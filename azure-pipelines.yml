@@ -39,6 +39,11 @@ steps:
   inputs:
     versionSpec: '16.x'
 
+- task: CmdLine@2
+  inputs:
+    script: |
+      cd $(System.DefaultWorkingDirectory)/Organizr.Member/member-application
+      npm i
 - task: Npm@1
   inputs:
     command: 'custom'
