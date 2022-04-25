@@ -23,12 +23,45 @@ steps:
 
 
 - task: VSBuild@1
-  displayName: 'Build .csproj file'
+  displayName: 'Build solution'
   inputs:
     solution: '**/*.csproj'
     platform: '$(BuildPlatform)'
     configuration: '$(BuildConfiguration)'
 
+- task: NodeTool@0
+  displayName: 'Install Node.js'
+  inputs:
+    versionSpec: '6.x'
+    checkLatest: true
+
+- task: Npm@1
+  displayName: 'Install Angular Cli'
+  inputs:
+    command: 'custom'
+    workingDir: '**/AppMember'
+    customCommand: 'install @angular-cli'
+
+- task: Npm@1
+  displayName: 'Install Dependencies'
+  inputs:
+    command: 'install'
+    workingDir: '**/AppMember'
+
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    workingDir: '**/AppMember'
+    customCommand: 'run build'
+
+- task: ArchiveFiles@2
+  displayName: 'Archive Files'
+  inputs:
+    rootFolderOrFile: '$(Build.BinariesDirectory)'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
 
 - task: VSTest@2
   inputs:
