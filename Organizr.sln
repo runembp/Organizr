@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Organizr.Api", "Organizr.Ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Organizr.Database", "Organizr.Database\Organizr.Database.csproj", "{C0714A56-9A9D-4412-B0CB-0A637D84D1E8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Organzir.Member", "Organzir.Member", "{E170AAFD-4540-4AA2-878A-E92FAF1EAFA0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Organzr.Member", "Organzr.Member", "{E170AAFD-4540-4AA2-878A-E92FAF1EAFA0}"
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "member-application", "..\..\..\ClientApplication\member-application\", "{A5E95B92-3231-4B8C-8609-2DA5D7387FA0}"
 	ProjectSection(WebsiteProperties) = preProject
