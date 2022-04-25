@@ -41,7 +41,7 @@ steps:
 - task: Npm@1
   inputs:
     command: 'custom'
-    workingDir: '$(System.DefaultWorkingDirectory)/Organizr.Member'
+    workingDir: '$(System.DefaultWorkingDirectory)/Organizr.Member/member-application'
     customCommand: 'install @angular-cli'
 
 - task: VSTest@2
