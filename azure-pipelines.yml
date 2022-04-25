@@ -28,27 +28,33 @@ steps:
     platform: '$(BuildPlatform)'
     configuration: '$(BuildConfiguration)'
 
-- task: CmdLine@2
-  inputs:
-    script: |
-      cd $(System.DefaultWorkingDirectory)/Organizr.Member/member-application
-      dir
-
 - task: NodeTool@0
   displayName: 'Install Node.js'
   inputs:
     versionSpec: '16.x'
-
 - task: CmdLine@2
   inputs:
     script: |
-      cd $(System.DefaultWorkingDirectory)/Organizr.Member/member-application
-      npm i
-- task: Npm@1
+      cd '$(System.DefaultWorkingDirectory)/Organizr.Member/member-application'
+      npm install -g @angular/cli
+      npm install
+      ng build --prod
+
+- task: ArchiveFiles@2
+  displayName: 'Archive files'
   inputs:
-    command: 'custom'
-    workingDir: '$(System.DefaultWorkingDirectory)/Organizr.Member/member-application'
-    customCommand: 'install @angular/cli'
+    rootFolderOrFile: '$(System.DefaultWorkingDirectory)/HelloWorld/dist/HelloWorld/'
+    includeRootFolder: false
+    archiveType: zip
+    archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+    replaceExistingArchive: true
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+      
 
 - task: VSTest@2
   inputs:
