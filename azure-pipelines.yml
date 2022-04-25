@@ -32,7 +32,8 @@ steps:
 - task: CmdLine@2
   inputs:
     script: | 
-      echo dir
+      echo  '$(System.DefaultWorkingDirectory)'
+      dir    
 
 - task: NodeTool@0
   displayName: 'Install Node.js'
