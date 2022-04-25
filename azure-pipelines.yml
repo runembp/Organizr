@@ -21,7 +21,6 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
-steps:
 - task: VSBuild@1
   displayName: 'Build .csproj file'
   inputs:
