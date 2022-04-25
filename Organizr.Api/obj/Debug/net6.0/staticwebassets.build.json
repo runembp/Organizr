@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "QwELfdfhaHUVj2uonzKQb+SmbCyw2+P/GXQ7DcoHpYQ=",
+  "Source": "Organizr.Api",
+  "BasePath": "_content/Organizr.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

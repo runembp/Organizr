@@ -1,0 +1,34 @@
+C:\Users\runem\Desktop\Organizr\Organizr.Database\bin\Debug\net6.0\Organizr.Database.deps.json
+C:\Users\runem\Desktop\Organizr\Organizr.Database\bin\Debug\net6.0\Organizr.Database.runtimeconfig.json
+C:\Users\runem\Desktop\Organizr\Organizr.Database\bin\Debug\net6.0\Organizr.Database.dll
+C:\Users\runem\Desktop\Organizr\Organizr.Database\bin\Debug\net6.0\Organizr.Database.pdb
+C:\Users\runem\Desktop\Organizr\Organizr.Database\bin\Debug\net6.0\Organizr.Infrastructure.dll
+C:\Users\runem\Desktop\Organizr\Organizr.Database\bin\Debug\net6.0\Organizr.Infrastructure.pdb
+C:\Users\runem\Desktop\Organizr\Organizr.Database\obj\Debug\net6.0\Organizr.Database.csproj.AssemblyReference.cache
+C:\Users\runem\Desktop\Organizr\Organizr.Database\obj\Debug\net6.0\Organizr.Database.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\runem\Desktop\Organizr\Organizr.Database\obj\Debug\net6.0\Organizr.Database.AssemblyInfoInputs.cache
+C:\Users\runem\Desktop\Organizr\Organizr.Database\obj\Debug\net6.0\Organizr.Database.AssemblyInfo.cs
+C:\Users\runem\Desktop\Organizr\Organizr.Database\obj\Debug\net6.0\Organizr.Database.csproj.CoreCompileInputs.cache
+C:\Users\runem\Desktop\Organizr\Organizr.Database\obj\Debug\net6.0\Organizr.Database.csproj.CopyComplete
+C:\Users\runem\Desktop\Organizr\Organizr.Database\obj\Debug\net6.0\Organizr.Database.dll
+C:\Users\runem\Desktop\Organizr\Organizr.Database\obj\Debug\net6.0\refint\Organizr.Database.dll
+C:\Users\runem\Desktop\Organizr\Organizr.Database\obj\Debug\net6.0\Organizr.Database.pdb
+C:\Users\runem\Desktop\Organizr\Organizr.Database\obj\Debug\net6.0\Organizr.Database.genruntimeconfig.cache
+C:\Users\runem\Desktop\Organizr\Organizr.Database\obj\Debug\net6.0\ref\Organizr.Database.dll
+G:\My Drive\Programmering\Organizr\Organizr.Database\bin\Debug\net6.0\Organizr.Database.deps.json
+G:\My Drive\Programmering\Organizr\Organizr.Database\bin\Debug\net6.0\Organizr.Database.runtimeconfig.json
+G:\My Drive\Programmering\Organizr\Organizr.Database\bin\Debug\net6.0\Organizr.Database.dll
+G:\My Drive\Programmering\Organizr\Organizr.Database\bin\Debug\net6.0\Organizr.Database.pdb
+G:\My Drive\Programmering\Organizr\Organizr.Database\bin\Debug\net6.0\Organizr.Infrastructure.dll
+G:\My Drive\Programmering\Organizr\Organizr.Database\bin\Debug\net6.0\Organizr.Infrastructure.pdb
+G:\My Drive\Programmering\Organizr\Organizr.Database\obj\Debug\net6.0\Organizr.Database.csproj.AssemblyReference.cache
+G:\My Drive\Programmering\Organizr\Organizr.Database\obj\Debug\net6.0\Organizr.Database.GeneratedMSBuildEditorConfig.editorconfig
+G:\My Drive\Programmering\Organizr\Organizr.Database\obj\Debug\net6.0\Organizr.Database.AssemblyInfoInputs.cache
+G:\My Drive\Programmering\Organizr\Organizr.Database\obj\Debug\net6.0\Organizr.Database.AssemblyInfo.cs
+G:\My Drive\Programmering\Organizr\Organizr.Database\obj\Debug\net6.0\Organizr.Database.csproj.CoreCompileInputs.cache
+G:\My Drive\Programmering\Organizr\Organizr.Database\obj\Debug\net6.0\Organizr.Database.csproj.CopyComplete
+G:\My Drive\Programmering\Organizr\Organizr.Database\obj\Debug\net6.0\Organizr.Database.dll
+G:\My Drive\Programmering\Organizr\Organizr.Database\obj\Debug\net6.0\refint\Organizr.Database.dll
+G:\My Drive\Programmering\Organizr\Organizr.Database\obj\Debug\net6.0\Organizr.Database.pdb
+G:\My Drive\Programmering\Organizr\Organizr.Database\obj\Debug\net6.0\Organizr.Database.genruntimeconfig.cache
+G:\My Drive\Programmering\Organizr\Organizr.Database\obj\Debug\net6.0\ref\Organizr.Database.dll

@@ -1,0 +1,17 @@
+G:\Mit drev\Programmering\Organizr\Organizr.Core\bin\Debug\net6.0\Organizr.Core.deps.json
+G:\Mit drev\Programmering\Organizr\Organizr.Core\bin\Debug\net6.0\Organizr.Core.dll
+G:\Mit drev\Programmering\Organizr\Organizr.Core\bin\Debug\net6.0\Organizr.Core.pdb
+G:\Mit drev\Programmering\Organizr\Organizr.Core\bin\Debug\net6.0\Organizr.Database.dll
+G:\Mit drev\Programmering\Organizr\Organizr.Core\bin\Debug\net6.0\Organizr.Infrastructure.dll
+G:\Mit drev\Programmering\Organizr\Organizr.Core\bin\Debug\net6.0\Organizr.Database.pdb
+G:\Mit drev\Programmering\Organizr\Organizr.Core\bin\Debug\net6.0\Organizr.Infrastructure.pdb
+G:\Mit drev\Programmering\Organizr\Organizr.Core\obj\Debug\net6.0\Organizr.Core.csproj.AssemblyReference.cache
+G:\Mit drev\Programmering\Organizr\Organizr.Core\obj\Debug\net6.0\Organizr.Core.GeneratedMSBuildEditorConfig.editorconfig
+G:\Mit drev\Programmering\Organizr\Organizr.Core\obj\Debug\net6.0\Organizr.Core.AssemblyInfoInputs.cache
+G:\Mit drev\Programmering\Organizr\Organizr.Core\obj\Debug\net6.0\Organizr.Core.AssemblyInfo.cs
+G:\Mit drev\Programmering\Organizr\Organizr.Core\obj\Debug\net6.0\Organizr.Core.csproj.CoreCompileInputs.cache
+G:\Mit drev\Programmering\Organizr\Organizr.Core\obj\Debug\net6.0\Organizr.Core.csproj.CopyComplete
+G:\Mit drev\Programmering\Organizr\Organizr.Core\obj\Debug\net6.0\Organizr.Core.dll
+G:\Mit drev\Programmering\Organizr\Organizr.Core\obj\Debug\net6.0\refint\Organizr.Core.dll
+G:\Mit drev\Programmering\Organizr\Organizr.Core\obj\Debug\net6.0\Organizr.Core.pdb
+G:\Mit drev\Programmering\Organizr\Organizr.Core\obj\Debug\net6.0\ref\Organizr.Core.dll

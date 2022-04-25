@@ -1,0 +1,12 @@
+G:\Mit drev\Programmering\Organizr\Organizr.Infrastructure\bin\Debug\net6.0\Organizr.Infrastructure.deps.json
+G:\Mit drev\Programmering\Organizr\Organizr.Infrastructure\bin\Debug\net6.0\Organizr.Infrastructure.dll
+G:\Mit drev\Programmering\Organizr\Organizr.Infrastructure\bin\Debug\net6.0\Organizr.Infrastructure.pdb
+G:\Mit drev\Programmering\Organizr\Organizr.Infrastructure\obj\Debug\net6.0\Organizr.Infrastructure.csproj.AssemblyReference.cache
+G:\Mit drev\Programmering\Organizr\Organizr.Infrastructure\obj\Debug\net6.0\Organizr.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+G:\Mit drev\Programmering\Organizr\Organizr.Infrastructure\obj\Debug\net6.0\Organizr.Infrastructure.AssemblyInfoInputs.cache
+G:\Mit drev\Programmering\Organizr\Organizr.Infrastructure\obj\Debug\net6.0\Organizr.Infrastructure.AssemblyInfo.cs
+G:\Mit drev\Programmering\Organizr\Organizr.Infrastructure\obj\Debug\net6.0\Organizr.Infrastructure.csproj.CoreCompileInputs.cache
+G:\Mit drev\Programmering\Organizr\Organizr.Infrastructure\obj\Debug\net6.0\Organizr.Infrastructure.dll
+G:\Mit drev\Programmering\Organizr\Organizr.Infrastructure\obj\Debug\net6.0\refint\Organizr.Infrastructure.dll
+G:\Mit drev\Programmering\Organizr\Organizr.Infrastructure\obj\Debug\net6.0\Organizr.Infrastructure.pdb
+G:\Mit drev\Programmering\Organizr\Organizr.Infrastructure\obj\Debug\net6.0\ref\Organizr.Infrastructure.dll
