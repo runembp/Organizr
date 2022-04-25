@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32106.194
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Organizr.Core", "Organizr.Core\Organizr.Core.csproj", "{D759E4C0-0976-46A4-8FB1-799BF7853C0C}"
 EndProject
@@ -11,24 +11,27 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Organizr.Api", "Organizr.Ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Organizr.Database", "Organizr.Database\Organizr.Database.csproj", "{C0714A56-9A9D-4412-B0CB-0A637D84D1E8}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AppMember", "..\..\..\Angular_Projekter\AppMember\AppMember\", "{0FF4731C-2485-4D98-93CF-D52BBCF4FECB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Organizr.Member", "Organizr.Member", "{E170AAFD-4540-4AA2-878A-E92FAF1EAFA0}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "member-application", "..\..\..\ClientApplication\member-application\", "{A5E95B92-3231-4B8C-8609-2DA5D7387FA0}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_58834"
-		Debug.AspNetCompiler.PhysicalPath = "..\..\..\Angular_Projekter\AppMember\AppMember\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_58834\"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_65210"
+		Debug.AspNetCompiler.PhysicalPath = "..\..\..\ClientApplication\member-application\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_65210\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_58834"
-		Release.AspNetCompiler.PhysicalPath = "..\..\..\Angular_Projekter\AppMember\AppMember\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_58834\"
+		Release.AspNetCompiler.VirtualPath = "/localhost_65210"
+		Release.AspNetCompiler.PhysicalPath = "..\..\..\ClientApplication\member-application\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_65210\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "58834"
+		VWDPort = "65210"
+		SlnRelativePath = "..\..\..\ClientApplication\member-application\"
 	EndProjectSection
 EndProject
 Global
@@ -53,13 +56,16 @@ Global
 		{C0714A56-9A9D-4412-B0CB-0A637D84D1E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0714A56-9A9D-4412-B0CB-0A637D84D1E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0714A56-9A9D-4412-B0CB-0A637D84D1E8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0FF4731C-2485-4D98-93CF-D52BBCF4FECB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0FF4731C-2485-4D98-93CF-D52BBCF4FECB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0FF4731C-2485-4D98-93CF-D52BBCF4FECB}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{0FF4731C-2485-4D98-93CF-D52BBCF4FECB}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{A5E95B92-3231-4B8C-8609-2DA5D7387FA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5E95B92-3231-4B8C-8609-2DA5D7387FA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5E95B92-3231-4B8C-8609-2DA5D7387FA0}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5E95B92-3231-4B8C-8609-2DA5D7387FA0}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A5E95B92-3231-4B8C-8609-2DA5D7387FA0} = {E170AAFD-4540-4AA2-878A-E92FAF1EAFA0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0C736664-B120-4EE3-94EB-7878C8F32859}
