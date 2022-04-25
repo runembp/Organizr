@@ -27,29 +27,6 @@ steps:
   inputs:
     versionSpec: '16.x'
 
-- task: CmdLine@2
-  inputs:
-    script: |
-      cd '$(System.DefaultWorkingDirectory)/HelloWorld'
-          npm install -g @angular/cli
-          npm install
-          
-        
-- task: ArchiveFiles@2
-  displayName: 'Archive files'
-  inputs:
-    rootFolderOrFile: '$(System.DefaultWorkingDirectory)/HelloWorld/dist/HelloWorld/'
-    includeRootFolder: false
-    archiveType: zip
-    archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-    replaceExistingArchive: true
-   
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
-
 - task: VSBuild@1
   displayName: 'Build solution'
   inputs:
@@ -57,14 +34,23 @@ steps:
     platform: '$(BuildPlatform)'
     configuration: '$(BuildConfiguration)'
 
-- task: ArchiveFiles@2
-  displayName: 'Archive Files'
+- task: CmdLine@2
   inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)'
-    includeRootFolder: true
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
+    script: |
+      echo "Structure of work folder of this pipeline:"
+      tree $(Agent.WorkFolder)\1 /f
+      
+      echo "Build.ArtifactStagingDirectory:" 
+      
+      echo "$(Build.ArtifactStagingDirectory)"
+      
+      echo "Build.BinariesDirectory:" 
+      
+      echo "$(Build.BinariesDirectory)"
+      
+      echo "Build.SourcesDirectory:"
+      
+      echo "$(Build.SourcesDirectory)"
 
 - task: VSTest@2
   inputs:
