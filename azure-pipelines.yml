@@ -21,6 +21,13 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
+- task: CmdLine@2
+  inputs:
+    script: | 
+      echo  '$(System.DefaultWorkingDirectory)'
+      dir    
+      cd..
+      dir
 
 - task: VSBuild@1
   displayName: 'Build solution'
@@ -29,13 +36,7 @@ steps:
     platform: '$(BuildPlatform)'
     configuration: '$(BuildConfiguration)'
 
-- task: CmdLine@2
-  inputs:
-    script: | 
-      echo  '$(System.DefaultWorkingDirectory)'
-      dir    
-      cd..
-      dir
+
 
 - task: NodeTool@0
   displayName: 'Install Node.js'
