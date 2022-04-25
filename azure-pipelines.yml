@@ -48,7 +48,7 @@ steps:
   inputs:
     command: 'custom'
     workingDir: '$(System.DefaultWorkingDirectory)/Organizr.Member/member-application'
-    customCommand: 'install @angular-cli'
+    customCommand: 'install @angular/cli'
 
 - task: VSTest@2
   inputs:
