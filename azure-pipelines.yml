@@ -28,6 +28,7 @@ steps:
     platform: '$(BuildPlatform)'
     configuration: '$(BuildConfiguration)'
 
+
 - task: NodeTool@0
   displayName: 'Install Node.js'
   inputs:
@@ -43,7 +44,7 @@ steps:
 - task: ArchiveFiles@2
   displayName: 'Archive files'
   inputs:
-    rootFolderOrFile: '$(System.DefaultWorkingDirectory)/member-application/dist/member-application/'
+    rootFolderOrFile: '$(System.DefaultWorkingDirectory)/Organizr.Member/member-application'
     includeRootFolder: false
     archiveType: zip
     archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
