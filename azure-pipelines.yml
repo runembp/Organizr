@@ -46,12 +46,14 @@ steps:
       echo "$(Build.BinariesDirectory)"
       echo "Build.SourcesDirectory:"
       echo "$(Build.SourcesDirectory)"
+      echo "System.DefaultWorkingDirectory:"
+      echo "$(System.DefaultWorkingDirectory)"
 
 - task: Npm@1
   displayName: 'Install Angular Cli'
   inputs:
     command: 'custom'
-    workingDir: '../../../AppMember'
+    workingDir: '$(System.DefaultWorkingDirectory)/AppMember'
     customCommand: 'install @angular-cli'
 
 - task: Npm@1
