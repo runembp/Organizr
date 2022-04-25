@@ -39,7 +39,7 @@ steps:
   displayName: 'Install Angular Cli'
   inputs:
     command: 'custom'
-    workingDir: '*/AppMember'
+    workingDir: '$(Build.SourcesDirectory)/AppMember'
     customCommand: 'install @angular-cli'
 
 - task: Npm@1
