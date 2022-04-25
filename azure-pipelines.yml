@@ -21,13 +21,13 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
+
 - task: VSBuild@1
   displayName: 'Build .csproj file'
   inputs:
     solution: '**/*.csproj'
-    vsVersion: 16.0
     platform: '$(BuildPlatform)'
-configuration: '$(BuildConfiguration)'
+    configuration: '$(BuildConfiguration)'
 
 
 - task: VSTest@2
