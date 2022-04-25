@@ -21,15 +21,34 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
+    
+- task: NodeTool@0
+  displayName: 'Install Node.js'
+  inputs:
+    versionSpec: '16.x'
+
 - task: CmdLine@2
   inputs:
-    script: | 
-      echo  '$(System.DefaultWorkingDirectory)'
-      dir    
-      cd..
-      cd..
-      cd..
-      dir
+    script: |
+      cd '$(System.DefaultWorkingDirectory)/HelloWorld'
+          npm install -g @angular/cli
+          npm install
+          
+        
+- task: ArchiveFiles@2
+  displayName: 'Archive files'
+  inputs:
+    rootFolderOrFile: '$(System.DefaultWorkingDirectory)/HelloWorld/dist/HelloWorld/'
+    includeRootFolder: false
+    archiveType: zip
+    archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+    replaceExistingArchive: true
+   
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
 
 - task: VSBuild@1
   displayName: 'Build solution'
@@ -37,34 +56,6 @@ steps:
     solution: '**/*.csproj'
     platform: '$(BuildPlatform)'
     configuration: '$(BuildConfiguration)'
-
-
-
-- task: NodeTool@0
-  displayName: 'Install Node.js'
-  inputs:
-    versionSpec: '6.x'
-    checkLatest: true
-   
-
-- task: Npm@1
-  displayName: 'Install Angular Cli'
-  inputs:
-    command: 'custom'
-    workingDir: '$(System.DefaultWorkingDirectory)/AppMember'
-    customCommand: 'install @angular-cli'
-
-- task: Npm@1
-  displayName: 'Install Dependencies'
-  inputs:
-    command: 'install'
-    workingDir: '*/AppMember'
-
-- task: Npm@1
-  inputs:
-    command: 'custom'
-    workingDir: '*/AppMember'
-    customCommand: 'run build'
 
 - task: ArchiveFiles@2
   displayName: 'Archive Files'
