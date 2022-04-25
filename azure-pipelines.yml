@@ -39,19 +39,19 @@ steps:
   displayName: 'Install Angular Cli'
   inputs:
     command: 'custom'
-    workingDir: '**/AppMember'
+    workingDir: '*/AppMember'
     customCommand: 'install @angular-cli'
 
 - task: Npm@1
   displayName: 'Install Dependencies'
   inputs:
     command: 'install'
-    workingDir: '**/AppMember'
+    workingDir: '*/AppMember'
 
 - task: Npm@1
   inputs:
     command: 'custom'
-    workingDir: '**/AppMember'
+    workingDir: '*/AppMember'
     customCommand: 'run build'
 
 - task: ArchiveFiles@2
