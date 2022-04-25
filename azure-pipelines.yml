@@ -27,6 +27,8 @@ steps:
       echo  '$(System.DefaultWorkingDirectory)'
       dir    
       cd..
+      cd..
+      cd..
       dir
 
 - task: VSBuild@1
