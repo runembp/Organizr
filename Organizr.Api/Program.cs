@@ -1,5 +1,9 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Organizr.Core.Services;
 using Organizr.Database;
 using Organizr.Infrastructure.Models;
 
@@ -20,8 +24,33 @@ builder.Services.AddIdentity<OrganizrUser, IdentityRole>(options =>
     {
         options.SignIn.RequireConfirmedAccount = false;
     })
-    .AddEntityFrameworkStores<OrganizrDataContext>();
+    .AddRoleManager<RoleManager<IdentityRole>>()
+    .AddDefaultTokenProviders()
+    .AddEntityFrameworkStores<OrganizrDataContext>()
+    .AddRoles<IdentityRole>();
+builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+        options.SaveToken = true;
+        options.RequireHttpsMetadata = false;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+            
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = false
+        };
+    });
+builder.Services.AddAuthorization();
 
+// Dependency injection
+builder.Services.AddScoped<AccountService>();
 
 var app = builder.Build();
 
