@@ -12,8 +12,8 @@ using Organizr.Database;
 namespace Organizr.Database.Migrations
 {
     [DbContext(typeof(OrganizrDataContext))]
-    [Migration("20220425095728_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220426100722_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,21 +23,6 @@ namespace Organizr.Database.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("GroupPerson", b =>
-                {
-                    b.Property<int>("GroupsGroupId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PersonsPersonId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GroupsGroupId", "PersonsPersonId");
-
-                    b.HasIndex("PersonsPersonId");
-
-                    b.ToTable("GroupPerson");
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -172,7 +157,7 @@ namespace Organizr.Database.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Organizr.Database.OrganizrUser", b =>
+            modelBuilder.Entity("Organizr.Infrastructure.Models.OrganizrUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -237,59 +222,6 @@ namespace Organizr.Database.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Organizr.Infrastructure.Models.Group", b =>
-                {
-                    b.Property<int>("GroupId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GroupId"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("GroupId");
-
-                    b.ToTable("Groups");
-                });
-
-            modelBuilder.Entity("Organizr.Infrastructure.Models.Person", b =>
-                {
-                    b.Property<int>("PersonId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PersonId"), 1L, 1);
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("PersonId");
-
-                    b.ToTable("Persons");
-                });
-
-            modelBuilder.Entity("GroupPerson", b =>
-                {
-                    b.HasOne("Organizr.Infrastructure.Models.Group", null)
-                        .WithMany()
-                        .HasForeignKey("GroupsGroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Organizr.Infrastructure.Models.Person", null)
-                        .WithMany()
-                        .HasForeignKey("PersonsPersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -301,7 +233,7 @@ namespace Organizr.Database.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Organizr.Database.OrganizrUser", null)
+                    b.HasOne("Organizr.Infrastructure.Models.OrganizrUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -310,7 +242,7 @@ namespace Organizr.Database.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Organizr.Database.OrganizrUser", null)
+                    b.HasOne("Organizr.Infrastructure.Models.OrganizrUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -325,7 +257,7 @@ namespace Organizr.Database.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Organizr.Database.OrganizrUser", null)
+                    b.HasOne("Organizr.Infrastructure.Models.OrganizrUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -334,7 +266,7 @@ namespace Organizr.Database.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Organizr.Database.OrganizrUser", null)
+                    b.HasOne("Organizr.Infrastructure.Models.OrganizrUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
