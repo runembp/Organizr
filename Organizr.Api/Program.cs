@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Organizr.Core.Services;
 using Organizr.Database;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,9 +11,6 @@ builder.Services.AddDbContext<OrganizrDataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-
-builder.Services.AddScoped<GroupService>();
-builder.Services.AddScoped<PersonService>();
 
 var app = builder.Build();
 
