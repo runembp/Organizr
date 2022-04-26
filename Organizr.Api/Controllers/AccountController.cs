@@ -34,12 +34,13 @@ public class AccountController : ControllerBase
     {
         var result = await _accountService.Login(request);
 
-        if (!result)
+        // TODO Fix this method for proper error handling
+        if (result.ToLower().Contains("error"))
         {
             return BadRequest("Failed login");
         }
 
-        return Ok("Successful login!");
+        return Ok(result);
     }
     
     [HttpPost("Test")]

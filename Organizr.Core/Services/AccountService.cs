@@ -38,24 +38,25 @@ public class AccountService
     }
 
     [AllowAnonymous]
-    public async Task<bool> Login(LoginUserDto request)
+    public async Task<string> Login(LoginUserDto request)
     {
         var user = await _userManager.FindByEmailAsync(request.Email);
 
+        // TODO Fix "Error" message 
         if (user is null)
         {
-            return false;
+            return "Error!";
         }
 
         var signInResult = await _signInManager.PasswordSignInAsync(user, request.Password, false, false);
 
+        // TODO Fix "Error" message 
         if (!signInResult.Succeeded)
         {
-            return false;
+            return "Error!";
         }
         
-        GenerateToken(user);
-        return true;
+        return GenerateToken(user);
     }
     
     
@@ -76,6 +77,7 @@ public class AccountService
                 SecurityAlgorithms.HmacSha256Signature)
         };
         var token = tokenHandler.CreateToken(tokenDescriptor);
+        
         return tokenHandler.WriteToken(token);
     }
 }
