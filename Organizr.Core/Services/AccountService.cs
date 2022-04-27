@@ -38,28 +38,32 @@ public class AccountService
     }
 
     [AllowAnonymous]
-    public async Task<string> Login(LoginUserDto request)
+    public async Task<LoginUserResponseDto> Login(LoginUserDto request)
     {
         var user = await _userManager.FindByEmailAsync(request.Email);
 
-        // TODO Fix "Error" message 
+        var response = new LoginUserResponseDto();
+
         if (user is null)
         {
-            return "Error!";
+            response.Succeeded = false;
+            return response;
         }
 
         var signInResult = await _signInManager.PasswordSignInAsync(user, request.Password, false, false);
 
-        // TODO Fix "Error" message 
         if (!signInResult.Succeeded)
         {
-            return "Error!";
+            response.Succeeded = false;
+            return response;
         }
-        
-        return GenerateToken(user);
+
+        response.Username = request.Email;
+        response.Token = GenerateToken(user);
+        response.Succeeded = signInResult.Succeeded;
+
+        return response;
     }
-    
-    
     
     private string GenerateToken(OrganizrUser userInfo)
     {
