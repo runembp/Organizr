@@ -1,6 +1,6 @@
 ﻿namespace Organizr.Infrastructure.DTO;
 
-public class LoginUserResponseDto
+public class LoginUserResponse
 {
     public string Username { get; set; }
     public string Token { get; set; }

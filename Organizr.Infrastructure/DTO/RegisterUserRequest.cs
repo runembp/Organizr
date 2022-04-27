@@ -2,16 +2,20 @@
 
 namespace Organizr.Infrastructure.DTO;
 
-public class RegisterUserDto
+public class RegisterUserRequest
 {
     [Required]
     public string Email { get; set; }
+    
     [Required]
     public string Password { get; set; }
+    
     [Required]
     public string FirstName { get; set; }
+    
     [Required]
     public string LastName { get; set; }
+    
     [Required]
     public Gender Gender { get; set; }
 }

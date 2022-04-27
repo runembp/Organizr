@@ -24,7 +24,7 @@ public class AccountService
     }
 
     [AllowAnonymous]
-    public async Task<bool> RegisterUser(RegisterUserDto request)
+    public async Task<bool> RegisterUser(RegisterUserRequest request)
     {
         var user = new OrganizrUser
         {
@@ -38,11 +38,11 @@ public class AccountService
     }
 
     [AllowAnonymous]
-    public async Task<LoginUserResponseDto> Login(LoginUserDto request)
+    public async Task<LoginUserResponse> Login(LoginUserRequest request)
     {
         var user = await _userManager.FindByEmailAsync(request.Email);
 
-        var response = new LoginUserResponseDto();
+        var response = new LoginUserResponse();
 
         if (user is null)
         {
