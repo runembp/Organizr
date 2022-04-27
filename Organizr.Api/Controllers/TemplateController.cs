@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Organizr.Application.Queries;
 using Organizr.Application.Services;
@@ -8,7 +7,7 @@ using Organizr.Core.Entities;
 namespace Organizr.Api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/template")]
 public class TemplateController : ControllerBase
 {
     private readonly AccountService _accountService;

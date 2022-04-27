@@ -3,22 +3,20 @@ using Organizr.Application.Commands;
 using Organizr.Application.Queries;
 using Organizr.Application.Responses;
 using Organizr.Application.Services;
-using Organizr.Infrastructure.DTO;
 
 namespace Organizr.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
-public class AccountController : ControllerBase
+[Route("api/users")]
+public class UserController : ControllerBase
 {
     private readonly AccountService _accountService;
-
-    public AccountController(AccountService accountService)
+    public UserController(AccountService accountService)
     {
         _accountService = accountService;
     }
     
-    [HttpPost("Register")]
+    [HttpPost("user")]
     public async Task<ActionResult<RegisterUserResponse>> RegisterUser([FromBody] CreateOrganizrUserCommand command)
     {
         var result = await _accountService.RegisterUser(command);
@@ -30,21 +28,8 @@ public class AccountController : ControllerBase
 
         return Created("Created?" ,result);
     }
-
-    [HttpPost("login")]
-    public async Task<ActionResult<LoginUserResponse>> Login([FromBody] LoginUserQuery query)
-    {
-        var result = await _accountService.Login(query);
-
-        if (!result.Succeeded)
-        {
-            return BadRequest("Failed login");
-        }
-
-        return Ok(result);
-    }
     
-    [HttpPost("RegisterOrganizationAdministrator")]
+    [HttpPost("organisation-administrator")]
     public async Task<ActionResult<RegisterUserResponse>> RegisterOrganizationAdministrator([FromBody] RegisterUserQuery query)
     {
         var result = await _accountService.RegisterOrganizationAdministrator(query);
