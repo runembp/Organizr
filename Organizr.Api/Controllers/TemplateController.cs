@@ -8,6 +8,7 @@ namespace Organizr.Api.Controllers;
 
 [ApiController]
 [Route("api/template")]
+[Obsolete("Proof of concept - to be deleted")]
 public class TemplateController : ControllerBase
 {
     private readonly AccountService _accountService;
