@@ -10,5 +10,8 @@ Organizr.Infrastructure/obj
 Organizr.Database/bin
 Organizr.Database/obj
 
+Organizr.AppAdmin/bin
+Organizr.AppAdmin/obj
+
 .vs
 .idea
