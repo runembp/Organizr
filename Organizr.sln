@@ -34,7 +34,9 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "member-application", "..\..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Organizr.Application", "Organizr.Application\Organizr.Application.csproj", "{C2EBCB9B-79E5-4070-92B0-60BA0DDF840F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Organizr.AppAdmin", "Organizr.AppAdmin\Organizr.AppAdmin.csproj", "{54C9257C-0F6D-4F5D-BAA7-72C39FFD346F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Organizr.Admin", "Organizr.Admin\Organizr.Admin.csproj", "{54C9257C-0F6D-4F5D-BAA7-72C39FFD346F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Organizr.WebClients", "Organizr.WebClients", "{3FA4A6BE-DCCD-4D3A-8C12-4874F71B4DC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,6 +74,8 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A5E95B92-3231-4B8C-8609-2DA5D7387FA0} = {E170AAFD-4540-4AA2-878A-E92FAF1EAFA0}
+		{E170AAFD-4540-4AA2-878A-E92FAF1EAFA0} = {3FA4A6BE-DCCD-4D3A-8C12-4874F71B4DC1}
+		{54C9257C-0F6D-4F5D-BAA7-72C39FFD346F} = {3FA4A6BE-DCCD-4D3A-8C12-4874F71B4DC1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0C736664-B120-4EE3-94EB-7878C8F32859}
