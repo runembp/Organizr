@@ -7,6 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="11.0.1" />
+      <PackageReference Include="MediatR.CQRS" Version="1.0.1" />
+      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
       <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.4" />
       <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.4" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.4" />
@@ -22,7 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Organizr.Infrastructure\Organizr.Infrastructure.csproj" />
+      <ProjectReference Include="..\Organizr.Core\Organizr.Core.csproj" />
     </ItemGroup>
 
 </Project>
