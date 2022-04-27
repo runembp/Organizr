@@ -28,11 +28,16 @@
     <ItemGroup>
       <Folder Include="Data\EntityConfigurations" />
       <Folder Include="Migrations\" />
+      <Folder Include="Models" />
     </ItemGroup>
 
     <ItemGroup>
       <Reference Include="Microsoft.Extensions.Identity.Stores">
       </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Models\OrganizrRoles.cs" />
     </ItemGroup>
 
 </Project>

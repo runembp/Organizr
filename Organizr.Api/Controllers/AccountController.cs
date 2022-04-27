@@ -1,7 +1,8 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Organizr.Core.Services;
+﻿using Microsoft.AspNetCore.Mvc;
+using Organizr.Application.Commands;
+using Organizr.Application.Queries;
+using Organizr.Application.Responses;
+using Organizr.Application.Services;
 using Organizr.Infrastructure.DTO;
 
 namespace Organizr.Api.Controllers;
@@ -18,20 +19,20 @@ public class AccountController : ControllerBase
     }
     
     [HttpPost("Register")]
-    public async Task<IActionResult> RegisterUser([FromBody] RegisterUserQuery query)
+    public async Task<ActionResult<RegisterUserResponse>> RegisterUser([FromBody] CreateOrganizrUserQuery query)
     {
         var result = await _accountService.RegisterUser(query);
 
-        if (!result)
+        if (!result.Succeeded)
         {
-            return BadRequest("User could not be created");
+            return BadRequest(result.Errors);
         }
 
-        return Ok("User has been created");
+        return Created("Created?" ,result);
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginUserQuery query)
+    public async Task<ActionResult<LoginUserResponse>> Login([FromBody] LoginUserQuery query)
     {
         var result = await _accountService.Login(query);
 
@@ -43,29 +44,16 @@ public class AccountController : ControllerBase
         return Ok(result);
     }
     
-    [HttpPost("login-with-predetermined-user-and-password")]
-    public async Task<IActionResult> LoginWithPredeterminedUserAndPassword()
+    [HttpPost("RegisterOrganizationAdministrator")]
+    public async Task<ActionResult<RegisterUserResponse>> RegisterOrganizationAdministrator([FromBody] RegisterUserQuery query)
     {
-        var request = new LoginUserQuery()
-        {
-            Email = "user@organizr.com",
-            Password = "Tester1+"
-        };
-        
-        var result = await _accountService.Login(request);
+        var result = await _accountService.RegisterOrganizationAdministrator(query);
 
         if (!result.Succeeded)
         {
-            return BadRequest("Failed login");
+            return BadRequest(result.Errors);
         }
 
-        return Ok(result);
+        return Ok(result.Succeeded);
     }
-    
-    [HttpGet("TestAuth")]
-    [Authorize]
-    public IActionResult Test()
-    {
-        return Ok("If you see this, you're authorized!");
-    } 
 }

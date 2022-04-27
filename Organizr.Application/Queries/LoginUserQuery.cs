@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Organizr.Infrastructure.DTO;
+namespace Organizr.Application.Queries;
 
-public class LoginUserQuery
+public class LoginUserQuery 
 {
     [Required]
     public string Email { get; set; }
