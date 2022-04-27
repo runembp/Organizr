@@ -9,7 +9,7 @@ using Organizr.Core.Entities;
 namespace Organizr.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/organizr-user")]
 public class OrganizrUserController : ControllerBase
 {
     private readonly IMediator _mediator;
