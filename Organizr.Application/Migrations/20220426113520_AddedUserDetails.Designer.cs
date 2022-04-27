@@ -12,10 +12,10 @@ using Organizr.Database;
 namespace Organizr.Database.Migrations
 {
     [DbContext(typeof(OrganizrDataContext))]
-    [Migration("20220426100722_Initial")]
-    partial class Initial
+    [Migration("20220426113520_AddedUserDetails")]
+    partial class AddedUserDetails
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -175,6 +175,17 @@ namespace Organizr.Database.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");

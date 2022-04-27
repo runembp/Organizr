@@ -2,7 +2,7 @@
 
 namespace Organizr.Infrastructure.DTO;
 
-public class RegisterUserRequest
+public class RegisterUserQuery
 {
     [Required]
     public string Email { get; set; }

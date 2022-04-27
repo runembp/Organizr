@@ -18,9 +18,9 @@ public class AccountController : ControllerBase
     }
     
     [HttpPost("Register")]
-    public async Task<IActionResult> RegisterUser([FromBody] RegisterUserRequest request)
+    public async Task<IActionResult> RegisterUser([FromBody] RegisterUserQuery query)
     {
-        var result = await _accountService.RegisterUser(request);
+        var result = await _accountService.RegisterUser(query);
 
         if (!result)
         {
@@ -31,9 +31,9 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginUserRequest request)
+    public async Task<IActionResult> Login([FromBody] LoginUserQuery query)
     {
-        var result = await _accountService.Login(request);
+        var result = await _accountService.Login(query);
 
         if (!result.Succeeded)
         {
@@ -46,7 +46,7 @@ public class AccountController : ControllerBase
     [HttpPost("login-with-predetermined-user-and-password")]
     public async Task<IActionResult> LoginWithPredeterminedUserAndPassword()
     {
-        var request = new LoginUserRequest()
+        var request = new LoginUserQuery()
         {
             Email = "user@organizr.com",
             Password = "Tester1+"

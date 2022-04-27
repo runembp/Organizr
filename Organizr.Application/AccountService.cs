@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Organizr.Core.Entities;
 using Organizr.Infrastructure.DTO;
 using Organizr.Infrastructure.Models;
 
@@ -24,23 +25,23 @@ public class AccountService
     }
 
     [AllowAnonymous]
-    public async Task<bool> RegisterUser(RegisterUserRequest request)
+    public async Task<bool> RegisterUser(RegisterUserQuery query)
     {
         var user = new OrganizrUser
         {
-            UserName = request.Email,
-            Email = request.Email,
+            UserName = query.Email,
+            Email = query.Email,
         };
 
-        var result = await _userManager.CreateAsync(user, request.Password);
+        var result = await _userManager.CreateAsync(user, query.Password);
 
         return result.Succeeded;
     }
 
     [AllowAnonymous]
-    public async Task<LoginUserResponse> Login(LoginUserRequest request)
+    public async Task<LoginUserResponse> Login(LoginUserQuery query)
     {
-        var user = await _userManager.FindByEmailAsync(request.Email);
+        var user = await _userManager.FindByEmailAsync(query.Email);
 
         var response = new LoginUserResponse();
 
@@ -50,7 +51,7 @@ public class AccountService
             return response;
         }
 
-        var signInResult = await _signInManager.PasswordSignInAsync(user, request.Password, false, false);
+        var signInResult = await _signInManager.PasswordSignInAsync(user, query.Password, false, false);
 
         if (!signInResult.Succeeded)
         {
@@ -58,7 +59,7 @@ public class AccountService
             return response;
         }
 
-        response.Username = request.Email;
+        response.Username = query.Email;
         response.Token = GenerateToken(user);
         response.Succeeded = signInResult.Succeeded;
 

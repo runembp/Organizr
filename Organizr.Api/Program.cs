@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Organizr.Core.Entities;
 using Organizr.Core.Services;
-using Organizr.Database;
+using Organizr.Infrastructure.Data;
 using Organizr.Infrastructure.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,7 +36,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 // Database
-builder.Services.AddDbContext<OrganizrDataContext>(options =>
+builder.Services.AddDbContext<OrganizrDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
@@ -47,7 +48,7 @@ builder.Services.AddIdentity<OrganizrUser, IdentityRole>(options =>
     })
     .AddRoleManager<RoleManager<IdentityRole>>()
     .AddDefaultTokenProviders()
-    .AddEntityFrameworkStores<OrganizrDataContext>()
+    .AddEntityFrameworkStores<OrganizrDbContext>()
     .AddRoles<IdentityRole>();
 builder.Services.AddAuthentication(options =>
     {
@@ -77,8 +78,9 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Employee.API v1"));
 }
 
 app.UseHttpsRedirection();

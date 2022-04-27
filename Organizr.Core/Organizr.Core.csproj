@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
@@ -7,11 +7,19 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Organizr.Database\Organizr.Database.csproj" />
+      <Compile Remove="Interfaces\**" />
+      <EmbeddedResource Remove="Interfaces\**" />
+      <None Remove="Interfaces\**" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Interfaces" />
+      <Folder Include="Services" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.Extensions.Identity.Stores">
+        <HintPath>..\..\..\..\..\program files\dotnet\shared\Microsoft.AspNetCore.App\6.0.4\Microsoft.Extensions.Identity.Stores.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>
