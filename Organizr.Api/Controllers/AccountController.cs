@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Organizr.Core.Services;
 using Organizr.Infrastructure.DTO;
@@ -42,11 +43,29 @@ public class AccountController : ControllerBase
         return Ok(result);
     }
     
-    [HttpPost("Test")]
-    public async Task<IActionResult> TestGet()
+    [HttpPost("login-with-predetermined-user-and-password")]
+    public async Task<IActionResult> LoginWithPredeterminedUserAndPassword()
     {
-        var email= User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
-        var userid= User.Claims.FirstOrDefault(x => x.Type == "id")?.Value;
-        return Ok();
+        var request = new LoginUserDto()
+        {
+            Email = "user@organizr.com",
+            Password = "Tester1+"
+        };
+        
+        var result = await _accountService.Login(request);
+
+        if (!result.Succeeded)
+        {
+            return BadRequest("Failed login");
+        }
+
+        return Ok(result);
     }
+    
+    [HttpGet("TestAuth")]
+    [Authorize]
+    public IActionResult Test()
+    {
+        return Ok("If you see this, you're authorized!");
+    } 
 }
