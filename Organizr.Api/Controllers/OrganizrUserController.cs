@@ -9,7 +9,7 @@ using Organizr.Core.Entities;
 namespace Organizr.Api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class OrganizrUserController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -19,13 +19,14 @@ public class OrganizrUserController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet("/organizr-user")]
+    [HttpGet("organizr-user")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<List<OrganizrUser>> Get()
     {
         return (List<OrganizrUser>) await _mediator.Send(new GetAllOrganizrUserQuery());
     }
-    [HttpPost("/organizr-user")]
+    
+    [HttpPost("organizr-user")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<OrganizrUserResponse>> CreateOrganizrUser([FromBody] CreateOrganizrUserCommand command)
     {
