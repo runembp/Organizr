@@ -19,9 +19,9 @@ public class AccountController : ControllerBase
     }
     
     [HttpPost("Register")]
-    public async Task<ActionResult<RegisterUserResponse>> RegisterUser([FromBody] CreateOrganizrUserQuery query)
+    public async Task<ActionResult<RegisterUserResponse>> RegisterUser([FromBody] CreateOrganizrUserCommand command)
     {
-        var result = await _accountService.RegisterUser(query);
+        var result = await _accountService.RegisterUser(command);
 
         if (!result.Succeeded)
         {

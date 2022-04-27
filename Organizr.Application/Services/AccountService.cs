@@ -55,18 +55,18 @@ public class AccountService
     }
 
     [AllowAnonymous]
-    public async Task<RegisterUserResponse> RegisterUser(CreateOrganizrUserQuery query)
+    public async Task<RegisterUserResponse> RegisterUser(CreateOrganizrUserCommand command)
     {
         var user = new OrganizrUser
         {
-            UserName = query.Email,
-            Email = query.Email,
-            FirstName = query.FirstName,
-            LastName = query.LastName,
-            Address = query.LastName,
+            UserName = command.Email,
+            Email = command.Email,
+            FirstName = command.FirstName,
+            LastName = command.LastName,
+            Address = command.LastName,
         };
 
-        var result = await _userManager.CreateAsync(user, query.Password);
+        var result = await _userManager.CreateAsync(user, command.Password);
 
         return new RegisterUserResponse
         {

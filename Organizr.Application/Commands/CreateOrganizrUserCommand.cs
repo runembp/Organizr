@@ -4,7 +4,7 @@ using Organizr.Infrastructure;
 
 namespace Organizr.Application.Commands
 {
-    public class CreateOrganizrUserQuery : IRequest<CreateOrganizrUserResponse>
+    public class CreateOrganizrUserCommand : IRequest<OrganizrUserResponse>
     {
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;

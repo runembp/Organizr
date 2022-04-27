@@ -23,7 +23,7 @@ public class OrganizrUserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<List<OrganizrUser>> Get()
     {
-        return await _mediator.Send(new GetAllOrganizrUserQuery());
+        return (List<OrganizrUser>) await _mediator.Send(new GetAllOrganizrUserQuery());
     }
     [HttpPost("/organizr-user")]
     [ProducesResponseType(StatusCodes.Status200OK)]

@@ -1,6 +1,6 @@
 ﻿namespace Organizr.Application.Responses
 {
-    public class CreateOrganizrUserResponse
+    public class OrganizrUserResponse
     {
         public Guid OrganizrUserId { get; set; }
         public string FirstName { get; set; } = string.Empty;
