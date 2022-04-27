@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Organizr.Core.Services;
-using Organizr.Infrastructure.Models;
+
 
 namespace Organizr.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class GroupController : ControllerBase
+public class UserGroupController : ControllerBase
 {
-    private readonly GroupService _groupService;
+    /*private readonly GroupService _groupService;
     
     public GroupController(GroupService groupService)
     {
@@ -32,5 +31,5 @@ public class GroupController : ControllerBase
         }
 
         return group;
-    }
+    }*/
 }
