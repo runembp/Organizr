@@ -11,10 +11,9 @@ namespace Organizr.Test.Mocks
     {
         public static Mock<IOrganizrUserRepository> GetOrganizrUserRepository()
         {
-
-            var organizrUsers = new List<Core.Entities.OrganizrUser>
+            var organizrUsers = new List<OrganizrUser>
             {
-                 new Core.Entities.OrganizrUser
+                 new OrganizrUser
                 {
                     FirstName = "Fornavn",
                     LastName = "Efternavn",
@@ -24,14 +23,14 @@ namespace Organizr.Test.Mocks
                     Gender = Gender.Male,
                     Password = "password"
                 },
-                 new Core.Entities.OrganizrUser
+                 new OrganizrUser
                 {
                     FirstName = "FornavnTest",
                     LastName = "EfternavnTest",
                     Email = "emailtest01",
                     PhoneNumber = "12345678",
                     Address = "Testvej 78 2450 København SV",
-                    Gender = Gender.Female,
+                    Gender= Gender.Female,
                     Password = "mitpassword"
                 }
             };
@@ -40,11 +39,11 @@ namespace Organizr.Test.Mocks
 
             mockRepo.Setup(r => r.GetAll()).ReturnsAsync(organizrUsers);
 
-           mockRepo.Setup(r => r.Add(It.IsAny<OrganizrUser>())).ReturnsAsync((OrganizrUser organizrUser) =>
-           {
-               return organizrUser;
-           });
-          
+            mockRepo.Setup(r => r.Add(It.IsAny<OrganizrUser>())).ReturnsAsync((OrganizrUser organizrUser) =>
+            {
+                organizrUsers.Add(organizrUser);
+                return organizrUser;
+            });
 
             return mockRepo;
         }

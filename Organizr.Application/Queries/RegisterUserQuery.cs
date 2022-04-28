@@ -1,4 +1,5 @@
-﻿using Organizr.Infrastructure;
+﻿using Organizr.Core.Enums;
+using Organizr.Infrastructure;
 
 namespace Organizr.Application.Queries;
 
