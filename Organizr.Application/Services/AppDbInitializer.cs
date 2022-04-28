@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using Organizr.Core.Entities;
+using Organizr.Core.ApplicationConstants;
 
 namespace Organizr.Application.Services;
 
@@ -17,19 +17,19 @@ public static class AppDbInitializer
 
         var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-        if (!await roleManager.RoleExistsAsync(OrganizrRole.OrganizationAdministrator))
+        if (!await roleManager.RoleExistsAsync(ApplicationConstants.OrganizationAdministrator))
         {
-            await roleManager.CreateAsync(new IdentityRole(OrganizrRole.OrganizationAdministrator));
+            await roleManager.CreateAsync(new IdentityRole(ApplicationConstants.OrganizationAdministrator));
         }
         
-        if (!await roleManager.RoleExistsAsync(OrganizrRole.Administrator))
+        if (!await roleManager.RoleExistsAsync(ApplicationConstants.Administrator))
         {
-            await roleManager.CreateAsync(new IdentityRole(OrganizrRole.Administrator));
+            await roleManager.CreateAsync(new IdentityRole(ApplicationConstants.Administrator));
         }
         
-        if (!await roleManager.RoleExistsAsync(OrganizrRole.Basic))
+        if (!await roleManager.RoleExistsAsync(ApplicationConstants.Basic))
         {
-            await roleManager.CreateAsync(new IdentityRole(OrganizrRole.Basic));
+            await roleManager.CreateAsync(new IdentityRole(ApplicationConstants.Basic));
         }
     }
 }
