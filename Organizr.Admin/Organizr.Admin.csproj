@@ -14,10 +14,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Data" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\Organizr.Application\Organizr.Application.csproj" />
     </ItemGroup>
 
