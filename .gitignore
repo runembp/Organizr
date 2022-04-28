@@ -13,5 +13,8 @@ Organizr.Application/obj
 Organizr.AppAdmin/bin
 Organizr.AppAdmin/obj
 
+Organizr.Test/bin
+Organizr.Test/obj
+
 .vs
 .idea

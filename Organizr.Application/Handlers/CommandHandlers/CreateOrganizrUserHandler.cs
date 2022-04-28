@@ -1,30 +1,32 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Organizr.Application.Commands;
-using Organizr.Application.Mapper;
 using Organizr.Application.Responses;
 using Organizr.Core.Entities;
-using Organizr.Core.Repositories.Base;
+using Organizr.Core.Repositories;
 
 namespace Organizr.Application.Handlers.CommandHandlers;
 
 public class CreateOrganizrUserHandler : IRequestHandler<CreateOrganizrUserCommand, OrganizrUserResponse>
 {
-    private readonly IOrganizrUserRepository _memberRepo;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    public CreateOrganizrUserHandler(IOrganizrUserRepository memberRepository)
+    public CreateOrganizrUserHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
-        _memberRepo = memberRepository;
+        _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
     public async Task<OrganizrUserResponse> Handle(CreateOrganizrUserCommand request, CancellationToken cancellationToken)
     {
-        var memberEntity = OrganizrUserMapper.Mapper.Map<OrganizrUser>(request);
+        var memberEntity = _mapper.Map<OrganizrUser>(request);
         if (memberEntity is null)
         {
             throw new ApplicationException("Issue with mapper");
         }
-        var newEmployee = await _memberRepo.AddAsync(memberEntity);
-        var employeeResponse = OrganizrUserMapper.Mapper.Map<OrganizrUserResponse>(newEmployee);
-        return employeeResponse;
+        var newOrganizrUser = await _unitOfWork.OrganizrUserRepository.Add(memberEntity);
+        var memberResponse = _mapper.Map<OrganizrUserResponse>(newOrganizrUser);
+        return memberResponse;
     }
 
 }

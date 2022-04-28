@@ -2,10 +2,9 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Organizr.Application.Handlers.CommandHandlers;
-using Organizr.Core.Repositories.Base;
+using Organizr.Core.Repositories;
 using Organizr.Infrastructure.Data;
 using Organizr.Infrastructure.Repositories;
-using Organizr.Infrastructure.Repositories.Base;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -3,14 +3,14 @@ using Organizr.Application.Commands;
 using Organizr.Application.Responses;
 using Organizr.Core.Entities;
 
-namespace Organizr.Application.Mapper
+namespace Organizr.Application.Mapper;
+
+public class OrganizrUserMappingProfile : Profile
 {
-    public class OrganizrUserMappingProfile : Profile
+    public OrganizrUserMappingProfile()
     {
-        public OrganizrUserMappingProfile()
-        {
-            CreateMap<OrganizrUser, OrganizrUserResponse>().ReverseMap();
-            CreateMap<OrganizrUser, CreateOrganizrUserCommand>().ReverseMap();
-        }
+        CreateMap<OrganizrUser, OrganizrUserResponse>().ReverseMap();
+        CreateMap<OrganizrUser, CreateOrganizrUserCommand>().ReverseMap();
     }
 }
+
