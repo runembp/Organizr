@@ -2,6 +2,9 @@ using Blazored.LocalStorage;
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
+using Microsoft.AspNetCore.Components.Authorization;
+using Organizr.Application.Services;
+using Organizr.Core.ApplicationConstants;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +18,10 @@ builder.Services
     .AddBootstrapProviders()
     .AddFontAwesomeIcons();
 builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddAuthorization();
+builder.Services.AddScoped(_ => new HttpClient {BaseAddress = new Uri(ApplicationConstants.OrganizrApi)});
+builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
+builder.Services.AddScoped<AuthService>();
 
 var app = builder.Build();
 
@@ -26,7 +33,6 @@ if (!app.Environment.IsDevelopment())
 
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();

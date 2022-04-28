@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <PackageReference Include="AutoMapper" Version="11.0.1" />
+      <PackageReference Include="Blazored.LocalStorage" Version="4.2.0" />
       <PackageReference Include="MediatR.Contracts" Version="1.0.1" />
       <PackageReference Include="MediatR.CQRS" Version="1.0.1" />
       <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />

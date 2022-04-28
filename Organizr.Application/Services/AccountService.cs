@@ -104,6 +104,42 @@ public class AccountService
         return response;
     }
 
+    [AllowAnonymous]
+    public async Task<LoginUserResponse> LoginAsOrganisationAdministrator(LoginUserQuery query)
+    {
+        var user = await _userManager.FindByEmailAsync(query.Email);
+
+        var response = new LoginUserResponse();
+
+        if (user is null)
+        {
+            response.Succeeded = false;
+            return response;
+        }
+        
+        var signInResult = await _signInManager.PasswordSignInAsync(user, query.Password, false, false);
+        
+        if (!signInResult.Succeeded)
+        {
+            response.Succeeded = false;
+            return response;
+        }
+        
+        var isOrganizationAdministrator = await _userManager.IsInRoleAsync(user, ApplicationConstants.OrganizationAdministrator);
+
+        if (!isOrganizationAdministrator)
+        {
+            response.Succeeded = false;
+            return response;
+        }
+
+        response.Username = query.Email;
+        response.Token = await GenerateToken(user);
+        response.Succeeded = signInResult.Succeeded;
+
+        return response;
+    }
+
     private async Task<string> GenerateToken(OrganizrUser user)
     {
         var tokenHandler = new JwtSecurityTokenHandler();

@@ -1,0 +1,45 @@
+﻿@using Organizr.Application.Services
+@using Organizr.Application.Queries
+@inject AuthService AuthService;
+@inject NavigationManager NavigationManager
+
+<PageTitle>Organizr</PageTitle>
+
+<Field ColumnSize="ColumnSize.Is6">
+    <FieldLabel>Email address</FieldLabel>
+    <TextEdit Role="TextRole.Email" Placeholder="Indtast email" @bind-Text="_username"/>
+    <FieldLabel>Password</FieldLabel>
+    <TextEdit Role="TextRole.Password" Placeholder="Indtast password" @bind-Text="_password"/>
+</Field>
+
+<Alert Visible="ShowErrors" Color="Color.Danger">
+    <AlertMessage>Brugernavn eller password er forkert</AlertMessage>
+</Alert>
+
+<Button Color="Color.Primary" Clicked="OnLoginButton_Clicked">Login</Button>
+
+@code {
+
+    private string _username = string.Empty;
+    private string _password = string.Empty;
+    private bool ShowErrors { get; set; }
+
+    private readonly LoginUserQuery _loginUserQuery = new ();
+
+    private async Task OnLoginButton_Clicked()
+    {
+        _loginUserQuery.Email = _username;
+        _loginUserQuery.Password = _password;
+
+        var response = await AuthService.Login(_loginUserQuery);
+
+        if (response.Succeeded)
+        {
+            NavigationManager.NavigateTo("/", forceLoad:true);
+        }
+        else
+        {
+            ShowErrors = true;
+        }
+    }
+}

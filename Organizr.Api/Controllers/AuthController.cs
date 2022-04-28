@@ -15,7 +15,7 @@ namespace Organizr.Api.Controllers
         {
             _accountService = accountService;
         }
-    
+
         [HttpPost("login")]
         public async Task<ActionResult<LoginUserResponse>> Login([FromBody] LoginUserQuery query)
         {
@@ -29,13 +29,20 @@ namespace Organizr.Api.Controllers
             return Ok(result);
         }
 
-        [HttpPost("logout")]
-        public async Task<IActionResult> Logout()
+        [HttpPost("login/organisation-administrator")]
+        public async Task<ActionResult<LoginUserResponse>> LoginAsOrganisationAdministrator(
+            [FromBody] LoginUserQuery query)
         {
-            //TODO Implement this.
-            return BadRequest("Not yet implemented");
+            var result = await _accountService.LoginAsOrganisationAdministrator(query);
+
+            if (!result.Succeeded)
+            {
+                return BadRequest("Failed login");
+            }
+
+            return Ok(result);
         }
-    
+
         [HttpPost("refresh-token")]
         public async Task<IActionResult> RefreshToken()
         {
