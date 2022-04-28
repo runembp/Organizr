@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Organizr.Core.Entities;
 using System.Reflection;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Organizr.Infrastructure.Data
 {
-    public class OrganizrDbContext : DbContext
+    public class OrganizrDbContext : IdentityDbContext<OrganizrUser>
     {
-        public DbSet<OrganizrUser> Users => Set<OrganizrUser>();
-
         public OrganizrDbContext(DbContextOptions<OrganizrDbContext> options) : base(options)
         {
 
@@ -18,6 +18,5 @@ namespace Organizr.Infrastructure.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
-
     }
 }
