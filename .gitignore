@@ -10,8 +10,11 @@ Organizr.Infrastructure/obj
 Organizr.Application/bin
 Organizr.Application/obj
 
-Organizr.AppAdmin/bin
-Organizr.AppAdmin/obj
+Organizr.Admin/bin
+Organizr.Admin/obj
+
+Organizr.Application/bin
+Organizr.Application/obj
 
 Organizr.Test/bin
 Organizr.Test/obj

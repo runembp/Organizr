@@ -1,0 +1,21 @@
+﻿@page "/counter"
+
+@attribute [Authorize]
+
+<PageTitle>Counter</PageTitle>
+
+<Heading>Counter</Heading>
+
+<Paragraph role="status">Current count: @currentCount</Paragraph>
+
+<Button class="btn btn-primary" @onclick="IncrementCount">Click me</Button>
+
+@code {
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+}
