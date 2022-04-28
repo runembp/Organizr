@@ -30,8 +30,7 @@ namespace Organizr.Api.Controllers
         }
 
         [HttpPost("login/organisation-administrator")]
-        public async Task<ActionResult<LoginUserResponse>> LoginAsOrganisationAdministrator(
-            [FromBody] LoginUserQuery query)
+        public async Task<ActionResult<LoginUserResponse>> LoginAsOrganisationAdministrator([FromBody] LoginUserQuery query)
         {
             var result = await _accountService.LoginAsOrganisationAdministrator(query);
 
