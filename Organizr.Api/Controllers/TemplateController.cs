@@ -17,7 +17,7 @@ public class TemplateController : ControllerBase
     {
         _accountService = accountService;
     }
-    
+
     [HttpPost("login-with-predetermined-user-and-password-without-roles")]
     public async Task<IActionResult> LoginWithPredeterminedUserAndPassword()
     {
@@ -26,7 +26,7 @@ public class TemplateController : ControllerBase
             Email = "user@organizr.com",
             Password = "Tester1+"
         };
-        
+
         var result = await _accountService.Login(request);
 
         if (!result.Succeeded)
@@ -36,7 +36,7 @@ public class TemplateController : ControllerBase
 
         return Ok(result);
     }
-    
+
     [HttpPost("login-with-predetermined-user-and-password_with_organisationadministrator_role")]
     public async Task<IActionResult> LoginWithPredeterminedUserAndPassword_2()
     {
@@ -45,7 +45,7 @@ public class TemplateController : ControllerBase
             Email = "organizationadministrator@organizr.com",
             Password = "Orgadmin1+"
         };
-        
+
         var result = await _accountService.Login(request);
 
         if (!result.Succeeded)
@@ -55,7 +55,7 @@ public class TemplateController : ControllerBase
 
         return Ok(result);
     }
-    
+
     [HttpGet("TestAuth-OnlyForAuthorized")]
     [Authorize]
     public IActionResult Test()
@@ -76,14 +76,14 @@ public class TemplateController : ControllerBase
     {
         return Ok("If you see this, you're authorised as an Administrator!");
     }
-    
+
     [HttpGet("TestAuth-OnlyForBasic")]
     [Authorize(Roles = ApplicationConstants.Basic)]
     public IActionResult TestBasic()
     {
         return Ok("If you see this, you're authorised as a member with a Basic-Role!");
     }
-    
+
     [HttpGet("TestAuth-OnlyForAnyRolesAuthenticated")]
     [Authorize(Roles = ApplicationConstants.Basic + "," + ApplicationConstants.Administrator + "," + ApplicationConstants.OrganizationAdministrator)]
     public IActionResult TestAuthenticatedWithAnyRole()

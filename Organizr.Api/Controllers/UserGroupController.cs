@@ -7,5 +7,5 @@ namespace Organizr.Api.Controllers;
 [Route("[controller]")]
 public class UserGroupController : ControllerBase
 {
-      
+
 }

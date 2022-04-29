@@ -2,11 +2,11 @@
 
 namespace Organizr.Application.Queries;
 
-public class LoginUserQuery 
+public class LoginUserQuery
 {
     [Required]
     public string Email { get; set; }
-    
+
     [Required]
     public string Password { get; set; }
 }

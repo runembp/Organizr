@@ -1,7 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -11,6 +8,9 @@ using Organizr.Application.Responses;
 using Organizr.Core.ApplicationConstants;
 using Organizr.Core.Entities;
 using Organizr.Infrastructure.DTO;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace Organizr.Application.Services;
 
@@ -18,7 +18,7 @@ public class AccountService
 {
     private readonly UserManager<OrganizrUser> _userManager;
     private readonly SignInManager<OrganizrUser> _signInManager;
-    private readonly IConfiguration _configuration; 
+    private readonly IConfiguration _configuration;
 
     public AccountService(UserManager<OrganizrUser> userManager, SignInManager<OrganizrUser> signInManager, IConfiguration configuration)
     {
@@ -38,7 +38,7 @@ public class AccountService
             LastName = "Istrator",
             Address = ""
         };
-        
+
         var result = await _userManager.CreateAsync(user, user.Password);
 
         var roleResult = new IdentityResult();
@@ -108,7 +108,7 @@ public class AccountService
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
-        
+
         var authClaims = new List<Claim>
         {
             new (ClaimTypes.Name, user.UserName)
@@ -125,7 +125,7 @@ public class AccountService
                 SecurityAlgorithms.HmacSha256Signature)
         };
         var token = tokenHandler.CreateToken(tokenDescriptor);
-        
+
         return tokenHandler.WriteToken(token);
     }
 }

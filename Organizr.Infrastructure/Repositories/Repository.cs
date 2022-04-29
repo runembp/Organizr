@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Organizr.Core.Repositories.Base;
+using Organizr.Core.Repositories;
 using Organizr.Infrastructure.Data;
 
-namespace Organizr.Infrastructure.Repositories.Base
+namespace Organizr.Infrastructure.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
@@ -13,7 +13,7 @@ namespace Organizr.Infrastructure.Repositories.Base
             _organizrContext = organizrDbContext;
         }
 
-        public async Task<T> AddAsync(T entity)
+        public async Task<T> Add(T entity)
         {
             await _organizrContext.Set<T>().AddAsync(entity);
             await _organizrContext.SaveChangesAsync();
@@ -26,7 +26,7 @@ namespace Organizr.Infrastructure.Repositories.Base
             await _organizrContext.SaveChangesAsync();
         }
 
-        public async Task<IReadOnlyList<T>> GetAllAsync()
+        public async Task<IReadOnlyList<T>> GetAll()
         {
             return await _organizrContext.Set<T>().ToListAsync();
         }

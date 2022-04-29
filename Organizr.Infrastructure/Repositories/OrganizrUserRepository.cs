@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Organizr.Core.Entities;
-using Organizr.Core.Repositories.Base;
+using Organizr.Core.Repositories;
 using Organizr.Infrastructure.Data;
-using Organizr.Infrastructure.Repositories.Base;
 
 namespace Organizr.Infrastructure.Repositories
 {
