@@ -41,7 +41,7 @@ namespace Organizr.Test.OrganizrUsersMockData.Commands
                 PhoneNumber = "12345678",
                 Address = "Testvej 12 9430 Vadum",
                 Password = "password",
-                Gender = Gender.None
+                Gender = Gender.Undefined
             };
         }
 

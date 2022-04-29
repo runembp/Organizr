@@ -4,5 +4,5 @@ public enum Gender
 {
     Female = 0,
     Male = 1,
-    None = 3
+    Undefined = 2
 }

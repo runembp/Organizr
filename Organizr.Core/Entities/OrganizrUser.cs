@@ -9,6 +9,6 @@ namespace Organizr.Core.Entities
         public string LastName { get; set; } = string.Empty;
         public string Address { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
-        public Gender Gender { get; set; } = Gender.None;
+        public Gender Gender { get; set; } = Gender.Undefined;
     }
 }
