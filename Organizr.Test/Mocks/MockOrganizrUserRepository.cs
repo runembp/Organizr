@@ -1,7 +1,6 @@
 ﻿
 using Moq;
 using Organizr.Core.Entities;
-using Organizr.Core.Enums;
 using Organizr.Core.Repositories;
 using System.Collections.Generic;
 
@@ -20,7 +19,6 @@ namespace Organizr.Test.Mocks
                     Email = "emailtest",
                     PhoneNumber = "12345678",
                     Address = "Testvej 12 9430 Vadum",
-                    Gender = Gender.Male,
                     Password = "password"
                 },
                  new OrganizrUser
@@ -30,7 +28,6 @@ namespace Organizr.Test.Mocks
                     Email = "emailtest01",
                     PhoneNumber = "12345678",
                     Address = "Testvej 78 2450 København SV",
-                    Gender= Gender.Female,
                     Password = "mitpassword"
                 }
             };

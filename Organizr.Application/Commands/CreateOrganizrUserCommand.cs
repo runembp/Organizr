@@ -1,7 +1,5 @@
 ﻿using MediatR;
 using Organizr.Application.Responses;
-using Organizr.Infrastructure;
-using Organizr.Core.Enums;
 
 namespace Organizr.Application.Commands
 {
@@ -13,6 +11,5 @@ namespace Organizr.Application.Commands
         public string LastName { get; set; } = string.Empty;
         public string Address { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
-        public Gender Gender { get; set; }
     }
 }

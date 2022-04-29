@@ -15,7 +15,7 @@ public class UserController : ControllerBase
     {
         _accountService = accountService;
     }
-    
+
     [HttpPost("user")]
     public async Task<ActionResult<RegisterUserResponse>> RegisterUser([FromBody] CreateOrganizrUserCommand command)
     {
@@ -26,9 +26,9 @@ public class UserController : ControllerBase
             return BadRequest(result.Errors);
         }
 
-        return Created("Created?" ,result);
+        return Created("Created?", result);
     }
-    
+
     [HttpPost("organisation-administrator")]
     public async Task<ActionResult<RegisterUserResponse>> RegisterOrganizationAdministrator([FromBody] RegisterUserQuery query)
     {

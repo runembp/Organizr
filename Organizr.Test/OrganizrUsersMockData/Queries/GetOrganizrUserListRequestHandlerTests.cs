@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
 using Moq;
+using Organizr.Application.Handlers.QueryHandlers;
 using Organizr.Application.Mapper;
+using Organizr.Application.Queries;
+using Organizr.Core.Entities;
+using Organizr.Core.Repositories;
 using Organizr.Test.Mocks;
+using Shouldly;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
-using System.Threading;
-using Organizr.Application.Handlers.QueryHandlers;
-using Organizr.Application.Queries;
-using Shouldly;
-using Organizr.Core.Repositories;
-using Organizr.Core.Entities;
 
 namespace Organizr.Test.OrganizrUsersMockData.Queries
 {
@@ -39,9 +39,9 @@ namespace Organizr.Test.OrganizrUsersMockData.Queries
             result.ShouldBeOfType<List<OrganizrUser>>();
 
             result.Count.ShouldBe(2);
- 
+
         }
 
-       
+
     }
 }

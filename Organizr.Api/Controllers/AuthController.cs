@@ -15,7 +15,7 @@ namespace Organizr.Api.Controllers
         {
             _accountService = accountService;
         }
-    
+
         [HttpPost("login")]
         public async Task<ActionResult<LoginUserResponse>> Login([FromBody] LoginUserQuery query)
         {
@@ -35,7 +35,7 @@ namespace Organizr.Api.Controllers
             //TODO Implement this.
             return BadRequest("Not yet implemented");
         }
-    
+
         [HttpPost("refresh-token")]
         public async Task<IActionResult> RefreshToken()
         {

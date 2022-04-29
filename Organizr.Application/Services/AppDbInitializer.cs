@@ -21,12 +21,12 @@ public static class AppDbInitializer
         {
             await roleManager.CreateAsync(new IdentityRole(OrganizrRole.OrganizationAdministrator));
         }
-        
+
         if (!await roleManager.RoleExistsAsync(OrganizrRole.Administrator))
         {
             await roleManager.CreateAsync(new IdentityRole(OrganizrRole.Administrator));
         }
-        
+
         if (!await roleManager.RoleExistsAsync(OrganizrRole.Basic))
         {
             await roleManager.CreateAsync(new IdentityRole(OrganizrRole.Basic));
