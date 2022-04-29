@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Organizr.Application.Commands;
 using Organizr.Application.Queries;
 using Organizr.Application.Responses;
+using Organizr.Core.ApplicationConstants;
 using Organizr.Core.Entities;
 using Organizr.Infrastructure.DTO;
 using System.IdentityModel.Tokens.Jwt;
@@ -44,7 +45,7 @@ public class AccountService
 
         if (result.Succeeded)
         {
-            roleResult = await _userManager.AddToRoleAsync(user, OrganizrRole.OrganizationAdministrator);
+            roleResult = await _userManager.AddToRoleAsync(user, ApplicationConstants.OrganizationAdministrator);
         }
 
         return new RegisterUserResponse

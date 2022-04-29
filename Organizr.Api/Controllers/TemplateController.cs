@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Organizr.Application.Queries;
 using Organizr.Application.Services;
-using Organizr.Core.Entities;
+using Organizr.Core.ApplicationConstants;
 
 namespace Organizr.Api.Controllers;
 
@@ -64,28 +64,28 @@ public class TemplateController : ControllerBase
     }
 
     [HttpGet("TestAuth-OnlyForOrganizationAdministrators")]
-    [Authorize(Roles = OrganizrRole.OrganizationAdministrator)]
+    [Authorize(Roles = ApplicationConstants.OrganizationAdministrator)]
     public IActionResult TestOrgAdministrator()
     {
         return Ok("If you see this, you're authorised as an Organization administrator!");
     }
 
     [HttpGet("TestAuth-OnlyForAdministrators")]
-    [Authorize(Roles = OrganizrRole.Administrator)]
+    [Authorize(Roles = ApplicationConstants.Administrator)]
     public IActionResult TestAdministrator()
     {
         return Ok("If you see this, you're authorised as an Administrator!");
     }
 
     [HttpGet("TestAuth-OnlyForBasic")]
-    [Authorize(Roles = OrganizrRole.Basic)]
+    [Authorize(Roles = ApplicationConstants.Basic)]
     public IActionResult TestBasic()
     {
         return Ok("If you see this, you're authorised as a member with a Basic-Role!");
     }
 
     [HttpGet("TestAuth-OnlyForAnyRolesAuthenticated")]
-    [Authorize(Roles = OrganizrRole.Basic + "," + OrganizrRole.Administrator + "," + OrganizrRole.OrganizationAdministrator)]
+    [Authorize(Roles = ApplicationConstants.Basic + "," + ApplicationConstants.Administrator + "," + ApplicationConstants.OrganizationAdministrator)]
     public IActionResult TestAuthenticatedWithAnyRole()
     {
         return Ok("If you see this, you're authorised as a member with any Role!");
