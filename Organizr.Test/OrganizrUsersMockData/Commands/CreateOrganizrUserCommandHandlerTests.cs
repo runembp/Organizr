@@ -4,6 +4,7 @@ using Organizr.Application.Commands;
 using Organizr.Application.Handlers.CommandHandlers;
 using Organizr.Application.Mapper;
 using Organizr.Application.Responses;
+using Organizr.Core.Enums;
 using Organizr.Core.Repositories;
 using Organizr.Test.Mocks;
 using Shouldly;
@@ -39,7 +40,8 @@ namespace Organizr.Test.OrganizrUsersMockData.Commands
                 Email = "emailtest",
                 PhoneNumber = "12345678",
                 Address = "Testvej 12 9430 Vadum",
-                Password = "password"
+                Password = "password",
+                Gender = Gender.None
             };
         }
 
