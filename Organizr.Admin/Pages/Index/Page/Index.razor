@@ -1,0 +1,10 @@
+﻿@page "/"
+
+<AuthorizeView>
+    <Authorized>
+        <IndexAuthorized/>
+    </Authorized>
+    <NotAuthorized>
+        <IndexAnonymous/>
+    </NotAuthorized>
+</AuthorizeView>
