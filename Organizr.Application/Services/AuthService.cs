@@ -51,4 +51,12 @@ public class AuthService
 
         return loginResult;
     }
+
+    public async Task Logout()
+    {
+        await _localStorage.RemoveItemAsync("authToken");
+        await _localStorage.RemoveItemAsync("authEmail");
+        ((ApiAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsLoggedOut();
+        _httpClient.DefaultRequestHeaders.Authorization = null;
+    }
 }
