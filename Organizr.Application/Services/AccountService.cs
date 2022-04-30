@@ -33,7 +33,7 @@ public class AccountService
     {
         var user = new OrganizrUser
         {
-            UserName = query.FirstName + query.LastName,
+            UserName = query.Email,
             Email = query.Email,
             FirstName = query.FirstName,
             LastName = query.LastName,
