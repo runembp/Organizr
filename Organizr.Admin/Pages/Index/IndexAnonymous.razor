@@ -33,7 +33,7 @@
 
         var response = await AuthService.Login(_loginUserQuery);
 
-        if (response.Succeeded)
+        if (response is {Succeeded: true })
         {
             NavigationManager.NavigateTo("/", forceLoad:true);
         }

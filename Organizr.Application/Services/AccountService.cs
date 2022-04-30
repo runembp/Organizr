@@ -55,7 +55,7 @@ public class AccountService
         };
     }
 
-    [AllowAnonymous]
+    [Authorize]
     public async Task<RegisterUserResponse> RegisterUser(CreateOrganizrUserCommand command)
     {
         var user = new OrganizrUser
@@ -97,7 +97,7 @@ public class AccountService
             return response;
         }
 
-        response.Username = query.Email;
+        response.Email = query.Email;
         response.Token = await GenerateToken(user);
         response.Succeeded = signInResult.Succeeded;
 
@@ -133,7 +133,7 @@ public class AccountService
             return response;
         }
 
-        response.Username = query.Email;
+        response.Email = query.Email;
         response.Token = await GenerateToken(user);
         response.Succeeded = signInResult.Succeeded;
 

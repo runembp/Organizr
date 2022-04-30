@@ -11,15 +11,15 @@ namespace Organizr.Application.Services;
 
 public class AuthService
 {
-    private readonly HttpClient _httpClient;
     private readonly AuthenticationStateProvider _authenticationStateProvider;
+    private readonly AccountService _accountService;
     private readonly ILocalStorageService _localStorage;
 
-    public AuthService(HttpClient httpClient, AuthenticationStateProvider authenticationStateProvider, ILocalStorageService localStorage)
+    public AuthService(AuthenticationStateProvider authenticationStateProvider, ILocalStorageService localStorage, AccountService accountService)
     {
-        _httpClient = httpClient;
         _authenticationStateProvider = authenticationStateProvider;
         _localStorage = localStorage;
+        _accountService = accountService;
     }
     
     public async Task<string> GetAuthenticatedUsername()
@@ -31,32 +31,29 @@ public class AuthService
 
     public async Task<LoginUserResponse?> Login(LoginUserQuery query)
     {
-        var loginAsJson = JsonSerializer.Serialize(query);
-
-        var response = await _httpClient.PostAsync(ApplicationConstants.LoginAsOrganisationAdministratorApiEndpoint, new StringContent(loginAsJson, Encoding.UTF8, ApplicationConstants.ApplicationJson));
-        if (!response.IsSuccessStatusCode)
+        var response = await _accountService.Login(query);
+        
+        if (!response.Succeeded)
         {
-            return new LoginUserResponse {Succeeded = false};
+            return response;
         }
         
-        var loginResult = JsonSerializer.Deserialize<LoginUserResponse>(await response.Content.ReadAsStringAsync(), new JsonSerializerOptions {PropertyNameCaseInsensitive = true});
-        
-        await _localStorage.RemoveItemAsync("authToken");
-        await _localStorage.RemoveItemAsync("authEmail");
-        await _localStorage.SetItemAsync("authToken", loginResult.Token);
-        await _localStorage.SetItemAsync("authEmail", loginResult.Username);
+        //await _localStorage.RemoveItemAsync("authToken");
+        //await _localStorage.RemoveItemAsync("authEmail");
+        //await _localStorage.SetItemAsync("authToken", response.Token);
+        //await _localStorage.SetItemAsync("authEmail", response.Email);
         
         ((ApiAuthenticationStateProvider) _authenticationStateProvider).MarkUserAsAuthenticated(query.Email);
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", loginResult.Token);
+        //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", loginResult.Token);
 
-        return loginResult;
+        return response;
     }
 
     public async Task Logout()
     {
-        await _localStorage.RemoveItemAsync("authToken");
-        await _localStorage.RemoveItemAsync("authEmail");
+        //await _localStorage.RemoveItemAsync("authToken");
+        //await _localStorage.RemoveItemAsync("authEmail");
         ((ApiAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsLoggedOut();
-        _httpClient.DefaultRequestHeaders.Authorization = null;
+        //_httpClient.DefaultRequestHeaders.Authorization = null;
     }
 }
