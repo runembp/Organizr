@@ -26,7 +26,7 @@ public static class AppDbInitializer
         {
             options.UseSqlServer(
                 builder.Configuration.GetConnectionString("DefaultConnection"),
-                sqlOptions => sqlOptions.MigrationsAssembly(ApplicationConstants.OrganizrAdminProject));
+                sqlOptions => sqlOptions.MigrationsAssembly(ApplicationConstants.OrganizrInfrastructureProject));
         });
         
         // Identity

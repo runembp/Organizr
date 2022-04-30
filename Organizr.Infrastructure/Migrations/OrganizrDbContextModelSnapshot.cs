@@ -8,7 +8,7 @@ using Organizr.Infrastructure.Data;
 
 #nullable disable
 
-namespace Organizr.Admin.Migrations
+namespace Organizr.Infrastructure.Migrations
 {
     [DbContext(typeof(OrganizrDbContext))]
     partial class OrganizrDbContextModelSnapshot : ModelSnapshot

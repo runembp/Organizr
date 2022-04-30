@@ -9,11 +9,11 @@ using Organizr.Infrastructure.Data;
 
 #nullable disable
 
-namespace Organizr.Admin.Migrations
+namespace Organizr.Infrastructure.Migrations
 {
     [DbContext(typeof(OrganizrDbContext))]
-    [Migration("20220430133752_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220430145620_InitialCreateWithFurtherAdjustmentsToUser")]
+    partial class InitialCreateWithFurtherAdjustmentsToUser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -38,7 +38,7 @@
 
         var response = await AuthenticationService.LoginAsOrganizationAdministrator(_loginUserQuery);
 
-        if (response is { Succeeded: true })
+        if (response.Succeeded)
         {
             NavigationManager.NavigateTo("/", forceLoad: true);
         }

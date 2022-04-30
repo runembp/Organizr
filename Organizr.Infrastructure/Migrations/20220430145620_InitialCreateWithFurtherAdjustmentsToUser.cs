@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Organizr.Admin.Migrations
+namespace Organizr.Infrastructure.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialCreateWithFurtherAdjustmentsToUser : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

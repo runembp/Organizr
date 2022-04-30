@@ -11,6 +11,6 @@ public static class ApplicationConstants
     public const string Basic = "Basic";
     
     // Migrations Assembly
-    public const string OrganizrAdminProject = "Organizr.Admin";
+    public const string OrganizrInfrastructureProject = "Organizr.Infrastructure";
 
 }
