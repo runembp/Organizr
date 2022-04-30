@@ -63,7 +63,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
-// Seed roles to Database
+// Seed Roles and Users to Database
 AppDbInitializer.SeedRolesToDb(app).Wait();
+AppDbInitializer.SeedMandatoryUsersToDatabase(app).Wait();
 
 app.Run();

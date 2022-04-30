@@ -29,7 +29,7 @@ AppDbInitializer.SetUpDatabaseAndIdentity(builder);
 builder.Services.AddScoped(_ => new HttpClient {BaseAddress = new Uri(ApplicationConstants.OrganizrApi)});
 builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
 builder.Services.AddScoped<AccountService>();
-builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<AuthenticationService>();
 
 var app = builder.Build();
 
@@ -47,7 +47,8 @@ app.UseRouting();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
-// Seed Roles to Database
+// Seed Roles and Users to Database
 AppDbInitializer.SeedRolesToDb(app).Wait();
+AppDbInitializer.SeedMandatoryUsersToDatabase(app).Wait();
 
 app.Run();

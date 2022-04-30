@@ -1,12 +1,12 @@
 ﻿@page "/logout"
 @using Organizr.Application.Services
-@inject AuthService AuthService
+@inject AuthenticationService AuthenticationService
 @inject NavigationManager NavigationManager
 
 @code {
     protected override async Task OnInitializedAsync()
     {
-        await AuthService.Logout();
+        await AuthenticationService.Logout();
         NavigationManager.NavigateTo("/");
     }
 }

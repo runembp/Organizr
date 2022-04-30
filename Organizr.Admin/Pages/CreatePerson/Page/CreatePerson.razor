@@ -1,6 +1,11 @@
 ﻿@page "/CreatePerson"
 @using Organizr.Application.Queries
+@using Organizr.Application.Services
 @using Organizr.Core.Enums
+@using Microsoft.AspNetCore.Identity
+@inject AccountService AccountService
+
+@attribute [Authorize]
 
 <Heading Size="HeadingSize.Is2">Opret Person</Heading>
 
@@ -64,8 +69,20 @@
                 <Button Color="Color.Primary">Gem og send</Button>
             </Column>
         </Row>
+        
+        <br />
 
-
+        <Alert Visible="_userCreated" Color="Color.Success">
+            <AlertMessage>Bruger er blevet oprettet.</AlertMessage>
+        </Alert>
+        
+        <Alert Visible="_showErrors" Color="Color.Danger">
+            <AlertMessage>Bruger kunne ikke oprettes.</AlertMessage>
+            @foreach (var error in _errors)
+            {
+                <Div><AlertMessage>@error.Description</AlertMessage></Div>
+            }
+        </Alert>
 
     </Field>
 </Fields>
@@ -79,9 +96,15 @@
     private string _password = string.Empty;
     private int _gender;
     private bool _refreshConfiguration;
+    private bool _userCreated;
+    private bool _showErrors;
+    private List<IdentityError> _errors = new();
 
     private async Task OnButtonSave_Clicked()
     {
+        _userCreated = false;
+        _showErrors = false;
+        
         var query = new RegisterUserQuery
             {
                 FirstName = _firstName,
@@ -93,7 +116,17 @@
                 Password = _password,
                 ConfigRefreshPrivilege = _refreshConfiguration
             };
-    
-        // var result = 
+
+        var result = await AccountService.RegisterUser(query);
+
+        if (!result.Succeeded)
+        {
+            _showErrors = true;
+            _errors = result.Errors.ToList();
+        }
+        else
+        {
+            _userCreated = true;
+        }
     }
 }

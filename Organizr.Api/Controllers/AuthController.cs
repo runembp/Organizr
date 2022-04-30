@@ -32,7 +32,7 @@ namespace Organizr.Api.Controllers
         [HttpPost("login/organisation-administrator")]
         public async Task<ActionResult<LoginUserResponse>> LoginAsOrganisationAdministrator([FromBody] LoginUserQuery query)
         {
-            var result = await _accountService.LoginAsOrganisationAdministrator(query);
+            var result = await _accountService.LoginAsOrganizationAdministrator(query);
 
             if (!result.Succeeded)
             {

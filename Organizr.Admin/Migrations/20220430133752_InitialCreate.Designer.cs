@@ -9,11 +9,11 @@ using Organizr.Infrastructure.Data;
 
 #nullable disable
 
-namespace Organizr.Infrastructure.Migrations
+namespace Organizr.Admin.Migrations
 {
     [DbContext(typeof(OrganizrDbContext))]
-    [Migration("20220429080723_AddedGenderToUsersTable")]
-    partial class AddedGenderToUsersTable
+    [Migration("20220430133752_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -173,6 +173,9 @@ namespace Organizr.Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("ConfigRefreshPrivilege")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -204,10 +207,6 @@ namespace Organizr.Infrastructure.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");

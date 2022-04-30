@@ -11,10 +11,19 @@
       <PackageReference Include="Blazorise" Version="1.0.4" />
       <PackageReference Include="Blazorise.Bootstrap" Version="1.0.4" />
       <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.0.4" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.4">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Organizr.Application\Organizr.Application.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Pages\Group\" />
+      <Folder Include="Pages\CreateGroup\" />
     </ItemGroup>
 
 </Project>
