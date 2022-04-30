@@ -56,6 +56,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Organizr.WebClients", "Orga
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Organizr.Admin", "Organizr.Admin\Organizr.Admin.csproj", "{6FAB5B01-32F8-47C9-A893-DFE67914A58A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Organizr.Test", "Organizr.Test\Organizr.Test.csproj", "{8642C8AB-9BB0-4421-AC0F-4982CDDE373F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,6 +88,14 @@ Global
 		{6FAB5B01-32F8-47C9-A893-DFE67914A58A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FAB5B01-32F8-47C9-A893-DFE67914A58A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FAB5B01-32F8-47C9-A893-DFE67914A58A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54C9257C-0F6D-4F5D-BAA7-72C39FFD346F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54C9257C-0F6D-4F5D-BAA7-72C39FFD346F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54C9257C-0F6D-4F5D-BAA7-72C39FFD346F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54C9257C-0F6D-4F5D-BAA7-72C39FFD346F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8642C8AB-9BB0-4421-AC0F-4982CDDE373F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8642C8AB-9BB0-4421-AC0F-4982CDDE373F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8642C8AB-9BB0-4421-AC0F-4982CDDE373F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8642C8AB-9BB0-4421-AC0F-4982CDDE373F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

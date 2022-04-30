@@ -7,6 +7,15 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="Interfaces\**" />
+      <Compile Remove="Migrations\**" />
+      <EmbeddedResource Remove="Interfaces\**" />
+      <EmbeddedResource Remove="Migrations\**" />
+      <None Remove="Interfaces\**" />
+      <None Remove="Migrations\**" />
+    </ItemGroup>
+
+    <ItemGroup>
       <PackageReference Include="AutoMapper" Version="11.0.1" />
       <PackageReference Include="Blazored.LocalStorage" Version="4.2.0" />
       <PackageReference Include="MediatR.Contracts" Version="1.0.1" />
@@ -29,11 +38,6 @@
     <ItemGroup>
       <ProjectReference Include="..\Organizr.Core\Organizr.Core.csproj" />
       <ProjectReference Include="..\Organizr.Infrastructure\Organizr.Infrastructure.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Interfaces" />
-      <Folder Include="Migrations" />
     </ItemGroup>
 
 </Project>

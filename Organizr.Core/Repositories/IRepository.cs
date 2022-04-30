@@ -1,10 +1,10 @@
-﻿namespace Organizr.Core.Repositories.Base
+﻿namespace Organizr.Core.Repositories
 {
     public interface IRepository<T> where T : class
     {
-        Task<IReadOnlyList<T>> GetAllAsync();
+        Task<IReadOnlyList<T>> GetAll();
         Task<T> GetByIdAsync(int id);
-        Task<T> AddAsync(T entity);
+        Task<T> Add(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);
     }
