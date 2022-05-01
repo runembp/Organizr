@@ -1,15 +1,9 @@
-﻿@using Organizr.Application.Services
-@using Organizr.Application.Queries
-@inject AuthenticationService AuthenticationService;
-@inject NavigationManager NavigationManager
-
-
-<Div Flex="Flex.JustifyContent.Center">
+﻿<Div Flex="Flex.JustifyContent.Center">
     <PageTitle>Organizr</PageTitle>
 
     <Field ColumnSize="ColumnSize.Is4">
         <FieldLabel>Email address</FieldLabel>
-        <TextEdit Role="TextRole.Email" Placeholder="Indtast email" @bind-Text="_username" />
+        <TextEdit Role="TextRole.Email" Placeholder="Indtast email" @bind-Text="_email" />
         <FieldLabel>Password</FieldLabel>
         <TextEdit Role="TextRole.Password" Placeholder="Indtast password" @bind-Text="_password" />
     </Field>
@@ -25,19 +19,23 @@
 
 @code {
 
-    private string _username = string.Empty;
+    private string _email = string.Empty;
     private string _password = string.Empty;
     private bool ShowErrors { get; set; }
 
-    private readonly LoginUserQuery _loginUserQuery = new();
+    private readonly UserLoginRequest _userLoginRequest = new();
 
     private async Task OnLoginButton_Clicked()
     {
-        _loginUserQuery.Email = _username;
-        _loginUserQuery.Password = _password;
+        _userLoginRequest.Email = _email;
+        _userLoginRequest.Password = _password;
 
-        var response = await AuthenticationService.LoginAsOrganizationAdministrator(_loginUserQuery);
-
+        var response = await Mediator.Send(new UserLoginRequest()
+        {
+            Email = _email,
+            Password = _password
+        });
+        
         if (response.Succeeded)
         {
             NavigationManager.NavigateTo("/", forceLoad: true);

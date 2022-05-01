@@ -1,8 +1,10 @@
-﻿using Organizr.Core.Enums;
+﻿using MediatR;
+using Organizr.Application.Responses;
+using Organizr.Core.Enums;
 
 namespace Organizr.Application.Queries;
 
-public class RegisterUserQuery
+public class RegisterUserRequest : IRequest<RegisterUserResponse>
 {
     public string Email { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;

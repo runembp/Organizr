@@ -1,20 +1,76 @@
-﻿using System.Net.Http.Headers;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http.Headers;
 using System.Security.Claims;
+using System.Text;
 using System.Text.Json;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using Organizr.Application.Queries;
+using Organizr.Application.Responses;
+using Organizr.Core.Entities;
+using Organizr.Core.Repositories;
 
-namespace Organizr.Application.Services;
+namespace Organizr.Application.HelperClasses;
 
-public class ApiAuthenticationStateProvider : AuthenticationStateProvider
+public class AuthenticationHelperClass : AuthenticationStateProvider
 {
+    private readonly IUnitOfWork _unitOfWork;
     private readonly HttpClient _httpClient;
     private readonly ILocalStorageService _localStorage;
+    private readonly IConfiguration _configuration;
 
-    public ApiAuthenticationStateProvider(HttpClient httpClient, ILocalStorageService localStorage)
+    public AuthenticationHelperClass(IUnitOfWork unitOfWork, HttpClient httpClient, ILocalStorageService localStorage, IConfiguration configuration)
     {
+        _unitOfWork = unitOfWork;
         _httpClient = httpClient;
         _localStorage = localStorage;
+        _configuration = configuration;
+    }
+
+    public async Task HandleLocalStorageAuthentication(UserLoginRequest request, UserLoginResponse response)
+    {
+        await _localStorage.RemoveItemAsync("authToken");
+        await _localStorage.RemoveItemAsync("authEmail");
+        await _localStorage.SetItemAsync("authToken", response.Token);
+        await _localStorage.SetItemAsync("authEmail", response.Email);
+
+        MarkUserAsAuthenticated(request.Email);
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", response.Token);
+    }
+    
+    public async Task<string> GenerateToken(OrganizrUser user)
+    {
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
+
+        var authClaims = new List<Claim>
+        {
+            new (ClaimTypes.Name, user.UserName)
+        };
+        var userRoles = await _unitOfWork.UserManager.GetRolesAsync(user);
+        authClaims.AddRange(userRoles.Select(role => new Claim(ClaimTypes.Role, role)));
+
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(authClaims),
+            Expires = DateTime.UtcNow.AddMinutes(30),
+            SigningCredentials = new SigningCredentials(
+                new SymmetricSecurityKey(key),
+                SecurityAlgorithms.HmacSha256Signature)
+        };
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+
+        return tokenHandler.WriteToken(token);
+    }
+    
+    public async Task Logout()
+    {
+        await _localStorage.RemoveItemAsync("authToken");
+        await _localStorage.RemoveItemAsync("authEmail");
+        MarkUserAsLoggedOut();
+        _httpClient.DefaultRequestHeaders.Authorization = null;
     }
     
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
@@ -31,15 +87,15 @@ public class ApiAuthenticationStateProvider : AuthenticationStateProvider
 
         return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity(ParseClaimsFromJwt(savedToken, savedName), "jwt")));
     }
-    
-    public void MarkUserAsAuthenticated(string email)
+
+    private void MarkUserAsAuthenticated(string email)
     {
         var authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, email) }, "apiauth"));
         var authState = Task.FromResult(new AuthenticationState(authenticatedUser));
         NotifyAuthenticationStateChanged(authState);
     }
 
-    public void MarkUserAsLoggedOut()
+    private void MarkUserAsLoggedOut()
     {
         var anonymousUser = new ClaimsPrincipal(new ClaimsIdentity());
         var authState = Task.FromResult(new AuthenticationState(anonymousUser));

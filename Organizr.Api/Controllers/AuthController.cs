@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Organizr.Application.Queries;
-using Organizr.Application.Services;
-using Organizr.Infrastructure.DTO;
+using Organizr.Application.Responses;
 
 namespace Organizr.Api.Controllers
 {
@@ -9,17 +9,17 @@ namespace Organizr.Api.Controllers
     [Route("api/auth")]
     public class AuthController : ControllerBase
     {
-        private readonly AccountService _accountService;
+        private readonly IMediator _mediator;
 
-        public AuthController(AccountService accountService)
+        public AuthController(IMediator mediator)
         {
-            _accountService = accountService;
+            _mediator = mediator;
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<LoginUserResponse>> Login([FromBody] LoginUserQuery query)
+        public async Task<ActionResult<UserLoginResponse>> Login([FromBody] UserLoginRequest query)
         {
-            var result = await _accountService.Login(query);
+            var result = await _mediator.Send(query);
 
             if (!result.Succeeded)
             {
@@ -27,26 +27,6 @@ namespace Organizr.Api.Controllers
             }
 
             return Ok(result);
-        }
-
-        [HttpPost("login/organisation-administrator")]
-        public async Task<ActionResult<LoginUserResponse>> LoginAsOrganisationAdministrator([FromBody] LoginUserQuery query)
-        {
-            var result = await _accountService.LoginAsOrganizationAdministrator(query);
-
-            if (!result.Succeeded)
-            {
-                return BadRequest("Failed login");
-            }
-
-            return Ok(result);
-        }
-
-        [HttpPost("refresh-token")]
-        public async Task<IActionResult> RefreshToken()
-        {
-            //TODO Implement this.
-            return BadRequest("Not yet implemented");
         }
     }
 }
