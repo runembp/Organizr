@@ -28,6 +28,21 @@ public class AuthenticationHelperClass : AuthenticationStateProvider
         _localStorage = localStorage;
         _configuration = configuration;
     }
+    
+    public override async Task<AuthenticationState> GetAuthenticationStateAsync()
+    {
+        var savedToken = await _localStorage.GetItemAsync<string>("authToken");
+        var savedName = await _localStorage.GetItemAsync<string>("authEmail") ?? string.Empty;
+
+        if (string.IsNullOrWhiteSpace(savedToken))
+        {
+            return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
+        }
+
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", savedToken);
+
+        return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity(ParseClaimsFromJwt(savedToken, savedName), "jwt")));
+    }
 
     public async Task HandleLocalStorageAuthentication(UserLoginRequest request, UserLoginResponse response)
     {
@@ -72,23 +87,8 @@ public class AuthenticationHelperClass : AuthenticationStateProvider
         MarkUserAsLoggedOut();
         _httpClient.DefaultRequestHeaders.Authorization = null;
     }
-    
-    public override async Task<AuthenticationState> GetAuthenticationStateAsync()
-    {
-        var savedToken = await _localStorage.GetItemAsync<string>("authToken");
-        var savedName = await _localStorage.GetItemAsync<string>("authEmail") ?? string.Empty;
 
-        if (string.IsNullOrWhiteSpace(savedToken))
-        {
-            return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
-        }
-
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", savedToken);
-
-        return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity(ParseClaimsFromJwt(savedToken, savedName), "jwt")));
-    }
-
-    private void MarkUserAsAuthenticated(string email)
+    public void MarkUserAsAuthenticated(string email)
     {
         var authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, email) }, "apiauth"));
         var authState = Task.FromResult(new AuthenticationState(authenticatedUser));

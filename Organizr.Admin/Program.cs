@@ -32,6 +32,8 @@ void MandatoryServices()
         })
         .AddBootstrapProviders()
         .AddFontAwesomeIcons();
+    builder.Services.AddAuthentication();
+    builder.Services.AddAuthorization();
 }
 
 void DependencyInjections()
@@ -39,8 +41,8 @@ void DependencyInjections()
     builder.Services.AddScoped(_ => new HttpClient());
     builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
     builder.Services.AddScoped<IOrganizrUserRepository, OrganizrUserRepository>();
-    builder.Services.AddScoped<IRequestHandler<UserLoginRequest, UserLoginResponse>, UserLoginAsOrganizationAdministratorHandler>();
     builder.Services.AddScoped<AuthenticationHelperClass>();
+    builder.Services.AddScoped<IRequestHandler<UserLoginRequest, UserLoginResponse>, UserLoginAsOrganizationAdministratorHandler>();
 }
 
 void ApplicationSetup()
@@ -53,8 +55,6 @@ void ApplicationSetup()
         app.UseHsts();
     }
     
-    app.UseAuthentication();
-    app.UseAuthorization();
     app.UseHttpsRedirection();
     app.UseStaticFiles();
     app.UseRouting();
