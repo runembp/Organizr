@@ -30,11 +30,7 @@
         _userLoginRequest.Email = _email;
         _userLoginRequest.Password = _password;
 
-        var response = await Mediator.Send(new UserLoginRequest()
-        {
-            Email = _email,
-            Password = _password
-        });
+        var response = await AuthenticationHelperClass.Login(_userLoginRequest);
         
         if (response.Succeeded)
         {

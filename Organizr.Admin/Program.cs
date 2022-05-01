@@ -3,10 +3,8 @@ using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
 using MediatR;
-using Organizr.Application.Handlers.QueryHandlers;
+using Microsoft.AspNetCore.Components.Authorization;
 using Organizr.Application.HelperClasses;
-using Organizr.Application.Queries;
-using Organizr.Application.Responses;
 using Organizr.Core.Repositories;
 using Organizr.Infrastructure.Repositories;
 
@@ -39,9 +37,10 @@ void MandatoryServices()
 void DependencyInjections()
 {
     builder.Services.AddScoped(_ => new HttpClient());
+    builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationStateProviderHelperClass>();
+    builder.Services.AddScoped<AuthenticationHelperClass>();
     builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
     builder.Services.AddScoped<IOrganizrUserRepository, OrganizrUserRepository>();
-    builder.Services.AddScoped<IRequestHandler<UserLoginRequest, UserLoginResponse>, UserLoginAsOrganizationAdministratorHandler>();
 }
 
 void ApplicationSetup()
