@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using Organizr.Application.HelperClasses;
 using Organizr.Application.Queries;
 using Organizr.Application.Responses;
 using Organizr.Core.Repositories;
@@ -11,13 +10,13 @@ public class UserLoginQueryHandler : IRequestHandler<UserLoginRequest, UserLogin
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-    private readonly AuthenticationHelperClass _authenticationHelperClass;
+    // private readonly AuthenticationHelperClass _authenticationHelperClass;
+    // private readonly AuthenticationStateProvider _authenticationStateProvider;
 
-    public UserLoginQueryHandler(IUnitOfWork unitOfWork, IMapper mapper, AuthenticationHelperClass authenticationHelperClass)
+    public UserLoginQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
-        _authenticationHelperClass = authenticationHelperClass;
     }
 
     public async Task<UserLoginResponse> Handle(UserLoginRequest request, CancellationToken cancellationToken)
@@ -41,10 +40,12 @@ public class UserLoginQueryHandler : IRequestHandler<UserLoginRequest, UserLogin
         }
 
         response.Email = user.Email;
-        response.Token = await _authenticationHelperClass.GenerateToken(user);
+        // response.Token = await _authenticationHelperClass.GenerateToken(user);
         response.Succeeded = signInResult.Succeeded;
         
-        await _authenticationHelperClass.HandleLocalStorageAuthentication(request, response);
+        // await _authenticationHelperClass.HandleLocalStorageAuthentication(response);
+        
+        // ((ApiAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsAuthenticated(response.Email);
 
         return response;
     }

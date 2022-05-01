@@ -41,7 +41,6 @@ void DependencyInjections()
     builder.Services.AddScoped(_ => new HttpClient());
     builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
     builder.Services.AddScoped<IOrganizrUserRepository, OrganizrUserRepository>();
-    builder.Services.AddScoped<AuthenticationHelperClass>();
     builder.Services.AddScoped<IRequestHandler<UserLoginRequest, UserLoginResponse>, UserLoginAsOrganizationAdministratorHandler>();
 }
 
