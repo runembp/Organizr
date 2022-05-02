@@ -12,15 +12,18 @@ public class UnitOfWork : IUnitOfWork
     public UserManager<OrganizrUser> UserManager { get; }
     public SignInManager<OrganizrUser> SignInManager { get; }
 
-    public UnitOfWork(OrganizrDbContext dbContext, UserManager<OrganizrUser> userManager, SignInManager<OrganizrUser> signInManager)
+    public UnitOfWork(OrganizrDbContext dbContext, UserManager<OrganizrUser> userManager, SignInManager<OrganizrUser> signInManager, IUserGroupRepository userGroupRepository)
     {
         _dbContext = dbContext;
         UserManager = userManager;
         SignInManager = signInManager;
+        UserGroupRepository = userGroupRepository;
     }
 
     public IOrganizrUserRepository OrganizrUserRepository =>
             _userRepository ??= new OrganizrUserRepository(_dbContext);
+
+    public IUserGroupRepository UserGroupRepository { get; }
 
     public void Dispose()
     {
