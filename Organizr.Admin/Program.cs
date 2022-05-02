@@ -40,6 +40,7 @@ void MandatoryServices()
 void DependencyInjections()
 {
     builder.Services.AddScoped(_ => new HttpClient());
+    builder.Services.AddScoped<TokenHelperClass>();
     builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationStateProviderHelperClass>();
     builder.Services.AddScoped<AuthenticationHelperClass>();
     builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();

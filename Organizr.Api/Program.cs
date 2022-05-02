@@ -43,10 +43,12 @@ builder.Services.AddSwaggerGen(options =>
 ApplicationDatabaseInitializerHelperClass.SetUpDatabaseAndIdentity(builder);
 
 // Dependency injection
+builder.Services.AddScoped<TokenHelperClass>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IOrganizrUserRepository, OrganizrUserRepository>();
 builder.Services.AddScoped<IRequestHandler<GetAllOrganizrUserRequest, List<OrganizrUser>>, GetAllOrganizrUserHandler>();
 builder.Services.AddTransient<IRequestHandler<CreateOrganizrUserCommand, OrganizrUserResponse>, CreateOrganizrUserHandler>();
+builder.Services.AddTransient<IRequestHandler<UserLoginRequest, UserLoginResponse>, UserLoginHandler>();
 
 var app = builder.Build();
 

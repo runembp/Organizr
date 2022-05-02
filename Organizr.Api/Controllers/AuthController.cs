@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Organizr.Application.Requests;
 using Organizr.Application.Responses;
@@ -27,5 +28,12 @@ public class AuthController : ControllerBase
         }
 
         return Ok(result);
+    }
+
+    [HttpGet("TestAuthentication")]
+    [Authorize]
+    public Task<ActionResult> TestAuthentication()
+    {
+        return Task.FromResult<ActionResult>(Ok("You're authenticated!"));
     }
 }
