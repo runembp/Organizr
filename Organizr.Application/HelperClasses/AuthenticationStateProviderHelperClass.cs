@@ -3,24 +3,23 @@ using System.Security.Claims;
 using System.Text.Json;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
+using Organizr.Application.Responses;
 
-namespace Organizr.Application.Services;
+namespace Organizr.Application.HelperClasses;
 
-public class ApiAuthenticationStateProvider : AuthenticationStateProvider
+public class AuthenticationStateProviderHelperClass : AuthenticationStateProvider
 {
     private readonly HttpClient _httpClient;
     private readonly ILocalStorageService _localStorage;
 
-    public ApiAuthenticationStateProvider(HttpClient httpClient, ILocalStorageService localStorage)
+    public AuthenticationStateProviderHelperClass(HttpClient httpClient, ILocalStorageService localStorage)
     {
         _httpClient = httpClient;
         _localStorage = localStorage;
     }
-    
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
         var savedToken = await _localStorage.GetItemAsync<string>("authToken");
-        var savedName = await _localStorage.GetItemAsync<string>("authEmail") ?? string.Empty;
 
         if (string.IsNullOrWhiteSpace(savedToken))
         {
@@ -29,12 +28,16 @@ public class ApiAuthenticationStateProvider : AuthenticationStateProvider
 
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", savedToken);
 
-        return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity(ParseClaimsFromJwt(savedToken, savedName), "jwt")));
+        return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity(ParseClaimsFromJwt(savedToken), "jwt")));
     }
-    
-    public void MarkUserAsAuthenticated(string email)
+
+    public async Task MarkUserAsAuthenticated(UserLoginResponse response)
     {
-        var authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, email) }, "apiauth"));
+        await _localStorage.RemoveItemAsync("authToken");
+        await _localStorage.RemoveItemAsync("authEmail");
+        await _localStorage.SetItemAsync("authToken", response.Token);
+        await _localStorage.SetItemAsync("authEmail", response.Email);
+        var authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, response.Email) }, "apiauth"));
         var authState = Task.FromResult(new AuthenticationState(authenticatedUser));
         NotifyAuthenticationStateChanged(authState);
     }
@@ -45,13 +48,13 @@ public class ApiAuthenticationStateProvider : AuthenticationStateProvider
         var authState = Task.FromResult(new AuthenticationState(anonymousUser));
         NotifyAuthenticationStateChanged(authState);
     }
-    
-    private static IEnumerable<Claim> ParseClaimsFromJwt(string jwt, string name)
+
+    private static IEnumerable<Claim> ParseClaimsFromJwt(string jwt)
     {
         var claims = new List<Claim>();
-        var payload = jwt.Split(".")[1];
+        var payload = jwt.Split('.')[1];
         var jsonBytes = ParseBase64WithoutPadding(payload);
-        var keyValuePairs = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonBytes) ?? new Dictionary<string, object>();
+        var keyValuePairs = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonBytes) ?? new Dictionary<string, object>();;
 
         keyValuePairs.TryGetValue(ClaimTypes.Role, out var roles);
 
@@ -71,16 +74,14 @@ public class ApiAuthenticationStateProvider : AuthenticationStateProvider
                     claims.Add(new Claim(ClaimTypes.Role, rolesAsString));
                 }
             }
-
             keyValuePairs.Remove(ClaimTypes.Role);
         }
-        
-        claims.AddRange(keyValuePairs.Select(keyValuePair => new Claim(keyValuePair.Key, keyValuePair.Value.ToString() ?? string.Empty)));
-        claims.Add(new Claim(ClaimTypes.Name, name));
+
+        claims.AddRange(keyValuePairs.Select(kvp => new Claim(kvp.Key, kvp.Value.ToString() ?? string.Empty)));
 
         return claims;
     }
-    
+
     private static byte[] ParseBase64WithoutPadding(string base64)
     {
         switch (base64.Length % 4)

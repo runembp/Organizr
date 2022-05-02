@@ -1,14 +1,14 @@
 using MediatR;
 using Organizr.Application.Commands;
 using Organizr.Application.Handlers.CommandHandlers;
-using Organizr.Application.Requests;
 using Organizr.Application.Responses;
-using Organizr.Application.Services;
 using Organizr.Core.Entities;
 using Organizr.Core.Repositories;
 using Organizr.Infrastructure.Repositories;
 using System.Reflection;
 using Organizr.Application.Handlers.RequestHandlers;
+using Organizr.Application.HelperClasses;
+using Organizr.Application.Requests;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -42,14 +42,15 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 // Database and Identity
-AppDbInitializer.SetUpDatabaseAndIdentity(builder);
+ApplicationDatabaseInitializerHelperClass.SetUpDatabaseAndIdentity(builder);
 
 // Dependency injection
+builder.Services.AddScoped<TokenHelperClass>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IOrganizrUserRepository, OrganizrUserRepository>();
 builder.Services.AddScoped<IRequestHandler<GetAllOrganizrUserRequest, List<OrganizrUser>>, GetAllOrganizrUserHandler>();
-builder.Services.AddScoped<AccountService>();
 builder.Services.AddTransient<IRequestHandler<CreateOrganizrUserCommand, OrganizrUserResponse>, CreateOrganizrUserHandler>();
+builder.Services.AddTransient<IRequestHandler<UserLoginRequest, UserLoginResponse>, UserLoginHandler>();
 
 var app = builder.Build();
 
@@ -71,7 +72,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 // Seed Roles and Users to Database
-AppDbInitializer.SeedRolesToDb(app).Wait();
-AppDbInitializer.SeedMandatoryUsersToDatabase(app).Wait();
+ApplicationDatabaseInitializerHelperClass.SeedRolesToDb(app).Wait();
+ApplicationDatabaseInitializerHelperClass.SeedMandatoryUsersToDatabase(app).Wait();
 
 app.Run();

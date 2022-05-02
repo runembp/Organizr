@@ -1,9 +1,8 @@
 ﻿@page "/CreatePerson"
-@using Organizr.Application.Requests
-@using Organizr.Application.Services
 @using Organizr.Core.Enums
 @using Microsoft.AspNetCore.Identity
-@inject AccountService AccountService
+@using Organizr.Application.Commands
+@using Organizr.Application.Requests
 
 @attribute [Authorize]
 
@@ -105,7 +104,7 @@
         _userCreated = false;
         _showErrors = false;
         
-        var request = new RegisterUserRequest
+        var command = new CreateUserCommand
             {
                 FirstName = _firstName,
                 LastName = _lastName,
@@ -117,7 +116,7 @@
                 ConfigRefreshPrivilege = _refreshConfiguration
             };
 
-        var result = await AccountService.RegisterUser(request);
+        var result = await Mediator.Send(command);
 
         if (!result.Succeeded)
         {

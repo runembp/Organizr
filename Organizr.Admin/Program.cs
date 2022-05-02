@@ -1,54 +1,72 @@
-using System.Reflection;
 using Blazored.LocalStorage;
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
 using MediatR;
 using Microsoft.AspNetCore.Components.Authorization;
-using Organizr.Application.Services;
-using Organizr.Core.ApplicationConstants;
+using Organizr.Application.Commands;
+using Organizr.Application.Handlers.CommandHandlers;
+using Organizr.Application.HelperClasses;
+using Organizr.Application.Responses;
+using Organizr.Core.Repositories;
+using Organizr.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor();
-builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
-builder.Services.AddBlazoredLocalStorage();
-builder.Services
-    .AddBlazorise(options =>
-    {
-        options.Immediate = true;
-    })
-    .AddBootstrapProviders()
-    .AddFontAwesomeIcons();
+ApplicationDatabaseInitializerHelperClass.SetUpDatabaseAndIdentity(builder);
 
-// Database and Identity
-AppDbInitializer.SetUpDatabaseAndIdentity(builder);
+MandatoryServices();
+DependencyInjections();
+ApplicationSetup();
 
-// Dependency Injection
-builder.Services.AddScoped(_ => new HttpClient {BaseAddress = new Uri(ApplicationConstants.OrganizrApi)});
-builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
-builder.Services.AddScoped<AccountService>();
-builder.Services.AddScoped<AuthenticationService>();
-
-var app = builder.Build();
-
-if (!app.Environment.IsDevelopment())
+void MandatoryServices()
 {
-    app.UseExceptionHandler("/Error");
-    app.UseHsts();
+    builder.Services.AddRazorPages();
+    builder.Services.AddServerSideBlazor();
+    builder.Services.AddMediatR(typeof(Program));
+    builder.Services.AddAutoMapper(typeof(Program));
+    builder.Services.AddBlazoredLocalStorage();
+    builder.Services
+        .AddBlazorise(options =>
+        {
+            options.Immediate = true;
+        })
+        .AddBootstrapProviders()
+        .AddFontAwesomeIcons();
+    builder.Services.AddAuthentication();
+    builder.Services.AddAuthorization();
 }
 
-app.UseAuthentication();
-app.UseAuthorization();
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-app.UseRouting();
-app.MapBlazorHub();
-app.MapFallbackToPage("/_Host");
+void DependencyInjections()
+{
+    builder.Services.AddScoped(_ => new HttpClient());
+    builder.Services.AddScoped<TokenHelperClass>();
+    builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationStateProviderHelperClass>();
+    builder.Services.AddScoped<AuthenticationHelperClass>();
+    builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+    builder.Services.AddScoped<IOrganizrUserRepository, OrganizrUserRepository>();
+    builder.Services.AddTransient<IRequestHandler<CreateUserCommand, CreateUserResponse>, CreateUserCommandHandler>();
+}
 
-// Seed Roles and Users to Database
-AppDbInitializer.SeedRolesToDb(app).Wait();
-AppDbInitializer.SeedMandatoryUsersToDatabase(app).Wait();
+void ApplicationSetup()
+{
+    var app = builder.Build();
+    
+    if (!app.Environment.IsDevelopment())
+    {
+        app.UseExceptionHandler("/Error");
+        app.UseHsts();
+    }
+    
+    app.UseHttpsRedirection();
+    app.UseStaticFiles();
+    app.UseRouting();
+    app.MapBlazorHub();
+    app.MapFallbackToPage("/_Host");
 
-app.Run();
+    // Seed Roles and Users to Database
+    ApplicationDatabaseInitializerHelperClass.SeedRolesToDb(app).Wait();
+    ApplicationDatabaseInitializerHelperClass.SeedMandatoryUsersToDatabase(app).Wait();
+
+    app.Run();
+}

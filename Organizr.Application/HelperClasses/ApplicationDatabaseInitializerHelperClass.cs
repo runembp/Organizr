@@ -11,9 +11,9 @@ using Organizr.Core.Entities;
 using Organizr.Core.Enums;
 using Organizr.Infrastructure.Data;
 
-namespace Organizr.Application.Services;
+namespace Organizr.Application.HelperClasses;
 
-public static class AppDbInitializer
+public static class ApplicationDatabaseInitializerHelperClass
 {
     /// <summary>
     /// Sets up the Organizr Database with the recieved ConnectionString from appsettings.json and
@@ -30,14 +30,15 @@ public static class AppDbInitializer
         });
         
         // Identity
-        builder.Services.AddIdentity<OrganizrUser, IdentityRole>(options =>
+        builder.Services.AddIdentity<OrganizrUser, OrganizrRole>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
+                options.User.RequireUniqueEmail = true;
             })
-            .AddRoleManager<RoleManager<IdentityRole>>()
+            .AddRoleManager<RoleManager<OrganizrRole>>()
             .AddDefaultTokenProviders()
             .AddEntityFrameworkStores<OrganizrDbContext>()
-            .AddRoles<IdentityRole>();
+            .AddRoles<OrganizrRole>();
         builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -67,21 +68,21 @@ public static class AppDbInitializer
     {
         using var serviceScope = builder.ApplicationServices.CreateScope();
 
-        var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+        var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<OrganizrRole>>();
 
         if (!await roleManager.RoleExistsAsync(ApplicationConstants.OrganizationAdministrator))
         {
-            await roleManager.CreateAsync(new IdentityRole(ApplicationConstants.OrganizationAdministrator));
+            await roleManager.CreateAsync(new OrganizrRole(ApplicationConstants.OrganizationAdministrator));
         }
         
         if (!await roleManager.RoleExistsAsync(ApplicationConstants.Administrator))
         {
-            await roleManager.CreateAsync(new IdentityRole(ApplicationConstants.Administrator));
+            await roleManager.CreateAsync(new OrganizrRole(ApplicationConstants.Administrator));
         }
         
         if (!await roleManager.RoleExistsAsync(ApplicationConstants.Basic))
         {
-            await roleManager.CreateAsync(new IdentityRole(ApplicationConstants.Basic));
+            await roleManager.CreateAsync(new OrganizrRole(ApplicationConstants.Basic));
         }
     }
 
@@ -106,10 +107,6 @@ public static class AppDbInitializer
             {
                 UserName = organizationAdministratorEmail,
                 Email = organizationAdministratorEmail,
-                FirstName = "Organization",
-                LastName = "Administrator",
-                Gender = Gender.Undefined,
-                Address = "Vej 1, By 1",
                 ConfigRefreshPrivilege = true,
             };
 
