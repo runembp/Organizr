@@ -2,7 +2,6 @@
 @using Organizr.Core.Enums
 @using Microsoft.AspNetCore.Identity
 @using Organizr.Application.Commands
-@using Organizr.Application.Requests
 
 @attribute [Authorize]
 
@@ -21,9 +20,9 @@
             <Column ColumnSize="ColumnSize.Is6">
                 <FieldLabel>Køn</FieldLabel>
                 <Select TValue="int" @bind-SelectedValue="@_gender">
-                    <SelectItem Value="@Gender.Female">Kvinde</SelectItem>
-                    <SelectItem Value="@Gender.Male">Mand</SelectItem>
-                    <SelectItem Value="@Gender.Undefined">Udefineret</SelectItem>
+                    <SelectItem Value="@((int)Gender.Female)">Kvinde</SelectItem>
+                    <SelectItem Value="@((int)Gender.Male)">Mand</SelectItem>
+                    <SelectItem Value="@((int)Gender.Undefined)">Udefineret</SelectItem>
                 </Select>
             </Column>
             <Column ColumnSize="ColumnSize.Is6">
