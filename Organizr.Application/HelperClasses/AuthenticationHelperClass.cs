@@ -1,14 +1,8 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Net.Http.Headers;
-using System.Security.Claims;
-using System.Text;
+﻿using System.Net.Http.Headers;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 using Organizr.Application.Requests;
 using Organizr.Application.Responses;
-using Organizr.Core.Entities;
 using Organizr.Core.Repositories;
 
 namespace Organizr.Application.HelperClasses;
@@ -19,15 +13,15 @@ public class AuthenticationHelperClass
     private readonly AuthenticationStateProvider _authenticationStateProvider;
     private readonly ILocalStorageService _localStorage;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IConfiguration _config;
+    private readonly TokenHelperClass _tokenHelperClass;
 
-    public AuthenticationHelperClass(HttpClient httpClient, AuthenticationStateProvider authenticationStateProvider, ILocalStorageService localStorage, IUnitOfWork unitOfWork, IConfiguration config)
+    public AuthenticationHelperClass(HttpClient httpClient, AuthenticationStateProvider authenticationStateProvider, ILocalStorageService localStorage, IUnitOfWork unitOfWork, TokenHelperClass tokenHelperClass)
     {
         _httpClient = httpClient;
         _authenticationStateProvider = authenticationStateProvider;
         _localStorage = localStorage;
         _unitOfWork = unitOfWork;
-        _config = config;
+        _tokenHelperClass = tokenHelperClass;
     }
 
     public async Task<UserLoginResponse> Login(UserLoginRequest request)
@@ -43,7 +37,7 @@ public class AuthenticationHelperClass
 
         response.Succeeded = signInResult.Succeeded;
         response.Email = user.Email;
-        response.Token = GenerateToken(user);
+        response.Token = _tokenHelperClass.GenerateToken(user);
 
         await ((AuthenticationStateProviderHelperClass)_authenticationStateProvider).MarkUserAsAuthenticated(response);
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", response.Token);
@@ -57,22 +51,5 @@ public class AuthenticationHelperClass
         await _localStorage.RemoveItemAsync("authEmail");
         ((AuthenticationStateProviderHelperClass)_authenticationStateProvider).MarkUserAsLoggedOut();
         _httpClient.DefaultRequestHeaders.Authorization = null;
-    }
-    
-    private string GenerateToken(OrganizrUser user)
-    {
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(_config["Jwt:Key"]);
-        var tokenDescriptor = new SecurityTokenDescriptor
-        {
-            Subject = new ClaimsIdentity(new Claim[]
-            {
-                new (ClaimTypes.Name, user.Email)
-            }),
-            Expires = DateTime.UtcNow.AddMonths(1),
-            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-        };
-        var token = tokenHandler.CreateToken(tokenDescriptor);
-        return tokenHandler.WriteToken(token);
     }
 }
