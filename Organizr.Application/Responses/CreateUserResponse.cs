@@ -2,8 +2,8 @@
 
 namespace Organizr.Application.Responses;
 
-public class RegisterUserResponse
+public class CreateUserResponse
 {
-    public bool Succeeded { get; set; } = false;
+    public bool Succeeded { get; set; }
     public List<IdentityError> Errors { get; set; } = new();
 }
