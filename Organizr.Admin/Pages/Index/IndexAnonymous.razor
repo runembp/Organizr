@@ -1,5 +1,5 @@
 ﻿@using Organizr.Application.Services
-@using Organizr.Application.Queries
+@using Organizr.Application.Requests
 @inject AuthenticationService AuthenticationService;
 @inject NavigationManager NavigationManager
 
@@ -29,14 +29,14 @@
     private string _password = string.Empty;
     private bool ShowErrors { get; set; }
 
-    private readonly LoginUserQuery _loginUserQuery = new();
+    private readonly LoginUserRequest _loginUserRequest = new();
 
     private async Task OnLoginButton_Clicked()
     {
-        _loginUserQuery.Email = _username;
-        _loginUserQuery.Password = _password;
+        _loginUserRequest.Email = _username;
+        _loginUserRequest.Password = _password;
 
-        var response = await AuthenticationService.LoginAsOrganizationAdministrator(_loginUserQuery);
+        var response = await AuthenticationService.LoginAsOrganizationAdministrator(_loginUserRequest);
 
         if (response.Succeeded)
         {

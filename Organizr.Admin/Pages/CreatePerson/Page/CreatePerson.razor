@@ -1,5 +1,5 @@
 ﻿@page "/CreatePerson"
-@using Organizr.Application.Queries
+@using Organizr.Application.Requests
 @using Organizr.Application.Services
 @using Organizr.Core.Enums
 @using Microsoft.AspNetCore.Identity
@@ -105,7 +105,7 @@
         _userCreated = false;
         _showErrors = false;
         
-        var query = new RegisterUserQuery
+        var request = new RegisterUserRequest
             {
                 FirstName = _firstName,
                 LastName = _lastName,
@@ -117,7 +117,7 @@
                 ConfigRefreshPrivilege = _refreshConfiguration
             };
 
-        var result = await AccountService.RegisterUser(query);
+        var result = await AccountService.RegisterUser(request);
 
         if (!result.Succeeded)
         {

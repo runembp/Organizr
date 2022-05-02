@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Organizr.Application.Queries;
+using Organizr.Application.Requests;
 using Organizr.Application.Services;
 using Organizr.Infrastructure.DTO;
 
@@ -17,9 +17,9 @@ namespace Organizr.Api.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<LoginUserResponse>> Login([FromBody] LoginUserQuery query)
+        public async Task<ActionResult<LoginUserResponse>> Login([FromBody] LoginUserRequest request)
         {
-            var result = await _accountService.Login(query);
+            var result = await _accountService.Login(request);
 
             if (!result.Succeeded)
             {
@@ -30,9 +30,9 @@ namespace Organizr.Api.Controllers
         }
 
         [HttpPost("login/organisation-administrator")]
-        public async Task<ActionResult<LoginUserResponse>> LoginAsOrganisationAdministrator([FromBody] LoginUserQuery query)
+        public async Task<ActionResult<LoginUserResponse>> LoginAsOrganisationAdministrator([FromBody] LoginUserRequest request)
         {
-            var result = await _accountService.LoginAsOrganizationAdministrator(query);
+            var result = await _accountService.LoginAsOrganizationAdministrator(request);
 
             if (!result.Succeeded)
             {

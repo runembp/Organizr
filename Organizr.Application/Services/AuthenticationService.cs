@@ -3,7 +3,7 @@ using System.Text;
 using System.Text.Json;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
-using Organizr.Application.Queries;
+using Organizr.Application.Requests;
 using Organizr.Core.ApplicationConstants;
 using Organizr.Infrastructure.DTO;
 
@@ -31,9 +31,9 @@ public class AuthenticationService
         return authenticateState.User.Identity?.Name ?? string.Empty;
     }
 
-    public async Task<LoginUserResponse?> Login(LoginUserQuery query)
+    public async Task<LoginUserResponse?> Login(LoginUserRequest request)
     {
-        var response = await _accountService.Login(query);
+        var response = await _accountService.Login(request);
         
         if (!response.Succeeded)
         {
@@ -45,15 +45,15 @@ public class AuthenticationService
         await _localStorage.SetItemAsync("authToken", response.Token);
         await _localStorage.SetItemAsync("authEmail", response.Email);
         
-        ((ApiAuthenticationStateProvider) _authenticationStateProvider).MarkUserAsAuthenticated(query.Email);
+        ((ApiAuthenticationStateProvider) _authenticationStateProvider).MarkUserAsAuthenticated(request.Email);
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", response.Token);
 
         return response;
     }
 
-    public async Task<LoginUserResponse> LoginAsOrganizationAdministrator(LoginUserQuery query)
+    public async Task<LoginUserResponse> LoginAsOrganizationAdministrator(LoginUserRequest request)
     {
-        var response = await _accountService.LoginAsOrganizationAdministrator(query);
+        var response = await _accountService.LoginAsOrganizationAdministrator(request);
 
         if (!response.Succeeded)
         {
@@ -65,7 +65,7 @@ public class AuthenticationService
         await _localStorage.SetItemAsync("authToken", response.Token);
         await _localStorage.SetItemAsync("authEmail", response.Email);
 
-        ((ApiAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsAuthenticated(query.Email);
+        ((ApiAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsAuthenticated(request.Email);
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", response.Token);
 
         return response;

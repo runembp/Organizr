@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using Moq;
-using Organizr.Application.Handlers.QueryHandlers;
 using Organizr.Application.Mapper;
-using Organizr.Application.Queries;
+using Organizr.Application.Requests;
 using Organizr.Core.Entities;
 using Organizr.Core.Repositories;
 using Organizr.Test.Mocks;
@@ -10,6 +9,7 @@ using Shouldly;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Organizr.Application.Handlers.RequestHandlers;
 using Xunit;
 
 namespace Organizr.Test.OrganizrUsersMockData.Queries
@@ -34,7 +34,7 @@ namespace Organizr.Test.OrganizrUsersMockData.Queries
         public async Task GetOrganizrUserListTest()
         {
             var handler = new GetAllOrganizrUserHandler(_mockRepo.Object, _mapper);
-            var result = await handler.Handle(new GetAllOrganizrUserQuery(), CancellationToken.None);
+            var result = await handler.Handle(new GetAllOrganizrUserRequest(), CancellationToken.None);
 
             result.ShouldBeOfType<List<OrganizrUser>>();
 

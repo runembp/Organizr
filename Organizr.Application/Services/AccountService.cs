@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Organizr.Application.Commands;
-using Organizr.Application.Queries;
+using Organizr.Application.Requests;
 using Organizr.Application.Responses;
 using Organizr.Core.ApplicationConstants;
 using Organizr.Core.Entities;
@@ -29,18 +29,18 @@ public class AccountService
         _configuration = configuration;
     }
 
-    public async Task<RegisterUserResponse> RegisterOrganizationAdministrator(RegisterUserQuery query)
+    public async Task<RegisterUserResponse> RegisterOrganizationAdministrator(RegisterUserRequest request)
     {
         var user = new OrganizrUser
         {
-            UserName = query.Email,
-            Email = query.Email,
-            FirstName = query.FirstName,
-            LastName = query.LastName,
-            Address = query.Address,
+            UserName = request.Email,
+            Email = request.Email,
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            Address = request.Address,
         };
 
-        var result = await _userManager.CreateAsync(user, query.Password);
+        var result = await _userManager.CreateAsync(user, request.Password);
 
         var roleResult = new IdentityResult();
 
@@ -57,11 +57,11 @@ public class AccountService
     }
 
     [Authorize]
-    public async Task<RegisterUserResponse> RegisterUser(RegisterUserQuery query)
+    public async Task<RegisterUserResponse> RegisterUser(RegisterUserRequest request)
     {
         var response = new RegisterUserResponse();
 
-        if(!new EmailAddressAttribute().IsValid(query.Email))
+        if(!new EmailAddressAttribute().IsValid(request.Email))
         {
             response.Errors.Add(new IdentityError { Description = "Email er ikke i et godkendt format" });
             return response;
@@ -69,17 +69,17 @@ public class AccountService
 
         var user = new OrganizrUser
         {
-            UserName = query.Email,
-            Email = query.Email,
-            FirstName = query.FirstName,
-            LastName = query.LastName,
-            Address = query.LastName,
-            Gender = query.Gender,
-            PhoneNumber = query.PhoneNumber,
-            ConfigRefreshPrivilege = query.ConfigRefreshPrivilege
+            UserName = request.Email,
+            Email = request.Email,
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            Address = request.LastName,
+            Gender = request.Gender,
+            PhoneNumber = request.PhoneNumber,
+            ConfigRefreshPrivilege = request.ConfigRefreshPrivilege
         };
 
-        var result = await _userManager.CreateAsync(user, query.Password);
+        var result = await _userManager.CreateAsync(user, request.Password);
 
 
         return new RegisterUserResponse
@@ -90,9 +90,9 @@ public class AccountService
     }
 
     [AllowAnonymous]
-    public async Task<LoginUserResponse> Login(LoginUserQuery query)
+    public async Task<LoginUserResponse> Login(LoginUserRequest request)
     {
-        var user = await _userManager.FindByEmailAsync(query.Email);
+        var user = await _userManager.FindByEmailAsync(request.Email);
 
         var response = new LoginUserResponse();
 
@@ -102,7 +102,7 @@ public class AccountService
             return response;
         }
 
-        var signInResult = await _signInManager.CheckPasswordSignInAsync(user, query.Password, false);
+        var signInResult = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
 
         if (!signInResult.Succeeded)
         {
@@ -118,9 +118,9 @@ public class AccountService
     }
 
     [AllowAnonymous]
-    public async Task<LoginUserResponse> LoginAsOrganizationAdministrator(LoginUserQuery query)
+    public async Task<LoginUserResponse> LoginAsOrganizationAdministrator(LoginUserRequest request)
     {
-        var user = await _userManager.FindByEmailAsync(query.Email);
+        var user = await _userManager.FindByEmailAsync(request.Email);
 
         var response = new LoginUserResponse();
 
@@ -130,7 +130,7 @@ public class AccountService
             return response;
         }
 
-        var signInResult = await _signInManager.CheckPasswordSignInAsync(user, query.Password, false);
+        var signInResult = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
 
         if (!signInResult.Succeeded)
         {
@@ -146,7 +146,7 @@ public class AccountService
             return response;
         }
 
-        response.Email = query.Email;
+        response.Email = request.Email;
         response.Token = await GenerateToken(user);
         response.Succeeded = signInResult.Succeeded;
 

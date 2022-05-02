@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Organizr.Application.Commands;
-using Organizr.Application.Queries;
+using Organizr.Application.Requests;
 using Organizr.Application.Responses;
 using Organizr.Core.Entities;
 
@@ -25,7 +25,7 @@ public class OrganizrUserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<List<OrganizrUser>> Get()
     {
-        return await _mediator.Send(new GetAllOrganizrUserQuery());
+        return await _mediator.Send(new GetAllOrganizrUserRequest());
     }
 
     [HttpPost("organizr-user")]

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Organizr.Application.Queries;
+using Organizr.Application.Requests;
 using Organizr.Application.Services;
 using Organizr.Core.ApplicationConstants;
 
@@ -21,7 +21,7 @@ public class TemplateController : ControllerBase
     [HttpPost("login-with-predetermined-user-and-password-without-roles")]
     public async Task<IActionResult> LoginWithPredeterminedUserAndPassword()
     {
-        var request = new LoginUserQuery()
+        var request = new LoginUserRequest()
         {
             Email = "user@organizr.com",
             Password = "Tester1+"
@@ -40,7 +40,7 @@ public class TemplateController : ControllerBase
     [HttpPost("login-with-predetermined-user-and-password_with_organisationadministrator_role")]
     public async Task<IActionResult> LoginWithPredeterminedUserAndPassword_2()
     {
-        var request = new LoginUserQuery()
+        var request = new LoginUserRequest()
         {
             Email = "organizationadministrator@organizr.com",
             Password = "Orgadmin1+"
