@@ -44,7 +44,7 @@ void DependencyInjections()
     builder.Services.AddScoped<AuthenticationHelperClass>();
     builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
     builder.Services.AddScoped<IOrganizrUserRepository, OrganizrUserRepository>();
-    builder.Services.AddTransient<IRequestHandler<RegisterUserRequest, RegisterUserResponse>, RegisterOrganizationAdministratorCommandHandler>();
+    builder.Services.AddTransient<IRequestHandler<RegisterUserCommand, RegisterUserResponse>, RegisterOrganizationAdministratorCommandHandler>();
 }
 
 void ApplicationSetup()

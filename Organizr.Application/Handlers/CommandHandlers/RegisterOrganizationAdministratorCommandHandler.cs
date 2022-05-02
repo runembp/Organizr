@@ -9,7 +9,7 @@ using Organizr.Core.Repositories;
 
 namespace Organizr.Application.Handlers.CommandHandlers;
 
-public class RegisterOrganizationAdministratorCommandHandler : IRequestHandler<RegisterUserRequest, RegisterUserResponse>
+public class RegisterOrganizationAdministratorCommandHandler : IRequestHandler<RegisterUserCommand, RegisterUserResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -20,18 +20,18 @@ public class RegisterOrganizationAdministratorCommandHandler : IRequestHandler<R
         _mapper = mapper;
     }
     
-    public async Task<RegisterUserResponse> Handle(RegisterUserRequest request, CancellationToken cancellationToken)
+    public async Task<RegisterUserResponse> Handle(RegisterUserCommand command, CancellationToken cancellationToken)
     {
         var user = new OrganizrUser
         {
-            UserName = request.Email,
-            Email = request.Email,
-            FirstName = request.FirstName,
-            LastName = request.LastName,
-            Address = request.Address,
+            UserName = command.Email,
+            Email = command.Email,
+            FirstName = command.FirstName,
+            LastName = command.LastName,
+            Address = command.Address,
         };
 
-        var result = await _unitOfWork.UserManager.CreateAsync(user, request.Password);
+        var result = await _unitOfWork.UserManager.CreateAsync(user, command.Password);
 
         var roleResult = new IdentityResult();
 

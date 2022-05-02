@@ -9,7 +9,7 @@ using Organizr.Core.Repositories;
 
 namespace Organizr.Application.Handlers.CommandHandlers;
 
-public class RegisterUserCommandHandler : IRequestHandler<RegisterUserRequest, RegisterUserResponse>
+public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, RegisterUserResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -20,11 +20,11 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserRequest, R
         _mapper = mapper;
     }
     
-    public async Task<RegisterUserResponse> Handle(RegisterUserRequest request, CancellationToken cancellationToken)
+    public async Task<RegisterUserResponse> Handle(RegisterUserCommand command, CancellationToken cancellationToken)
     {
         var response = new RegisterUserResponse();
 
-        if(!new EmailAddressAttribute().IsValid(request.Email))
+        if(!new EmailAddressAttribute().IsValid(command.Email))
         {
             response.Errors.Add(new IdentityError { Description = "Email er ikke i et godkendt format" });
             return response;
@@ -32,17 +32,17 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserRequest, R
 
         var user = new OrganizrUser
         {
-            UserName = request.Email,
-            Email = request.Email,
-            FirstName = request.FirstName,
-            LastName = request.LastName,
-            Address = request.LastName,
-            Gender = request.Gender,
-            PhoneNumber = request.PhoneNumber,
-            ConfigRefreshPrivilege = request.ConfigRefreshPrivilege
+            UserName = command.Email,
+            Email = command.Email,
+            FirstName = command.FirstName,
+            LastName = command.LastName,
+            Address = command.LastName,
+            Gender = command.Gender,
+            PhoneNumber = command.PhoneNumber,
+            ConfigRefreshPrivilege = command.ConfigRefreshPrivilege
         };
 
-        var result = await _unitOfWork.UserManager.CreateAsync(user, request.Password);
+        var result = await _unitOfWork.UserManager.CreateAsync(user, command.Password);
 
         return new RegisterUserResponse
         {

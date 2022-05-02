@@ -103,7 +103,7 @@
         _userCreated = false;
         _showErrors = false;
         
-        var request = new RegisterUserRequest
+        var command = new RegisterUserCommand
             {
                 FirstName = _firstName,
                 LastName = _lastName,
@@ -115,7 +115,7 @@
                 ConfigRefreshPrivilege = _refreshConfiguration
             };
 
-        var result = await Mediator.Send(request);
+        var result = await Mediator.Send(command);
 
         if (!result.Succeeded)
         {
