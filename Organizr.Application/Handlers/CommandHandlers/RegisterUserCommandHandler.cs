@@ -2,7 +2,7 @@
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Organizr.Application.Queries;
+using Organizr.Application.Requests;
 using Organizr.Application.Responses;
 using Organizr.Core.Entities;
 using Organizr.Core.Repositories;

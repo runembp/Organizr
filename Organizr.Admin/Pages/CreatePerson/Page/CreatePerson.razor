@@ -1,6 +1,7 @@
 ﻿@page "/CreatePerson"
 @using Organizr.Core.Enums
 @using Microsoft.AspNetCore.Identity
+@using Organizr.Application.Requests
 
 @attribute [Authorize]
 
@@ -102,7 +103,7 @@
         _userCreated = false;
         _showErrors = false;
         
-        var query = new RegisterUserRequest
+        var request = new RegisterUserRequest
             {
                 FirstName = _firstName,
                 LastName = _lastName,
@@ -114,7 +115,7 @@
                 ConfigRefreshPrivilege = _refreshConfiguration
             };
 
-        var result = await Mediator.Send(query);
+        var result = await Mediator.Send(request);
 
         if (!result.Succeeded)
         {

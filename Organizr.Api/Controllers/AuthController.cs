@@ -1,6 +1,6 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Organizr.Application.Queries;
+using Organizr.Application.Requests;
 using Organizr.Application.Responses;
 
 namespace Organizr.Api.Controllers;

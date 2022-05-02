@@ -2,7 +2,7 @@
 using MediatR;
 using Organizr.Application.Responses;
 
-namespace Organizr.Application.Queries;
+namespace Organizr.Application.Requests;
 
 public class UserLoginRequest : IRequest<UserLoginResponse>
 {

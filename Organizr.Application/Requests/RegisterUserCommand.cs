@@ -2,7 +2,7 @@
 using Organizr.Application.Responses;
 using Organizr.Core.Enums;
 
-namespace Organizr.Application.Queries;
+namespace Organizr.Application.Requests;
 
 public class RegisterUserRequest : IRequest<RegisterUserResponse>
 {

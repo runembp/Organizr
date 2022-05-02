@@ -6,7 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Components.Authorization;
 using Organizr.Application.Handlers.CommandHandlers;
 using Organizr.Application.HelperClasses;
-using Organizr.Application.Queries;
+using Organizr.Application.Requests;
 using Organizr.Application.Responses;
 using Organizr.Core.Repositories;
 using Organizr.Infrastructure.Repositories;

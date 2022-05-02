@@ -6,7 +6,7 @@ using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Organizr.Application.Queries;
+using Organizr.Application.Requests;
 using Organizr.Application.Responses;
 using Organizr.Core.Entities;
 using Organizr.Core.Repositories;
