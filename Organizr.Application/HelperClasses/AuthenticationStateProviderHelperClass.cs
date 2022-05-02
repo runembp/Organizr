@@ -33,6 +33,8 @@ public class AuthenticationStateProviderHelperClass : AuthenticationStateProvide
 
     public async Task MarkUserAsAuthenticated(UserLoginResponse response)
     {
+        await _localStorage.RemoveItemAsync("authToken");
+        await _localStorage.RemoveItemAsync("authEmail");
         await _localStorage.SetItemAsync("authToken", response.Token);
         await _localStorage.SetItemAsync("authEmail", response.Email);
         var authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, response.Email) }, "apiauth"));
