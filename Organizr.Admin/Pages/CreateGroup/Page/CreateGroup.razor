@@ -1,0 +1,53 @@
+﻿@page "/CreateGroup"
+@using Blazorise.Extensions
+@using Organizr.Application.Commands
+<h3>Opret gruppe</h3>
+
+<Fields>
+    <Field ColumnSize="ColumnSize.Is4">
+        <FieldLabel>Navn:</FieldLabel>
+        <TextEdit @bind-Text="GroupName" Placeholder="Gruppenavn"></TextEdit>
+    </Field>
+
+    <Field>
+        <FieldLabel>Åben for alle</FieldLabel>
+        <Check TValue="bool" @bind-Checked="GroupOpenForAll">Aktiv</Check>
+    </Field>
+</Fields>
+
+<Alert Visible="InvalidName">
+    <AlertMessage TextColor="TextColor.Danger">Indtast et gruppenavn</AlertMessage>
+</Alert>
+
+<Button Clicked="OnSaveButton_Clicked" Color="Color.Primary">Gem</Button>
+
+<Alert Visible="GroupCreated">
+    <AlertMessage TextColor="TextColor.Success">@GroupName er blevet oprettet</AlertMessage>
+</Alert>
+
+@code {
+    private string GroupName { get; set; } = string.Empty;
+    private bool GroupOpenForAll { get; set; }
+    private bool InvalidName { get; set; }
+    private bool GroupCreated { get; set; }
+
+    private async Task OnSaveButton_Clicked()
+    {
+        InvalidName = false;
+        GroupCreated = false;
+        if (GroupName.IsNullOrEmpty())
+        {
+            InvalidName = true;
+            return;
+        }
+
+        var response = await Mediator.Send(new CreateUserGroupCommand
+        {
+            GroupName = GroupName,
+            GroupOpenForAll = GroupOpenForAll
+        });
+
+        GroupCreated = response.Succeeded;
+        GroupName = response.GroupName;
+    }
+}
