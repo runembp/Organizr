@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Organizr.Core.ApplicationConstants;
 using Organizr.Core.Entities;
+using Organizr.Core.Enums;
 using Organizr.Infrastructure.Data;
 
 namespace Organizr.Application.Services;
@@ -23,7 +24,9 @@ public static class AppDbInitializer
     {
         builder.Services.AddDbContext<OrganizrDbContext>(options =>
         {
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            options.UseSqlServer(
+                builder.Configuration.GetConnectionString("DefaultConnection"),
+                sqlOptions => sqlOptions.MigrationsAssembly(ApplicationConstants.OrganizrInfrastructureProject));
         });
         
         // Identity
@@ -79,6 +82,40 @@ public static class AppDbInitializer
         if (!await roleManager.RoleExistsAsync(ApplicationConstants.Basic))
         {
             await roleManager.CreateAsync(new IdentityRole(ApplicationConstants.Basic));
+        }
+    }
+
+    /// <summary>
+    /// Makes sure we always have an OrganizationAdministrator in the Database
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
+    //TODO Remove before production
+    public static async Task SeedMandatoryUsersToDatabase(IApplicationBuilder builder)
+    {
+        using var serviceScope = builder.ApplicationServices.CreateScope();
+
+        const string organizationAdministratorEmail = "organizationadministrator@organizr.com";
+        var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<OrganizrUser>>();
+
+        var organizationAdminUserFromDatabase = await userManager.FindByEmailAsync(organizationAdministratorEmail);
+
+        if (organizationAdminUserFromDatabase is null)
+        {
+            var organizationAdministrator = new OrganizrUser
+            {
+                UserName = organizationAdministratorEmail,
+                Email = organizationAdministratorEmail,
+                FirstName = "Organization",
+                LastName = "Administrator",
+                Gender = Gender.Undefined,
+                Address = "Vej 1, By 1",
+                ConfigRefreshPrivilege = true,
+            };
+
+            const string organizationAdminPassword = "Orgadmin1+";
+            await userManager.CreateAsync(organizationAdministrator, organizationAdminPassword);
+            await userManager.AddToRoleAsync(organizationAdministrator, ApplicationConstants.OrganizationAdministrator);
         }
     }
 }

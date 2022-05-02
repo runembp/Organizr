@@ -1,14 +1,14 @@
 using MediatR;
 using Organizr.Application.Commands;
 using Organizr.Application.Handlers.CommandHandlers;
-using Organizr.Application.Handlers.QueryHandlers;
-using Organizr.Application.Queries;
+using Organizr.Application.Requests;
 using Organizr.Application.Responses;
 using Organizr.Application.Services;
 using Organizr.Core.Entities;
 using Organizr.Core.Repositories;
 using Organizr.Infrastructure.Repositories;
 using System.Reflection;
+using Organizr.Application.Handlers.RequestHandlers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,7 +45,7 @@ AppDbInitializer.SetUpDatabaseAndIdentity(builder);
 // Dependency injection
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IOrganizrUserRepository, OrganizrUserRepository>();
-builder.Services.AddScoped<IRequestHandler<GetAllOrganizrUserQuery, List<OrganizrUser>>, GetAllOrganizrUserHandler>();
+builder.Services.AddScoped<IRequestHandler<GetAllOrganizrUserRequest, List<OrganizrUser>>, GetAllOrganizrUserHandler>();
 builder.Services.AddScoped<AccountService>();
 builder.Services.AddTransient<IRequestHandler<CreateOrganizrUserCommand, OrganizrUserResponse>, CreateOrganizrUserHandler>();
 
@@ -63,7 +63,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
-// Seed roles to Database
+// Seed Roles and Users to Database
 AppDbInitializer.SeedRolesToDb(app).Wait();
+AppDbInitializer.SeedMandatoryUsersToDatabase(app).Wait();
 
 app.Run();

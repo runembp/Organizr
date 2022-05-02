@@ -1,0 +1,132 @@
+﻿@page "/CreatePerson"
+@using Organizr.Application.Requests
+@using Organizr.Application.Services
+@using Organizr.Core.Enums
+@using Microsoft.AspNetCore.Identity
+@inject AccountService AccountService
+
+@attribute [Authorize]
+
+<Heading Size="HeadingSize.Is2">Opret Person</Heading>
+
+<Fields ColumnSize="ColumnSize.Is6">
+    <Field>
+        <FieldLabel>Fornavn</FieldLabel>
+        <TextEdit @bind-Text="_firstName" Placeholder="Indtast fornavn" />
+
+        <FieldLabel>Efternavn</FieldLabel>
+        <TextEdit @bind-Text="_lastName" Placeholder="Indtast efternavn" />
+
+        <Row>
+
+            <Column ColumnSize="ColumnSize.Is6">
+                <FieldLabel>Køn</FieldLabel>
+                <Select TValue="int" @bind-SelectedValue="@_gender">
+                    <SelectItem Value="@Gender.Female">Kvinde</SelectItem>
+                    <SelectItem Value="@Gender.Male">Mand</SelectItem>
+                    <SelectItem Value="@Gender.Undefined">Udefineret</SelectItem>
+                </Select>
+            </Column>
+            <Column ColumnSize="ColumnSize.Is6">
+                <FieldLabel>Telefon</FieldLabel>
+                <TextEdit @bind-Text="_phoneNumber" Placeholder="Indtast telefon" />
+            </Column>
+        </Row>
+
+        <FieldLabel>Adresse</FieldLabel>
+        <TextEdit @bind-Text="_address" Placeholder="Indtast adresse" />
+
+        <FieldLabel>Email</FieldLabel>
+        <TextEdit @bind-Text="_email" Role="TextRole.Email" Placeholder="Indtast email" />
+
+        <FieldLabel>Aktiver mulighed for medlem at genindlæse konfiguration på Medlems-applikationen</FieldLabel>
+        <Field>
+            <RadioGroup TValue="bool" @bind-CheckedValue="@_refreshConfiguration">
+                <Radio Value="@(false)">Nej</Radio>
+                <Radio Value="@(true)">Ja</Radio>
+            </RadioGroup>
+        </Field>
+
+        <FieldLabel>Password</FieldLabel>
+        <Field>
+            <Row>
+                <Column>
+                    <TextEdit @bind-Text="_password" Placeholder="Indtast password" />
+                </Column>
+                <Column>
+                    <Button Color="Color.Primary">Generer password (Ikke Implementeret)</Button>
+                </Column>
+            </Row>
+        </Field>
+
+        <br />
+
+        <Row>
+            <Column>
+                <Button Color="Color.Primary" Clicked="OnButtonSave_Clicked">Gem</Button>
+            </Column>
+            <Column>
+                <Button Color="Color.Primary">Gem og send (Ikke Implementeret)</Button>
+            </Column>
+        </Row>
+        
+        <br />
+
+        <Alert Visible="_userCreated" Color="Color.Success">
+            <AlertMessage>Bruger er blevet oprettet.</AlertMessage>
+        </Alert>
+        
+        <Alert Visible="_showErrors" Color="Color.Danger">
+            <AlertMessage>Bruger kunne ikke oprettes.</AlertMessage>
+            @foreach (var error in _errors)
+            {
+                <Div><AlertMessage>@error.Description</AlertMessage></Div>
+            }
+        </Alert>
+
+    </Field>
+</Fields>
+
+@code {
+    private string _firstName = string.Empty;
+    private string _lastName = string.Empty;
+    private string _address = string.Empty;
+    private string _phoneNumber = string.Empty;
+    private string _email = string.Empty;
+    private string _password = string.Empty;
+    private int _gender;
+    private bool _refreshConfiguration;
+    private bool _userCreated;
+    private bool _showErrors;
+    private List<IdentityError> _errors = new();
+
+    private async Task OnButtonSave_Clicked()
+    {
+        _userCreated = false;
+        _showErrors = false;
+        
+        var request = new RegisterUserRequest
+            {
+                FirstName = _firstName,
+                LastName = _lastName,
+                Gender = (Gender)_gender,
+                Address = _address,
+                PhoneNumber = _phoneNumber,
+                Email = _email,
+                Password = _password,
+                ConfigRefreshPrivilege = _refreshConfiguration
+            };
+
+        var result = await AccountService.RegisterUser(request);
+
+        if (!result.Succeeded)
+        {
+            _showErrors = true;
+            _errors = result.Errors.ToList();
+        }
+        else
+        {
+            _userCreated = true;
+        }
+    }
+}
