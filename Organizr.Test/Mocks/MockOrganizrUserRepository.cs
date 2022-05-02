@@ -20,7 +20,6 @@ namespace Organizr.Test.Mocks
                     Email = "emailtest",
                     PhoneNumber = "12345678",
                     Address = "Testvej 12 9430 Vadum",
-                    Password = "password",
                     Gender = Gender.Male,
                 },
                  new OrganizrUser
@@ -30,7 +29,6 @@ namespace Organizr.Test.Mocks
                     Email = "emailtest01",
                     PhoneNumber = "12345678",
                     Address = "Testvej 78 2450 København SV",
-                    Password = "mitpassword",
                     Gender = Gender.Female
                 }
             };

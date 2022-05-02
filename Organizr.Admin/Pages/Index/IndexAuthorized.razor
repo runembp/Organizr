@@ -1,0 +1,13 @@
+﻿@using Organizr.Application.Services
+@inject AuthenticationService AuthenticationService;
+
+<Heading>Velkommen indenfor, @_name :)</Heading>
+
+@code {
+    private string _name = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _name = await AuthenticationService.GetAuthenticatedUsername();
+    }
+}

@@ -1,14 +1,16 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Organizr.Application.Commands;
-using Organizr.Application.Queries;
+using Organizr.Application.Requests;
 using Organizr.Application.Responses;
 using Organizr.Core.ApplicationConstants;
 using Organizr.Core.Entities;
 using Organizr.Infrastructure.DTO;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
 
@@ -27,19 +29,18 @@ public class AccountService
         _configuration = configuration;
     }
 
-    public async Task<RegisterUserResponse> RegisterOrganizationAdministrator(RegisterUserQuery query)
+    public async Task<RegisterUserResponse> RegisterOrganizationAdministrator(RegisterUserRequest request)
     {
         var user = new OrganizrUser
         {
-            UserName = "organizationadministrator@organizr.com",
-            Email = "organizationadministrator@organizr.com",
-            //Password = "Orgadmin1+",
-            FirstName = "OrgAdmin",
-            LastName = "Istrator",
-            Address = ""
+            UserName = request.Email,
+            Email = request.Email,
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            Address = request.Address,
         };
 
-        var result = await _userManager.CreateAsync(user, user.Password);
+        var result = await _userManager.CreateAsync(user, request.Password);
 
         var roleResult = new IdentityResult();
 
@@ -51,35 +52,47 @@ public class AccountService
         return new RegisterUserResponse
         {
             Succeeded = roleResult.Succeeded,
-            Errors = roleResult.Errors
+            Errors = roleResult.Errors.ToList()
         };
     }
 
-    [AllowAnonymous]
-    public async Task<RegisterUserResponse> RegisterUser(CreateOrganizrUserCommand command)
+    [Authorize]
+    public async Task<RegisterUserResponse> RegisterUser(RegisterUserRequest request)
     {
+        var response = new RegisterUserResponse();
+
+        if(!new EmailAddressAttribute().IsValid(request.Email))
+        {
+            response.Errors.Add(new IdentityError { Description = "Email er ikke i et godkendt format" });
+            return response;
+        }
+
         var user = new OrganizrUser
         {
-            UserName = command.Email,
-            Email = command.Email,
-            FirstName = command.FirstName,
-            LastName = command.LastName,
-            Address = command.LastName,
+            UserName = request.Email,
+            Email = request.Email,
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            Address = request.LastName,
+            Gender = request.Gender,
+            PhoneNumber = request.PhoneNumber,
+            ConfigRefreshPrivilege = request.ConfigRefreshPrivilege
         };
 
-        var result = await _userManager.CreateAsync(user, command.Password);
+        var result = await _userManager.CreateAsync(user, request.Password);
+
 
         return new RegisterUserResponse
         {
             Succeeded = result.Succeeded,
-            Errors = result.Errors
+            Errors = result.Errors.ToList()
         };
     }
 
     [AllowAnonymous]
-    public async Task<LoginUserResponse> Login(LoginUserQuery query)
+    public async Task<LoginUserResponse> Login(LoginUserRequest request)
     {
-        var user = await _userManager.FindByEmailAsync(query.Email);
+        var user = await _userManager.FindByEmailAsync(request.Email);
 
         var response = new LoginUserResponse();
 
@@ -89,7 +102,7 @@ public class AccountService
             return response;
         }
 
-        var signInResult = await _signInManager.PasswordSignInAsync(user, query.Password, false, false);
+        var signInResult = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
 
         if (!signInResult.Succeeded)
         {
@@ -97,7 +110,43 @@ public class AccountService
             return response;
         }
 
-        response.Username = query.Email;
+        response.Email = user.Email;
+        response.Token = await GenerateToken(user);
+        response.Succeeded = signInResult.Succeeded;
+
+        return response;
+    }
+
+    [AllowAnonymous]
+    public async Task<LoginUserResponse> LoginAsOrganizationAdministrator(LoginUserRequest request)
+    {
+        var user = await _userManager.FindByEmailAsync(request.Email);
+
+        var response = new LoginUserResponse();
+
+        if (user is null)
+        {
+            response.Succeeded = false;
+            return response;
+        }
+
+        var signInResult = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
+
+        if (!signInResult.Succeeded)
+        {
+            response.Succeeded = false;
+            return response;
+        }
+
+        var isOrganizationAdministrator = await _userManager.IsInRoleAsync(user, ApplicationConstants.OrganizationAdministrator);
+
+        if (!isOrganizationAdministrator)
+        {
+            response.Succeeded = false;
+            return response;
+        }
+
+        response.Email = request.Email;
         response.Token = await GenerateToken(user);
         response.Succeeded = signInResult.Succeeded;
 

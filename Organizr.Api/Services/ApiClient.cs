@@ -22,12 +22,12 @@ namespace Organizr.Api.Services
     {
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<LoginUserResponse> LoginAsync(LoginUserQuery body);
+        System.Threading.Tasks.Task<LoginUserResponse> LoginAsync(LoginUserRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<LoginUserResponse> LoginAsync(LoginUserQuery body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<LoginUserResponse> LoginAsync(LoginUserRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -142,12 +142,12 @@ namespace Organizr.Api.Services
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<RegisterUserResponse> OrganisationAdministratorAsync(RegisterUserQuery body);
+        System.Threading.Tasks.Task<RegisterUserResponse> OrganisationAdministratorAsync(RegisterUserRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<RegisterUserResponse> OrganisationAdministratorAsync(RegisterUserQuery body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<RegisterUserResponse> OrganisationAdministratorAsync(RegisterUserRequest body, System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -188,7 +188,7 @@ namespace Organizr.Api.Services
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<LoginUserResponse> LoginAsync(LoginUserQuery body)
+        public virtual System.Threading.Tasks.Task<LoginUserResponse> LoginAsync(LoginUserRequest body)
         {
             return LoginAsync(body, System.Threading.CancellationToken.None);
         }
@@ -196,7 +196,7 @@ namespace Organizr.Api.Services
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<LoginUserResponse> LoginAsync(LoginUserQuery body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<LoginUserResponse> LoginAsync(LoginUserRequest body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/auth/login");
@@ -1052,7 +1052,7 @@ namespace Organizr.Api.Services
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<RegisterUserResponse> OrganisationAdministratorAsync(RegisterUserQuery body)
+        public virtual System.Threading.Tasks.Task<RegisterUserResponse> OrganisationAdministratorAsync(RegisterUserRequest body)
         {
             return OrganisationAdministratorAsync(body, System.Threading.CancellationToken.None);
         }
@@ -1060,7 +1060,7 @@ namespace Organizr.Api.Services
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<RegisterUserResponse> OrganisationAdministratorAsync(RegisterUserQuery body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<RegisterUserResponse> OrganisationAdministratorAsync(RegisterUserRequest body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/users/organisation-administrator");
@@ -1490,7 +1490,7 @@ namespace Organizr.Api.Services
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.15.10.0 (NJsonSchema v10.6.10.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class LoginUserQuery
+    public partial class LoginUserRequest
     {
         [Newtonsoft.Json.JsonProperty("email", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -1608,7 +1608,7 @@ namespace Organizr.Api.Services
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.15.10.0 (NJsonSchema v10.6.10.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class RegisterUserQuery
+    public partial class RegisterUserRequest
     {
         [Newtonsoft.Json.JsonProperty("email", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Email { get; set; }

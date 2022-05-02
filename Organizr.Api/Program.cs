@@ -1,33 +1,20 @@
 using MediatR;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Organizr.Application.Commands;
 using Organizr.Application.Handlers.CommandHandlers;
-using Organizr.Application.Handlers.QueryHandlers;
-using Organizr.Application.Queries;
+using Organizr.Application.Requests;
 using Organizr.Application.Responses;
 using Organizr.Application.Services;
 using Organizr.Core.Entities;
 using Organizr.Core.Repositories;
-using Organizr.Infrastructure.Data;
 using Organizr.Infrastructure.Repositories;
 using System.Reflection;
-using System.Text;
+using Organizr.Application.Handlers.RequestHandlers;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
-
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<IOrganizrUserRepository, OrganizrUserRepository>();
-builder.Services.AddScoped<IRequestHandler<GetAllOrganizrUserQuery, List<OrganizrUser>>, GetAllOrganizrUserHandler>();
-builder.Services.AddTransient<IRequestHandler<CreateOrganizrUserCommand, OrganizrUserResponse>, CreateOrganizrUserHandler>();
-
-
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddSwaggerGen(options =>
 {
@@ -52,44 +39,15 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// Database
-builder.Services.AddDbContext<OrganizrDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
-
-// Identity
-builder.Services.AddIdentity<OrganizrUser, IdentityRole>(options =>
-    {
-        options.SignIn.RequireConfirmedAccount = false;
-    })
-    .AddRoleManager<RoleManager<IdentityRole>>()
-    .AddDefaultTokenProviders()
-    .AddEntityFrameworkStores<OrganizrDbContext>()
-    .AddRoles<IdentityRole>();
-builder.Services.AddAuthentication(options =>
-    {
-        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    })
-    .AddJwtBearer(options =>
-    {
-        options.SaveToken = true;
-        options.RequireHttpsMetadata = false;
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
-
-            ValidateIssuer = false,
-            ValidateAudience = false,
-            ValidateLifetime = false
-        };
-    });
-builder.Services.AddAuthorization();
+// Database and Identity
+AppDbInitializer.SetUpDatabaseAndIdentity(builder);
 
 // Dependency injection
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IOrganizrUserRepository, OrganizrUserRepository>();
+builder.Services.AddScoped<IRequestHandler<GetAllOrganizrUserRequest, List<OrganizrUser>>, GetAllOrganizrUserHandler>();
 builder.Services.AddScoped<AccountService>();
+builder.Services.AddTransient<IRequestHandler<CreateOrganizrUserCommand, OrganizrUserResponse>, CreateOrganizrUserHandler>();
 
 var app = builder.Build();
 
@@ -105,6 +63,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
+// Seed Roles and Users to Database
 AppDbInitializer.SeedRolesToDb(app).Wait();
+AppDbInitializer.SeedMandatoryUsersToDatabase(app).Wait();
 
 app.Run();
