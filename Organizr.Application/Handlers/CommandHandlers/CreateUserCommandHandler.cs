@@ -2,27 +2,27 @@
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Organizr.Application.Requests;
+using Organizr.Application.Commands;
 using Organizr.Application.Responses;
 using Organizr.Core.Entities;
 using Organizr.Core.Repositories;
 
 namespace Organizr.Application.Handlers.CommandHandlers;
 
-public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, RegisterUserResponse>
+public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, CreateUserResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
-    public RegisterUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    public CreateUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
     
-    public async Task<RegisterUserResponse> Handle(RegisterUserCommand command, CancellationToken cancellationToken)
+    public async Task<CreateUserResponse> Handle(CreateUserCommand command, CancellationToken cancellationToken)
     {
-        var response = new RegisterUserResponse();
+        var response = new CreateUserResponse();
 
         if(!new EmailAddressAttribute().IsValid(command.Email))
         {
@@ -44,7 +44,7 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, R
 
         var result = await _unitOfWork.UserManager.CreateAsync(user, command.Password);
 
-        return new RegisterUserResponse
+        return new CreateUserResponse
         {
             Succeeded = result.Succeeded,
             Errors = result.Errors.ToList()

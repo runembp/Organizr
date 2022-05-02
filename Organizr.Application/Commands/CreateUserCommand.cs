@@ -2,9 +2,9 @@
 using Organizr.Application.Responses;
 using Organizr.Core.Enums;
 
-namespace Organizr.Application.Requests
+namespace Organizr.Application.Commands
 {
-    public class RegisterUserCommand : IRequest<RegisterUserResponse>
+    public class CreateUserCommand : IRequest<CreateUserResponse>
     {
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;

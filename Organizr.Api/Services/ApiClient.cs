@@ -133,21 +133,21 @@ namespace Organizr.Api.Services
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<RegisterUserResponse> UserAsync(CreateOrganizrUserCommand body);
+        System.Threading.Tasks.Task<CreateUserResponse> UserAsync(CreateOrganizrUserCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<RegisterUserResponse> UserAsync(CreateOrganizrUserCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CreateUserResponse> UserAsync(CreateOrganizrUserCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<RegisterUserResponse> OrganisationAdministratorAsync(RegisterUserRequest body);
+        System.Threading.Tasks.Task<CreateUserResponse> OrganisationAdministratorAsync(CreateUserRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<RegisterUserResponse> OrganisationAdministratorAsync(RegisterUserRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CreateUserResponse> OrganisationAdministratorAsync(CreateUserRequest body, System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -975,7 +975,7 @@ namespace Organizr.Api.Services
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<RegisterUserResponse> UserAsync(CreateOrganizrUserCommand body)
+        public virtual System.Threading.Tasks.Task<CreateUserResponse> UserAsync(CreateOrganizrUserCommand body)
         {
             return UserAsync(body, System.Threading.CancellationToken.None);
         }
@@ -983,7 +983,7 @@ namespace Organizr.Api.Services
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<RegisterUserResponse> UserAsync(CreateOrganizrUserCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CreateUserResponse> UserAsync(CreateOrganizrUserCommand body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/users/user");
@@ -1023,7 +1023,7 @@ namespace Organizr.Api.Services
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<RegisterUserResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<CreateUserResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1052,7 +1052,7 @@ namespace Organizr.Api.Services
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<RegisterUserResponse> OrganisationAdministratorAsync(RegisterUserRequest body)
+        public virtual System.Threading.Tasks.Task<CreateUserResponse> OrganisationAdministratorAsync(CreateUserRequest body)
         {
             return OrganisationAdministratorAsync(body, System.Threading.CancellationToken.None);
         }
@@ -1060,7 +1060,7 @@ namespace Organizr.Api.Services
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<RegisterUserResponse> OrganisationAdministratorAsync(RegisterUserRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CreateUserResponse> OrganisationAdministratorAsync(CreateUserRequest body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/users/organisation-administrator");
@@ -1100,7 +1100,7 @@ namespace Organizr.Api.Services
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<RegisterUserResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<CreateUserResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1608,7 +1608,7 @@ namespace Organizr.Api.Services
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.15.10.0 (NJsonSchema v10.6.10.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class RegisterUserRequest
+    public partial class CreateUserRequest
     {
         [Newtonsoft.Json.JsonProperty("email", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Email { get; set; }
@@ -1628,7 +1628,7 @@ namespace Organizr.Api.Services
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.15.10.0 (NJsonSchema v10.6.10.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class RegisterUserResponse
+    public partial class CreateUserResponse
     {
         [Newtonsoft.Json.JsonProperty("succeeded", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public bool Succeeded { get; set; }

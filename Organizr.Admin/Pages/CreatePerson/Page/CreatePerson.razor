@@ -1,6 +1,7 @@
 ﻿@page "/CreatePerson"
 @using Organizr.Core.Enums
 @using Microsoft.AspNetCore.Identity
+@using Organizr.Application.Commands
 @using Organizr.Application.Requests
 
 @attribute [Authorize]
@@ -103,7 +104,7 @@
         _userCreated = false;
         _showErrors = false;
         
-        var command = new RegisterUserCommand
+        var command = new CreateUserCommand
             {
                 FirstName = _firstName,
                 LastName = _lastName,

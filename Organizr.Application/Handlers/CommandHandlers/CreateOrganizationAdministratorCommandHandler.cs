@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Organizr.Application.Commands;
 using Organizr.Application.Requests;
 using Organizr.Application.Responses;
 using Organizr.Core.ApplicationConstants;
@@ -9,18 +10,18 @@ using Organizr.Core.Repositories;
 
 namespace Organizr.Application.Handlers.CommandHandlers;
 
-public class RegisterOrganizationAdministratorCommandHandler : IRequestHandler<RegisterUserCommand, RegisterUserResponse>
+public class CreateOrganizationAdministratorCommandHandler : IRequestHandler<CreateUserCommand, CreateUserResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
-    public RegisterOrganizationAdministratorCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    public CreateOrganizationAdministratorCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
     
-    public async Task<RegisterUserResponse> Handle(RegisterUserCommand command, CancellationToken cancellationToken)
+    public async Task<CreateUserResponse> Handle(CreateUserCommand command, CancellationToken cancellationToken)
     {
         var user = new OrganizrUser
         {
@@ -40,7 +41,7 @@ public class RegisterOrganizationAdministratorCommandHandler : IRequestHandler<R
             roleResult = await _unitOfWork.UserManager.AddToRoleAsync(user, ApplicationConstants.OrganizationAdministrator);
         }
 
-        return new RegisterUserResponse
+        return new CreateUserResponse
         {
             Succeeded = roleResult.Succeeded,
             Errors = roleResult.Errors.ToList()
