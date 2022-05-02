@@ -1,1 +1,67 @@
-<p>sign-up works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <div class="container">
+                <form [formGroup]="createUserForm" (ngSubmit)="onSubmit()">
+                    <div class="row">
+                        <div class="mb-3 col-6">
+                            <label for="firstName" class="form-label">Fornavn</label>
+                            <input type="text" class="form-control" id="firstName" formControlName="firstName" />
+
+                            <small *ngIf="!createUserForm.get('firstName')?.valid && createUserForm.get('firstName')?.touched">Username is
+                                required</small>
+                        </div>
+                        <div class="mb-3 col-6">
+                            <label for="lastname" class="form-label">Efternavn</label>
+                            <input type="text" class="form-control" id="lastname" formControlName="lastName" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-6">
+                            <label for="phoneNumber" class="form-label">Telefon</label>
+                            <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber" />
+                        </div>
+                        <div class="mb-3 col-6">
+                            <label for="gender" class="form-label">Køn</label>
+                            <select class="form-select" name="genderSelect" id="gender" formControlName="gender">
+                                <option *ngFor="let gender of genders" [value]="gender">
+                                    {{gender}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-12">
+                            <label for="address">Adresse</label>
+                            <input type="text" class="form-control" id="address" formControlName="address" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="mb-3 col-12">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" formControlName="email" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="mb-3 col-6">
+                            <label for="password" class="form-label">Adgangskode</label>
+                            <input type="password" class="form-control" id="password" formControlName="password" />
+                        </div>
+                        <div class="mb-3 col-6">
+                            <label for="password2" class="form-label">Gentag Adgangskode</label>
+                            <input type="password" class="form-control" id="password2" formControlName="password2" />
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" type="submit" [disabled]="!createUserForm.valid">
+                        Opret
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
