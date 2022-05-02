@@ -11,9 +11,9 @@ using Organizr.Core.Entities;
 using Organizr.Core.Enums;
 using Organizr.Infrastructure.Data;
 
-namespace Organizr.Application.Services;
+namespace Organizr.Application.HelperClasses;
 
-public static class AppDbInitializer
+public static class ApplicationDatabaseInitializerHelperClass
 {
     /// <summary>
     /// Sets up the Organizr Database with the recieved ConnectionString from appsettings.json and

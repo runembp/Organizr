@@ -1,52 +1,31 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Organizr.Application.Requests;
-using Organizr.Application.Services;
-using Organizr.Infrastructure.DTO;
+using Organizr.Application.Responses;
 
-namespace Organizr.Api.Controllers
+namespace Organizr.Api.Controllers;
+
+[ApiController]
+[Route("api/auth")]
+public class AuthController : ControllerBase
 {
-    [ApiController]
-    [Route("api/auth")]
-    public class AuthController : ControllerBase
+    private readonly IMediator _mediator;
+
+    public AuthController(IMediator mediator)
     {
-        private readonly AccountService _accountService;
+        _mediator = mediator;
+    }
 
-        public AuthController(AccountService accountService)
+    [HttpPost("login")]
+    public async Task<ActionResult<UserLoginResponse>> Login([FromBody] UserLoginRequest query)
+    {
+        var result = await _mediator.Send(query);
+
+        if (!result.Succeeded)
         {
-            _accountService = accountService;
+            return BadRequest("Failed login");
         }
 
-        [HttpPost("login")]
-        public async Task<ActionResult<LoginUserResponse>> Login([FromBody] LoginUserRequest request)
-        {
-            var result = await _accountService.Login(request);
-
-            if (!result.Succeeded)
-            {
-                return BadRequest("Failed login");
-            }
-
-            return Ok(result);
-        }
-
-        [HttpPost("login/organisation-administrator")]
-        public async Task<ActionResult<LoginUserResponse>> LoginAsOrganisationAdministrator([FromBody] LoginUserRequest request)
-        {
-            var result = await _accountService.LoginAsOrganizationAdministrator(request);
-
-            if (!result.Succeeded)
-            {
-                return BadRequest("Failed login");
-            }
-
-            return Ok(result);
-        }
-
-        [HttpPost("refresh-token")]
-        public async Task<IActionResult> RefreshToken()
-        {
-            //TODO Implement this.
-            return BadRequest("Not yet implemented");
-        }
+        return Ok(result);
     }
 }
