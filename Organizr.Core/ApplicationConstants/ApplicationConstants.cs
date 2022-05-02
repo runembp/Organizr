@@ -12,5 +12,8 @@ public static class ApplicationConstants
     
     // Migrations Assembly
     public const string OrganizrInfrastructureProject = "Organizr.Infrastructure";
+    
+    // Organization administrator specific
+    public const string MandatoryOrganizationAdministratorEmail = "organizationadministrator@organizr.com";
 
 }
