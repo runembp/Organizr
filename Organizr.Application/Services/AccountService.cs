@@ -33,7 +33,7 @@ public class AccountService
         {
             UserName = "organizationadministrator@organizr.com",
             Email = "organizationadministrator@organizr.com",
-            Password = "Orgadmin1+",
+            //Password = "Orgadmin1+",
             FirstName = "OrgAdmin",
             LastName = "Istrator",
             Address = ""
