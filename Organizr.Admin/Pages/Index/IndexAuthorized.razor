@@ -1,5 +1,8 @@
 ﻿<Heading>Velkommen indenfor :)</Heading>
 
 @code {
-
+    protected override void OnInitialized()
+    {
+        NavigationManager.NavigateTo("/SearchPerson", forceLoad:true);
+    }
 }

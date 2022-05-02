@@ -6,8 +6,11 @@ using MediatR;
 using Microsoft.AspNetCore.Components.Authorization;
 using Organizr.Application.Commands;
 using Organizr.Application.Handlers.CommandHandlers;
+using Organizr.Application.Handlers.RequestHandlers;
 using Organizr.Application.HelperClasses;
+using Organizr.Application.Requests;
 using Organizr.Application.Responses;
+using Organizr.Core.Entities;
 using Organizr.Core.Repositories;
 using Organizr.Infrastructure.Repositories;
 
@@ -47,6 +50,8 @@ void DependencyInjections()
     builder.Services.AddScoped<IOrganizrUserRepository, OrganizrUserRepository>();
     builder.Services.AddScoped<IUserGroupRepository, UserGroupRepository>();
     builder.Services.AddTransient<IRequestHandler<CreateUserCommand, CreateUserResponse>, CreateUserCommandHandler>();
+    builder.Services.AddTransient<IRequestHandler<CreateUserGroupCommand, CreateUserGroupResponse>, CreateUserGroupCommandHandler>();
+    builder.Services.AddTransient<IRequestHandler<GetAllOrganizrUserRequest, List<OrganizrUser>>, GetAllOrganizrUserHandler>();
     builder.Services.AddTransient<IRequestHandler<CreateUserGroupCommand, CreateUserGroupResponse>, CreateUserGroupCommandHandler>();
 }
 
