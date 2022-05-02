@@ -7,6 +7,8 @@ namespace Organizr.Infrastructure.Data
 {
     public class OrganizrDbContext : IdentityDbContext<OrganizrUser>
     {
+        public DbSet<UserGroup> UserGroups { get; set; }
+
         public OrganizrDbContext(DbContextOptions<OrganizrDbContext> options) : base(options)
         {
 
