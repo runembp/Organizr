@@ -1,10 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Organizr.Core.Enums;
 
 namespace Organizr.Core.Entities
 {
-    public class OrganizrUser : IdentityUser
+    public class OrganizrUser : IdentityUser<int>
     {
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
