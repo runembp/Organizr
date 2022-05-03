@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Organizr.Infrastructure.Data
 {
-    public class OrganizrDbContext : IdentityDbContext<OrganizrUser>
+    public class OrganizrDbContext : IdentityDbContext<OrganizrUser, OrganizrRole, int>
     {
         public DbSet<UserGroup> UserGroups { get; set; }
 
