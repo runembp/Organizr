@@ -1,0 +1,63 @@
+﻿@page "/Configurations"
+<h3>Konfigurationer</h3>
+
+<CardDeck Padding="Padding.Is3">
+    <Card ColumnSize="ColumnSize.Is6">
+        <CardBody>
+            <CardTitle Size="5">Nyhedskonfigurationer</CardTitle>
+            <Field>
+                <FieldLabel>Aktiver kommentarer på Nyheder</FieldLabel>
+                <Check TValue="bool">Aktiv</Check>
+            </Field>
+            <Field>
+                <FieldLabel>Aktiver mulighed for at skrive kommentarer til Nyheder for Administratorer</FieldLabel>
+                <Check TValue="bool">Aktiv</Check>
+            </Field>
+            <Field>
+                <FieldLabel>Aktiver mulighed for at skrive kommentarer til Nyheder for Medlemmer</FieldLabel>
+                <Check TValue="bool">Aktiv</Check>
+            </Field>
+        </CardBody>
+    </Card>
+
+    <Card ColumnSize="ColumnSize.Is6">
+        <CardBody>
+            <CardTitle Size="5">Opret nyheder</CardTitle>
+            <Field>
+                <FieldLabel>Giv alle medlemmer mulighed for at oprette nyheder?</FieldLabel>
+                <Check TValue="bool">Aktiv</Check>
+            </Field>
+        </CardBody>
+    </Card>
+</CardDeck>
+
+<CardDeck Padding="Padding.Is3">
+    <Card ColumnSize="ColumnSize.Is6">
+        <CardBody>
+            <CardTitle Size="5">Medlemsskab</CardTitle>
+            <Field>
+                <FieldLabel>Vælg hvilken gruppe der skal tilmeldes ved oprettelse af Medlemsskab</FieldLabel>
+                <Select TValue="int" Width="Width.Is50">
+                    <SelectItem Value="1">Hundeluftere</SelectItem>
+                </Select>
+            </Field>
+        </CardBody>
+    </Card>
+
+    <Card ColumnSize="ColumnSize.Is6">
+        <CardBody>
+            <CardTitle Size="5">Organisations data</CardTitle>
+            <Field>
+                <FieldLabel>Organisations adresse</FieldLabel>
+                <TextEdit Text="Vej XXX, København X"/> 
+            </Field>
+
+        </CardBody>
+    </Card>
+</CardDeck>
+
+<Button Color="Color.Primary">Gem</Button>
+
+@code {
+
+}
