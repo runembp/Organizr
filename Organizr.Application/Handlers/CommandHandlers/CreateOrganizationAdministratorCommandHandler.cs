@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Organizr.Application.Commands;
 using Organizr.Application.Responses;
 using Organizr.Core.ApplicationConstants;
