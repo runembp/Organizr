@@ -9,7 +9,7 @@ namespace Organizr.Test.Mocks
 {
     public static class MockOrganizrUserRepository
     {
-        public static Mock<IOrganizrUserRepository> GetOrganizrUserRepository()
+        public static Mock<IUserRepository> GetOrganizrUserRepository()
         {
             var organizrUsers = new List<OrganizrUser>
             {
@@ -33,7 +33,7 @@ namespace Organizr.Test.Mocks
                 }
             };
 
-            var mockRepo = new Mock<IOrganizrUserRepository>();
+            var mockRepo = new Mock<IUserRepository>();
 
             mockRepo.Setup(r => r.GetAll()).ReturnsAsync(organizrUsers);
 

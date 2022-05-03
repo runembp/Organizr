@@ -21,11 +21,6 @@ export class ApiClientService {
     }),
   };
 
-  getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl + '/api/organizr-user')
-    .pipe(retry(1), catchError(this.handleError));
-  }
-
 
   jsonUser: string;
   createOrganizrUser(user: User): Observable<User> {

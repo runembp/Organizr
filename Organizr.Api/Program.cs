@@ -46,10 +46,11 @@ ApplicationDatabaseInitializerHelperClass.SetUpDatabaseAndIdentity(builder);
 // Dependency injection
 builder.Services.AddScoped<TokenHelperClass>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<IOrganizrUserRepository, OrganizrUserRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRequestHandler<GetAllOrganizrUserRequest, List<OrganizrUser>>, GetAllOrganizrUserHandler>();
 builder.Services.AddTransient<IRequestHandler<CreateUserCommand, CreateUserResponse>, CreateUserCommandHandler>();
 builder.Services.AddTransient<IRequestHandler<UserLoginRequest, UserLoginResponse>, UserLoginHandler>();
+builder.Services.AddScoped<IUserGroupRepository, UserGroupRepository>();
 
 var app = builder.Build();
 

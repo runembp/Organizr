@@ -24,7 +24,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Creat
     {
         var response = new CreateUserResponse();
 
-        if(!new EmailAddressAttribute().IsValid(command.Email))
+        if (!new EmailAddressAttribute().IsValid(command.Email))
         {
             response.Errors.Add(new IdentityError { Description = "Email er ikke i et godkendt format" });
             return response;

@@ -14,14 +14,14 @@ using Xunit;
 
 namespace Organizr.Test.OrganizrUsersMockData.Commands
 {
-    public class CreateOrganizrUserCommandHandlerTests
+    public class CreateUserCommandHandlerTests
     {
         private readonly IMapper _mapper;
         private readonly Mock<IUnitOfWork> _mockUow;
         private readonly CreateUserCommand _organizrUserCommand;
         private readonly CreateUserCommandHandler _handler;
 
-        public CreateOrganizrUserCommandHandlerTests()
+        public CreateUserCommandHandlerTests()
         {
             _mockUow = MockUnitOfWork.GetUnitOfWork();
 

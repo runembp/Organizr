@@ -17,7 +17,7 @@ namespace Organizr.Test.OrganizrUsersMockData.Queries
     public class GetOrganizrUserListRequestHandlerTests
     {
         private readonly IMapper _mapper;
-        private readonly Mock<IOrganizrUserRepository> _mockRepo;
+        private readonly Mock<IUserRepository> _mockRepo;
 
         public GetOrganizrUserListRequestHandlerTests()
         {

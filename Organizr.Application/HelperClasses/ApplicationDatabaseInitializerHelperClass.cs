@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Organizr.Core.ApplicationConstants;
 using Organizr.Core.Entities;
-using Organizr.Core.Enums;
 using Organizr.Infrastructure.Data;
 
 namespace Organizr.Application.HelperClasses;
