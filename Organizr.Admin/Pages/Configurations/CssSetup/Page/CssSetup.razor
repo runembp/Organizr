@@ -1,22 +1,19 @@
 ﻿@page "/CssSetup"
 
-<h3>Opsætning af CSS for Member-applikationen</h3>
+<Heading Size="HeadingSize.Is3">Opsætning af CSS for Member-applikationen</Heading>
 
-<Column ColumnSize="ColumnSize.Is6">
-    <MemoEdit Rows="30" AutoSize Disabled="!_editingActivated"/>
-</Column>
+<Div>
+    <Column ColumnSize="ColumnSize.Is6" Padding="Padding.Is0">
+        <MemoEdit Rows="30" AutoSize Disabled="!_editingActivated"/>
+    </Column>
 
-<Field>
-    <FieldLabel>Aktiver redigering</FieldLabel>
-    <Check TValue="bool" @bind-Checked="_editingActivated">Aktiver Redigering</Check>
-</Field>
+    <Field TextAlignment="TextAlignment.End" ColumnSize="ColumnSize.Is6">
+        <Check TValue="bool" @bind-Checked="_editingActivated">Aktiver Redigering</Check>
+    </Field>
 
-<Button Color="Color.Primary">Gem</Button>
+    <Button Color="Color.Primary">Gem</Button>
+</Div>
+
 @code {
-    private bool _editingActivated = false;
-
-    private void OnActivateEditingCheckbox_Checked()
-    {
-        
-    }
+    private bool _editingActivated;
 }
