@@ -10,7 +10,6 @@ using Organizr.Core.Repositories;
 using Organizr.Infrastructure.Repositories;
 using System.Reflection;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -43,6 +42,7 @@ builder.Services.AddSwaggerGen(options =>
 // Database and Identity
 ApplicationDatabaseInitializerHelperClass.SetUpDatabaseAndIdentity(builder);
 
+
 // Dependency injection
 builder.Services.AddScoped<TokenHelperClass>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -53,6 +53,8 @@ builder.Services.AddTransient<IRequestHandler<UserLoginRequest, UserLoginRespons
 builder.Services.AddScoped<IUserGroupRepository, UserGroupRepository>();
 
 var app = builder.Build();
+
+
 
 if (app.Environment.IsDevelopment())
 {

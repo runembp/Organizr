@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using Organizr.Core.ApplicationConstants;
 using Organizr.Core.Entities;
 using Organizr.Infrastructure.Data;
+using Organizr.Infrastructure.Services;
 using System.Text;
 
 namespace Organizr.Application.HelperClasses;
@@ -21,6 +22,7 @@ public static class ApplicationDatabaseInitializerHelperClass
     /// <param name="builder"></param>
     public static void SetUpDatabaseAndIdentity(WebApplicationBuilder builder)
     {
+
         builder.Services.AddDbContext<OrganizrDbContext>(options =>
         {
             options.UseSqlServer(
@@ -50,7 +52,7 @@ public static class ApplicationDatabaseInitializerHelperClass
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(KeyVaultService.GetSecret("JwtKey", builder))),
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     ValidateLifetime = false
