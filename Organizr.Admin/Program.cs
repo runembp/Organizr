@@ -30,10 +30,7 @@ void MandatoryServices()
     builder.Services.AddAutoMapper(typeof(Program));
     builder.Services.AddBlazoredLocalStorage();
     builder.Services
-        .AddBlazorise(options =>
-        {
-            options.Immediate = true;
-        })
+        .AddBlazorise(options => { options.Immediate = true; })
         .AddBootstrapProviders()
         .AddFontAwesomeIcons();
     builder.Services.AddAuthentication();
@@ -53,16 +50,18 @@ void DependencyInjections()
     builder.Services.AddTransient<IRequestHandler<CreateUserGroupCommand, CreateUserGroupResponse>, CreateUserGroupCommandHandler>();
     builder.Services.AddTransient<IRequestHandler<GetAllOrganizrUserRequest, List<OrganizrUser>>, GetAllOrganizrUserHandler>();
     builder.Services.AddTransient<IRequestHandler<GetAllUserGroupsRequest, GetAllUserGroupsResponse>, GetAllUserGroupsHandler>();
+}
+
 void ApplicationSetup()
 {
     var app = builder.Build();
-    
+
     if (!app.Environment.IsDevelopment())
     {
         app.UseExceptionHandler("/Error");
         app.UseHsts();
     }
-    
+
     app.UseHttpsRedirection();
     app.UseStaticFiles();
     app.UseRouting();

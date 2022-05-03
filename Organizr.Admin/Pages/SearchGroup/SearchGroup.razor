@@ -12,7 +12,12 @@
           Editable="true"
           RowSelectable="_ => false">
     <DataGridColumns>
-        <DataGridColumn Field="@nameof(UserGroup.UserGroupId)" Caption="Gruppe ID" Width="100">
+        <DataGridCommandColumn NewCommandAllowed="false" EditCommandAllowed="false">
+                <DeleteCommandTemplate>
+                    <Button Size="Size.Small" Color="Color.Danger">Slet</Button>
+                </DeleteCommandTemplate>
+            </DataGridCommandColumn>
+        <DataGridColumn Field="@nameof(UserGroup.UserGroupId)" Caption="Gruppe ID">
             <DisplayTemplate>
                 <Button Clicked="() => OnEditGroupLink_Clicked(context.UserGroupId)" Color="Color.Link">@context.UserGroupId</Button>
             </DisplayTemplate>
