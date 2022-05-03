@@ -27,7 +27,7 @@ namespace Organizr.Test.OrganizrUsersMockData.Commands
 
             var mapperConfig = new MapperConfiguration(c =>
             {
-                c.AddProfile<OrganizrUserMappingProfile>();
+                c.AddProfile<OrganizrMappingProfiler>();
             });
 
             _mapper = mapperConfig.CreateMapper();

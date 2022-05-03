@@ -5,9 +5,9 @@ using Organizr.Core.Entities;
 
 namespace Organizr.Application.Mapper;
 
-public class OrganizrUserMappingProfile : Profile
+public class OrganizrMappingProfiler : Profile
 {
-    public OrganizrUserMappingProfile()
+    public OrganizrMappingProfiler()
     {
         CreateMap<OrganizrUser, CreateUserResponse>().ReverseMap();
         CreateMap<OrganizrUser, CreateUserCommand>().ReverseMap();
