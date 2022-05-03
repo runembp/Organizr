@@ -17,7 +17,7 @@ export class ApiClientService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Accept': 'text/plain'
+      'Accept': 'application/json'
     }),
   };
 
@@ -26,13 +26,17 @@ export class ApiClientService {
     .pipe(retry(1), catchError(this.handleError));
   }
 
-  
-  createOrganizrUser(user: any): Observable<User> {
-    console.log("vi er her")
+
+  jsonUser: string;
+  createOrganizrUser(user: User): Observable<User> {
+    this.jsonUser = JSON.stringify(user);
+
+    console.log(this.jsonUser);
+
     return this.http
     .post<User>(
-      this.apiUrl + '/organizr-user',
-      JSON.stringify(user),
+      this.apiUrl + '/api/organizr-user',
+      this.jsonUser,
       this.httpOptions)
       .pipe(retry(1), catchError(this.handleError));
   }
@@ -42,9 +46,11 @@ export class ApiClientService {
     if (error.error instanceof ErrorEvent) {
       // Get client-side error
       errorMessage = error.error.message;
+      
     } else {
       // Get server-side error
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      
     }
     window.alert(errorMessage);
     return throwError(() => {

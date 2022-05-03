@@ -8,12 +8,18 @@
                             <label for="firstName" class="form-label">Fornavn</label>
                             <input type="text" class="form-control" id="firstName" formControlName="firstName" />
 
-                            <small *ngIf="!createUserForm.get('firstName')?.valid && createUserForm.get('firstName')?.touched">Username is
-                                required</small>
+                            <small
+                                *ngIf="!createUserForm.get('firstName')?.valid && createUserForm.get('firstName')?.touched">
+                                Indtast Fornavn</small>
                         </div>
                         <div class="mb-3 col-6">
                             <label for="lastname" class="form-label">Efternavn</label>
                             <input type="text" class="form-control" id="lastname" formControlName="lastName" />
+
+                            <small
+                                *ngIf="!createUserForm.get('lastName')?.valid && createUserForm.get('lastName')?.touched">
+                                Indtast Efternavn
+                            </small>
                         </div>
                     </div>
                     <div class="row">
@@ -21,13 +27,21 @@
                             <label for="phoneNumber" class="form-label">Telefon</label>
                             <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber" />
                         </div>
+                        <small
+                            *ngIf="!createUserForm.get('phoneNumber')?.valid && createUserForm.get('phoneNumber')?.touched">
+                            Indtast dit telefonnummer
+                        </small>
                         <div class="mb-3 col-6">
                             <label for="gender" class="form-label">Køn</label>
                             <select class="form-select" name="genderSelect" id="gender" formControlName="gender">
-                                <option *ngFor="let gender of genders" [value]="gender">
-                                    {{gender}}
+                                <option *ngFor="let gender of genders | keyvalue" [value]="gender.value">
+                                    {{gender.key}}
                                 </option>
                             </select>
+                            <small
+                                *ngIf="!createUserForm.get('gender')?.valid && createUserForm.get('gender')?.touched">
+                                Vælg en fra dropdown
+                            </small>
                         </div>
                     </div>
                     <div class="row">
@@ -35,6 +49,9 @@
                             <label for="address">Adresse</label>
                             <input type="text" class="form-control" id="address" formControlName="address" />
                         </div>
+                        <small *ngIf="!createUserForm.get('address')?.valid && createUserForm.get('address')?.touched">
+                            Indtast din adresse
+                        </small>
                     </div>
 
                     <div class="row">
@@ -42,18 +59,37 @@
                             <label for="email">Email</label>
                             <input type="email" class="form-control" id="email" formControlName="email" />
                         </div>
+                        <small *ngIf="!createUserForm.get('email')?.valid && createUserForm.get('email')?.touched">
+                            Indtast en gyldig email
+                        </small>
                     </div>
 
-                    <div class="row">
-                        <div class="mb-3 col-6">
-                            <label for="password" class="form-label">Adgangskode</label>
-                            <input type="password" class="form-control" id="password" formControlName="password" />
+                        <div class="row">
+                            <div class="mb-3 col-6">
+                                <label for="password" class="form-label">Adgangskode</label>
+                                <input type="password" class="form-control" id="password" formControlName="password" />
+                            </div>
+                            <div class="mb-3 col-6">
+                                <label for="password2" class="form-label">Gentag Adgangskode</label>
+                                <input type="password" class="form-control" id="password2"
+                                    formControlName="password2"
+                                    [ngClass]="{ 'is-invalid': submitted && f['password2']?.errors }"
+                                    />
+                            </div>
+                            <small
+                                *ngIf="createUserForm.get('password')?.invalid && createUserForm.get('password')?.touched">
+                                Indtast Adgangskode
+                            </small>
+
+                            <small *ngIf="f['password2']?.errors?.['matching']" >
+                                Adgangskoder stemmer ikke overens
+                            </small>
+
+                            
+
+                            
                         </div>
-                        <div class="mb-3 col-6">
-                            <label for="password2" class="form-label">Gentag Adgangskode</label>
-                            <input type="password" class="form-control" id="password2" formControlName="password2" />
-                        </div>
-                    </div>
+                   
 
                     <button class="btn btn-primary" type="submit" [disabled]="!createUserForm.valid">
                         Opret
