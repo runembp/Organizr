@@ -12,7 +12,9 @@
       <PackageReference Include="Blazored.LocalStorage" Version="4.2.0" />
       <PackageReference Include="Blazorise" Version="1.0.4" />
       <PackageReference Include="Blazorise.Bootstrap" Version="1.0.4" />
+      <PackageReference Include="Blazorise.DataGrid" Version="1.0.4" />
       <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.0.4" />
+      <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.4" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.4">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

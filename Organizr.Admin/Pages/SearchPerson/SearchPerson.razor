@@ -1,0 +1,52 @@
+﻿@page "/SearchPerson"
+@using Organizr.Core.Entities
+@using Organizr.Application.Requests
+@using Organizr.Core.ApplicationConstants
+
+<SearchBar />
+
+<DataGrid
+    TItem="OrganizrUser"
+    Data="_userList"
+    FixedHeader="true"
+    Editable="true"
+    RowSelectable="_ => false ">
+    <DataGridCommandColumn NewCommandAllowed="false" EditCommandAllowed="false">
+        <DeleteCommandTemplate>
+            <Button Size="Size.Small" Color="Color.Danger">Slet</Button>
+        </DeleteCommandTemplate>
+    </DataGridCommandColumn>
+    <DataGridColumn Field="@nameof(OrganizrUser.Id)" Caption="Profil ID">
+        <DisplayTemplate>
+            <Button Clicked="() => OnEditUserLink_Clicked(context.Id)" Color="Color.Link">@context.Id</Button>
+        </DisplayTemplate>
+    </DataGridColumn>
+    <DataGridColumn Field="@nameof(OrganizrUser.FirstName)" Caption="Fornavn"/>
+    <DataGridColumn Field="@nameof(OrganizrUser.LastName)" Caption="Efternavn"/>
+    <DataGridColumn Field="@nameof(OrganizrUser.Address)" Caption="Adresse"/>
+    <DataGridColumn Field="@nameof(OrganizrUser.Email)" Caption="Email"/>
+    <DataGridColumn Field="@nameof(OrganizrUser.Gender)" Caption="Køn"/>
+    <DataGridColumn Field="@nameof(OrganizrUser.PhoneNumber)" Caption="Telefon"/>
+    <DataGridColumn Field="@nameof(OrganizrUser.ConfigRefreshPrivilege)" Caption="Opdaterings Rettigheder">
+        <DisplayTemplate>
+            <Check TValue="bool" Checked="context.ConfigRefreshPrivilege" Disabled="true"></Check>
+        </DisplayTemplate>
+    </DataGridColumn>
+</DataGrid>
+
+@code {
+
+    private List<OrganizrUser> _userList = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _userList = await Mediator.Send(new GetAllOrganizrUserRequest());
+        var organizrUser = _userList.First(x => x.Id == 1 && x.Email == ApplicationConstants.MandatoryOrganizationAdministratorEmail);
+        _userList.Remove(organizrUser);
+    }
+
+    private void OnEditUserLink_Clicked(int userId)
+    {
+        NavigationManager.NavigateTo($"EditPerson/{userId}");
+    }
+}
