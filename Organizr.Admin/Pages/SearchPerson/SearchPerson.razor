@@ -18,7 +18,7 @@
     </DataGridCommandColumn>
     <DataGridColumn Field="@nameof(OrganizrUser.Id)" Caption="Profil ID">
         <DisplayTemplate>
-            <Button Clicked="() => NavigationManager.NavigateTo(context.Id.ToString())" Color="Color.Link">@context.Id</Button>
+            <Button Clicked="() => OnEditUserLink_Clicked(context.Id)" Color="Color.Link">@context.Id</Button>
         </DisplayTemplate>
     </DataGridColumn>
     <DataGridColumn Field="@nameof(OrganizrUser.FirstName)" Caption="Fornavn"/>
@@ -43,5 +43,10 @@
         _userList = await Mediator.Send(new GetAllOrganizrUserRequest());
         var organizrUser = _userList.First(x => x.Id == 1 && x.Email == ApplicationConstants.MandatoryOrganizationAdministratorEmail);
         _userList.Remove(organizrUser);
+    }
+
+    private void OnEditUserLink_Clicked(int userId)
+    {
+        NavigationManager.NavigateTo($"EditPerson/{userId}");
     }
 }
