@@ -17,7 +17,7 @@
                 <Heading Size="HeadingSize.Is5">Personer</Heading>
             </BarLabel>
             <BarItem>
-                <BarLink To="/SearchPerson">Find Person</BarLink>
+                <BarLink To="/SearchPerson">Søg</BarLink>
             </BarItem>
             <BarItem>
                 <BarLink To="/CreatePerson">Opret Person</BarLink>
@@ -28,7 +28,7 @@
                 </BarLabel>
             </BarItem>
             <BarItem>
-                <BarLink To="/SearchGroup">Opret Gruppe</BarLink>
+                <BarLink To="/SearchGroup">Søg</BarLink>
             </BarItem>
             <BarItem>
                 <BarLink To="/CreateGroup">Opret Gruppe</BarLink>
@@ -36,15 +36,3 @@
         </BarStart>
     </BarMenu>
 </Bar>
-
-@code {
-    private bool _collapseNavMenu = true;
-
-    private string? NavMenuCssClass => _collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        _collapseNavMenu = !_collapseNavMenu;
-    }
-
-}
