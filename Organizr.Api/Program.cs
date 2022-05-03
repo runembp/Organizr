@@ -1,22 +1,9 @@
-using MediatR;
-using Organizr.Application.Commands;
-using Organizr.Application.Handlers.CommandHandlers;
-using Organizr.Application.Handlers.RequestHandlers;
 using Organizr.Application.HelperClasses;
-using Organizr.Application.Requests;
-using Organizr.Application.Responses;
-using Organizr.Core.Entities;
-using Organizr.Core.Repositories;
-using Organizr.Infrastructure.Repositories;
-using System.Reflection;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
@@ -41,16 +28,10 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 // Database and Identity
-ApplicationDatabaseInitializerHelperClass.SetUpDatabaseAndIdentity(builder);
+ApplicationInitializerHelperClass.SetUpDatabaseAndIdentity(builder);
 
 // Dependency injection
-builder.Services.AddScoped<TokenHelperClass>();
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IRequestHandler<GetAllOrganizrUserRequest, List<OrganizrUser>>, GetAllOrganizrUserHandler>();
-builder.Services.AddTransient<IRequestHandler<CreateUserCommand, CreateUserResponse>, CreateUserCommandHandler>();
-builder.Services.AddTransient<IRequestHandler<UserLoginRequest, UserLoginResponse>, UserLoginHandler>();
-builder.Services.AddScoped<IUserGroupRepository, UserGroupRepository>();
+ApplicationInitializerHelperClass.AddSharedDependencyInjections(builder);
 
 var app = builder.Build();
 
@@ -65,14 +46,11 @@ app.UseCors(x => x
             .AllowAnyMethod()
             .AllowAnyHeader());
 
-
 app.UseHttpsRedirection();
-app.UseAuthentication();
-app.UseAuthorization();
 app.MapControllers();
 
 // Seed Roles and Users to Database
-ApplicationDatabaseInitializerHelperClass.SeedRolesToDb(app).Wait();
-ApplicationDatabaseInitializerHelperClass.SeedMandatoryUsersToDatabase(app).Wait();
+ApplicationInitializerHelperClass.SeedRolesToDb(app).Wait();
+ApplicationInitializerHelperClass.SeedMandatoryUsersToDatabase(app).Wait();
 
 app.Run();

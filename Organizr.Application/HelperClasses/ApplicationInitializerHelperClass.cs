@@ -9,10 +9,18 @@ using Organizr.Core.ApplicationConstants;
 using Organizr.Core.Entities;
 using Organizr.Infrastructure.Data;
 using System.Text;
+using MediatR;
+using Organizr.Application.Commands;
+using Organizr.Application.Handlers.CommandHandlers;
+using Organizr.Application.Handlers.RequestHandlers;
+using Organizr.Application.Requests;
+using Organizr.Application.Responses;
+using Organizr.Core.Repositories;
+using Organizr.Infrastructure.Repositories;
 
 namespace Organizr.Application.HelperClasses;
 
-public static class ApplicationDatabaseInitializerHelperClass
+public static class ApplicationInitializerHelperClass
 {
     /// <summary>
     /// Sets up the Organizr Database with the recieved ConnectionString from appsettings.json and
@@ -56,7 +64,22 @@ public static class ApplicationDatabaseInitializerHelperClass
                     ValidateLifetime = false
                 };
             });
+        builder.Services.AddAuthentication();
         builder.Services.AddAuthorization();
+    }
+
+    public static void AddSharedDependencyInjections(WebApplicationBuilder builder)
+    {
+        builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
+        builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        builder.Services.AddScoped<TokenHelperClass>();
+        builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+        builder.Services.AddScoped<IUserRepository, UserRepository>();
+        builder.Services.AddScoped<IUserGroupRepository, UserGroupRepository>();
+        builder.Services.AddTransient<IRequestHandler<CreateUserCommand, CreateUserResponse>, CreateUserCommandHandler>();
+        builder.Services.AddTransient<IRequestHandler<CreateUserGroupCommand, CreateUserGroupResponse>, CreateUserGroupCommandHandler>();
+        builder.Services.AddTransient<IRequestHandler<GetAllOrganizrUserRequest, List<OrganizrUser>>, GetAllOrganizrUserHandler>();
+        builder.Services.AddTransient<IRequestHandler<GetAllUserGroupsRequest, GetAllUserGroupsResponse>, GetAllUserGroupsHandler>();
     }
 
     /// <summary>
