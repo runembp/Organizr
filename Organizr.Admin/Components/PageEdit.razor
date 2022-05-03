@@ -1,12 +1,12 @@
 ﻿<RichTextEdit @ref="richTextEditRef"
               Theme="RichTextEditTheme.Snow"
               ContentChanged="@OnContentChanged"
-              PlaceHolder="Type your post here..."
+              PlaceHolder="Indsæt sidetekst"
               ReadOnly="@readOnly"
               SubmitOnEnter="false"
               EnterPressed="@OnSave"
               ToolbarPosition="Placement.Bottom">
-    <Editor>My example content</Editor>
+    <Editor>@UsedFor</Editor>
     <Toolbar>
         <RichTextEditToolbarGroup>
             <RichTextEditToolbarButton Action="RichTextEditAction.Bold" />
@@ -20,14 +20,19 @@
             <RichTextEditToolbarButton Action="RichTextEditAction.List" Value="ordered" />
             <RichTextEditToolbarButton Action="RichTextEditAction.List" Value="bullet" />
         </RichTextEditToolbarGroup>
-        <!-- Custom toolbar content -->
+        
         <RichTextEditToolbarGroup Float="Float.End">
             <Button onClick="window.open('https://www.quilljs.com/','quilljs')"><Icon Name="IconName.InfoCircle" /></Button>
             <Button Clicked="@OnSave"><Icon Name="IconName.Save" /></Button>
         </RichTextEditToolbarGroup>
+        
     </Toolbar>
 </RichTextEdit>
 @code{
+
+    [Parameter]
+    public string UsedFor { get; set; } = string.Empty;
+    
     protected RichTextEdit richTextEditRef;
     protected bool readOnly;
     protected string contentAsHtml;
