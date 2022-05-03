@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Moq;
+using Organizr.Application.Handlers.RequestHandlers;
 using Organizr.Application.Mapper;
 using Organizr.Application.Requests;
 using Organizr.Core.Entities;
@@ -9,7 +10,6 @@ using Shouldly;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Organizr.Application.Handlers.RequestHandlers;
 using Xunit;
 
 namespace Organizr.Test.OrganizrUsersMockData.Queries

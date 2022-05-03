@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using MediatR;
+﻿using MediatR;
 using Organizr.Application.Responses;
+using System.ComponentModel.DataAnnotations;
 
 namespace Organizr.Application.Requests;
 

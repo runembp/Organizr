@@ -1,9 +1,9 @@
-﻿using System.Net.Http.Headers;
-using System.Security.Claims;
-using System.Text.Json;
-using Blazored.LocalStorage;
+﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Organizr.Application.Responses;
+using System.Net.Http.Headers;
+using System.Security.Claims;
+using System.Text.Json;
 
 namespace Organizr.Application.HelperClasses;
 
@@ -54,7 +54,7 @@ public class AuthenticationStateProviderHelperClass : AuthenticationStateProvide
         var claims = new List<Claim>();
         var payload = jwt.Split('.')[1];
         var jsonBytes = ParseBase64WithoutPadding(payload);
-        var keyValuePairs = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonBytes) ?? new Dictionary<string, object>();;
+        var keyValuePairs = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonBytes) ?? new Dictionary<string, object>(); ;
 
         keyValuePairs.TryGetValue(ClaimTypes.Role, out var roles);
 

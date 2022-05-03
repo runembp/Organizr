@@ -13,7 +13,7 @@ public class GetAllUserGroupsHandler : IRequestHandler<GetAllUserGroupsRequest, 
     {
         _unitOfWork = unitOfWork;
     }
-    
+
     public async Task<GetAllUserGroupsResponse> Handle(GetAllUserGroupsRequest request, CancellationToken cancellationToken)
     {
         var response = new GetAllUserGroupsResponse

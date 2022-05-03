@@ -2,7 +2,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Organizr.Application.Commands;
-using Organizr.Application.Requests;
 using Organizr.Application.Responses;
 using Organizr.Core.ApplicationConstants;
 using Organizr.Core.Entities;
@@ -20,7 +19,7 @@ public class CreateOrganizationAdministratorCommandHandler : IRequestHandler<Cre
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
-    
+
     public async Task<CreateUserResponse> Handle(CreateUserCommand command, CancellationToken cancellationToken)
     {
         var user = new OrganizrUser

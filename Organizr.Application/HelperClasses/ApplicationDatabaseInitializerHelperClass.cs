@@ -1,5 +1,4 @@
-﻿using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using Organizr.Core.ApplicationConstants;
 using Organizr.Core.Entities;
 using Organizr.Infrastructure.Data;
+using System.Text;
 
 namespace Organizr.Application.HelperClasses;
 
@@ -27,7 +27,7 @@ public static class ApplicationDatabaseInitializerHelperClass
                 builder.Configuration.GetConnectionString("DefaultConnection"),
                 sqlOptions => sqlOptions.MigrationsAssembly(ApplicationConstants.OrganizrInfrastructureProject));
         });
-        
+
         // Identity
         builder.Services.AddIdentity<OrganizrUser, OrganizrRole>(options =>
             {
@@ -58,7 +58,7 @@ public static class ApplicationDatabaseInitializerHelperClass
             });
         builder.Services.AddAuthorization();
     }
-    
+
     /// <summary>
     /// Makes sure that we always have the established Organizr Roles on the database
     /// </summary>
@@ -73,12 +73,12 @@ public static class ApplicationDatabaseInitializerHelperClass
         {
             await roleManager.CreateAsync(new OrganizrRole(ApplicationConstants.OrganizationAdministrator));
         }
-        
+
         if (!await roleManager.RoleExistsAsync(ApplicationConstants.Administrator))
         {
             await roleManager.CreateAsync(new OrganizrRole(ApplicationConstants.Administrator));
         }
-        
+
         if (!await roleManager.RoleExistsAsync(ApplicationConstants.Basic))
         {
             await roleManager.CreateAsync(new OrganizrRole(ApplicationConstants.Basic));

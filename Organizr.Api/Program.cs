@@ -1,14 +1,14 @@
 using MediatR;
 using Organizr.Application.Commands;
 using Organizr.Application.Handlers.CommandHandlers;
+using Organizr.Application.Handlers.RequestHandlers;
+using Organizr.Application.HelperClasses;
+using Organizr.Application.Requests;
 using Organizr.Application.Responses;
 using Organizr.Core.Entities;
 using Organizr.Core.Repositories;
 using Organizr.Infrastructure.Repositories;
 using System.Reflection;
-using Organizr.Application.Handlers.RequestHandlers;
-using Organizr.Application.HelperClasses;
-using Organizr.Application.Requests;
 
 
 var builder = WebApplication.CreateBuilder(args);
