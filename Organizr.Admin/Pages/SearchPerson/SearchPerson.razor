@@ -3,13 +3,7 @@
 @using Organizr.Application.Requests
 @using Organizr.Core.ApplicationConstants
 
-<Fields ColumnSize="ColumnSize.Is6">
-    <FieldLabel>Søg Person</FieldLabel>
-    <TextEdit Placeholder="..."></TextEdit>
-    <Label>Der kan søges på Navn, Adresse, Telefon, Køn</Label>
-</Fields>
-
-<Divider/>
+<SearchBar />
 
 <DataGrid
     TItem="OrganizrUser"
@@ -24,7 +18,7 @@
     </DataGridCommandColumn>
     <DataGridColumn Field="@nameof(OrganizrUser.Id)" Caption="Profil ID">
         <DisplayTemplate>
-            <Button Clicked="@(() => NavigationManager.NavigateTo($"{context.Id}"))" Color="Color.Link">@context.Id</Button>
+            <Button Clicked="() => NavigationManager.NavigateTo(context.Id.ToString())" Color="Color.Link">@context.Id</Button>
         </DisplayTemplate>
     </DataGridColumn>
     <DataGridColumn Field="@nameof(OrganizrUser.FirstName)" Caption="Fornavn"/>
