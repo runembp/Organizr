@@ -26,8 +26,6 @@ export class ApiClientService {
   createOrganizrUser(user: User): Observable<User> {
     this.jsonUser = JSON.stringify(user);
 
-    console.log(this.jsonUser);
-
     return this.http
     .post<User>(
       this.apiUrl + '/api/organizr-user',
