@@ -8,23 +8,22 @@ namespace Organizr.Infrastructure.Repositories;
 public class UnitOfWork : IUnitOfWork
 {
     private readonly OrganizrDbContext _dbContext;
-    private IOrganizrUserRepository _userRepository;
     public UserManager<OrganizrUser> UserManager { get; }
     public SignInManager<OrganizrUser> SignInManager { get; }
+    public IOrganizrUserRepository OrganizrUserRepository { get; }
+    public IUserGroupRepository UserGroupRepository { get; }
 
-    public UnitOfWork(OrganizrDbContext dbContext, UserManager<OrganizrUser> userManager, SignInManager<OrganizrUser> signInManager)
+    public UnitOfWork(OrganizrDbContext dbContext, UserManager<OrganizrUser> userManager, SignInManager<OrganizrUser> signInManager, IUserGroupRepository userGroupRepository, IOrganizrUserRepository organizrUserRepository)
     {
         _dbContext = dbContext;
         UserManager = userManager;
         SignInManager = signInManager;
+        UserGroupRepository = userGroupRepository;
+        OrganizrUserRepository = organizrUserRepository;
     }
-
-    public IOrganizrUserRepository OrganizrUserRepository =>
-            _userRepository ??= new OrganizrUserRepository(_dbContext);
 
     public void Dispose()
     {
         _dbContext.Dispose();
     }
 }
-

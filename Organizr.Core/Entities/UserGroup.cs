@@ -2,8 +2,8 @@
 {
     public class UserGroup
     {
-        public int GroupId { get; set; }
+        public int UserGroupId { get; set; }
         public string Name { get; set; } = string.Empty;
-        public List<OrganizrUser> Users { get; set; } = new();
+        public bool Open { get; set; }
     }
 }

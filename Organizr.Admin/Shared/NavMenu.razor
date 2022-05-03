@@ -6,35 +6,33 @@
     <BarBrand>
         <BarItem>
             <BarLink To="#">
-                <BarIcon IconName="IconName.Dashboard" />
+                <BarIcon IconName="IconName.Dashboard"/>
                 Organizr Admin
             </BarLink>
         </BarItem>
     </BarBrand>
     <BarMenu>
         <BarStart>
-            <BarLabel><Heading Size="HeadingSize.Is5">Personer</Heading></BarLabel>
+            <BarLabel>
+                <Heading Size="HeadingSize.Is5">Personer</Heading>
+            </BarLabel>
             <BarItem>
-                <BarLink To="/">Find Person</BarLink>
+                <BarLink To="/SearchPerson">Søg</BarLink>
             </BarItem>
             <BarItem>
                 <BarLink To="/CreatePerson">Opret Person</BarLink>
             </BarItem>
             <BarItem>
-                <BarLabel><Heading Size="HeadingSize.Is5">Grupper</Heading></BarLabel>
+                <BarLabel>
+                    <Heading Size="HeadingSize.Is5">Grupper</Heading>
+                </BarLabel>
+            </BarItem>
+            <BarItem>
+                <BarLink To="/SearchGroup">Søg</BarLink>
+            </BarItem>
+            <BarItem>
+                <BarLink To="/CreateGroup">Opret Gruppe</BarLink>
             </BarItem>
         </BarStart>
     </BarMenu>
 </Bar>
-
-@code {
-    private bool collapseNavMenu = true;
-
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-
-}
