@@ -14,6 +14,7 @@
       <PackageReference Include="Blazorise.Bootstrap" Version="1.0.4" />
       <PackageReference Include="Blazorise.DataGrid" Version="1.0.4" />
       <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.0.4" />
+      <PackageReference Include="Blazorise.RichTextEdit" Version="1.0.4" />
       <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.4" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.4">
         <PrivateAssets>all</PrivateAssets>
@@ -26,7 +27,23 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Pages\CreateGroup\" />
+      <Folder Include="Pages\Authentication" />
+      <Folder Include="Pages\Group\" />
+      <Folder Include="Pages\Person" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Pages\Authentication\Login\IndexAnonymous.razor" />
+      <AdditionalFiles Include="Pages\Authentication\Login\IndexAuthorized.razor" />
+      <AdditionalFiles Include="Pages\Authentication\Login\Page\Index.razor" />
+      <AdditionalFiles Include="Pages\Authentication\Logout\Page\Logout.razor" />
+      <AdditionalFiles Include="Pages\Group\CreateGroup\Page\CreateGroup.razor" />
+      <AdditionalFiles Include="Pages\Person\CreatePerson\Page\CreatePerson.razor" />
+      <AdditionalFiles Include="Pages\Person\SearchPerson\SearchPerson.razor" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Pages\Logout\Page\Logout.razor" />
     </ItemGroup>
 
 </Project>
