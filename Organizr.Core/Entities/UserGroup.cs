@@ -2,7 +2,7 @@
 {
     public class UserGroup
     {
-        public int UserGroupId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public bool Open { get; set; }
     }

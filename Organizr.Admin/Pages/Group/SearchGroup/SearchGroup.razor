@@ -17,7 +17,7 @@
                     <Button Size="Size.Small" Color="Color.Danger">Slet</Button>
                 </DeleteCommandTemplate>
             </DataGridCommandColumn>
-        <DataGridColumn Field="@nameof(UserGroup.UserGroupId)" Caption="Gruppe ID">
+        <DataGridColumn Field="@nameof(UserGroup.Id)" Caption="Gruppe ID">
             <DisplayTemplate>
                 <Button Clicked="() => OnEditGroupLink_Clicked(context.UserGroupId)" Color="Color.Link">@context.UserGroupId</Button>
             </DisplayTemplate>

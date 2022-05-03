@@ -16,7 +16,7 @@ public class GetAllUserGroupsHandler : IRequestHandler<GetAllUserGroupsRequest, 
 
     public async Task<GetAllUserGroupsResponse> Handle(GetAllUserGroupsRequest request, CancellationToken cancellationToken)
     {
-        var userGroups = await _unitOfWork.UserGroupRepository.GetAll();
+        var userGroups = await _unitOfWork.GroupRepository.GetAll();
         
         return new GetAllUserGroupsResponse
         {

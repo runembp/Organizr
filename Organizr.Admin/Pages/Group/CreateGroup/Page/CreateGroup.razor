@@ -43,8 +43,8 @@
 
         var response = await Mediator.Send(new CreateUserGroupCommand
         {
-            GroupName = GroupName,
-            GroupOpenForAll = GroupOpenForAll
+            Name = GroupName,
+            Open = GroupOpenForAll
         });
 
         GroupCreated = response.Succeeded;
