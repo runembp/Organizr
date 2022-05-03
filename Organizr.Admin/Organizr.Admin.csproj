@@ -44,6 +44,7 @@
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Pages\Logout\Page\Logout.razor" />
+      <_ContentIncludedByDefault Remove="Pages\SearchGroup\SearchGroup.razor" />
     </ItemGroup>
 
 </Project>
