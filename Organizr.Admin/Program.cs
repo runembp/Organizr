@@ -2,6 +2,7 @@ using Blazored.LocalStorage;
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
+using Blazorise.RichTextEdit;
 using MediatR;
 using Microsoft.AspNetCore.Components.Authorization;
 using Organizr.Application.Commands;
@@ -34,6 +35,7 @@ void MandatoryServices()
         {
             options.Immediate = true;
         })
+        .AddBlazoriseRichTextEdit()
         .AddBootstrapProviders()
         .AddFontAwesomeIcons();
     builder.Services.AddAuthentication();

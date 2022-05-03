@@ -1,0 +1,37 @@
+﻿@page "/PageSetup"
+
+<h3>Sideopsætning</h3>
+
+<Tabs SelectedTab="@selectedTab" SelectedTabChanged="@OnSelectedTabChanged">
+    <Items>
+        <Tab Name="Forside">Home</Tab>
+        <Tab Name="Om os">Profile</Tab>
+        <Tab Name="Kontakt">Messages</Tab>
+        <Tab Name="Opret medlemskab">Settings</Tab>
+    </Items>
+    <Content>
+        <TabPanel Name="Forside">
+            Content for home.
+        </TabPanel>
+        <TabPanel Name="Om os">
+            Content for profile.
+        </TabPanel>
+        <TabPanel Name="Kontakt">
+            Content for messages.
+        </TabPanel>
+        <TabPanel Name="Opret medlemskab">
+            <PageEdit  />
+        </TabPanel>
+    </Content>
+</Tabs>
+
+@code{
+    string selectedTab = "profile";
+
+    private Task OnSelectedTabChanged( string name )
+    {
+        selectedTab = name;
+
+        return Task.CompletedTask;
+    }
+}
