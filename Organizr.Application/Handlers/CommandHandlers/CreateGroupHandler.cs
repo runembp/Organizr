@@ -14,10 +14,10 @@ public class CreateUserGroupCommandHandler : IRequestHandler<CreateUserGroupComm
     {
         _unitOfWork = unitOfWork;
     }
-    
+
     public async Task<CreateUserGroupResponse> Handle(CreateUserGroupCommand request, CancellationToken cancellationToken)
     {
-        var response = new CreateUserGroupResponse {Succeeded = false};
+        var response = new CreateUserGroupResponse { Succeeded = false };
 
         var groupNameAlreadyTaken = await _unitOfWork.UserGroupRepository.GroupExists(request.GroupName);
 
@@ -25,7 +25,7 @@ public class CreateUserGroupCommandHandler : IRequestHandler<CreateUserGroupComm
         {
             return response;
         }
-        
+
         var userGroup = new UserGroup
         {
             Name = request.GroupName,

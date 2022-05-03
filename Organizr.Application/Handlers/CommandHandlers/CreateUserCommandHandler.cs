@@ -1,11 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-using AutoMapper;
+﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Organizr.Application.Commands;
 using Organizr.Application.Responses;
 using Organizr.Core.Entities;
 using Organizr.Core.Repositories;
+using System.ComponentModel.DataAnnotations;
 
 namespace Organizr.Application.Handlers.CommandHandlers;
 
@@ -19,12 +19,12 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Creat
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
-    
+
     public async Task<CreateUserResponse> Handle(CreateUserCommand command, CancellationToken cancellationToken)
     {
         var response = new CreateUserResponse();
 
-        if(!new EmailAddressAttribute().IsValid(command.Email))
+        if (!new EmailAddressAttribute().IsValid(command.Email))
         {
             response.Errors.Add(new IdentityError { Description = "Email er ikke i et godkendt format" });
             return response;

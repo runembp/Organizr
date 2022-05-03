@@ -16,18 +16,18 @@ public class UserLoginHandler : IRequestHandler<UserLoginRequest, UserLoginRespo
         _unitOfWork = unitOfWork;
         _tokenHelperClass = tokenHelperClass;
     }
-    
+
     public async Task<UserLoginResponse> Handle(UserLoginRequest request, CancellationToken cancellationToken)
     {
-        var response = new UserLoginResponse { Succeeded = false};
-        
+        var response = new UserLoginResponse { Succeeded = false };
+
         var user = await _unitOfWork.UserManager.FindByEmailAsync(request.Email);
 
         if (user is null)
         {
             return response;
         }
-        
+
         var signInResult = await _unitOfWork.SignInManager.CheckPasswordSignInAsync(user, request.Password, false);
 
         if (!signInResult.Succeeded)
@@ -38,7 +38,7 @@ public class UserLoginHandler : IRequestHandler<UserLoginRequest, UserLoginRespo
         response.Email = user.Email;
         response.Succeeded = signInResult.Succeeded;
         response.Token = _tokenHelperClass.GenerateToken(user);
-        
+
         return response;
     }
 }

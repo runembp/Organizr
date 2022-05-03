@@ -1,9 +1,9 @@
-﻿using System.Net.Http.Headers;
-using Blazored.LocalStorage;
+﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Organizr.Application.Requests;
 using Organizr.Application.Responses;
 using Organizr.Core.Repositories;
+using System.Net.Http.Headers;
 
 namespace Organizr.Application.HelperClasses;
 
@@ -27,13 +27,13 @@ public class AuthenticationHelperClass
     public async Task<UserLoginResponse> Login(UserLoginRequest request)
     {
         var user = await _unitOfWork.UserManager.FindByEmailAsync(request.Email);
-        var response = new UserLoginResponse { Succeeded = false};
+        var response = new UserLoginResponse { Succeeded = false };
         var signInResult = await _unitOfWork.SignInManager.CheckPasswordSignInAsync(user, request.Password, false);
-        
+
         if (!signInResult.Succeeded)
         {
             return response;
-        } 
+        }
 
         response.Succeeded = signInResult.Succeeded;
         response.Email = user.Email;

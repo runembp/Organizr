@@ -9,8 +9,8 @@ public class OrganizrUserMappingProfile : Profile
 {
     public OrganizrUserMappingProfile()
     {
-        CreateMap<OrganizrUser, OrganizrUserResponse>().ReverseMap();
-        CreateMap<OrganizrUser, CreateOrganizrUserCommand>().ReverseMap();
+        CreateMap<OrganizrUser, CreateUserResponse>().ReverseMap();
+        CreateMap<OrganizrUser, CreateUserCommand>().ReverseMap();
     }
 }
 

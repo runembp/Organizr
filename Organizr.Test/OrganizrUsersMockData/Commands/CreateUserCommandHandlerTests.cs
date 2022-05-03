@@ -14,14 +14,14 @@ using Xunit;
 
 namespace Organizr.Test.OrganizrUsersMockData.Commands
 {
-    public class CreateOrganizrUserCommandHandlerTests
+    public class CreateUserCommandHandlerTests
     {
         private readonly IMapper _mapper;
         private readonly Mock<IUnitOfWork> _mockUow;
-        private readonly CreateOrganizrUserCommand _organizrUserCommand;
-        private readonly CreateOrganizrUserHandler _handler;
+        private readonly CreateUserCommand _organizrUserCommand;
+        private readonly CreateUserCommandHandler _handler;
 
-        public CreateOrganizrUserCommandHandlerTests()
+        public CreateUserCommandHandlerTests()
         {
             _mockUow = MockUnitOfWork.GetUnitOfWork();
 
@@ -31,9 +31,9 @@ namespace Organizr.Test.OrganizrUsersMockData.Commands
             });
 
             _mapper = mapperConfig.CreateMapper();
-            _handler = new CreateOrganizrUserHandler(_mockUow.Object, _mapper);
+            _handler = new CreateUserCommandHandler(_mockUow.Object, _mapper);
 
-            _organizrUserCommand = new CreateOrganizrUserCommand
+            _organizrUserCommand = new CreateUserCommand
             {
                 FirstName = "Test",
                 LastName = "Test",
@@ -52,7 +52,7 @@ namespace Organizr.Test.OrganizrUsersMockData.Commands
             var result = await _handler.Handle(_organizrUserCommand, CancellationToken.None);
             var users = await _mockUow.Object.OrganizrUserRepository.GetAll();
 
-            result.ShouldBeOfType<OrganizrUserResponse>();
+            result.ShouldBeOfType<CreateUserResponse>();
 
             users.Count.ShouldBe(3);
 

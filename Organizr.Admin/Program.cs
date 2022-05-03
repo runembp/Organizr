@@ -46,7 +46,7 @@ void DependencyInjections()
     builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationStateProviderHelperClass>();
     builder.Services.AddScoped<AuthenticationHelperClass>();
     builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-    builder.Services.AddScoped<IOrganizrUserRepository, OrganizrUserRepository>();
+    builder.Services.AddScoped<IUserRepository, UserRepository>();
     builder.Services.AddScoped<IUserGroupRepository, UserGroupRepository>();
     builder.Services.AddTransient<IRequestHandler<CreateUserCommand, CreateUserResponse>, CreateUserCommandHandler>();
     builder.Services.AddTransient<IRequestHandler<CreateUserGroupCommand, CreateUserGroupResponse>, CreateUserGroupCommandHandler>();
