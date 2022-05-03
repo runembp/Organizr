@@ -1,0 +1,19 @@
+﻿@page "/CssSetup"
+
+<Heading Size="HeadingSize.Is3">Opsætning af CSS for Member-applikationen</Heading>
+
+<Div>
+    <Column ColumnSize="ColumnSize.Is6" Padding="Padding.Is0">
+        <MemoEdit Rows="30" AutoSize Disabled="!_editingActivated"/>
+    </Column>
+
+    <Field TextAlignment="TextAlignment.End" ColumnSize="ColumnSize.Is6">
+        <Check TValue="bool" @bind-Checked="_editingActivated">Aktiver Redigering</Check>
+    </Field>
+
+    <Button Color="Color.Primary">Gem</Button>
+</Div>
+
+@code {
+    private bool _editingActivated;
+}
