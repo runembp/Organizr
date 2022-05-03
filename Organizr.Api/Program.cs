@@ -10,7 +10,6 @@ using Organizr.Application.Handlers.RequestHandlers;
 using Organizr.Application.HelperClasses;
 using Organizr.Application.Requests;
 
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,9 +47,8 @@ ApplicationDatabaseInitializerHelperClass.SetUpDatabaseAndIdentity(builder);
 builder.Services.AddScoped<TokenHelperClass>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IOrganizrUserRepository, OrganizrUserRepository>();
-builder.Services.AddScoped<IUserGroupRepository, UserGroupRepository>();
 builder.Services.AddScoped<IRequestHandler<GetAllOrganizrUserRequest, List<OrganizrUser>>, GetAllOrganizrUserHandler>();
-builder.Services.AddTransient<IRequestHandler<CreateOrganizrUserCommand, OrganizrUserResponse>, CreateOrganizrUserHandler>();
+builder.Services.AddTransient<IRequestHandler<CreateUserCommand, CreateUserResponse>, CreateUserCommandHandler>();
 builder.Services.AddTransient<IRequestHandler<UserLoginRequest, UserLoginResponse>, UserLoginHandler>();
 
 var app = builder.Build();

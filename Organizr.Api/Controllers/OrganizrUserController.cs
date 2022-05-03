@@ -30,7 +30,7 @@ public class OrganizrUserController : ControllerBase
 
     [HttpPost("organizr-user")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<OrganizrUserResponse>> CreateOrganizrUser([FromBody] CreateOrganizrUserCommand command)
+    public async Task<ActionResult<CreateUserResponse>> CreateOrganizrUser([FromBody] CreateUserCommand command)
     {
         var result = await _mediator.Send(command);
         return Ok(result);

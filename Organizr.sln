@@ -5,31 +5,11 @@ VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Organizr.Core", "Organizr.Core\Organizr.Core.csproj", "{D759E4C0-0976-46A4-8FB1-799BF7853C0C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Organizr.Infrastructure", "Organizr.Infrastructure\Organizr.Infrastructure.csproj", "{75F27D39-7CB6-4CFC-8B0B-CA88FE6841AA}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Organizr.Api", "Organizr.Api\Organizr.Api.csproj", "{D386A1DF-43E8-41EC-91B7-E7AF8E45C3C0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Organizr.Member", "Organizr.Member", "{E170AAFD-4540-4AA2-878A-E92FAF1EAFA0}"
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "member-application", "..\..\..\ClientApplication\member-application\", "{A5E95B92-3231-4B8C-8609-2DA5D7387FA0}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_65210"
-		Debug.AspNetCompiler.PhysicalPath = "..\..\..\ClientApplication\member-application\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_65210\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_65210"
-		Release.AspNetCompiler.PhysicalPath = "..\..\..\ClientApplication\member-application\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_65210\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "65210"
-	EndProjectSection
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_65210"
@@ -56,7 +36,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Organizr.WebClients", "Orga
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Organizr.Admin", "Organizr.Admin\Organizr.Admin.csproj", "{6FAB5B01-32F8-47C9-A893-DFE67914A58A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Organizr.Test", "Organizr.Test\Organizr.Test.csproj", "{8642C8AB-9BB0-4421-AC0F-4982CDDE373F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Organizr.Test", "Organizr.Test\Organizr.Test.csproj", "{8642C8AB-9BB0-4421-AC0F-4982CDDE373F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,10 +48,6 @@ Global
 		{D759E4C0-0976-46A4-8FB1-799BF7853C0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D759E4C0-0976-46A4-8FB1-799BF7853C0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D759E4C0-0976-46A4-8FB1-799BF7853C0C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{75F27D39-7CB6-4CFC-8B0B-CA88FE6841AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{75F27D39-7CB6-4CFC-8B0B-CA88FE6841AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{75F27D39-7CB6-4CFC-8B0B-CA88FE6841AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{75F27D39-7CB6-4CFC-8B0B-CA88FE6841AA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D386A1DF-43E8-41EC-91B7-E7AF8E45C3C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D386A1DF-43E8-41EC-91B7-E7AF8E45C3C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D386A1DF-43E8-41EC-91B7-E7AF8E45C3C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -88,10 +64,6 @@ Global
 		{6FAB5B01-32F8-47C9-A893-DFE67914A58A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FAB5B01-32F8-47C9-A893-DFE67914A58A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FAB5B01-32F8-47C9-A893-DFE67914A58A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{54C9257C-0F6D-4F5D-BAA7-72C39FFD346F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{54C9257C-0F6D-4F5D-BAA7-72C39FFD346F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{54C9257C-0F6D-4F5D-BAA7-72C39FFD346F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{54C9257C-0F6D-4F5D-BAA7-72C39FFD346F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8642C8AB-9BB0-4421-AC0F-4982CDDE373F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8642C8AB-9BB0-4421-AC0F-4982CDDE373F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8642C8AB-9BB0-4421-AC0F-4982CDDE373F}.Release|Any CPU.ActiveCfg = Release|Any CPU
