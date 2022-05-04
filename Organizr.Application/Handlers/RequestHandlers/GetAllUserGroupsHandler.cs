@@ -13,14 +13,14 @@ public class GetAllUserGroupsHandler : IRequestHandler<GetAllUserGroupsRequest, 
     {
         _unitOfWork = unitOfWork;
     }
-    
+
     public async Task<GetAllUserGroupsResponse> Handle(GetAllUserGroupsRequest request, CancellationToken cancellationToken)
     {
-        var response = new GetAllUserGroupsResponse
+        var userGroups = await _unitOfWork.GroupRepository.GetAll();
+        
+        return new GetAllUserGroupsResponse
         {
-            UserGroups = await _unitOfWork.UserGroupRepository.GetAll()
+            UserGroups = userGroups
         };
-
-        return response;
     }
 }

@@ -1,11 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-using AutoMapper;
+﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Organizr.Application.Commands;
 using Organizr.Application.Responses;
 using Organizr.Core.Entities;
 using Organizr.Core.Repositories;
+using System.ComponentModel.DataAnnotations;
 
 namespace Organizr.Application.Handlers.CommandHandlers;
 
@@ -19,35 +19,30 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Creat
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
-    
+
     public async Task<CreateUserResponse> Handle(CreateUserCommand command, CancellationToken cancellationToken)
     {
-        var response = new CreateUserResponse();
-
-        if(!new EmailAddressAttribute().IsValid(command.Email))
+        var user = _mapper.Map<OrganizrUser>(command);
+        
+        var response = new CreateUserResponse {Succeeded = false};
+        
+        if (user is null)
         {
-            response.Errors.Add(new IdentityError { Description = "Email er ikke i et godkendt format" });
             return response;
         }
 
-        var user = new OrganizrUser
+        if (!new EmailAddressAttribute().IsValid(command.Email))
         {
-            UserName = command.Email,
-            Email = command.Email,
-            FirstName = command.FirstName,
-            LastName = command.LastName,
-            Address = command.LastName,
-            Gender = command.Gender,
-            PhoneNumber = command.PhoneNumber,
-            ConfigRefreshPrivilege = command.ConfigRefreshPrivilege
-        };
+            response.Errors.Add(new IdentityError {Description = "Email er ikke i et godkendt format"});
+        }
+        
+        user.UserName = user.Email;
 
         var result = await _unitOfWork.UserManager.CreateAsync(user, command.Password);
 
-        return new CreateUserResponse
-        {
-            Succeeded = result.Succeeded,
-            Errors = result.Errors.ToList()
-        };
+        response.Succeeded = result.Succeeded;
+        response.Errors.AddRange(result.Errors.ToList());
+
+        return response;
     }
 }

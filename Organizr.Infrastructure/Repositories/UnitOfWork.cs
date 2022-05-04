@@ -10,15 +10,15 @@ public class UnitOfWork : IUnitOfWork
     private readonly OrganizrDbContext _dbContext;
     public UserManager<OrganizrUser> UserManager { get; }
     public SignInManager<OrganizrUser> SignInManager { get; }
-    public IOrganizrUserRepository OrganizrUserRepository { get; }
-    public IUserGroupRepository UserGroupRepository { get; }
+    public IUserRepository OrganizrUserRepository { get; }
+    public IUserGroupRepository GroupRepository { get; }
 
-    public UnitOfWork(OrganizrDbContext dbContext, UserManager<OrganizrUser> userManager, SignInManager<OrganizrUser> signInManager, IUserGroupRepository userGroupRepository, IOrganizrUserRepository organizrUserRepository)
+    public UnitOfWork(OrganizrDbContext dbContext, UserManager<OrganizrUser> userManager, SignInManager<OrganizrUser> signInManager, IUserGroupRepository userGroupRepository, IUserRepository organizrUserRepository)
     {
         _dbContext = dbContext;
         UserManager = userManager;
         SignInManager = signInManager;
-        UserGroupRepository = userGroupRepository;
+        GroupRepository = userGroupRepository;
         OrganizrUserRepository = organizrUserRepository;
     }
 

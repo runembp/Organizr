@@ -1,5 +1,4 @@
-﻿using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -8,12 +7,21 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Organizr.Core.ApplicationConstants;
 using Organizr.Core.Entities;
-using Organizr.Core.Enums;
 using Organizr.Infrastructure.Data;
+using Organizr.Infrastructure.Services;
+using System.Text;
+using MediatR;
+using Organizr.Application.Commands;
+using Organizr.Application.Handlers.CommandHandlers;
+using Organizr.Application.Handlers.RequestHandlers;
+using Organizr.Application.Requests;
+using Organizr.Application.Responses;
+using Organizr.Core.Repositories;
+using Organizr.Infrastructure.Repositories;
 
 namespace Organizr.Application.HelperClasses;
 
-public static class ApplicationDatabaseInitializerHelperClass
+public static class ApplicationInitializerHelperClass
 {
     /// <summary>
     /// Sets up the Organizr Database with the recieved ConnectionString from appsettings.json and
@@ -22,13 +30,14 @@ public static class ApplicationDatabaseInitializerHelperClass
     /// <param name="builder"></param>
     public static void SetUpDatabaseAndIdentity(WebApplicationBuilder builder)
     {
+
         builder.Services.AddDbContext<OrganizrDbContext>(options =>
         {
             options.UseSqlServer(
                 builder.Configuration.GetConnectionString("DefaultConnection"),
                 sqlOptions => sqlOptions.MigrationsAssembly(ApplicationConstants.OrganizrInfrastructureProject));
         });
-        
+
         // Identity
         builder.Services.AddIdentity<OrganizrUser, OrganizrRole>(options =>
             {
@@ -51,15 +60,30 @@ public static class ApplicationDatabaseInitializerHelperClass
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(KeyVaultService.GetSecret("JwtKey", builder))),
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     ValidateLifetime = false
                 };
             });
+        builder.Services.AddAuthentication();
         builder.Services.AddAuthorization();
     }
-    
+
+    public static void AddSharedDependencyInjections(WebApplicationBuilder builder)
+    {
+        builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
+        builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        builder.Services.AddScoped<TokenHelperClass>();
+        builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+        builder.Services.AddScoped<IUserRepository, UserRepository>();
+        builder.Services.AddScoped<IUserGroupRepository, UserGroupRepository>();
+        builder.Services.AddTransient<IRequestHandler<CreateUserCommand, CreateUserResponse>, CreateUserCommandHandler>();
+        builder.Services.AddTransient<IRequestHandler<CreateUserGroupCommand, CreateUserGroupResponse>, CreateUserGroupCommandHandler>();
+        builder.Services.AddTransient<IRequestHandler<GetAllOrganizrUserRequest, List<OrganizrUser>>, GetAllOrganizrUserHandler>();
+        builder.Services.AddTransient<IRequestHandler<GetAllUserGroupsRequest, GetAllUserGroupsResponse>, GetAllUserGroupsHandler>();
+    }
+
     /// <summary>
     /// Makes sure that we always have the established Organizr Roles on the database
     /// </summary>
@@ -74,12 +98,12 @@ public static class ApplicationDatabaseInitializerHelperClass
         {
             await roleManager.CreateAsync(new OrganizrRole(ApplicationConstants.OrganizationAdministrator));
         }
-        
+
         if (!await roleManager.RoleExistsAsync(ApplicationConstants.Administrator))
         {
             await roleManager.CreateAsync(new OrganizrRole(ApplicationConstants.Administrator));
         }
-        
+
         if (!await roleManager.RoleExistsAsync(ApplicationConstants.Basic))
         {
             await roleManager.CreateAsync(new OrganizrRole(ApplicationConstants.Basic));

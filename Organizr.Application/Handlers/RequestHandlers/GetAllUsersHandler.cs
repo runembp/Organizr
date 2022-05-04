@@ -8,10 +8,10 @@ namespace Organizr.Application.Handlers.RequestHandlers;
 
 public class GetAllOrganizrUserHandler : IRequestHandler<GetAllOrganizrUserRequest, List<OrganizrUser>>
 {
-    private readonly IOrganizrUserRepository _memberRepo;
+    private readonly IUserRepository _memberRepo;
     private readonly IMapper _mapper;
 
-    public GetAllOrganizrUserHandler(IOrganizrUserRepository memberRepository, IMapper mapper)
+    public GetAllOrganizrUserHandler(IUserRepository memberRepository, IMapper mapper)
     {
         _memberRepo = memberRepository;
         _mapper = mapper;

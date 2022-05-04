@@ -1,15 +1,14 @@
-﻿
+﻿using System.Collections.Generic;
 using Moq;
 using Organizr.Core.Entities;
 using Organizr.Core.Enums;
 using Organizr.Core.Repositories;
-using System.Collections.Generic;
 
-namespace Organizr.Test.Mocks
+namespace Organizr.Test.MockData
 {
     public static class MockOrganizrUserRepository
     {
-        public static Mock<IOrganizrUserRepository> GetOrganizrUserRepository()
+        public static Mock<IUserRepository> GetOrganizrUserRepository()
         {
             var organizrUsers = new List<OrganizrUser>
             {
@@ -33,7 +32,7 @@ namespace Organizr.Test.Mocks
                 }
             };
 
-            var mockRepo = new Mock<IOrganizrUserRepository>();
+            var mockRepo = new Mock<IUserRepository>();
 
             mockRepo.Setup(r => r.GetAll()).ReturnsAsync(organizrUsers);
 

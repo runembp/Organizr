@@ -5,9 +5,9 @@ using Organizr.Infrastructure.Data;
 
 namespace Organizr.Infrastructure.Repositories
 {
-    public class OrganizrUserRepository : Repository<OrganizrUser>, IOrganizrUserRepository
+    public class UserRepository : Repository<OrganizrUser>, IUserRepository
     {
-        public OrganizrUserRepository(OrganizrDbContext organizrContext) : base(organizrContext) { }
+        public UserRepository(OrganizrDbContext organizrContext) : base(organizrContext) { }
         public async Task<IEnumerable<OrganizrUser>> GetEmployeeByLastName(string lastname)
         {
             return await _organizrContext.Users.Where(m => m.LastName == lastname).ToListAsync();

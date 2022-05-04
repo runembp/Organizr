@@ -243,20 +243,20 @@ namespace Organizr.Infrastructure.Migrations
 
             modelBuilder.Entity("Organizr.Core.Entities.UserGroup", b =>
                 {
-                    b.Property<int>("UserGroupId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserGroupId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("IsOpen")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Open")
-                        .HasColumnType("bit");
-
-                    b.HasKey("UserGroupId");
+                    b.HasKey("Id");
 
                     b.ToTable("UserGroups");
                 });

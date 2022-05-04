@@ -5,5 +5,5 @@ namespace Organizr.Application.Requests;
 
 public class GetAllUserGroupsRequest : IRequest<GetAllUserGroupsResponse>
 {
-    
+
 }
