@@ -5,56 +5,37 @@ using Blazorise.Icons.FontAwesome;
 using Blazorise.RichTextEdit;
 using MediatR;
 using Microsoft.AspNetCore.Components.Authorization;
-using Organizr.Application.Commands;
-using Organizr.Application.Handlers.CommandHandlers;
-using Organizr.Application.Handlers.RequestHandlers;
 using Organizr.Application.HelperClasses;
-using Organizr.Application.Requests;
-using Organizr.Application.Responses;
-using Organizr.Core.Entities;
-using Organizr.Core.Repositories;
-using Organizr.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-ApplicationDatabaseInitializerHelperClass.SetUpDatabaseAndIdentity(builder);
+ApplicationInitializerHelperClass.SetUpDatabaseAndIdentity(builder);
+ApplicationInitializerHelperClass.AddSharedDependencyInjections(builder);
+AddMandatoryServices();
+AddApplicationSpecificDependencyInjections();
+AddApplicationSetup();
 
-MandatoryServices();
-DependencyInjections();
-ApplicationSetup();
-
-void MandatoryServices()
+void AddMandatoryServices()
 {
     builder.Services.AddRazorPages();
     builder.Services.AddServerSideBlazor();
-    builder.Services.AddMediatR(typeof(Program));
-    builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-    builder.Services.AddBlazoredLocalStorage();
     builder.Services
+        .AddMediatR(typeof(Program))
         .AddBlazorise(options => { options.Immediate = true; })
         .AddBlazoriseRichTextEdit()
         .AddBootstrapProviders()
-        .AddFontAwesomeIcons();
-    builder.Services.AddAuthentication();
-    builder.Services.AddAuthorization();
+        .AddFontAwesomeIcons()
+        .AddBlazoredLocalStorage();
 }
 
-void DependencyInjections()
+void AddApplicationSpecificDependencyInjections()
 {
     builder.Services.AddScoped(_ => new HttpClient());
-    builder.Services.AddScoped<TokenHelperClass>();
     builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationStateProviderHelperClass>();
     builder.Services.AddScoped<AuthenticationHelperClass>();
-    builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-    builder.Services.AddScoped<IUserRepository, UserRepository>();
-    builder.Services.AddScoped<IUserGroupRepository, UserGroupRepository>();
-    builder.Services.AddTransient<IRequestHandler<CreateUserCommand, CreateUserResponse>, CreateUserCommandHandler>();
-    builder.Services.AddTransient<IRequestHandler<CreateUserGroupCommand, CreateUserGroupResponse>, CreateUserGroupCommandHandler>();
-    builder.Services.AddTransient<IRequestHandler<GetAllOrganizrUserRequest, List<OrganizrUser>>, GetAllOrganizrUserHandler>();
-    builder.Services.AddTransient<IRequestHandler<GetAllUserGroupsRequest, GetAllUserGroupsResponse>, GetAllUserGroupsHandler>();
 }
 
-void ApplicationSetup()
+void AddApplicationSetup()
 {
     var app = builder.Build();
 
@@ -71,8 +52,8 @@ void ApplicationSetup()
     app.MapFallbackToPage("/_Host");
 
     // Seed Roles and Users to Database
-    ApplicationDatabaseInitializerHelperClass.SeedRolesToDb(app).Wait();
-    ApplicationDatabaseInitializerHelperClass.SeedMandatoryUsersToDatabase(app).Wait();
+    ApplicationInitializerHelperClass.SeedRolesToDb(app).Wait();
+    ApplicationInitializerHelperClass.SeedMandatoryUsersToDatabase(app).Wait();
 
     app.Run();
 }
