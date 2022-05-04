@@ -21,14 +21,14 @@ public class MemberController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet("organizr-user")]
+    [HttpGet("organizr-member")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<List<Member>> Get()
     {
         return await _mediator.Send(new GetAllMembersRequest());
     }
 
-    [HttpPost("organizr-user")]
+    [HttpPost("organizr-member")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<CreateMemberResponse>> CreateMemberUser([FromBody] CreateMemberCommand command)
