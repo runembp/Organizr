@@ -49,8 +49,8 @@ app.UseCors(x => x
 app.UseHttpsRedirection();
 app.MapControllers();
 
-// Seed Roles and Users to Database
+// Seed Roles and Members to Database
 ApplicationInitializerHelperClass.SeedRolesToDb(app).Wait();
-ApplicationInitializerHelperClass.SeedMandatoryUsersToDatabase(app).Wait();
+ApplicationInitializerHelperClass.SeedMandatoryMembersToDatabase(app).Wait();
 
 app.Run();

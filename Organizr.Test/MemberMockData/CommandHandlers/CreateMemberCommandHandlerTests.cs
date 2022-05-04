@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
 using Organizr.Application.Commands;
 using Organizr.Application.Handlers.CommandHandlers;
 using Organizr.Application.Responses;
@@ -10,23 +9,22 @@ using Organizr.Test.MockData;
 using Shouldly;
 using Xunit;
 
-namespace Organizr.Test.UserMockData.CommandHandlers
+namespace Organizr.Test.MemberMockData.CommandHandlers
 {
-    public class CreateUserCommandHandlerTests
+    public class CreateMemberCommandHandlerTests
     {
-        private readonly IMapper _mapper;
         private readonly IUnitOfWork _mockUow;
-        private readonly CreateUserCommand _organizrUserCommand;
-        private readonly CreateUserCommandHandler _handler;
+        private readonly CreateMemberCommand _organizrMemberCommand;
+        private readonly CreateMemberCommandHandler _handler;
 
-        public CreateUserCommandHandlerTests()
+        public CreateMemberCommandHandlerTests()
         {
             _mockUow = MockSetup.GetUnitOfWork();
-            _mapper = MockSetup.GetMapper();
+            var mapper = MockSetup.GetMapper();
             
-            _handler = new CreateUserCommandHandler(_mockUow, _mapper);
+            _handler = new CreateMemberCommandHandler(_mockUow, mapper);
 
-            _organizrUserCommand = new CreateUserCommand
+            _organizrMemberCommand = new CreateMemberCommand
             {
                 FirstName = "Test",
                 LastName = "Test",
@@ -40,13 +38,13 @@ namespace Organizr.Test.UserMockData.CommandHandlers
 
 
         [Fact]
-        public async Task Valid_OrganizrUser_Added()
+        public async Task Valid_Member_Added()
         {
-            var users = await _mockUow.OrganizrUserRepository.GetAll();
-            var result = await _handler.Handle(_organizrUserCommand, CancellationToken.None);
+            var result = await _handler.Handle(_organizrMemberCommand, CancellationToken.None);
             
-            result.ShouldBeOfType<CreateUserResponse>();
+            result.ShouldBeOfType<CreateMemberResponse>();
             result.Succeeded.ShouldBe(true);
+            result.Errors.Count.ShouldBe(0);
         }
     }
 }

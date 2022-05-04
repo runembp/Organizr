@@ -5,22 +5,22 @@ using Organizr.Core.Repositories;
 
 namespace Organizr.Application.Handlers.RequestHandlers;
 
-public class GetAllUserGroupsHandler : IRequestHandler<GetAllUserGroupsRequest, GetAllUserGroupsResponse>
+public class GetAllMemberGroupsHandler : IRequestHandler<GetAllMemberGroupsRequest, GetAllMemberGroupsResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public GetAllUserGroupsHandler(IUnitOfWork unitOfWork)
+    public GetAllMemberGroupsHandler(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<GetAllUserGroupsResponse> Handle(GetAllUserGroupsRequest request, CancellationToken cancellationToken)
+    public async Task<GetAllMemberGroupsResponse> Handle(GetAllMemberGroupsRequest request, CancellationToken cancellationToken)
     {
         var userGroups = await _unitOfWork.GroupRepository.GetAll();
         
-        return new GetAllUserGroupsResponse
+        return new GetAllMemberGroupsResponse
         {
-            UserGroups = userGroups
+            MemberGroups = userGroups
         };
     }
 }

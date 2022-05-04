@@ -14,30 +14,30 @@ using Xunit;
 
 namespace Organizr.Test.GroupMockData.RequestHandlers;
 
-public class RequestUserGroupHandler
+public class RequestMemberGroupHandler
 {
     private readonly IUnitOfWork _mockUnitOfWork;
-    private readonly GetAllUserGroupsHandler _requestHandler;
+    private readonly GetAllMemberGroupsHandler _requestHandler;
     
-    public RequestUserGroupHandler()
+    public RequestMemberGroupHandler()
     {
         _mockUnitOfWork = MockSetup.GetUnitOfWork();
-        _requestHandler = new GetAllUserGroupsHandler(_mockUnitOfWork);
+        _requestHandler = new GetAllMemberGroupsHandler(_mockUnitOfWork);
     }
 
     [Fact]
-    public async Task Valid_UserGroup_Added()
+    public async Task Valid_MemberGroup_Added()
     {
         // Arrange
-        var emptyUserGroupResponse = new GetAllUserGroupsResponse(); 
+        var emptyMemberGroupResponse = new GetAllMemberGroupsResponse(); 
         
         // Act
-        var result = await _requestHandler.Handle(new GetAllUserGroupsRequest(), CancellationToken.None);
+        var result = await _requestHandler.Handle(new GetAllMemberGroupsRequest(), CancellationToken.None);
         
         // Assert
-        result.ShouldBeOfType<GetAllUserGroupsResponse>();
-        result.UserGroups.ShouldBeOfType<List<UserGroup>>();
-        result.ShouldNotBe(emptyUserGroupResponse);
-        result.UserGroups.Count.ShouldBe(3);
+        result.ShouldBeOfType<GetAllMemberGroupsResponse>();
+        result.MemberGroups.ShouldBeOfType<List<MemberGroup>>();
+        result.ShouldNotBe(emptyMemberGroupResponse);
+        result.MemberGroups.Count.ShouldBe(3);
     }
 }

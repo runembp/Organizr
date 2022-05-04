@@ -6,19 +6,19 @@ using Organizr.Core.Repositories;
 
 namespace Organizr.Application.Handlers.RequestHandlers;
 
-public class GetAllOrganizrUserHandler : IRequestHandler<GetAllOrganizrUserRequest, List<OrganizrUser>>
+public class GetAllMembersHandler : IRequestHandler<GetAllMembersRequest, List<Member>>
 {
-    private readonly IUserRepository _memberRepo;
+    private readonly IMemberRepository _memberRepo;
     private readonly IMapper _mapper;
 
-    public GetAllOrganizrUserHandler(IUserRepository memberRepository, IMapper mapper)
+    public GetAllMembersHandler(IMemberRepository memberRepository, IMapper mapper)
     {
         _memberRepo = memberRepository;
         _mapper = mapper;
     }
-    public async Task<List<OrganizrUser>> Handle(GetAllOrganizrUserRequest request, CancellationToken cancellationToken)
+    public async Task<List<Member>> Handle(GetAllMembersRequest request, CancellationToken cancellationToken)
     {
-        var organizrUsers = await _memberRepo.GetAll();
-        return _mapper.Map<List<OrganizrUser>>(organizrUsers);
+        var members = await _memberRepo.GetAll();
+        return _mapper.Map<List<Member>>(members);
     }
 }

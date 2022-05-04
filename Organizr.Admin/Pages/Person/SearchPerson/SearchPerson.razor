@@ -8,7 +8,7 @@
 <SearchBar/>
 
 <DataGrid
-    TItem="OrganizrUser"
+    TItem="Member"
     Data="_userList"
     Editable="true"
     RowSelectable="_ => false"
@@ -20,18 +20,18 @@
                 <Button Size="Size.Small" Color="Color.Danger">Slet</Button>
             </DeleteCommandTemplate>
         </DataGridCommandColumn>
-        <DataGridColumn Field="@nameof(OrganizrUser.Id)" Caption="Profil ID">
+        <DataGridColumn Field="@nameof(Member.Id)" Caption="Profil ID">
             <DisplayTemplate>
                 <Button Clicked="() => OnEditUserLink_Clicked(context.Id)" Color="Color.Link">@context.Id</Button>
             </DisplayTemplate>
         </DataGridColumn>
-        <DataGridColumn Field="@nameof(OrganizrUser.FirstName)" Caption="Fornavn"/>
-        <DataGridColumn Field="@nameof(OrganizrUser.LastName)" Caption="Efternavn"/>
-        <DataGridColumn Field="@nameof(OrganizrUser.Address)" Caption="Adresse"/>
-        <DataGridColumn Field="@nameof(OrganizrUser.Email)" Caption="Email"/>
-        <DataGridColumn Field="@nameof(OrganizrUser.Gender)" Caption="Køn"/>
-        <DataGridColumn Field="@nameof(OrganizrUser.PhoneNumber)" Caption="Telefon"/>
-        <DataGridColumn Field="@nameof(OrganizrUser.ConfigRefreshPrivilege)" Caption="Opdaterings Rettigheder">
+        <DataGridColumn Field="@nameof(Member.FirstName)" Caption="Fornavn"/>
+        <DataGridColumn Field="@nameof(Member.LastName)" Caption="Efternavn"/>
+        <DataGridColumn Field="@nameof(Member.Address)" Caption="Adresse"/>
+        <DataGridColumn Field="@nameof(Member.Email)" Caption="Email"/>
+        <DataGridColumn Field="@nameof(Member.Gender)" Caption="Køn"/>
+        <DataGridColumn Field="@nameof(Member.PhoneNumber)" Caption="Telefon"/>
+        <DataGridColumn Field="@nameof(Member.ConfigRefreshPrivilege)" Caption="Opdaterings Rettigheder">
             <DisplayTemplate>
                 <Check TValue="bool" Checked="context.ConfigRefreshPrivilege" Disabled="true"></Check>
             </DisplayTemplate>
@@ -41,13 +41,13 @@
 
 @code {
 
-    private List<OrganizrUser> _userList = new();
+    private List<Member> _userList = new();
 
     protected override async Task OnInitializedAsync()
     {
-        _userList = await Mediator.Send(new GetAllOrganizrUserRequest());
-        var organizrUser = _userList.First(x => x.Id == 1 && x.Email == ApplicationConstants.MandatoryOrganizationAdministratorEmail);
-        _userList.Remove(organizrUser);
+        _userList = await Mediator.Send(new GetAllMembersRequest());
+        var mandatoryOrganizationAdministator = _userList.First(x => x.Id == 1 && x.Email == ApplicationConstants.MandatoryOrganizationAdministratorEmail);
+        _userList.Remove(mandatoryOrganizationAdministator);
         await base.OnInitializedAsync();
     }
 

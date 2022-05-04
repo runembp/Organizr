@@ -41,7 +41,7 @@
             return;
         }
 
-        var response = await Mediator.Send(new CreateUserGroupCommand
+        var response = await Mediator.Send(new CreateMemberGroupCommand
         {
             Name = GroupName,
             IsOpen = IsOpen

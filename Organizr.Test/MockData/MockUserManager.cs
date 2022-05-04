@@ -7,18 +7,18 @@ using Organizr.Core.Entities;
 
 namespace Organizr.Test.MockData;
 
-public abstract class MockUserManager : UserManager<OrganizrUser>
+public abstract class MockUserManager : UserManager<Member>
 {
     protected MockUserManager()
-        : base(new Mock<IUserPasswordStore<OrganizrUser>>().Object,
+        : base(new Mock<IUserPasswordStore<Member>>().Object,
             new Mock<IOptions<IdentityOptions>>().Object,
-            new Mock<IPasswordHasher<OrganizrUser>>().Object,
-            Array.Empty<IUserValidator<OrganizrUser>>(),
-            Array.Empty<IPasswordValidator<OrganizrUser>>(),
+            new Mock<IPasswordHasher<Member>>().Object,
+            Array.Empty<IUserValidator<Member>>(),
+            Array.Empty<IPasswordValidator<Member>>(),
             new Mock<ILookupNormalizer>().Object,
             new Mock<IdentityErrorDescriber>().Object,
             new Mock<IServiceProvider>().Object,
-            new Mock<ILogger<UserManager<OrganizrUser>>>().Object)
+            new Mock<ILogger<UserManager<Member>>>().Object)
     {
     }
 }

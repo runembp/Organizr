@@ -3,7 +3,7 @@ using Organizr.Core.Enums;
 
 namespace Organizr.Core.Entities
 {
-    public class OrganizrUser : IdentityUser<int>
+    public class Member : IdentityUser<int>
     {
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;

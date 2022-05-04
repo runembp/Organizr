@@ -5,9 +5,9 @@ namespace Organizr.Core.Repositories
 {
     public interface IUnitOfWork : IDisposable
     {
-        IUserRepository OrganizrUserRepository { get; }
-        IUserGroupRepository GroupRepository { get; }
-        UserManager<OrganizrUser> UserManager { get; }
-        SignInManager<OrganizrUser> SignInManager { get; }
+        IMemberRepository MemberRepository { get; }
+        IMemberGroupRepository GroupRepository { get; }
+        UserManager<Member> UserManager { get; }
+        SignInManager<Member> SignInManager { get; }
     }
 }

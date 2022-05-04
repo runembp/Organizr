@@ -7,22 +7,22 @@ using Organizr.Core.Repositories;
 
 namespace Organizr.Application.Handlers.CommandHandlers;
 
-public class CreateUserGroupCommandHandler : IRequestHandler<CreateUserGroupCommand, CreateUserGroupResponse>
+public class CreateMemberGroupCommandHandler : IRequestHandler<CreateMemberGroupCommand, CreateMemberGroupResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
-    public CreateUserGroupCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    public CreateMemberGroupCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
 
-    public async Task<CreateUserGroupResponse> Handle(CreateUserGroupCommand command, CancellationToken cancellationToken)
+    public async Task<CreateMemberGroupResponse> Handle(CreateMemberGroupCommand command, CancellationToken cancellationToken)
     {
-        var response = new CreateUserGroupResponse { Succeeded = false };
+        var response = new CreateMemberGroupResponse { Succeeded = false };
         
-        var userGroup = _mapper.Map<UserGroup>(command);
+        var userGroup = _mapper.Map<MemberGroup>(command);
 
         if (userGroup is null)
         {

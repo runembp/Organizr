@@ -1,6 +1,6 @@
 ﻿namespace Organizr.Core.Entities
 {
-    public class UserGroup
+    public class MemberGroup
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;

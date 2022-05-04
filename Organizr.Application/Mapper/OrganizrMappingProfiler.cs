@@ -8,8 +8,8 @@ public class OrganizrMappingProfiler : Profile
 {
     public OrganizrMappingProfiler()
     {
-        CreateMap<OrganizrUser, CreateUserCommand>().ReverseMap();
-        CreateMap<UserGroup, CreateUserGroupCommand>().ReverseMap();
+        CreateMap<Member, CreateMemberCommand>().ReverseMap();
+        CreateMap<MemberGroup, CreateMemberGroupCommand>().ReverseMap();
     }
 }
 

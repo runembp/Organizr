@@ -2,7 +2,7 @@
 
 namespace Organizr.Core.Repositories;
 
-public interface IUserGroupRepository : IRepository<UserGroup>
+public interface IMemberGroupRepository : IRepository<MemberGroup>
 {
     public Task<bool> GroupExists(string groupName);
 }
