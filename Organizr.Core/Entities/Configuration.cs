@@ -9,5 +9,5 @@ public class Configuration
     public string? Description { get; set; } = null;
     public string? StringValue { get; set; } = null;
     public bool? BoolValue { get; set; } = null;
-    public int? IdValues { get; set; } = null; 
+    public int? IdValue { get; set; } = null; 
 }
