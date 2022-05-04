@@ -5,9 +5,9 @@ using System.Reflection;
 
 namespace Organizr.Infrastructure.Data
 {
-    public class OrganizrDbContext : IdentityDbContext<OrganizrUser, OrganizrRole, int>
+    public class OrganizrDbContext : IdentityDbContext<Member, OrganizrRole, int>
     {
-        public DbSet<UserGroup> UserGroups { get; set; }
+        public DbSet<MemberGroup> MemberGroups { get; set; }
 
         public OrganizrDbContext(DbContextOptions<OrganizrDbContext> options) : base(options)
         {

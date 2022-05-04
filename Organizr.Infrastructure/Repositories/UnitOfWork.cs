@@ -8,18 +8,18 @@ namespace Organizr.Infrastructure.Repositories;
 public class UnitOfWork : IUnitOfWork
 {
     private readonly OrganizrDbContext _dbContext;
-    public UserManager<OrganizrUser> UserManager { get; }
-    public SignInManager<OrganizrUser> SignInManager { get; }
-    public IUserRepository OrganizrUserRepository { get; }
-    public IUserGroupRepository GroupRepository { get; }
+    public UserManager<Member> UserManager { get; }
+    public SignInManager<Member> SignInManager { get; }
+    public IMemberRepository MemberRepository { get; }
+    public IMemberGroupRepository GroupRepository { get; }
 
-    public UnitOfWork(OrganizrDbContext dbContext, UserManager<OrganizrUser> userManager, SignInManager<OrganizrUser> signInManager, IUserGroupRepository userGroupRepository, IUserRepository organizrUserRepository)
+    public UnitOfWork(OrganizrDbContext dbContext, UserManager<Member> userManager, SignInManager<Member> signInManager, IMemberGroupRepository memberGroupRepository, IMemberRepository memberRepository)
     {
         _dbContext = dbContext;
         UserManager = userManager;
         SignInManager = signInManager;
-        GroupRepository = userGroupRepository;
-        OrganizrUserRepository = organizrUserRepository;
+        GroupRepository = memberGroupRepository;
+        MemberRepository = memberRepository;
     }
 
     public void Dispose()

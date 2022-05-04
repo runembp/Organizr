@@ -7,9 +7,9 @@ namespace Organizr.Test.MockData;
 
 public static class MockGroupRepository
 {
-    public static Mock<IUserGroupRepository> GetUserGroupRepository()
+    public static Mock<IMemberGroupRepository> GetMemberGroupRepository()
     {
-        var userGroups = new List<UserGroup>
+        var memberGroups = new List<MemberGroup>
         {
             new ()
             {
@@ -31,13 +31,13 @@ public static class MockGroupRepository
             },
         };
 
-        var mockRepo = new Mock<IUserGroupRepository>();
+        var mockRepo = new Mock<IMemberGroupRepository>();
 
-        mockRepo.Setup(r => r.GetAll()).ReturnsAsync(userGroups);
+        mockRepo.Setup(r => r.GetAll()).ReturnsAsync(memberGroups);
 
-        mockRepo.Setup(r => r.Add(It.IsAny<UserGroup>())).ReturnsAsync((UserGroup userGroup) =>
+        mockRepo.Setup(r => r.Add(It.IsAny<MemberGroup>())).ReturnsAsync((MemberGroup userGroup) =>
         {
-            userGroups.Add(userGroup);
+            memberGroups.Add(userGroup);
             return userGroup;
         });
 

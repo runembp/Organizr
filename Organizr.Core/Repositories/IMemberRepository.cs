@@ -2,7 +2,7 @@
 
 namespace Organizr.Core.Repositories
 {
-    public interface IUserRepository : IRepository<OrganizrUser>
+    public interface IMemberRepository : IRepository<Member>
     {
 
     }

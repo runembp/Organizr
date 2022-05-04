@@ -13,12 +13,12 @@ namespace Organizr.Test.MockData
         {
             var mockUow = new Mock<IUnitOfWork>();
 
-            var userRepository = MockOrganizrUserRepository.GetOrganizrUserRepository();
-            var groupRepository = MockGroupRepository.GetUserGroupRepository();
+            var memberRepository = MockMemberRepository.GetMemberRepository();
+            var groupRepository = MockGroupRepository.GetMemberGroupRepository();
             var signInManager = new MockSignInManager();
-            var userManager = MockUserManager<OrganizrUser>();
+            var userManager = MockUserManager<Member>();
 
-            mockUow.Setup(repo => repo.OrganizrUserRepository).Returns(userRepository.Object);
+            mockUow.Setup(repo => repo.MemberRepository).Returns(memberRepository.Object);
             mockUow.Setup(repo => repo.GroupRepository).Returns(groupRepository.Object);
             mockUow.Setup(manager => manager.SignInManager).Returns(signInManager);
             mockUow.Setup(manager => manager.UserManager).Returns(userManager.Object);
