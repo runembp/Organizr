@@ -4,7 +4,6 @@ using Organizr.Application.Commands;
 using Organizr.Application.Handlers.CommandHandlers;
 using Organizr.Application.Responses;
 using Organizr.Core.Enums;
-using Organizr.Core.Repositories;
 using Organizr.Test.MockData;
 using Shouldly;
 using Xunit;
@@ -13,16 +12,15 @@ namespace Organizr.Test.MemberMockData.CommandHandlers
 {
     public class CreateMemberCommandHandlerTests
     {
-        private readonly IUnitOfWork _mockUow;
         private readonly CreateMemberCommand _organizrMemberCommand;
         private readonly CreateMemberCommandHandler _handler;
 
         public CreateMemberCommandHandlerTests()
         {
-            _mockUow = MockSetup.GetUnitOfWork();
+            var mockUow = MockSetup.GetUnitOfWork();
             var mapper = MockSetup.GetMapper();
             
-            _handler = new CreateMemberCommandHandler(_mockUow, mapper);
+            _handler = new CreateMemberCommandHandler(mockUow, mapper);
 
             _organizrMemberCommand = new CreateMemberCommand
             {
