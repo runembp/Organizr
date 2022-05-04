@@ -3,7 +3,7 @@ using Organizr.Application.Responses;
 
 namespace Organizr.Application.Requests;
 
-public class GetAllUserGroupsRequest : IRequest<GetAllUserGroupsResponse>
+public class GetAllMemberGroupsRequest : IRequest<GetAllMemberGroupsResponse>
 {
 
 }

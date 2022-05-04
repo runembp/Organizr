@@ -30,7 +30,6 @@ public static class ApplicationInitializerHelperClass
     /// <param name="builder"></param>
     public static void SetUpDatabaseAndIdentity(WebApplicationBuilder builder)
     {
-
         builder.Services.AddDbContext<OrganizrDbContext>(options =>
         {
             options.UseSqlServer(
@@ -39,7 +38,7 @@ public static class ApplicationInitializerHelperClass
         });
 
         // Identity
-        builder.Services.AddIdentity<OrganizrUser, OrganizrRole>(options =>
+        builder.Services.AddIdentity<Member, OrganizrRole>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.User.RequireUniqueEmail = true;
@@ -70,22 +69,26 @@ public static class ApplicationInitializerHelperClass
         builder.Services.AddAuthorization();
     }
 
+    /// <summary>
+    /// Makes sure we always have the same shared dependencies across Organizr.Api and Organizr.Admin
+    /// </summary>
+    /// <param name="builder"></param>
     public static void AddSharedDependencyInjections(WebApplicationBuilder builder)
     {
         builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         builder.Services.AddScoped<TokenHelperClass>();
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-        builder.Services.AddScoped<IUserRepository, UserRepository>();
-        builder.Services.AddScoped<IUserGroupRepository, UserGroupRepository>();
-        builder.Services.AddTransient<IRequestHandler<CreateUserCommand, CreateUserResponse>, CreateUserCommandHandler>();
-        builder.Services.AddTransient<IRequestHandler<CreateUserGroupCommand, CreateUserGroupResponse>, CreateUserGroupCommandHandler>();
-        builder.Services.AddTransient<IRequestHandler<GetAllOrganizrUserRequest, List<OrganizrUser>>, GetAllOrganizrUserHandler>();
-        builder.Services.AddTransient<IRequestHandler<GetAllUserGroupsRequest, GetAllUserGroupsResponse>, GetAllUserGroupsHandler>();
+        builder.Services.AddScoped<IMemberRepository, MemberRepository>();
+        builder.Services.AddScoped<IMemberGroupRepository, MemberGroupRepository>();
+        builder.Services.AddTransient<IRequestHandler<CreateMemberCommand, CreateMemberResponse>, CreateMemberCommandHandler>();
+        builder.Services.AddTransient<IRequestHandler<CreateMemberGroupCommand, CreateMemberGroupResponse>, CreateMemberGroupCommandHandler>();
+        builder.Services.AddTransient<IRequestHandler<GetAllMembersRequest, List<Member>>, GetAllMembersHandler>();
+        builder.Services.AddTransient<IRequestHandler<GetAllMemberGroupsRequest, GetAllMemberGroupsResponse>, GetAllMemberGroupsHandler>();
     }
 
     /// <summary>
-    /// Makes sure that we always have the established Organizr Roles on the database
+    /// Makes sure that we always have the established Organization Administrator role on the database
     /// </summary>
     /// <param name="builder"></param>
     public static async Task SeedRolesToDb(IApplicationBuilder builder)
@@ -98,16 +101,6 @@ public static class ApplicationInitializerHelperClass
         {
             await roleManager.CreateAsync(new OrganizrRole(ApplicationConstants.OrganizationAdministrator));
         }
-
-        if (!await roleManager.RoleExistsAsync(ApplicationConstants.Administrator))
-        {
-            await roleManager.CreateAsync(new OrganizrRole(ApplicationConstants.Administrator));
-        }
-
-        if (!await roleManager.RoleExistsAsync(ApplicationConstants.Basic))
-        {
-            await roleManager.CreateAsync(new OrganizrRole(ApplicationConstants.Basic));
-        }
     }
 
     /// <summary>
@@ -115,19 +108,19 @@ public static class ApplicationInitializerHelperClass
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
-    //TODO Remove before production
-    public static async Task SeedMandatoryUsersToDatabase(IApplicationBuilder builder)
+    //TODO Remove in production
+    public static async Task SeedMandatoryMembersToDatabase(IApplicationBuilder builder)
     {
         using var serviceScope = builder.ApplicationServices.CreateScope();
 
         const string organizationAdministratorEmail = "organizationadministrator@organizr.com";
-        var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<OrganizrUser>>();
+        var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<Member>>();
 
         var organizationAdminUserFromDatabase = await userManager.FindByEmailAsync(organizationAdministratorEmail);
 
         if (organizationAdminUserFromDatabase is null)
         {
-            var organizationAdministrator = new OrganizrUser
+            var organizationAdministrator = new Member
             {
                 UserName = organizationAdministratorEmail,
                 Email = organizationAdministratorEmail,

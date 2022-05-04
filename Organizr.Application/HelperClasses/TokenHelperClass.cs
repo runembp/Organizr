@@ -16,7 +16,7 @@ public class TokenHelperClass
         _config = config;
     }
 
-    public string GenerateToken(OrganizrUser user)
+    public string GenerateToken(Member member)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(_config["Jwt:Key"]);
@@ -24,7 +24,7 @@ public class TokenHelperClass
         {
             Subject = new ClaimsIdentity(new Claim[]
             {
-                new (ClaimTypes.Name, user.Email)
+                new (ClaimTypes.Name, member.Email)
             }),
             Expires = DateTime.UtcNow.AddMonths(1),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

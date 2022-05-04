@@ -6,7 +6,7 @@
 
 <SearchBar/>
 
-<DataGrid TItem="UserGroup"
+<DataGrid TItem="MemberGroup"
           Data="UserGroups"
           FixedHeader="true"
           Editable="true"
@@ -17,13 +17,13 @@
                     <Button Size="Size.Small" Color="Color.Danger">Slet</Button>
                 </DeleteCommandTemplate>
             </DataGridCommandColumn>
-        <DataGridColumn Field="@nameof(UserGroup.Id)" Caption="Gruppe ID">
+        <DataGridColumn Field="@nameof(MemberGroup.Id)" Caption="Gruppe ID">
             <DisplayTemplate>
                 <Button Clicked="() => OnEditGroupLink_Clicked(context.Id)" Color="Color.Link">@context.Id</Button>
             </DisplayTemplate>
         </DataGridColumn>
-        <DataGridColumn Field="@nameof(UserGroup.Name)" Caption="Navn"/>
-        <DataGridColumn Field="@nameof(UserGroup.IsOpen)" Caption="Åben for alle">
+        <DataGridColumn Field="@nameof(MemberGroup.Name)" Caption="Navn"/>
+        <DataGridColumn Field="@nameof(MemberGroup.IsOpen)" Caption="Åben for alle">
             <DisplayTemplate>
                 <Check TValue="bool" Checked="context.IsOpen" Disabled="true"></Check>
             </DisplayTemplate>
@@ -33,12 +33,12 @@
 
 @code {
 
-    private List<UserGroup> UserGroups { get; set; } = new();
+    private List<MemberGroup> UserGroups { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {
-        var response = await Mediator.Send(new GetAllUserGroupsRequest());
-        UserGroups = (List<UserGroup>) response.UserGroups;
+        var response = await Mediator.Send(new GetAllMemberGroupsRequest());
+        UserGroups = (List<MemberGroup>) response.MemberGroups;
     }
 
     private void OnEditGroupLink_Clicked(int id)
