@@ -4,7 +4,7 @@ using Organizr.Core.Enums;
 
 namespace Organizr.Application.Commands
 {
-    public class CreateUserCommand : IRequest<CreateUserResponse>
+    public class CreateMemberCommand : IRequest<CreateMemberResponse>
     {
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;

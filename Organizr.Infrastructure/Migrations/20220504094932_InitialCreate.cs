@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Organizr.Infrastructure.Migrations
 {
-    public partial class Initialcreate : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -55,17 +56,17 @@ namespace Organizr.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserGroups",
+                name: "MemberGroups",
                 columns: table => new
                 {
-                    UserGroupId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Open = table.Column<bool>(type: "bit", nullable: false)
+                    IsOpen = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserGroups", x => x.UserGroupId);
+                    table.PrimaryKey("PK_MemberGroups", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -232,7 +233,7 @@ namespace Organizr.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "UserGroups");
+                name: "MemberGroups");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

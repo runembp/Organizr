@@ -53,7 +53,7 @@ void AddApplicationSetup()
 
     // Seed Roles and Users to Database
     ApplicationInitializerHelperClass.SeedRolesToDb(app).Wait();
-    ApplicationInitializerHelperClass.SeedMandatoryUsersToDatabase(app).Wait();
+    ApplicationInitializerHelperClass.SeedMandatoryMembersToDatabase(app).Wait();
 
     app.Run();
 }

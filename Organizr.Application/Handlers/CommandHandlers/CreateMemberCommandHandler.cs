@@ -9,22 +9,22 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Organizr.Application.Handlers.CommandHandlers;
 
-public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, CreateUserResponse>
+public class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, CreateMemberResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
-    public CreateUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    public CreateMemberCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
 
-    public async Task<CreateUserResponse> Handle(CreateUserCommand command, CancellationToken cancellationToken)
+    public async Task<CreateMemberResponse> Handle(CreateMemberCommand command, CancellationToken cancellationToken)
     {
-        var user = _mapper.Map<OrganizrUser>(command);
+        var user = _mapper.Map<Member>(command);
         
-        var response = new CreateUserResponse {Succeeded = false};
+        var response = new CreateMemberResponse {Succeeded = false};
         
         if (user is null)
         {

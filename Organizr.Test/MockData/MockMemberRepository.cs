@@ -6,13 +6,13 @@ using Organizr.Core.Repositories;
 
 namespace Organizr.Test.MockData
 {
-    public static class MockOrganizrUserRepository
+    public static class MockMemberRepository
     {
-        public static Mock<IUserRepository> GetOrganizrUserRepository()
+        public static Mock<IMemberRepository> GetMemberRepository()
         {
-            var organizrUsers = new List<OrganizrUser>
+            var members = new List<Member>
             {
-                 new OrganizrUser
+                 new ()
                 {
                     FirstName = "Fornavn",
                     LastName = "Efternavn",
@@ -21,7 +21,7 @@ namespace Organizr.Test.MockData
                     Address = "Testvej 12 9430 Vadum",
                     Gender = Gender.Male,
                 },
-                 new OrganizrUser
+                 new ()
                 {
                     FirstName = "FornavnTest",
                     LastName = "EfternavnTest",
@@ -32,14 +32,14 @@ namespace Organizr.Test.MockData
                 }
             };
 
-            var mockRepo = new Mock<IUserRepository>();
+            var mockRepo = new Mock<IMemberRepository>();
 
-            mockRepo.Setup(r => r.GetAll()).ReturnsAsync(organizrUsers);
+            mockRepo.Setup(r => r.GetAll()).ReturnsAsync(members);
 
-            mockRepo.Setup(r => r.Add(It.IsAny<OrganizrUser>())).ReturnsAsync((OrganizrUser organizrUser) =>
+            mockRepo.Setup(r => r.Add(It.IsAny<Member>())).ReturnsAsync((Member member) =>
             {
-                organizrUsers.Add(organizrUser);
-                return organizrUser;
+                members.Add(member);
+                return member;
             });
 
             return mockRepo;

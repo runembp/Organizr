@@ -8,14 +8,14 @@ using Organizr.Core.Entities;
 
 namespace Organizr.Test.MockData;
 
-public class MockSignInManager : SignInManager<OrganizrUser>
+public class MockSignInManager : SignInManager<Member>
 {
     public MockSignInManager()
         : base(new Mock<MockUserManager>().Object,
             new HttpContextAccessor(),
-            new Mock<IUserClaimsPrincipalFactory<OrganizrUser>>().Object,
+            new Mock<IUserClaimsPrincipalFactory<Member>>().Object,
             new Mock<IOptions<IdentityOptions>>().Object,
-            new Mock<ILogger<SignInManager<OrganizrUser>>>().Object,
+            new Mock<ILogger<SignInManager<Member>>>().Object,
             new Mock<IAuthenticationSchemeProvider>().Object, null)
     {
     }

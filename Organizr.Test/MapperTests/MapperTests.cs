@@ -20,32 +20,32 @@ public class MapperTests
     public void TestAutoMapperObjects()
     {
         // Arrange
-        var user = new OrganizrUser {FirstName = "User", LastName = "Testesen"};
-        var createUserCommand = new CreateUserCommand {FirstName = "UserCommand", LastName = "Teztezen"};
+        var member = new Member {FirstName = "Member", LastName = "Testesen"};
+        var createMemberCommand = new CreateMemberCommand {FirstName = "MemberCommand", LastName = "Teztezen"};
 
-        var userGroup = new UserGroup {Name = "Group", IsOpen = false};
-        var createGroupCommand = new CreateUserGroupCommand { Name = "GroupCommand", IsOpen = true};
+        var memberGroup = new MemberGroup {Name = "Group", IsOpen = false};
+        var createGroupCommand = new CreateMemberGroupCommand { Name = "GroupCommand", IsOpen = true};
 
         // Act
-        var commandToUser = _mapper.Map<OrganizrUser>(createUserCommand);
-        var userToCommand = _mapper.Map<CreateUserCommand>(user);
-        var commandToGroup = _mapper.Map<UserGroup>(createGroupCommand);
-        var groupToCommand = _mapper.Map<CreateUserGroupCommand>(userGroup);
+        var commandToMember = _mapper.Map<Member>(createMemberCommand);
+        var memberToCommand = _mapper.Map<CreateMemberCommand>(member);
+        var commandToGroup = _mapper.Map<MemberGroup>(createGroupCommand);
+        var groupToCommand = _mapper.Map<CreateMemberGroupCommand>(memberGroup);
 
         // Assert
-        userToCommand.ShouldBeOfType<CreateUserCommand>();
-        userToCommand.FirstName.ShouldBe("User");
-        userToCommand.LastName.ShouldBe("Testesen");
+        memberToCommand.ShouldBeOfType<CreateMemberCommand>();
+        memberToCommand.FirstName.ShouldBe("Member");
+        memberToCommand.LastName.ShouldBe("Testesen");
         
-        commandToUser.ShouldBeOfType<OrganizrUser>();
-        commandToUser.FirstName.ShouldBe("UserCommand");
-        commandToUser.LastName.ShouldBe("Teztezen");
+        commandToMember.ShouldBeOfType<Member>();
+        commandToMember.FirstName.ShouldBe("MemberCommand");
+        commandToMember.LastName.ShouldBe("Teztezen");
 
-        groupToCommand.ShouldBeOfType<CreateUserGroupCommand>();
+        groupToCommand.ShouldBeOfType<CreateMemberGroupCommand>();
         groupToCommand.Name.ShouldBe("Group");
         groupToCommand.IsOpen.ShouldBe(false);
         
-        commandToGroup.ShouldBeOfType<UserGroup>();
+        commandToGroup.ShouldBeOfType<MemberGroup>();
         commandToGroup.Name.ShouldBe("GroupCommand");
         commandToGroup.IsOpen.ShouldBe(true);
     }
