@@ -1,5 +1,5 @@
 ﻿using Organizr.Core.Entities;
-using Organizr.Core.Repositories;
+using Organizr.Core.IRepositories;
 using Organizr.Infrastructure.Data;
 
 namespace Organizr.Infrastructure.Repositories

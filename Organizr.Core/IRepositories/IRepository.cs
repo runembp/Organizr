@@ -1,4 +1,4 @@
-﻿namespace Organizr.Core.Repositories
+﻿namespace Organizr.Core.IRepositories
 {
     public interface IRepository<T> where T : class
     {

@@ -1,4 +1,7 @@
 ﻿@page "/Configurations"
+@using Organizr.Application.Requests.Configurations
+@using Organizr.Core.Entities
+
 <h3>Konfigurationer</h3>
 
 <CardDeck Padding="Padding.Is3">
@@ -49,7 +52,7 @@
             <CardTitle Size="5">Organisations data</CardTitle>
             <Field>
                 <FieldLabel>Organisations adresse</FieldLabel>
-                <TextEdit Text="Vej XXX, København X"/> 
+                <TextEdit @bind-Text="ConfigOrganizationAddress"/> 
             </Field>
 
         </CardBody>
@@ -59,5 +62,22 @@
 <Button Color="Color.Primary">Gem</Button>
 
 @code {
+    private List<Configuration> ConfigurationList { get; set; } = new ();
+    private string? ConfigOrganizationAddress { get; set; } = string.Empty;
 
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await Mediator.Send(new GetAllConfigurationsOfTypeConfigurationRequest());
+
+        ConfigurationList = response.Configurations;
+        
+        await SetConfigurationValues();
+    }
+
+    private Task SetConfigurationValues()
+    {
+        ConfigOrganizationAddress = ConfigurationList.First(config => config.Id == 1).StringValue;
+        return Task.CompletedTask;
+    }
 }

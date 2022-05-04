@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Organizr.Core.Repositories;
+using Organizr.Core.IRepositories;
 using Organizr.Infrastructure.Data;
 
 namespace Organizr.Infrastructure.Repositories
@@ -8,7 +8,7 @@ namespace Organizr.Infrastructure.Repositories
     {
         protected readonly OrganizrDbContext _organizrContext;
 
-        public Repository(OrganizrDbContext organizrDbContext)
+        protected Repository(OrganizrDbContext organizrDbContext)
         {
             _organizrContext = organizrDbContext;
         }

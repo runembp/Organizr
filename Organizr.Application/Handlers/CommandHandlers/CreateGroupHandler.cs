@@ -3,7 +3,7 @@ using MediatR;
 using Organizr.Application.Commands;
 using Organizr.Application.Responses;
 using Organizr.Core.Entities;
-using Organizr.Core.Repositories;
+using Organizr.Core.IRepositories;
 
 namespace Organizr.Application.Handlers.CommandHandlers;
 

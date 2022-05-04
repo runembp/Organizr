@@ -2,7 +2,7 @@
 using Moq;
 using Organizr.Core.Entities;
 using Organizr.Core.Enums;
-using Organizr.Core.Repositories;
+using Organizr.Core.IRepositories;
 
 namespace Organizr.Test.MockData
 {

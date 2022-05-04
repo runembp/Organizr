@@ -14,9 +14,12 @@ using MediatR;
 using Organizr.Application.Commands;
 using Organizr.Application.Handlers.CommandHandlers;
 using Organizr.Application.Handlers.RequestHandlers;
+using Organizr.Application.Handlers.RequestHandlers.Configurations;
 using Organizr.Application.Requests;
+using Organizr.Application.Requests.Configurations;
 using Organizr.Application.Responses;
-using Organizr.Core.Repositories;
+using Organizr.Application.Responses.Configurations;
+using Organizr.Core.IRepositories;
 using Organizr.Infrastructure.Repositories;
 
 namespace Organizr.Application.HelperClasses;
@@ -81,10 +84,12 @@ public static class ApplicationInitializerHelperClass
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
         builder.Services.AddScoped<IMemberRepository, MemberRepository>();
         builder.Services.AddScoped<IMemberGroupRepository, MemberGroupRepository>();
+        builder.Services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
         builder.Services.AddTransient<IRequestHandler<CreateMemberCommand, CreateMemberResponse>, CreateMemberCommandHandler>();
         builder.Services.AddTransient<IRequestHandler<CreateMemberGroupCommand, CreateMemberGroupResponse>, CreateMemberGroupCommandHandler>();
         builder.Services.AddTransient<IRequestHandler<GetAllMembersRequest, List<Member>>, GetAllMembersHandler>();
         builder.Services.AddTransient<IRequestHandler<GetAllMemberGroupsRequest, GetAllMemberGroupsResponse>, GetAllMemberGroupsHandler>();
+        builder.Services.AddTransient<IRequestHandler<GetAllConfigurationsOfTypeConfigurationRequest, GetAllConfigurationsOfTypeConfigurationResponse>, GetAllConfigurationsOfTypeConfigurationHandler>(); 
     }
 
     /// <summary>

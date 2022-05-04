@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Identity;
 using Organizr.Application.Commands;
 using Organizr.Application.Responses;
 using Organizr.Core.Entities;
-using Organizr.Core.Repositories;
 using System.ComponentModel.DataAnnotations;
+using Organizr.Core.IRepositories;
 
 namespace Organizr.Application.Handlers.CommandHandlers;
 

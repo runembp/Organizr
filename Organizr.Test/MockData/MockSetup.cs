@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Moq;
 using Organizr.Application.Mapper;
 using Organizr.Core.Entities;
-using Organizr.Core.Repositories;
+using Organizr.Core.IRepositories;
 
 namespace Organizr.Test.MockData
 {

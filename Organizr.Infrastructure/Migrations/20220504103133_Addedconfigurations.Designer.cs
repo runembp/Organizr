@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Organizr.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using Organizr.Infrastructure.Data;
 namespace Organizr.Infrastructure.Migrations
 {
     [DbContext(typeof(OrganizrDbContext))]
-    partial class OrganizrDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220504103133_Addedconfigurations")]
+    partial class Addedconfigurations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,7 +152,7 @@ namespace Organizr.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Configurations", (string)null);
+                    b.ToTable("Configurations");
                 });
 
             modelBuilder.Entity("Organizr.Core.Entities.Member", b =>
@@ -256,7 +258,7 @@ namespace Organizr.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MemberGroups", (string)null);
+                    b.ToTable("MemberGroups");
                 });
 
             modelBuilder.Entity("Organizr.Core.Entities.OrganizrRole", b =>

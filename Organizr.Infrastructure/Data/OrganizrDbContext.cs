@@ -8,6 +8,7 @@ namespace Organizr.Infrastructure.Data
     public class OrganizrDbContext : IdentityDbContext<Member, OrganizrRole, int>
     {
         public DbSet<MemberGroup> MemberGroups { get; set; }
+        public DbSet<Configuration> Configurations { get; set; }
 
         public OrganizrDbContext(DbContextOptions<OrganizrDbContext> options) : base(options)
         {
