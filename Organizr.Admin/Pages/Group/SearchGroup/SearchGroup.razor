@@ -19,7 +19,7 @@
             </DataGridCommandColumn>
         <DataGridColumn Field="@nameof(UserGroup.Id)" Caption="Gruppe ID">
             <DisplayTemplate>
-                <Button Clicked="() => OnEditGroupLink_Clicked(context.UserGroupId)" Color="Color.Link">@context.UserGroupId</Button>
+                <Button Clicked="() => OnEditGroupLink_Clicked(context.Id)" Color="Color.Link">@context.Id</Button>
             </DisplayTemplate>
         </DataGridColumn>
         <DataGridColumn Field="@nameof(UserGroup.Name)" Caption="Navn"/>
