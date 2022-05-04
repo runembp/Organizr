@@ -2,7 +2,7 @@
 using Organizr.Application.HelperClasses;
 using Organizr.Application.Requests;
 using Organizr.Application.Responses;
-using Organizr.Core.Repositories;
+using Organizr.Core.IRepositories;
 
 namespace Organizr.Application.Handlers.RequestHandlers;
 

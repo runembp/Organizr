@@ -6,7 +6,7 @@ using Moq;
 using Organizr.Application.Handlers.RequestHandlers;
 using Organizr.Application.Requests;
 using Organizr.Core.Entities;
-using Organizr.Core.Repositories;
+using Organizr.Core.IRepositories;
 using Organizr.Test.MockData;
 using Shouldly;
 using Xunit;

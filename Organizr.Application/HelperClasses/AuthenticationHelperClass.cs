@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Components.Authorization;
 using Organizr.Application.Requests;
 using Organizr.Application.Responses;
-using Organizr.Core.Repositories;
 using System.Net.Http.Headers;
+using Organizr.Core.IRepositories;
 
 namespace Organizr.Application.HelperClasses;
 

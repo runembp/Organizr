@@ -1,13 +1,11 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Organizr.Application.Commands;
-using Organizr.Application.Handlers.CommandHandlers;
 using Organizr.Application.Handlers.RequestHandlers;
 using Organizr.Application.Requests;
 using Organizr.Application.Responses;
 using Organizr.Core.Entities;
-using Organizr.Core.Repositories;
+using Organizr.Core.IRepositories;
 using Organizr.Test.MockData;
 using Shouldly;
 using Xunit;

@@ -2,7 +2,7 @@
 using MediatR;
 using Organizr.Application.Requests;
 using Organizr.Core.Entities;
-using Organizr.Core.Repositories;
+using Organizr.Core.IRepositories;
 
 namespace Organizr.Application.Handlers.RequestHandlers;
 

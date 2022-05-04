@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Organizr.Core.Entities;
-using Organizr.Core.Repositories;
+using Organizr.Core.IRepositories;
 using Organizr.Infrastructure.Data;
 
 namespace Organizr.Infrastructure.Repositories;
@@ -12,14 +12,16 @@ public class UnitOfWork : IUnitOfWork
     public SignInManager<Member> SignInManager { get; }
     public IMemberRepository MemberRepository { get; }
     public IMemberGroupRepository GroupRepository { get; }
+    public IConfigurationRepository ConfigurationRepository { get; }
 
-    public UnitOfWork(OrganizrDbContext dbContext, UserManager<Member> userManager, SignInManager<Member> signInManager, IMemberGroupRepository memberGroupRepository, IMemberRepository memberRepository)
+    public UnitOfWork(OrganizrDbContext dbContext, UserManager<Member> userManager, SignInManager<Member> signInManager, IMemberGroupRepository memberGroupRepository, IMemberRepository memberRepository, IConfigurationRepository configurationRepository)
     {
         _dbContext = dbContext;
         UserManager = userManager;
         SignInManager = signInManager;
         GroupRepository = memberGroupRepository;
         MemberRepository = memberRepository;
+        ConfigurationRepository = configurationRepository;
     }
 
     public void Dispose()
