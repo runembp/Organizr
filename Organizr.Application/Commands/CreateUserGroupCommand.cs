@@ -6,5 +6,5 @@ namespace Organizr.Application.Commands;
 public class CreateUserGroupCommand : IRequest<CreateUserGroupResponse>
 {
     public string Name { get; init; } = string.Empty;
-    public bool Open { get; init; }
+    public bool IsOpen { get; init; }
 }

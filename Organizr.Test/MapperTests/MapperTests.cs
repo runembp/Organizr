@@ -23,8 +23,8 @@ public class MapperTests
         var user = new OrganizrUser {FirstName = "User", LastName = "Testesen"};
         var createUserCommand = new CreateUserCommand {FirstName = "UserCommand", LastName = "Teztezen"};
 
-        var userGroup = new UserGroup {Name = "Group", Open = false};
-        var createGroupCommand = new CreateUserGroupCommand { Name = "GroupCommand", Open = true};
+        var userGroup = new UserGroup {Name = "Group", IsOpen = false};
+        var createGroupCommand = new CreateUserGroupCommand { Name = "GroupCommand", IsOpen = true};
 
         // Act
         var commandToUser = _mapper.Map<OrganizrUser>(createUserCommand);
@@ -43,10 +43,10 @@ public class MapperTests
 
         groupToCommand.ShouldBeOfType<CreateUserGroupCommand>();
         groupToCommand.Name.ShouldBe("Group");
-        groupToCommand.Open.ShouldBe(false);
+        groupToCommand.IsOpen.ShouldBe(false);
         
         commandToGroup.ShouldBeOfType<UserGroup>();
         commandToGroup.Name.ShouldBe("GroupCommand");
-        commandToGroup.Open.ShouldBe(true);
+        commandToGroup.IsOpen.ShouldBe(true);
     }
 }

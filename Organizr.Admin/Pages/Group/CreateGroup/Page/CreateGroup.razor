@@ -11,7 +11,7 @@
 
     <Field>
         <FieldLabel>Åben for alle</FieldLabel>
-        <Check TValue="bool" @bind-Checked="GroupOpenForAll">Aktiv</Check>
+        <Check TValue="bool" @bind-Checked="IsOpen">Aktiv</Check>
     </Field>
 </Fields>
 
@@ -27,7 +27,7 @@
 
 @code {
     private string GroupName { get; set; } = string.Empty;
-    private bool GroupOpenForAll { get; set; }
+    private bool IsOpen { get; set; }
     private bool InvalidName { get; set; }
     private bool GroupCreated { get; set; }
 
@@ -44,7 +44,7 @@
         var response = await Mediator.Send(new CreateUserGroupCommand
         {
             Name = GroupName,
-            Open = GroupOpenForAll
+            IsOpen = IsOpen
         });
 
         GroupCreated = response.Succeeded;

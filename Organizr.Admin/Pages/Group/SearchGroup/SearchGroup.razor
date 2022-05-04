@@ -23,9 +23,9 @@
             </DisplayTemplate>
         </DataGridColumn>
         <DataGridColumn Field="@nameof(UserGroup.Name)" Caption="Navn"/>
-        <DataGridColumn Field="@nameof(UserGroup.Open)" Caption="Åben for alle">
+        <DataGridColumn Field="@nameof(UserGroup.IsOpen)" Caption="Åben for alle">
             <DisplayTemplate>
-                <Check TValue="bool" Checked="context.Open" Disabled="true"></Check>
+                <Check TValue="bool" Checked="context.IsOpen" Disabled="true"></Check>
             </DisplayTemplate>
         </DataGridColumn>
     </DataGridColumns>

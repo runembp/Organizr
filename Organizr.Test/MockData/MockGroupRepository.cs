@@ -15,19 +15,19 @@ public static class MockGroupRepository
             {
                 Id = 1,
                 Name = "Test Gruppe 1",
-                Open = true
+                IsOpen = true
             },
             new ()
             {
                 Id = 2,
                 Name = "Test Gruppe 2",
-                Open = false
+                IsOpen = false
             },
             new ()
             {
                 Id = 3,
                 Name = "Test Gruppe 3",
-                Open = false
+                IsOpen = false
             },
         };
 
