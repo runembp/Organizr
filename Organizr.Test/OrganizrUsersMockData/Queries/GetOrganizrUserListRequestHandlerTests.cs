@@ -24,7 +24,7 @@ namespace Organizr.Test.OrganizrUsersMockData.Queries
             _mockRepo = MockOrganizrUserRepository.GetOrganizrUserRepository();
             var mapperConfig = new MapperConfiguration(c =>
             {
-                c.AddProfile<OrganizrUserMappingProfile>();
+                c.AddProfile<OrganizrMappingProfiler>();
             });
 
             _mapper = mapperConfig.CreateMapper();

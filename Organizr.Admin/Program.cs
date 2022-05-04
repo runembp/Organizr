@@ -28,7 +28,7 @@ void MandatoryServices()
     builder.Services.AddRazorPages();
     builder.Services.AddServerSideBlazor();
     builder.Services.AddMediatR(typeof(Program));
-    builder.Services.AddAutoMapper(typeof(Program));
+    builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
     builder.Services.AddBlazoredLocalStorage();
     builder.Services
         .AddBlazorise(options => { options.Immediate = true; })

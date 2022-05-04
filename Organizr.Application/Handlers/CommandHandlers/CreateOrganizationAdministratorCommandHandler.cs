@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Organizr.Application.Commands;
 using Organizr.Application.Responses;
 using Organizr.Core.ApplicationConstants;
@@ -22,28 +21,34 @@ public class CreateOrganizationAdministratorCommandHandler : IRequestHandler<Cre
 
     public async Task<CreateUserResponse> Handle(CreateUserCommand command, CancellationToken cancellationToken)
     {
-        var user = new OrganizrUser
+        var user = _mapper.Map<OrganizrUser>(command);
+
+        var response = new CreateUserResponse {Succeeded = false};
+
+        if (user is null)
         {
-            UserName = command.Email,
-            Email = command.Email,
-            FirstName = command.FirstName,
-            LastName = command.LastName,
-            Address = command.Address,
-        };
+            return response;
+        }
 
         var result = await _unitOfWork.UserManager.CreateAsync(user, command.Password);
 
-        var roleResult = new IdentityResult();
-
-        if (result.Succeeded)
+        if (!result.Succeeded)
         {
-            roleResult = await _unitOfWork.UserManager.AddToRoleAsync(user, ApplicationConstants.OrganizationAdministrator);
+            response.Succeeded = result.Succeeded;
+            response.Errors = result.Errors.ToList();
+            return response;
         }
 
-        return new CreateUserResponse
+        result = await _unitOfWork.UserManager.AddToRoleAsync(user, ApplicationConstants.OrganizationAdministrator);
+
+        if (!result.Succeeded)
         {
-            Succeeded = roleResult.Succeeded,
-            Errors = roleResult.Errors.ToList()
-        };
+            response.Succeeded = result.Succeeded;
+            response.Errors = result.Errors.ToList();
+            return response;
+        }
+
+        response.Succeeded = result.Succeeded;
+        return response;
     }
 }

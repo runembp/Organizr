@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Organizr.Application.Commands;
 using Organizr.Application.Responses;
 using Organizr.Core.Entities;
@@ -9,28 +10,31 @@ namespace Organizr.Application.Handlers.CommandHandlers;
 public class CreateUserGroupCommandHandler : IRequestHandler<CreateUserGroupCommand, CreateUserGroupResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    public CreateUserGroupCommandHandler(IUnitOfWork unitOfWork)
+    public CreateUserGroupCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
-    public async Task<CreateUserGroupResponse> Handle(CreateUserGroupCommand request, CancellationToken cancellationToken)
+    public async Task<CreateUserGroupResponse> Handle(CreateUserGroupCommand command, CancellationToken cancellationToken)
     {
         var response = new CreateUserGroupResponse { Succeeded = false };
+        
+        var userGroup = _mapper.Map<UserGroup>(command);
 
-        var groupNameAlreadyTaken = await _unitOfWork.UserGroupRepository.GroupExists(request.GroupName);
+        if (userGroup is null)
+        {
+            return response;
+        }
+
+        var groupNameAlreadyTaken = await _unitOfWork.UserGroupRepository.GroupExists(command.GroupName);
 
         if (groupNameAlreadyTaken)
         {
             return response;
         }
-
-        var userGroup = new UserGroup
-        {
-            Name = request.GroupName,
-            Open = request.GroupOpenForAll
-        };
 
         var result = await _unitOfWork.UserGroupRepository.Add(userGroup);
 
