@@ -30,7 +30,6 @@ public static class ApplicationInitializerHelperClass
     /// <param name="builder"></param>
     public static void SetUpDatabaseAndIdentity(WebApplicationBuilder builder)
     {
-
         builder.Services.AddDbContext<OrganizrDbContext>(options =>
         {
             options.UseSqlServer(
@@ -70,6 +69,10 @@ public static class ApplicationInitializerHelperClass
         builder.Services.AddAuthorization();
     }
 
+    /// <summary>
+    /// Makes sure we always have the same shared dependencies across Organizr.Api and Organizr.Admin
+    /// </summary>
+    /// <param name="builder"></param>
     public static void AddSharedDependencyInjections(WebApplicationBuilder builder)
     {
         builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
@@ -85,7 +88,7 @@ public static class ApplicationInitializerHelperClass
     }
 
     /// <summary>
-    /// Makes sure that we always have the established Organizr Roles on the database
+    /// Makes sure that we always have the established Organization Administrator role on the database
     /// </summary>
     /// <param name="builder"></param>
     public static async Task SeedRolesToDb(IApplicationBuilder builder)
@@ -97,16 +100,6 @@ public static class ApplicationInitializerHelperClass
         if (!await roleManager.RoleExistsAsync(ApplicationConstants.OrganizationAdministrator))
         {
             await roleManager.CreateAsync(new OrganizrRole(ApplicationConstants.OrganizationAdministrator));
-        }
-
-        if (!await roleManager.RoleExistsAsync(ApplicationConstants.Administrator))
-        {
-            await roleManager.CreateAsync(new OrganizrRole(ApplicationConstants.Administrator));
-        }
-
-        if (!await roleManager.RoleExistsAsync(ApplicationConstants.Basic))
-        {
-            await roleManager.CreateAsync(new OrganizrRole(ApplicationConstants.Basic));
         }
     }
 
