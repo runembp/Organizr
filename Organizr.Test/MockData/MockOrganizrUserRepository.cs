@@ -1,11 +1,10 @@
-﻿
+﻿using System.Collections.Generic;
 using Moq;
 using Organizr.Core.Entities;
 using Organizr.Core.Enums;
 using Organizr.Core.Repositories;
-using System.Collections.Generic;
 
-namespace Organizr.Test.Mocks
+namespace Organizr.Test.MockData
 {
     public static class MockOrganizrUserRepository
     {

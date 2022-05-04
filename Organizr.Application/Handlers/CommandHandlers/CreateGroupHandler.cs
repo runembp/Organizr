@@ -29,14 +29,14 @@ public class CreateUserGroupCommandHandler : IRequestHandler<CreateUserGroupComm
             return response;
         }
 
-        var groupNameAlreadyTaken = await _unitOfWork.UserGroupRepository.GroupExists(command.GroupName);
+        var groupNameAlreadyTaken = await _unitOfWork.GroupRepository.GroupExists(command.Name);
 
         if (groupNameAlreadyTaken)
         {
             return response;
         }
 
-        var result = await _unitOfWork.UserGroupRepository.Add(userGroup);
+        var result = await _unitOfWork.GroupRepository.Add(userGroup);
 
         response.GroupName = result.Name;
         response.Succeeded = true;

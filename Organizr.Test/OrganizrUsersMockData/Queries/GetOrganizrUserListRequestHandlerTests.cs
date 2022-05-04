@@ -5,11 +5,11 @@ using Organizr.Application.Mapper;
 using Organizr.Application.Requests;
 using Organizr.Core.Entities;
 using Organizr.Core.Repositories;
-using Organizr.Test.Mocks;
 using Shouldly;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Organizr.Test.MockData;
 using Xunit;
 
 namespace Organizr.Test.OrganizrUsersMockData.Queries

@@ -17,15 +17,15 @@
                     <Button Size="Size.Small" Color="Color.Danger">Slet</Button>
                 </DeleteCommandTemplate>
             </DataGridCommandColumn>
-        <DataGridColumn Field="@nameof(UserGroup.UserGroupId)" Caption="Gruppe ID">
+        <DataGridColumn Field="@nameof(UserGroup.Id)" Caption="Gruppe ID">
             <DisplayTemplate>
-                <Button Clicked="() => OnEditGroupLink_Clicked(context.UserGroupId)" Color="Color.Link">@context.UserGroupId</Button>
+                <Button Clicked="() => OnEditGroupLink_Clicked(context.Id)" Color="Color.Link">@context.Id</Button>
             </DisplayTemplate>
         </DataGridColumn>
         <DataGridColumn Field="@nameof(UserGroup.Name)" Caption="Navn"/>
-        <DataGridColumn Field="@nameof(UserGroup.Open)" Caption="Åben for alle">
+        <DataGridColumn Field="@nameof(UserGroup.IsOpen)" Caption="Åben for alle">
             <DisplayTemplate>
-                <Check TValue="bool" Checked="context.Open" Disabled="true"></Check>
+                <Check TValue="bool" Checked="context.IsOpen" Disabled="true"></Check>
             </DisplayTemplate>
         </DataGridColumn>
     </DataGridColumns>
