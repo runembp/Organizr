@@ -1,5 +1,5 @@
 using MediatR;
-using Organizr.Application.Common.IRepositories;
+using Organizr.Application.Common.Interfaces;
 using Organizr.Application.Requests.Configurations;
 using Organizr.Application.Responses.Configurations;
 

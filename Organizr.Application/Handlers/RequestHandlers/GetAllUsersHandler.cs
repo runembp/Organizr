@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using Organizr.Application.Common.IRepositories;
+using Organizr.Application.Common.Interfaces;
 using Organizr.Application.Requests;
 using Organizr.Domain.Entities;
 
