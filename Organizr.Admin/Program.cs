@@ -9,7 +9,7 @@ using Organizr.Application.HelperClasses;
 
 var builder = WebApplication.CreateBuilder(args);
 
-ApplicationInitializerHelperClass.SetUpDatabaseAndIdentity(builder);
+await ApplicationInitializerHelperClass.SetUpDatabaseAndIdentity(builder);
 ApplicationInitializerHelperClass.AddSharedDependencyInjections(builder);
 AddMandatoryServices();
 AddApplicationSpecificDependencyInjections();

@@ -2,6 +2,11 @@ using Organizr.Application.HelperClasses;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Database and Identity
+await ApplicationInitializerHelperClass.SetUpDatabaseAndIdentity(builder);
+// Dependency injection
+ApplicationInitializerHelperClass.AddSharedDependencyInjections(builder);
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -26,12 +31,6 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
-
-// Database and Identity
-ApplicationInitializerHelperClass.SetUpDatabaseAndIdentity(builder);
-
-// Dependency injection
-ApplicationInitializerHelperClass.AddSharedDependencyInjections(builder);
 
 var app = builder.Build();
 
