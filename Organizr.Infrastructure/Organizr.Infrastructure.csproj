@@ -38,8 +38,4 @@
       <Compile Remove="Models\OrganizrRoles.cs" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Persistence\Migrations\" />
-    </ItemGroup>
-
 </Project>
