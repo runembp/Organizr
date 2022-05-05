@@ -38,7 +38,7 @@ public static class ApplicationInitializerHelperClass
         builder.Services.AddDbContext<OrganizrDbContext>(options =>
         {
             options.UseSqlServer(
-                builder.Configuration.GetConnectionString("TestDatabase"),
+                builder.Configuration.GetConnectionString("DefaultConnection"),
                 sqlOptions => sqlOptions.MigrationsAssembly(ApplicationConstants.OrganizrInfrastructureProject));
         });
 
