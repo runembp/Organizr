@@ -4,7 +4,6 @@ using Organizr.Domain.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Organizr.Infrastructure.Services;
 
 namespace Organizr.Application.Services;
 public class TokenHelperClass

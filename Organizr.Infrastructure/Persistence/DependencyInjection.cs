@@ -19,8 +19,10 @@ public class DependencyInjection
     /// sets up the database with AspNet.Core Identity with the associated Roles and JWT Bearer token authentication.
     /// </summary>
     /// <param name="builder"></param>
-    public static void SetUpDatabaseAndIdentity(WebApplicationBuilder builder)
+    public static async Task SetUpDatabaseAndIdentity(WebApplicationBuilder builder)
     {
+        var secret = await KeyVaultService.GetSecretFromBuilder(builder);
+
         builder.Services.AddDbContext<OrganizrDbContext>(options =>
         {
             options.UseSqlServer(
@@ -50,7 +52,7 @@ public class DependencyInjection
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(KeyVaultService.GetSecret("JwtKey", builder))),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)),
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     ValidateLifetime = false

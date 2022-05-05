@@ -4,9 +4,9 @@ using Organizr.Infrastructure.Persistence;
 var builder = WebApplication.CreateBuilder(args);
 
 // Database and Identity
-await ApplicationInitializerHelperClass.SetUpDatabaseAndIdentity(builder);
+await DependencyInjection.SetUpDatabaseAndIdentity(builder);
 // Dependency injection
-ApplicationInitializerHelperClass.AddSharedDependencyInjections(builder);
+ApiDependencyInjection.AddSharedDependencyInjections(builder);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -37,7 +37,7 @@ builder.Services.AddSwaggerGen(options =>
 global::Organizr.Infrastructure.Persistence.DependencyInjection.SetUpDatabaseAndIdentity(builder);
 
 // Dependency injection
-global::Organizr.Api.Common.Dependencies.DependencyInjection.AddSharedDependencyInjections(builder);
+global::Organizr.Api.Common.Dependencies.ApiDependencyInjection.AddSharedDependencyInjections(builder);
 
 var app = builder.Build();
 

@@ -14,7 +14,7 @@ using Organizr.Infrastructure.Repositories;
 
 namespace Organizr.Api.Common.Dependencies;
 
-public static class DependencyInjection
+public static class ApiDependencyInjection
 {
     /// <summary>
     /// Makes sure we always have the same shared dependencies across Organizr.Api and Organizr.Admin

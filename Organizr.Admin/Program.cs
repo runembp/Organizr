@@ -11,10 +11,9 @@ using Organizr.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
-global::Organizr.Infrastructure.Persistence.DependencyInjection.SetUpDatabaseAndIdentity(builder);
-global::Organizr.Api.Common.Dependencies.DependencyInjection.AddSharedDependencyInjections(builder);
-await ApplicationInitializerHelperClass.SetUpDatabaseAndIdentity(builder);
-ApplicationInitializerHelperClass.AddSharedDependencyInjections(builder);
+await DependencyInjection.SetUpDatabaseAndIdentity(builder);
+ApiDependencyInjection.AddSharedDependencyInjections(builder);
+
 AddMandatoryServices();
 AddApplicationSpecificDependencyInjections();
 AddApplicationSetup();
