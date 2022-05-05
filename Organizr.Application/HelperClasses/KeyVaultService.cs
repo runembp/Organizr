@@ -4,7 +4,7 @@ using Azure.Security.KeyVault.Secrets;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 
-namespace Organizr.Application.Services;
+namespace Organizr.Application.HelperClasses;
 public static class KeyVaultService
 {
     private const string KeyValuePair = "KeyVault:DNS";

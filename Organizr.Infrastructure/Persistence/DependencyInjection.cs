@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Organizr.Application.Services;
 using Organizr.Domain.ApplicationConstants;
 using Organizr.Domain.Entities;
 using System.Text;
+using Organizr.Application.HelperClasses;
 
 namespace Organizr.Infrastructure.Persistence;
 
-public class DependencyInjection
+public static class DependencyInjection
 {
     /// <summary>
     /// Sets up the Organizr Database with the recieved ConnectionString from appsettings.json and

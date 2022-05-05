@@ -1,4 +1,4 @@
-using Organizr.Api.Common.Dependencies;
+using Organizr.Api.Common;
 using Organizr.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,10 +34,10 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 // Database and Identity
-global::Organizr.Infrastructure.Persistence.DependencyInjection.SetUpDatabaseAndIdentity(builder);
+await DependencyInjection.SetUpDatabaseAndIdentity(builder);
 
 // Dependency injection
-global::Organizr.Api.Common.Dependencies.ApiDependencyInjection.AddSharedDependencyInjections(builder);
+ApiDependencyInjection.AddSharedDependencyInjections(builder);
 
 var app = builder.Build();
 

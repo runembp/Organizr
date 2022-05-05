@@ -5,8 +5,8 @@ using Blazorise.Icons.FontAwesome;
 using Blazorise.RichTextEdit;
 using MediatR;
 using Microsoft.AspNetCore.Components.Authorization;
-using Organizr.Api.Common.Dependencies;
-using Organizr.Application.Services;
+using Organizr.Api.Common;
+using Organizr.Application.HelperClasses;
 using Organizr.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
