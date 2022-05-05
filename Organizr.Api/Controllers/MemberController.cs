@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Organizr.Application.Commands;
 using Organizr.Application.Requests;
 using Organizr.Application.Responses;
-using Organizr.Core.Entities;
+using Organizr.Domain.Entities;
 
 
 namespace Organizr.Api.Controllers;

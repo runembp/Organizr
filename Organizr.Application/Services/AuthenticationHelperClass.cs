@@ -1,11 +1,11 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
+using Organizr.Application.Common.IRepositories;
 using Organizr.Application.Requests;
 using Organizr.Application.Responses;
 using System.Net.Http.Headers;
-using Organizr.Core.IRepositories;
 
-namespace Organizr.Application.HelperClasses;
+namespace Organizr.Application.Services;
 
 public class AuthenticationHelperClass
 {

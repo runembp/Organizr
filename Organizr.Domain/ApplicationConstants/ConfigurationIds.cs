@@ -17,7 +17,7 @@ public static class ConfigurationIds
     public const int AboutUsPage = 10;
     public const int ContactPage = 11;
     public const int CreateMembershipPage = 12;
-    
+
     // Css Setup
     public const int MemberApplicationCss = 13;
 }

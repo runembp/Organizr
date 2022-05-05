@@ -1,10 +1,10 @@
-using System.Threading;
-using System.Threading.Tasks;
 using Organizr.Application.Commands;
 using Organizr.Application.Handlers.CommandHandlers;
 using Organizr.Application.Responses;
 using Organizr.Test.MockData;
 using Shouldly;
+using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Organizr.Test.GroupMockData.CommandHandlers;
@@ -12,7 +12,7 @@ namespace Organizr.Test.GroupMockData.CommandHandlers;
 public class CreateMemberGroupHandlerTests
 {
     private readonly CreateMemberGroupCommandHandler _commandHandler;
-    
+
     public CreateMemberGroupHandlerTests()
     {
         var mockUnitOfWork = MockSetup.GetUnitOfWork();
@@ -24,10 +24,10 @@ public class CreateMemberGroupHandlerTests
     {
         // Arrange
         var createMemberCommand = new CreateMemberGroupCommand();
-        
+
         // Act
         var result = await _commandHandler.Handle(createMemberCommand, CancellationToken.None);
-        
+
         // Assert
         result.ShouldBeOfType<CreateMemberGroupResponse>();
         result.Succeeded.ShouldBe(true);

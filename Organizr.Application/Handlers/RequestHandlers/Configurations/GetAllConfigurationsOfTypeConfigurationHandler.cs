@@ -1,7 +1,8 @@
 using MediatR;
+using Organizr.Application.Common.IRepositories;
 using Organizr.Application.Requests.Configurations;
 using Organizr.Application.Responses.Configurations;
-using Organizr.Core.IRepositories;
+
 
 namespace Organizr.Application.Handlers.RequestHandlers.Configurations;
 
@@ -20,7 +21,7 @@ public class GetAllConfigurationsOfTypeConfigurationHandler : IRequestHandler<Ge
         {
             Configurations = await _configurationRepository.GetConfigurationsOfConfigTypeConfig()
         };
-        
+
         return response;
     }
 }

@@ -21,6 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Organizr.Api\Organizr.Api.csproj" />
       <ProjectReference Include="..\Organizr.Application\Organizr.Application.csproj" />
     </ItemGroup>
 

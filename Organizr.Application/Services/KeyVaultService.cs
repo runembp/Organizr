@@ -3,8 +3,7 @@ using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using Microsoft.AspNetCore.Builder;
 
-namespace Organizr.Infrastructure.Services;
-
+namespace Organizr.Application.Services;
 public static class KeyVaultService
 {
     public static string GetSecret(string keyName, WebApplicationBuilder builder)

@@ -5,8 +5,7 @@ using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text.Json;
 
-namespace Organizr.Application.HelperClasses;
-
+namespace Organizr.Application.Services;
 public class AuthenticationStateProviderHelperClass : AuthenticationStateProvider
 {
     private readonly HttpClient _httpClient;

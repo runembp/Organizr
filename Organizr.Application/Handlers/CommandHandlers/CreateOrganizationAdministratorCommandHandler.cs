@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
 using Organizr.Application.Commands;
+using Organizr.Application.Common.IRepositories;
 using Organizr.Application.Responses;
-using Organizr.Core.ApplicationConstants;
-using Organizr.Core.Entities;
-using Organizr.Core.IRepositories;
+using Organizr.Domain.ApplicationConstants;
+using Organizr.Domain.Entities;
+
 
 namespace Organizr.Application.Handlers.CommandHandlers;
 
@@ -23,7 +24,7 @@ public class CreateOrganizationAdministratorCommandHandler : IRequestHandler<Cre
     {
         var user = _mapper.Map<Member>(command);
 
-        var response = new CreateMemberResponse {Succeeded = false};
+        var response = new CreateMemberResponse { Succeeded = false };
 
         if (user is null)
         {

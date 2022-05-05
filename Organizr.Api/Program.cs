@@ -1,4 +1,5 @@
-using Organizr.Application.HelperClasses;
+using Organizr.Api.Common.Dependencies;
+using Organizr.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,10 +29,10 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 // Database and Identity
-ApplicationInitializerHelperClass.SetUpDatabaseAndIdentity(builder);
+global::Organizr.Infrastructure.Persistence.DependencyInjection.SetUpDatabaseAndIdentity(builder);
 
 // Dependency injection
-ApplicationInitializerHelperClass.AddSharedDependencyInjections(builder);
+global::Organizr.Api.Common.Dependencies.DependencyInjection.AddSharedDependencyInjections(builder);
 
 var app = builder.Build();
 
@@ -50,7 +51,7 @@ app.UseHttpsRedirection();
 app.MapControllers();
 
 // Seed Roles and Members to Database
-ApplicationInitializerHelperClass.SeedRolesToDb(app).Wait();
-ApplicationInitializerHelperClass.SeedMandatoryMembersToDatabase(app).Wait();
+OrganizrDbContextSeed.SeedRolesToDb(app).Wait();
+OrganizrDbContextSeed.SeedMandatoryMembersToDatabase(app).Wait();
 
 app.Run();

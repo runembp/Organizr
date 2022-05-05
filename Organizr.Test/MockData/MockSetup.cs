@@ -1,9 +1,9 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Moq;
+using Organizr.Application.Common.IRepositories;
 using Organizr.Application.Mapper;
-using Organizr.Core.Entities;
-using Organizr.Core.IRepositories;
+using Organizr.Domain.Entities;
 
 namespace Organizr.Test.MockData
 {
@@ -44,7 +44,7 @@ namespace Organizr.Test.MockData
 
             return userManager;
         }
-        
-        
+
+
     }
 }

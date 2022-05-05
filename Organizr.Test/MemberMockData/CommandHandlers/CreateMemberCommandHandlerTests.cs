@@ -1,11 +1,11 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Organizr.Application.Commands;
+﻿using Organizr.Application.Commands;
 using Organizr.Application.Handlers.CommandHandlers;
 using Organizr.Application.Responses;
-using Organizr.Core.Enums;
+using Organizr.Domain.Enums;
 using Organizr.Test.MockData;
 using Shouldly;
+using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Organizr.Test.MemberMockData.CommandHandlers
@@ -19,7 +19,7 @@ namespace Organizr.Test.MemberMockData.CommandHandlers
         {
             var mockUow = MockSetup.GetUnitOfWork();
             var mapper = MockSetup.GetMapper();
-            
+
             _handler = new CreateMemberCommandHandler(mockUow, mapper);
 
             _organizrMemberCommand = new CreateMemberCommand
@@ -39,7 +39,7 @@ namespace Organizr.Test.MemberMockData.CommandHandlers
         public async Task Valid_Member_Added()
         {
             var result = await _handler.Handle(_organizrMemberCommand, CancellationToken.None);
-            
+
             result.ShouldBeOfType<CreateMemberResponse>();
             result.Succeeded.ShouldBe(true);
             result.Errors.Count.ShouldBe(0);

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Organizr.Core.Entities;
+using Organizr.Domain.Entities;
 using System.Reflection;
 
-namespace Organizr.Infrastructure.Data
+namespace Organizr.Infrastructure.Persistence
 {
     public class OrganizrDbContext : IdentityDbContext<Member, OrganizrRole, int>
     {

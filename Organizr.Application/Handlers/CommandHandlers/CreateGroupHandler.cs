@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using MediatR;
 using Organizr.Application.Commands;
+using Organizr.Application.Common.IRepositories;
 using Organizr.Application.Responses;
-using Organizr.Core.Entities;
-using Organizr.Core.IRepositories;
+using Organizr.Domain.Entities;
 
 namespace Organizr.Application.Handlers.CommandHandlers;
 
@@ -21,7 +21,7 @@ public class CreateMemberGroupCommandHandler : IRequestHandler<CreateMemberGroup
     public async Task<CreateMemberGroupResponse> Handle(CreateMemberGroupCommand command, CancellationToken cancellationToken)
     {
         var response = new CreateMemberGroupResponse { Succeeded = false };
-        
+
         var userGroup = _mapper.Map<MemberGroup>(command);
 
         if (userGroup is null)

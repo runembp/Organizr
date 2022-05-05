@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
-using Organizr.Core.Entities;
+using Organizr.Domain.Entities;
 
 namespace Organizr.Test.MockData;
 

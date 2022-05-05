@@ -1,6 +1,6 @@
-﻿using Organizr.Core.Entities;
-using Organizr.Core.IRepositories;
-using Organizr.Infrastructure.Data;
+﻿using Organizr.Application.Common.IRepositories;
+using Organizr.Domain.Entities;
+using Organizr.Infrastructure.Persistence;
 
 namespace Organizr.Infrastructure.Repositories
 {

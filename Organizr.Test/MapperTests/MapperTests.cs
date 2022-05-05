@@ -1,6 +1,6 @@
 using AutoMapper;
 using Organizr.Application.Commands;
-using Organizr.Core.Entities;
+using Organizr.Domain.Entities;
 using Organizr.Test.MockData;
 using Shouldly;
 using Xunit;
@@ -20,11 +20,11 @@ public class MapperTests
     public void TestAutoMapperObjects()
     {
         // Arrange
-        var member = new Member {FirstName = "Member", LastName = "Testesen"};
-        var createMemberCommand = new CreateMemberCommand {FirstName = "MemberCommand", LastName = "Teztezen"};
+        var member = new Member { FirstName = "Member", LastName = "Testesen" };
+        var createMemberCommand = new CreateMemberCommand { FirstName = "MemberCommand", LastName = "Teztezen" };
 
-        var memberGroup = new MemberGroup {Name = "Group", IsOpen = false};
-        var createGroupCommand = new CreateMemberGroupCommand { Name = "GroupCommand", IsOpen = true};
+        var memberGroup = new MemberGroup { Name = "Group", IsOpen = false };
+        var createGroupCommand = new CreateMemberGroupCommand { Name = "GroupCommand", IsOpen = true };
 
         // Act
         var commandToMember = _mapper.Map<Member>(createMemberCommand);
@@ -36,7 +36,7 @@ public class MapperTests
         memberToCommand.ShouldBeOfType<CreateMemberCommand>();
         memberToCommand.FirstName.ShouldBe("Member");
         memberToCommand.LastName.ShouldBe("Testesen");
-        
+
         commandToMember.ShouldBeOfType<Member>();
         commandToMember.FirstName.ShouldBe("MemberCommand");
         commandToMember.LastName.ShouldBe("Teztezen");
@@ -44,7 +44,7 @@ public class MapperTests
         groupToCommand.ShouldBeOfType<CreateMemberGroupCommand>();
         groupToCommand.Name.ShouldBe("Group");
         groupToCommand.IsOpen.ShouldBe(false);
-        
+
         commandToGroup.ShouldBeOfType<MemberGroup>();
         commandToGroup.Name.ShouldBe("GroupCommand");
         commandToGroup.IsOpen.ShouldBe(true);

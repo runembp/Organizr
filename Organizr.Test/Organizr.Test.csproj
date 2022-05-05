@@ -25,7 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Organizr.Api\Organizr.Api.csproj" />
-    <ProjectReference Include="..\Organizr.Core\Organizr.Core.csproj" />
+    <ProjectReference Include="..\Organizr.Domain\Organizr.Domain.csproj" />
     <ProjectReference Include="..\Organizr.Infrastructure\Organizr.Infrastructure.csproj" />
   </ItemGroup>
 

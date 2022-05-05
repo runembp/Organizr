@@ -2,10 +2,11 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Organizr.Application.Commands;
+using Organizr.Application.Common.IRepositories;
 using Organizr.Application.Responses;
-using Organizr.Core.Entities;
+using Organizr.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
-using Organizr.Core.IRepositories;
+
 
 namespace Organizr.Application.Handlers.CommandHandlers;
 
@@ -23,9 +24,9 @@ public class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, C
     public async Task<CreateMemberResponse> Handle(CreateMemberCommand command, CancellationToken cancellationToken)
     {
         var user = _mapper.Map<Member>(command);
-        
-        var response = new CreateMemberResponse {Succeeded = false};
-        
+
+        var response = new CreateMemberResponse { Succeeded = false };
+
         if (user is null)
         {
             return response;
@@ -33,9 +34,9 @@ public class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, C
 
         if (!new EmailAddressAttribute().IsValid(command.Email))
         {
-            response.Errors.Add(new IdentityError {Description = "Email er ikke i et godkendt format"});
+            response.Errors.Add(new IdentityError { Description = "Email er ikke i et godkendt format" });
         }
-        
+
         user.UserName = user.Email;
 
         var result = await _unitOfWork.UserManager.CreateAsync(user, command.Password);

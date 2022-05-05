@@ -1,12 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Organizr.Core.Entities;
+using Organizr.Domain.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Organizr.Application.HelperClasses;
-
+namespace Organizr.Application.Services;
 public class TokenHelperClass
 {
     private readonly IConfiguration _config;

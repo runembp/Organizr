@@ -25,7 +25,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Organizr.Core\Organizr.Core.csproj" />
+      <ProjectReference Include="..\Organizr.Application\Organizr.Application.csproj" />
+      <ProjectReference Include="..\Organizr.Domain\Organizr.Domain.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -38,8 +39,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Identity\" />
       <Folder Include="Persistence\Configurations\" />
+      <Folder Include="Persistence\Migrations\" />
     </ItemGroup>
 
 </Project>
