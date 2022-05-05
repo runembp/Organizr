@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiClientService } from '../api/api-client.service';
+import { ApiClientService } from '../api-client/api-client.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from '../User';
 import { Validation } from '../validators/user-input-validator';
@@ -10,7 +10,6 @@ import { AbstractControl } from "@angular/forms";
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css']
 })
-
 
 export class SignUpComponent implements OnInit {
 
@@ -61,6 +60,5 @@ export class SignUpComponent implements OnInit {
     this.apiClient.createOrganizrUser(this.user).subscribe();
     this.createUserForm.reset();
   };
-
-
+  
 }
