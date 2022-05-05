@@ -1,8 +1,8 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Moq;
-using Organizr.Application.Common.IRepositories;
-using Organizr.Application.Mapper;
+using Organizr.Application.Common.Interfaces;
+using Organizr.Application.Common.Mapper;
 using Organizr.Domain.Entities;
 
 namespace Organizr.Test.MockData

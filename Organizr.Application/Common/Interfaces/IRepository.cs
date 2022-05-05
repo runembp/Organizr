@@ -1,4 +1,4 @@
-﻿namespace Organizr.Application.Common.IRepositories;
+﻿namespace Organizr.Application.Common.Interfaces;
 
 public interface IRepository<T> where T : class
 {

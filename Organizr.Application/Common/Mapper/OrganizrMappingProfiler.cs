@@ -2,7 +2,7 @@
 using Organizr.Application.Commands;
 using Organizr.Domain.Entities;
 
-namespace Organizr.Application.Mapper;
+namespace Organizr.Application.Common.Mapper;
 
 public class OrganizrMappingProfiler : Profile
 {
