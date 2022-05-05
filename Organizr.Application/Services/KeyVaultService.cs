@@ -23,7 +23,7 @@ public static class KeyVaultService
 
         return await GetSecret(keyVaultUri);
     }
-    
+
     private static async Task<string> GetSecret(string keyVaultUri)
     {
         var keyVaultSecretOptions = new SecretClientOptions
@@ -36,7 +36,7 @@ public static class KeyVaultService
                 Mode = RetryMode.Exponential
             }
         };
-        
+
         var client = new SecretClient(new Uri(keyVaultUri), new DefaultAzureCredential(), keyVaultSecretOptions);
         KeyVaultSecret secret = await client.GetSecretAsync(KeyName);
 
