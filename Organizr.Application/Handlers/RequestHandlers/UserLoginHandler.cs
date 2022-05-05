@@ -37,7 +37,7 @@ public class UserLoginHandler : IRequestHandler<UserLoginRequest, UserLoginRespo
 
         response.Email = user.Email;
         response.Succeeded = signInResult.Succeeded;
-        response.Token = _tokenHelperClass.GenerateToken(user);
+        response.Token = await _tokenHelperClass.GenerateToken(user);
 
         return response;
     }
