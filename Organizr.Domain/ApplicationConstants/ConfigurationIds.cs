@@ -13,11 +13,13 @@ public static class ConfigurationIds
     public const int ActivateAbilityForAllMembersToCreateNews = 8;
 
     // Page Setup
-    public const int Frontpage = 9;
-    public const int AboutUsPage = 10;
-    public const int ContactPage = 11;
-    public const int CreateMembershipPage = 12;
+    public const int FrontpageTopTextBox = 9;
+    public const int LoginForgottenPassword = 10;
+    public const int AboutUsPage = 11;
+    public const int ContactPageTopTextBox = 12;
+    public const int ContactPageLeftTextBox = 13;
+    public const int CreateMembershipTopText = 14;
 
     // Css Setup
-    public const int MemberApplicationCss = 13;
+    public const int MemberApplicationCss = 15;
 }
