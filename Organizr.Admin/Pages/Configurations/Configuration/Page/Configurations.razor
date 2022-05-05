@@ -1,6 +1,9 @@
 ﻿@page "/Configurations"
 @using Organizr.Application.Requests.Configurations
 @using Organizr.Domain.Entities
+@using Organizr.Application.Commands
+
+@attribute [Authorize]
 
 <h3>Konfigurationer</h3>
 
@@ -41,7 +44,11 @@
             <Field>
                 <FieldLabel>Vælg hvilken gruppe der skal tilmeldes ved oprettelse af Medlemsskab</FieldLabel>
                 <Select TValue="int" Width="Width.Is50">
-                    <SelectItem Value="1">Hundeluftere</SelectItem>
+                    @foreach (var group in ConfigurationList)
+                    {
+                        <SelectItem Value="@group.Id">Gruppe @group.Id</SelectItem>    
+                    }
+                    
                 </Select>
             </Field>
         </CardBody>
@@ -59,12 +66,16 @@
     </Card>
 </CardDeck>
 
-<Button Color="Color.Primary">Gem</Button>
+<Button Color="Color.Primary" Clicked="OnSaveButton_Clicked">Gem</Button>
+
+<Alert @bind-Visible="ConfigurationsHasBeenSaved">
+    <AlertMessage>Konfigurationer er gemt</AlertMessage>
+</Alert>
 
 @code {
     private List<Configuration> ConfigurationList { get; set; } = new ();
     private string? ConfigOrganizationAddress { get; set; } = string.Empty;
-
+    private bool ConfigurationsHasBeenSaved { get; set; } = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -80,4 +91,19 @@
         ConfigOrganizationAddress = ConfigurationList.First(config => config.Id == 1).StringValue;
         return Task.CompletedTask;
     }
+
+    private async Task OnSaveButton_Clicked()
+    {
+        ConfigurationsHasBeenSaved = false;
+
+        var request = new UpdateConfigurationsOfTypeConfigCommand
+        {
+            OrganizationAddress = new Configuration {StringValue = ConfigOrganizationAddress}
+        };
+
+        var response = await Mediator.Send(request);
+
+        ConfigurationsHasBeenSaved = response.Succeeded;
+    }
+
 }
