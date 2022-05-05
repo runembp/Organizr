@@ -37,7 +37,7 @@ public class AuthenticationHelperClass
 
         response.Succeeded = signInResult.Succeeded;
         response.Email = user.Email;
-        response.Token = _tokenHelperClass.GenerateToken(user);
+        response.Token = await _tokenHelperClass.GenerateToken(user);
 
         await ((AuthenticationStateProviderHelperClass)_authenticationStateProvider).MarkUserAsAuthenticated(response);
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", response.Token);

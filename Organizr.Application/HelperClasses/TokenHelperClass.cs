@@ -4,6 +4,7 @@ using Organizr.Core.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Organizr.Infrastructure.Services;
 
 namespace Organizr.Application.HelperClasses;
 
@@ -16,10 +17,10 @@ public class TokenHelperClass
         _config = config;
     }
 
-    public string GenerateToken(Member member)
+    public async Task<string> GenerateToken(Member member)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(_config["Jwt:Key"]);
+        var key = Encoding.ASCII.GetBytes(await KeyVaultService.GetSecretFromConfig(_config));
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new Claim[]
