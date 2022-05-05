@@ -2,6 +2,7 @@
 @using Organizr.Application.Requests.Configurations
 @using Organizr.Domain.Entities
 @using Organizr.Application.Commands
+@using Organizr.Domain.ApplicationConstants
 
 @attribute [Authorize]
 
@@ -13,15 +14,15 @@
             <CardTitle Size="5">Nyhedskonfigurationer</CardTitle>
             <Field>
                 <FieldLabel>Aktiver kommentarer på Nyheder</FieldLabel>
-                <Check TValue="bool">Aktiv</Check>
+                <Check TValue="bool" @bind-Checked="@ConfigActivateCommentsOnNews">Aktiv</Check>
             </Field>
             <Field>
                 <FieldLabel>Aktiver mulighed for at skrive kommentarer til Nyheder for Administratorer</FieldLabel>
-                <Check TValue="bool">Aktiv</Check>
+                <Check TValue="bool" @bind-Checked="@ConfigActivatedAdministratorCommentOnNews">Aktiv</Check>
             </Field>
             <Field>
                 <FieldLabel>Aktiver mulighed for at skrive kommentarer til Nyheder for Medlemmer</FieldLabel>
-                <Check TValue="bool">Aktiv</Check>
+                <Check TValue="bool" @bind-Checked="ConfigActivateBasicMemberCommentOnNews">Aktiv</Check>
             </Field>
         </CardBody>
     </Card>
@@ -31,7 +32,7 @@
             <CardTitle Size="5">Opret nyheder</CardTitle>
             <Field>
                 <FieldLabel>Giv alle medlemmer mulighed for at oprette nyheder?</FieldLabel>
-                <Check TValue="bool">Aktiv</Check>
+                <Check TValue="bool" @bind-Checked="@ConfigActivateAbilityForAllMembersToCreateNews">Aktiv</Check>
             </Field>
         </CardBody>
     </Card>
@@ -43,12 +44,11 @@
             <CardTitle Size="5">Medlemsskab</CardTitle>
             <Field>
                 <FieldLabel>Vælg hvilken gruppe der skal tilmeldes ved oprettelse af Medlemsskab</FieldLabel>
-                <Select TValue="int" Width="Width.Is50">
+                <Select TValue="int" Width="Width.Is50" @bind-SelectedValue="@ConfigPredeterminedGroupNewMembersAssignedTo">
                     @foreach (var group in ConfigurationList)
                     {
-                        <SelectItem Value="@group.Id">Gruppe @group.Id</SelectItem>    
+                        <SelectItem Value="@group.Id">Gruppe @group.Id</SelectItem>
                     }
-                    
                 </Select>
             </Field>
         </CardBody>
@@ -59,7 +59,7 @@
             <CardTitle Size="5">Organisations data</CardTitle>
             <Field>
                 <FieldLabel>Organisations adresse</FieldLabel>
-                <TextEdit @bind-Text="ConfigOrganizationAddress"/> 
+                <TextEdit @bind-Text="ConfigOrganizationAddress"/>
             </Field>
 
         </CardBody>
@@ -68,27 +68,45 @@
 
 <Button Color="Color.Primary" Clicked="OnSaveButton_Clicked">Gem</Button>
 
-<Alert @bind-Visible="ConfigurationsHasBeenSaved">
-    <AlertMessage>Konfigurationer er gemt</AlertMessage>
-</Alert>
+<Column ColumnSize="ColumnSize.Is3">
+    <Alert @bind-Visible="ConfigurationsHasBeenSaved" Color="Color.Success" TextAlignment="TextAlignment.Center">
+        <AlertMessage>Konfigurationer er gemt</AlertMessage>
+    </Alert>
+</Column>
 
 @code {
-    private List<Configuration> ConfigurationList { get; set; } = new ();
-    private string? ConfigOrganizationAddress { get; set; } = string.Empty;
-    private bool ConfigurationsHasBeenSaved { get; set; } = false;
+    private List<Configuration> ConfigurationList { get; set; } = new();
+
+    private string ConfigOrganizationAddress { get; set; } = string.Empty;
+    private string ConfigOrganizationPhoneNumber { get; set; } = string.Empty;
+    private string ConfigOrganizationEmail { get; set; } = string.Empty;
+    private int ConfigPredeterminedGroupNewMembersAssignedTo { get; set; }
+    private bool ConfigActivateCommentsOnNews { get; set; }
+    private bool ConfigActivatedAdministratorCommentOnNews { get; set; }
+    private bool ConfigActivateBasicMemberCommentOnNews { get; set; }
+    private bool ConfigActivateAbilityForAllMembersToCreateNews { get; set; }
+
+    private bool ConfigurationsHasBeenSaved { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         var response = await Mediator.Send(new GetAllConfigurationsOfTypeConfigurationRequest());
 
         ConfigurationList = response.Configurations;
-        
+
         await SetConfigurationValues();
     }
 
     private Task SetConfigurationValues()
     {
-        ConfigOrganizationAddress = ConfigurationList.First(config => config.Id == 1).StringValue;
+        ConfigOrganizationAddress = ConfigurationList.First(config => config.Id == ConfigurationIds.OrganizationAddress).StringValue!;
+        ConfigOrganizationPhoneNumber = ConfigurationList.First(config => config.Id == ConfigurationIds.OrganizationPhoneNumber).StringValue!;
+        ConfigOrganizationEmail = ConfigurationList.First(config => config.Id == ConfigurationIds.OrganizationEmailAddress).StringValue!;
+        ConfigPredeterminedGroupNewMembersAssignedTo = (int) ConfigurationList.First(config => config.Id == ConfigurationIds.PredeterminedGroupToAssignNewMembersTo).IdValue!;
+        ConfigActivateCommentsOnNews = (bool) ConfigurationList.First(config => config.Id == ConfigurationIds.ActivateCommentsOnNews).BoolValue!;
+        ConfigActivatedAdministratorCommentOnNews = (bool) ConfigurationList.First(config => config.Id == ConfigurationIds.ActivateAdministratorMemberAbilityToCommentOnNews).BoolValue!;
+        ConfigActivateBasicMemberCommentOnNews = (bool) ConfigurationList.First(config => config.Id == ConfigurationIds.ActivateBasicMemberAbilityToCommentOnNews).BoolValue!;
+        ConfigActivateAbilityForAllMembersToCreateNews = (bool) ConfigurationList.First(config => config.Id == ConfigurationIds.ActivateAbilityForAllMembersToCreateNews).BoolValue!;
         return Task.CompletedTask;
     }
 
@@ -98,7 +116,14 @@
 
         var request = new UpdateConfigurationsOfTypeConfigCommand
         {
-            OrganizationAddress = new Configuration {StringValue = ConfigOrganizationAddress}
+            OrganizationAddress = ConfigOrganizationAddress,
+            OrganizationEmailAddress = ConfigOrganizationEmail,
+            OrganizationPhoneNumber = ConfigOrganizationPhoneNumber,
+            ActivateCommentsOnNews = ConfigActivateCommentsOnNews,
+            PredeterminedGroupToAssignNewMembersTo = ConfigPredeterminedGroupNewMembersAssignedTo,
+            ActivateAbilityForAllMembersToCreateNews = ConfigActivateAbilityForAllMembersToCreateNews,
+            ActivateAdministratorMemberAbilityToCommentOnNews = ConfigActivatedAdministratorCommentOnNews,
+            ActivateBasicMemberAbilityToCommentOnNews = ConfigActivateBasicMemberCommentOnNews
         };
 
         var response = await Mediator.Send(request);

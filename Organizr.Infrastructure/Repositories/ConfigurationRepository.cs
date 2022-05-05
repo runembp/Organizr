@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Organizr.Application.Commands;
 using Organizr.Application.Common.Interfaces;
+using Organizr.Domain.ApplicationConstants;
 using Organizr.Domain.Entities;
 using Organizr.Domain.Enums;
 
@@ -28,42 +30,35 @@ public class ConfigurationRepository : Repository<Configuration>, IConfiguration
         return await _organizrContext.Configurations.Where(x => x.ConfigType == ConfigType.CssSetup).ToListAsync();
     }
 
-    public async Task<bool> UpdateConfigurationBasedOnIdAndStringValue(int configId, string? stringValue)
+    public async Task<bool> UpdateConfigurationOfTypeConfiguration(UpdateConfigurationsOfTypeConfigCommand command)
     {
-        var config = _organizrContext.Configurations.First(x => x.Id == configId);
+        var configurations = _organizrContext.Configurations.Where(x => x.ConfigType == ConfigType.Configuration).ToList();
         
-        config.StringValue = stringValue;
+        var organizationAddress = configurations.First(x => x.Id == ConfigurationIds.OrganizationAddress);
+        organizationAddress.StringValue = command.OrganizationAddress;
         
-        _organizrContext.Configurations.Update(config);
+        var organizationPhoneNumber = configurations.First(x => x.Id == ConfigurationIds.OrganizationPhoneNumber);
+        organizationPhoneNumber.StringValue = command.OrganizationPhoneNumber;
+        
+        var organizationEmail = configurations.First(x => x.Id == ConfigurationIds.OrganizationEmailAddress);
+        organizationEmail.StringValue = command.OrganizationEmailAddress;
+        
+        var predeterminedGroupForNewMember = configurations.First(x => x.Id == ConfigurationIds.PredeterminedGroupToAssignNewMembersTo);
+        predeterminedGroupForNewMember.IdValue = command.PredeterminedGroupToAssignNewMembersTo;
+        
+        var activateCommentsOnNews = configurations.First(x => x.Id == ConfigurationIds.ActivateCommentsOnNews);
+        activateCommentsOnNews.BoolValue = command.ActivateCommentsOnNews;
+        
+        var activateAdministratorCommentsOnNews = configurations.First(x => x.Id == ConfigurationIds.ActivateAdministratorMemberAbilityToCommentOnNews);
+        activateAdministratorCommentsOnNews.BoolValue = command.ActivateAdministratorMemberAbilityToCommentOnNews;
+        
+        var activateBasicMemberCommentsOnNews = configurations.First(x => x.Id == ConfigurationIds.ActivateBasicMemberAbilityToCommentOnNews);
+        activateBasicMemberCommentsOnNews.BoolValue = command.ActivateBasicMemberAbilityToCommentOnNews;
+        
+        var activateAbilityForAllMembersToCreateNews = configurations.First(x => x.Id == ConfigurationIds.ActivateAbilityForAllMembersToCreateNews);
+        activateAbilityForAllMembersToCreateNews.BoolValue = command.ActivateAbilityForAllMembersToCreateNews;
         
         await _organizrContext.SaveChangesAsync();
-
-        return true;
-    }
-
-    public async Task<bool> UpdateConfigurationBasedOnIdAndBoolValue(int configId, bool? boolValue)
-    {
-        var config = _organizrContext.Configurations.First(x => x.Id == configId);
-        
-        config.BoolValue = boolValue;
-        
-        _organizrContext.Configurations.Update(config);
-        
-        await _organizrContext.SaveChangesAsync();
-
-        return true;
-    }
-
-    public async Task<bool> UpdateConfigurationBasedOnIdAndIdValue(int configId, int? idValue)
-    {
-        var config = _organizrContext.Configurations.First(x => x.Id == configId);
-        
-        config.IdValue = idValue;
-        
-        _organizrContext.Configurations.Update(config);
-        
-        await _organizrContext.SaveChangesAsync();
-
         return true;
     }
 }

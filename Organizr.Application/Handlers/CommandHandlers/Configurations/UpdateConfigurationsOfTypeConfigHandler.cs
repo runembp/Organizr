@@ -1,8 +1,7 @@
 using MediatR;
 using Organizr.Application.Commands;
-using Organizr.Application.Common.IRepositories;
+using Organizr.Application.Common.Interfaces;
 using Organizr.Application.Responses.Configurations;
-using Organizr.Domain.ApplicationConstants;
 
 namespace Organizr.Application.Handlers.CommandHandlers.Configurations;
 
@@ -19,14 +18,9 @@ public class UpdateConfigurationsOfTypeConfigHandler : IRequestHandler<UpdateCon
     {
         var response = new UpdateConfigurationsOfTypeConfigResponse {Succeeded = false};
 
-        await _unitOfWork.ConfigurationRepository.UpdateConfigurationBasedOnIdAndStringValue(ConfigurationIds.OrganizationAddress, command.OrganizationAddress.StringValue);
-        await _unitOfWork.ConfigurationRepository.UpdateConfigurationBasedOnIdAndStringValue(ConfigurationIds.OrganizationPhoneNumber, command.OrganizationPhoneNumber.StringValue);
-        await _unitOfWork.ConfigurationRepository.UpdateConfigurationBasedOnIdAndStringValue(ConfigurationIds.OrganizationEmailAddress, command.OrganizationEmailAddress.StringValue);
-        await _unitOfWork.ConfigurationRepository.UpdateConfigurationBasedOnIdAndIdValue(ConfigurationIds.PredeterminedGroupToAssignNewMembersTo, command.PredeterminedGroupToAssignNewMembersTo.IdValue);
-        await _unitOfWork.ConfigurationRepository.UpdateConfigurationBasedOnIdAndBoolValue(ConfigurationIds.ActivateCommentsOnNews, command.ActivateCommentsOnNews.BoolValue);
-        await _unitOfWork.ConfigurationRepository.UpdateConfigurationBasedOnIdAndBoolValue(ConfigurationIds.ActivateAdministratorMemberAbilityToCommentOnNews, command.ActivateAdministratorMemberAbilityToCommentOnNews.BoolValue);
-        await _unitOfWork.ConfigurationRepository.UpdateConfigurationBasedOnIdAndBoolValue(ConfigurationIds.ActivateBasicMemberAbilityToCommentOnNews, command.ActivateBasicMemberAbilityToCommentOnNews.BoolValue);
-        await _unitOfWork.ConfigurationRepository.UpdateConfigurationBasedOnIdAndBoolValue(ConfigurationIds.ActivateCommentsOnNews, command.ActivateCommentsOnNews.BoolValue);
+        var result = await _unitOfWork.ConfigurationRepository.UpdateConfigurationOfTypeConfiguration(command);
+        
+        response.Succeeded = result;
         
         return response;
     }
