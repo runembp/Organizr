@@ -64,32 +64,30 @@
                         </small>
                     </div>
 
-                        <div class="row">
-                            <div class="mb-3 col-6">
-                                <label for="password" class="form-label">Adgangskode</label>
-                                <input type="password" class="form-control" id="password" formControlName="password" />
-                            </div>
-                            <div class="mb-3 col-6">
-                                <label for="password2" class="form-label">Gentag Adgangskode</label>
-                                <input type="password" class="form-control" id="password2"
-                                    formControlName="password2"
-                                    [ngClass]="{ 'is-invalid': submitted && f['password2']?.errors }"
-                                    />
-                            </div>
-                            <small
-                                *ngIf="createUserForm.get('password')?.invalid && createUserForm.get('password')?.touched">
-                                Indtast Adgangskode
-                            </small>
-
-                            <small *ngIf="f['password2']?.errors?.['matching']" >
-                                Adgangskoder stemmer ikke overens
-                            </small>
-
-                            
-
-                            
+                    <div class="row">
+                        <div class="mb-3 col-6">
+                            <label for="password" class="form-label">Adgangskode</label>
+                            <input type="password" class="form-control" id="password" formControlName="password" />
                         </div>
-                   
+                        <div class="mb-3 col-6">
+                            <label for="password2" class="form-label">Gentag Adgangskode</label>
+                            <input type="password" class="form-control" id="password2" formControlName="password2"
+                                [ngClass]="{ 'is-invalid': submitted && f['password2']?.errors }" />
+                        </div>
+                        <small
+                            *ngIf="createUserForm.get('password')?.invalid && createUserForm.get('password')?.touched">
+                            Indtast Adgangskode
+                        </small>
+
+                        <small *ngIf="f['password2']?.errors?.['matching']">
+                            Adgangskoder stemmer ikke overens
+                        </small>
+
+
+
+
+                    </div>
+
 
                     <button class="btn btn-primary" type="submit" [disabled]="!createUserForm.valid">
                         Opret
