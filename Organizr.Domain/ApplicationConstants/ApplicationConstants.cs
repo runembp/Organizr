@@ -1,4 +1,4 @@
-﻿namespace Organizr.Core.ApplicationConstants;
+﻿namespace Organizr.Domain.ApplicationConstants;
 
 public static class ApplicationConstants
 {

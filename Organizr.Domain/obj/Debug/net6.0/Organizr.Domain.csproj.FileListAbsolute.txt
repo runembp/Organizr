@@ -1,0 +1,5 @@
+C:\Users\cmbar\Desktop\Organizr\Organizr.Domain\obj\Debug\net6.0\Organizr.Domain.csproj.AssemblyReference.cache
+C:\Users\cmbar\Desktop\Organizr\Organizr.Domain\obj\Debug\net6.0\Organizr.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\cmbar\Desktop\Organizr\Organizr.Domain\obj\Debug\net6.0\Organizr.Domain.AssemblyInfoInputs.cache
+C:\Users\cmbar\Desktop\Organizr\Organizr.Domain\obj\Debug\net6.0\Organizr.Domain.AssemblyInfo.cs
+C:\Users\cmbar\Desktop\Organizr\Organizr.Domain\obj\Debug\net6.0\Organizr.Domain.csproj.CoreCompileInputs.cache

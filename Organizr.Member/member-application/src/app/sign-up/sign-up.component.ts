@@ -60,5 +60,5 @@ export class SignUpComponent implements OnInit {
     this.apiClient.createOrganizrUser(this.user).subscribe();
     this.createUserForm.reset();
   };
-  
+
 }

@@ -1,6 +1,6 @@
-using Organizr.Core.Enums;
+using Organizr.Domain.Enums;
 
-namespace Organizr.Core.Entities;
+namespace Organizr.Domain.Entities;
 
 public class Configuration
 {

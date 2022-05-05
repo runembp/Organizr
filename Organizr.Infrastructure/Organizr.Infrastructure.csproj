@@ -37,4 +37,9 @@
       <Compile Remove="Models\OrganizrRoles.cs" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Identity\" />
+      <Folder Include="Persistence\Configurations\" />
+    </ItemGroup>
+
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace Organizr.Core.Enums;
+﻿namespace Organizr.Domain.Enums;
 
 public enum Gender
 {

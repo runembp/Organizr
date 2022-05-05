@@ -1,6 +1,6 @@
-using Organizr.Core.Entities;
+using Organizr.Domain.Entities;
 
-namespace Organizr.Core.IRepositories;
+namespace Organizr.Domain.IRepositories;
 
 public interface IConfigurationRepository : IRepository<Configuration>
 {

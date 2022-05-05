@@ -1,4 +1,4 @@
-﻿namespace Organizr.Core.Entities
+﻿namespace Organizr.Domain.Entities
 {
     public class MemberGroup
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Organizr.Core.Entities;
+namespace Organizr.Domain.Entities;
 
 public class OrganizrRole : IdentityRole<int>
 {
