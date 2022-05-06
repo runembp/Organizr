@@ -1,4 +1,4 @@
-﻿using Organizr.Application.Common.IRepositories;
+﻿using Organizr.Application.Common.Interfaces;
 using Organizr.Domain.Entities;
 using Organizr.Infrastructure.Persistence;
 

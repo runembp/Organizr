@@ -1,6 +1,6 @@
 ﻿using Organizr.Domain.Entities;
 
-namespace Organizr.Application.Common.IRepositories;
+namespace Organizr.Application.Common.Interfaces;
 
 public interface IMemberGroupRepository : IRepository<MemberGroup>
 {

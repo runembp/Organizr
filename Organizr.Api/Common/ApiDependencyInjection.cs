@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Organizr.Application.Commands;
-using Organizr.Application.Common.IRepositories;
+using Organizr.Application.Common.Interfaces;
 using Organizr.Application.Handlers.CommandHandlers;
 using Organizr.Application.Handlers.RequestHandlers;
 using Organizr.Application.Handlers.RequestHandlers.Configurations;
