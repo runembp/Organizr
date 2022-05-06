@@ -1,4 +1,4 @@
-import { AbstractControl, ValidatorFn } from "@angular/forms";
+import { AbstractControl, ValidatorFn, ValidationErrors } from "@angular/forms";
 
 export class Validation {
 
@@ -18,19 +18,20 @@ export class Validation {
     };
   }
 
-  static checkForOnlyWhiteSpace(controlName: string): ValidatorFn {
+  static noWhiteSpace(check: string): ValidatorFn {
     return (controls: AbstractControl) => {
-      const control = controls.get(controlName);
+      const control = controls.get(check);
 
-      if((control?.value as string).trim().length !== 0){
-        controls.get(controlName)?.setErrors({containsOnlyWhiteSpaces: true});
-        return {containsOnlyWhiteSpaces: true};
-      }else {
-        return null;
+      let bla = control?.value;
+      console.log(bla.trim().length);
+
+      if ((control?.value as string).indexOf(' ') >= 0 && (control?.value as string).trim().length === 0) {
+        controls.get(check)?.setErrors({ doh: true });
+        //console.log(control?.value);
+        return { doh: true };
       }
+      return null;
 
-    };
+    }
   }
-
-
 }
