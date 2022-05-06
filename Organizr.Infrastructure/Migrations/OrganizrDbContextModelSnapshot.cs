@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Organizr.Infrastructure.Data;
+using Organizr.Infrastructure.Persistence;
 
 #nullable disable
 
@@ -125,7 +125,7 @@ namespace Organizr.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Organizr.Core.Entities.Configuration", b =>
+            modelBuilder.Entity("Organizr.Domain.Entities.Configuration", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -153,7 +153,7 @@ namespace Organizr.Infrastructure.Migrations
                     b.ToTable("Configurations");
                 });
 
-            modelBuilder.Entity("Organizr.Core.Entities.Member", b =>
+            modelBuilder.Entity("Organizr.Domain.Entities.Member", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -239,7 +239,7 @@ namespace Organizr.Infrastructure.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Organizr.Core.Entities.MemberGroup", b =>
+            modelBuilder.Entity("Organizr.Domain.Entities.MemberGroup", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -259,7 +259,7 @@ namespace Organizr.Infrastructure.Migrations
                     b.ToTable("MemberGroups");
                 });
 
-            modelBuilder.Entity("Organizr.Core.Entities.OrganizrRole", b =>
+            modelBuilder.Entity("Organizr.Domain.Entities.OrganizrRole", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -291,7 +291,7 @@ namespace Organizr.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("Organizr.Core.Entities.OrganizrRole", null)
+                    b.HasOne("Organizr.Domain.Entities.OrganizrRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -300,7 +300,7 @@ namespace Organizr.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
-                    b.HasOne("Organizr.Core.Entities.Member", null)
+                    b.HasOne("Organizr.Domain.Entities.Member", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -309,7 +309,7 @@ namespace Organizr.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("Organizr.Core.Entities.Member", null)
+                    b.HasOne("Organizr.Domain.Entities.Member", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -318,13 +318,13 @@ namespace Organizr.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.HasOne("Organizr.Core.Entities.OrganizrRole", null)
+                    b.HasOne("Organizr.Domain.Entities.OrganizrRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Organizr.Core.Entities.Member", null)
+                    b.HasOne("Organizr.Domain.Entities.Member", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -333,7 +333,7 @@ namespace Organizr.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.HasOne("Organizr.Core.Entities.Member", null)
+                    b.HasOne("Organizr.Domain.Entities.Member", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

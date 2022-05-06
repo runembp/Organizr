@@ -25,7 +25,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Organizr.Core\Organizr.Core.csproj" />
+      <ProjectReference Include="..\Organizr.Application\Organizr.Application.csproj" />
+      <ProjectReference Include="..\Organizr.Domain\Organizr.Domain.csproj" />
     </ItemGroup>
 
     <ItemGroup>

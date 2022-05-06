@@ -35,7 +35,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Organizr.Application\Organizr.Application.csproj" />
-      <ProjectReference Include="..\Organizr.Core\Organizr.Core.csproj" />
+      <ProjectReference Include="..\Organizr.Domain\Organizr.Domain.csproj" />
       <ProjectReference Include="..\Organizr.Application\Organizr.Application.csproj" />
       <ProjectReference Include="..\Organizr.Infrastructure\Organizr.Infrastructure.csproj" />
     </ItemGroup>

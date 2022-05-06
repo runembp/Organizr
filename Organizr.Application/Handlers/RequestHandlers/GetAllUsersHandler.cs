@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using MediatR;
+using Organizr.Application.Common.Interfaces;
 using Organizr.Application.Requests;
-using Organizr.Core.Entities;
-using Organizr.Core.IRepositories;
+using Organizr.Domain.Entities;
+
 
 namespace Organizr.Application.Handlers.RequestHandlers;
 

@@ -1,4 +1,4 @@
-﻿using Organizr.Core.Entities;
+﻿using Organizr.Domain.Entities;
 
 namespace Organizr.Application.Responses;
 

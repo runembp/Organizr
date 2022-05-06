@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using Moq;
-using Organizr.Core.Entities;
-using Organizr.Core.Enums;
-using Organizr.Core.IRepositories;
+﻿using Moq;
+using Organizr.Domain.Entities;
+using Organizr.Domain.Enums;
+using System.Collections.Generic;
+using Organizr.Application.Common.Interfaces;
 
 namespace Organizr.Test.MockData
 {

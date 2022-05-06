@@ -5,12 +5,15 @@ using Blazorise.Icons.FontAwesome;
 using Blazorise.RichTextEdit;
 using MediatR;
 using Microsoft.AspNetCore.Components.Authorization;
+using Organizr.Api.Common;
 using Organizr.Application.HelperClasses;
+using Organizr.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
-await ApplicationInitializerHelperClass.SetUpDatabaseAndIdentity(builder);
-ApplicationInitializerHelperClass.AddSharedDependencyInjections(builder);
+await DependencyInjection.SetUpDatabaseAndIdentity(builder);
+ApiDependencyInjection.AddSharedDependencyInjections(builder);
+
 AddMandatoryServices();
 AddApplicationSpecificDependencyInjections();
 AddApplicationSetup();
@@ -52,8 +55,8 @@ void AddApplicationSetup()
     app.MapFallbackToPage("/_Host");
 
     // Seed Roles and Users to Database
-    ApplicationInitializerHelperClass.SeedRolesToDb(app).Wait();
-    ApplicationInitializerHelperClass.SeedMandatoryMembersToDatabase(app).Wait();
+    OrganizrDbContextSeed.SeedRolesToDb(app).Wait();
+    OrganizrDbContextSeed.SeedMandatoryMembersToDatabase(app).Wait();
 
     app.Run();
 }

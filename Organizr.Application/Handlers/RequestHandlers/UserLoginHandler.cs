@@ -1,8 +1,8 @@
 ﻿using MediatR;
+using Organizr.Application.Common.Interfaces;
 using Organizr.Application.HelperClasses;
 using Organizr.Application.Requests;
 using Organizr.Application.Responses;
-using Organizr.Core.IRepositories;
 
 namespace Organizr.Application.Handlers.RequestHandlers;
 

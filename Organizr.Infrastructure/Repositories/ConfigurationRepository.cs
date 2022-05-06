@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using Organizr.Core.Entities;
-using Organizr.Core.Enums;
-using Organizr.Core.IRepositories;
-using Organizr.Infrastructure.Data;
+using Organizr.Application.Common.Interfaces;
+using Organizr.Domain.Entities;
+using Organizr.Domain.Enums;
+
+using Organizr.Infrastructure.Persistence;
 
 namespace Organizr.Infrastructure.Repositories;
 

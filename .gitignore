@@ -1,20 +1,17 @@
-Organizr.Api/bin
-Organizr.Api/obj
+Organizr.Application/bin
+Organizr.Application/obj
 
-Organizr.Core/bin
-Organizr.Core/obj
+Organizr.Domain/bin
+Organizr.Domain/obj
 
 Organizr.Infrastructure/bin
 Organizr.Infrastructure/obj
 
-Organizr.Application/bin
-Organizr.Application/obj
+Organizr.Api/bin
+Organizr.Api/obj
 
 Organizr.Admin/obj
 Organizr.Admin/bin
-
-Organizr.Application/bin
-Organizr.Application/obj
 
 Organizr.Test/bin
 Organizr.Test/obj

@@ -1,7 +1,7 @@
-using System.Collections.Generic;
 using Moq;
-using Organizr.Core.Entities;
-using Organizr.Core.IRepositories;
+using Organizr.Domain.Entities;
+using System.Collections.Generic;
+using Organizr.Application.Common.Interfaces;
 
 namespace Organizr.Test.MockData;
 

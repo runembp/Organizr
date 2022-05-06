@@ -1,11 +1,12 @@
-using Organizr.Application.HelperClasses;
+using Organizr.Api.Common;
+using Organizr.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Database and Identity
-await ApplicationInitializerHelperClass.SetUpDatabaseAndIdentity(builder);
+await DependencyInjection.SetUpDatabaseAndIdentity(builder);
 // Dependency injection
-ApplicationInitializerHelperClass.AddSharedDependencyInjections(builder);
+ApiDependencyInjection.AddSharedDependencyInjections(builder);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -32,6 +33,12 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+// Database and Identity
+await DependencyInjection.SetUpDatabaseAndIdentity(builder);
+
+// Dependency injection
+ApiDependencyInjection.AddSharedDependencyInjections(builder);
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -49,7 +56,7 @@ app.UseHttpsRedirection();
 app.MapControllers();
 
 // Seed Roles and Members to Database
-ApplicationInitializerHelperClass.SeedRolesToDb(app).Wait();
-ApplicationInitializerHelperClass.SeedMandatoryMembersToDatabase(app).Wait();
+OrganizrDbContextSeed.SeedRolesToDb(app).Wait();
+OrganizrDbContextSeed.SeedMandatoryMembersToDatabase(app).Wait();
 
 app.Run();
