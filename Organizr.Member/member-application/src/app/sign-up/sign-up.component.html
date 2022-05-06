@@ -1,6 +1,6 @@
 <div class="container mt-3">
     <div class="row">
-        <div class="col-6">
+        <div class="col-8">
             <div class="container">
                 <form [formGroup]="createUserForm" (ngSubmit)="onSubmit()">
                     <div class="row">
@@ -26,11 +26,13 @@
                         <div class="mb-3 col-6">
                             <label for="phoneNumber" class="form-label">Telefon</label>
                             <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber" />
+
+                            <small
+                                *ngIf="!createUserForm.get('phoneNumber')?.valid && createUserForm.get('phoneNumber')?.touched">
+                                Indtast dit telefonnummer
+                            </small>
                         </div>
-                        <small
-                            *ngIf="!createUserForm.get('phoneNumber')?.valid && createUserForm.get('phoneNumber')?.touched">
-                            Indtast dit telefonnummer
-                        </small>
+
                         <div class="mb-3 col-6">
                             <label for="gender" class="form-label">Køn</label>
                             <select class="form-select" name="genderSelect" id="gender" formControlName="gender">
@@ -82,19 +84,13 @@
                         <small *ngIf="f['password2']?.errors?.['matching']">
                             Adgangskoder stemmer ikke overens
                         </small>
-
-
-
-
                     </div>
 
 
                     <button class="btn btn-primary" type="submit" [disabled]="!createUserForm.valid">
                         Opret
                     </button>
-
                 </form>
-
             </div>
         </div>
     </div>

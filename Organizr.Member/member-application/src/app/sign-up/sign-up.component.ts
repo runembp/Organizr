@@ -26,11 +26,11 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit(): void {
     this.createUserForm = new FormGroup({
-      firstName: new FormControl(null, Validators.required),
+      firstName: new FormControl(null, [Validators.required, Validation.checkForOnlyWhiteSpace('firstname')]),
       lastName: new FormControl(null, Validators.required),
-      phoneNumber: new FormControl(null, Validators.required),
+      phoneNumber: new FormControl(null, [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/), Validators.maxLength(8), Validators.minLength(8)]),
       gender: new FormControl(null, Validators.required),
-      address: new FormControl(null, Validators.required),
+      address: new FormControl(null, [Validators.required, Validators.email]),
       email: new FormControl(null, Validators.required),
 
       password: new FormControl(null, Validators.required),
