@@ -1,6 +1,6 @@
 ﻿@page "/SearchGroup"
 @using Organizr.Domain.Entities
-@using Organizr.Application.Requests
+@using Organizr.Application.Requests.Groups
 
 <h3>Søg gruppe</h3>
 
@@ -45,5 +45,4 @@
     {
         NavigationManager.NavigateTo($"EditGroup/{id}");
     }
-
 }
