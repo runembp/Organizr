@@ -1,6 +1,6 @@
 ﻿using Organizr.Domain.Entities;
 
-namespace Organizr.Application.Responses;
+namespace Organizr.Application.Responses.Groups;
 
 public class GetAllMemberGroupsResponse
 {

@@ -2,7 +2,7 @@
 using MediatR;
 using Organizr.Application.Commands;
 using Organizr.Application.Common.Interfaces;
-using Organizr.Application.Responses;
+using Organizr.Application.Responses.Groups;
 using Organizr.Domain.Entities;
 
 namespace Organizr.Application.Handlers.CommandHandlers;
