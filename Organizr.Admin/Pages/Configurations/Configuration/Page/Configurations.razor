@@ -92,13 +92,11 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var configurationListTask = Mediator.Send(new GetAllConfigurationsOfTypeConfigurationRequest());
-        var groupListTask = Mediator.Send(new GetAllMemberGroupsRequest());
+        var configurationListTask = await Mediator.Send(new GetAllConfigurationsOfTypeConfigurationRequest());
+        var groupListTask = await Mediator.Send(new GetAllMemberGroupsRequest());
 
-        await Task.WhenAll(configurationListTask, groupListTask);
-
-        ConfigurationList = configurationListTask.Result.Configurations;
-        GroupList = groupListTask.Result.MemberGroups.ToList();
+        ConfigurationList = configurationListTask.Configurations;
+        GroupList = groupListTask.MemberGroups.ToList();
 
         await SetConfigurationValues();
     }
