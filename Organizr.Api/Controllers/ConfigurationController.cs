@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Organizr.Application.Requests.Configurations;
-using Organizr.Application.Responses.Configurations;
 using Organizr.Domain.Entities;
 
 namespace Organizr.Api.Controllers;
@@ -20,7 +19,7 @@ public class ConfigurationController : ControllerBase
     }
 
     [HttpGet("configuration")]
-  
+
     public async Task<List<Configuration>> Get()
     {
         return await _mediator.Send(new GetAllConfigurationsRequest());
