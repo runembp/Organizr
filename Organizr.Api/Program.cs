@@ -33,10 +33,6 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-
-// Dependency injection
-ApiDependencyInjection.AddSharedDependencyInjections(builder);
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
