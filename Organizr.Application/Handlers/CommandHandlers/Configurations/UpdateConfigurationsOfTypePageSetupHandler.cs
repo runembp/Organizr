@@ -8,7 +8,6 @@ namespace Organizr.Application.Handlers.CommandHandlers.Configurations;
 public class UpdateConfigurationsOfTypePageSetupHandler : IRequestHandler<UpdateConfigurationsOfTypePageSetupCommand, UpdateConfigurationsResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private const int NumberOfConfigurationsOfTypePageSetup = 4;
 
     public UpdateConfigurationsOfTypePageSetupHandler(IUnitOfWork unitOfWork)
     {
@@ -21,12 +20,7 @@ public class UpdateConfigurationsOfTypePageSetupHandler : IRequestHandler<Update
 
         var result = await _unitOfWork.ConfigurationRepository.UpdateConfigurationOfTypePageSetup(command);
 
-        if (result != NumberOfConfigurationsOfTypePageSetup)
-        {
-            return response;
-        }
-        
-        response.Succeeded = true;
+        response.Succeeded = result > 0;
         
         return response;
     }

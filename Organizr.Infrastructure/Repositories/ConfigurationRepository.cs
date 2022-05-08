@@ -15,7 +15,7 @@ public class ConfigurationRepository : Repository<Configuration>, IConfiguration
     {
     }
 
-    public async Task<List<Configuration>> GetConfigurationsOfConfigTypeConfig(ConfigType configType)
+    public async Task<List<Configuration>> GetConfigurationsOfConfigType(ConfigType configType)
     {
         return await _organizrContext.Configurations.Where(x => x.ConfigType == configType).ToListAsync();
     }

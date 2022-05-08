@@ -7,49 +7,52 @@
 
 <h3>Sideopsætning</h3>
 
-<Tabs SelectedTab="@_selectedTab" SelectedTabChanged="@OnSelectedTabChanged" RenderMode="TabsRenderMode.LazyReload">
+<Tabs SelectedTab="@_selectedTab" SelectedTabChanged="@OnSelectedTabChanged">
     <Items>
+        <Tab Name="Unselected">#</Tab>
         <Tab Name="Frontpage">Forside</Tab>
         <Tab Name="CreateMembership">Opret Medlemskab</Tab>
         <Tab Name="AboutUs">Om os</Tab>
         <Tab Name="Contact">Kontakt</Tab>
     </Items>
     <Content>
+        <TabPanel Name="Unselected" Padding="Padding.Is3">
+            <Paragraph>Vælg en side at redigere.</Paragraph>
+            <Help>Siderne bliver gemt i et "WYSIWYG" (What You See Is What You Get) format, som bliver vist på samme måde på Medlemssiden, som det gemmes her.</Help>
+        </TabPanel>
         <TabPanel Name="Frontpage">
-            <PageEdit Configuration="ConfigFrontpage" />
+            <PageEdit Configuration="ConfigFrontpage"/>
         </TabPanel>
         <TabPanel Name="CreateMembership">
-            <PageEdit Configuration="ConfigCreateMembership" />
+            <PageEdit Configuration="ConfigCreateMembership"/>
         </TabPanel>
         <TabPanel Name="AboutUs">
-            <PageEdit Configuration="ConfigAboutUs" />
+            <PageEdit Configuration="ConfigAboutUs"/>
         </TabPanel>
         <TabPanel Name="Contact">
-            <PageEdit Configuration="ConfigContact" />
+            <PageEdit Configuration="ConfigContact"/>
         </TabPanel>
     </Content>
 </Tabs>
 
-<Button Color="Color.Primary" Clicked="OnSaveButton_Clicked">Gem</Button>
+@if (!_selectedTab.Equals("Unselected"))
+{
+    <Button Color="Color.Primary" Clicked="OnSaveButton_Clicked">Gem</Button>    
+}
 
-<Alert Visible="_configurationsUpdatedSucces">
+<Alert Visible="@(_configurationsUpdatedSuccess && !_selectedTab.Equals("Unselected"))">
     <AlertMessage TextColor="TextColor.Success">Sideopsætningen er gemt</AlertMessage>
-</Alert>
-
-<Alert Visible="_configurationsUpdatedError">
-    <AlertMessage TextColor="TextColor.Danger">Sideopsætningen blev ikke gemt - prøv venligst igen</AlertMessage>
 </Alert>
 
 @code{
     private Configuration ConfigFrontpage { get; set; } = new();
-    private Configuration ConfigCreateMembership { get; set; } = new(); 
+    private Configuration ConfigCreateMembership { get; set; } = new();
     private Configuration ConfigAboutUs { get; set; } = new();
     private Configuration ConfigContact { get; set; } = new();
 
-    private bool _configurationsUpdatedError; 
-    private bool _configurationsUpdatedSucces; 
-    
-    string _selectedTab = "Frontpage";
+    private bool _configurationsUpdatedSuccess;
+
+    string _selectedTab = "Unselected";
 
     protected override async Task OnInitializedAsync()
     {
@@ -60,7 +63,7 @@
         ConfigContact = pageSetupConfigurations.Configurations.First(x => x.Id == ConfigurationIds.ContactPageTopTextBox);
     }
 
-    private Task OnSelectedTabChanged( string name )
+    private Task OnSelectedTabChanged(string name)
     {
         _selectedTab = name;
 
@@ -69,9 +72,8 @@
 
     private async Task OnSaveButton_Clicked()
     {
-        _configurationsUpdatedError = false;
-        _configurationsUpdatedSucces = false;
-        
+        _configurationsUpdatedSuccess = false;
+
         var command = new UpdateConfigurationsOfTypePageSetupCommand
         {
             Frontpage = ConfigFrontpage,
@@ -84,11 +86,8 @@
 
         if (response.Succeeded)
         {
-            _configurationsUpdatedSucces = true;
-        }
-        else
-        {
-            _configurationsUpdatedError = true;
+            _configurationsUpdatedSuccess = true;
         }
     }
+
 }
