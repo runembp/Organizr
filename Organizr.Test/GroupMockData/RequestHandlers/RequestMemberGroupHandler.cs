@@ -1,6 +1,4 @@
 using Organizr.Application.Handlers.RequestHandlers;
-using Organizr.Application.Requests;
-using Organizr.Application.Responses;
 using Organizr.Domain.Entities;
 using Organizr.Test.MockData;
 using Shouldly;
@@ -8,6 +6,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Organizr.Application.Common.Interfaces;
+using Organizr.Application.Requests.Groups;
+using Organizr.Application.Responses.Groups;
 using Xunit;
 
 namespace Organizr.Test.GroupMockData.RequestHandlers;

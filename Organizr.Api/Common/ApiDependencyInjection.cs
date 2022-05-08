@@ -7,10 +7,11 @@ using Organizr.Application.Handlers.CommandHandlers.Configurations;
 using Organizr.Application.Handlers.RequestHandlers;
 using Organizr.Application.Handlers.RequestHandlers.Configurations;
 using Organizr.Application.HelperClasses;
-using Organizr.Application.Requests;
 using Organizr.Application.Requests.Configurations;
+using Organizr.Application.Requests.Groups;
 using Organizr.Application.Responses;
 using Organizr.Application.Responses.Configurations;
+using Organizr.Application.Responses.Groups;
 using Organizr.Domain.Entities;
 using Organizr.Infrastructure.Repositories;
 
