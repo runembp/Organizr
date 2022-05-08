@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Organizr.Application.Common.Interfaces;
-using Organizr.Application.Requests;
-using Organizr.Application.Responses;
+using Organizr.Application.Requests.Groups;
+using Organizr.Application.Responses.Groups;
 
 
 namespace Organizr.Application.Handlers.RequestHandlers;

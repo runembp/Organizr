@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Organizr.Application.Common.Interfaces;
-using Organizr.Application.Requests;
+using Organizr.Application.Requests.Groups;
 using Organizr.Domain.Entities;
 
 
