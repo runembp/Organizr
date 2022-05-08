@@ -28,12 +28,12 @@ export class SignUpComponent implements OnInit {
     this.createUserForm = new FormGroup({
       firstName: new FormControl('', Validators.required),
       lastName: new FormControl('', Validators.required),
-      phoneNumber: new FormControl(null, [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/), Validators.maxLength(8), Validators.minLength(8)]),
-      gender: new FormControl(null, Validators.required),
-      address: new FormControl(null, [Validators.required]),
-      email: new FormControl(null, [Validators.required, Validators.email]),
+      phoneNumber: new FormControl('', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/), Validators.maxLength(8), Validators.minLength(8)]),
+      gender: new FormControl('', Validators.required),
+      address: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
 
-      password: new FormControl(null, Validators.required),
+      password: new FormControl(null, [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/)]),
       password2: new FormControl(null, Validators.required),
     }, {
       validators: [Validation.match('password', 'password2'), Validation.noWhiteSpace('firstName'),  Validation.noWhiteSpace('lastName')]

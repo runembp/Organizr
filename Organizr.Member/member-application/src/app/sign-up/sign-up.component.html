@@ -9,19 +9,22 @@
                             <input type="text" class="form-control" id="firstName" formControlName="firstName"
                                 [ngClass]="{ 'is-invalid': submitted && f['firstName']?.errors }" />
 
-
-                            <small *ngIf="f['firstName']?.errors?.['doh'] || createUserForm.get('firstName')?.touched">
+                            <small *ngIf="
+                            f['firstName']?.errors?.['containsOnlyWhiteSpaces'] || createUserForm.get('firstName')?.touched
+                            && !createUserForm.get('firstName')?.valid">
                                 Indtast et gyldigt fornavn
                             </small>
 
                         </div>
                         <div class="mb-3 col-6">
                             <label for="lastname" class="form-label">Efternavn</label>
-                            <input type="text" class="form-control" id="lastname" formControlName="lastName" />
+                            <input type="text" class="form-control" id="lastname" formControlName="lastName"
+                                [ngClass]="{ 'is-invalid': submitted && f['firstName']?.errors }" />
 
-                            <small
-                                *ngIf="!createUserForm.get('lastName')?.valid && createUserForm.get('lastName')?.touched">
-                                Indtast Efternavn
+                            <small *ngIf="
+                            f['lastName']?.errors?.['containsOnlyWhiteSpaces'] || createUserForm.get('lastName')?.touched
+                            && !createUserForm.get('lastName')?.valid">
+                                Indtast et gyldigt fornavn
                             </small>
                         </div>
                     </div>
@@ -73,22 +76,31 @@
                         <div class="mb-3 col-6">
                             <label for="password" class="form-label">Adgangskode</label>
                             <input type="password" class="form-control" id="password" formControlName="password" />
+
+                            <small
+                                *ngIf="createUserForm.get('password')?.invalid && createUserForm.get('password')?.touched">
+                                Indtast gyldigt password <br>
+                                (Minimun 6 karakter, 1 specieltegn, 1 tal, 1 lille bogstav, 1 stort bogstav)
+                            </small>
                         </div>
+
                         <div class="mb-3 col-6">
                             <label for="password2" class="form-label">Gentag Adgangskode</label>
                             <input type="password" class="form-control" id="password2" formControlName="password2"
                                 [ngClass]="{ 'is-invalid': submitted && f['password2']?.errors }" />
+
+                            <small
+                                *ngIf="f['password2']?.errors?.['matching'] && createUserForm.get('password2')?.touched">
+                                Adgangskoder stemmer ikke overens
+                            </small>
+
+                            <small *ngIf="createUserForm.get('password2')?.touched && !f['password2']?.errors?.['matching']
+                            && createUserForm.get('password2')?.invalid">
+                                Gentag adgangskode
+                            </small>
+
                         </div>
-                        <small
-                            *ngIf="createUserForm.get('password')?.invalid && createUserForm.get('password')?.touched">
-                            Indtast Adgangskode
-                        </small>
-
-                        <small *ngIf="f['password2']?.errors?.['matching']">
-                            Adgangskoder stemmer ikke overens
-                        </small>
                     </div>
-
 
                     <button class="btn btn-primary" type="submit" [disabled]="!createUserForm.valid">
                         Opret
