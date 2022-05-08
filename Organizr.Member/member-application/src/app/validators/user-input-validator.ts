@@ -9,7 +9,6 @@ export class Validation {
    
       if (control?.value !== checkControl?.value) {
         controls.get(checkControlName)?.setErrors({ matching: true });
-        console.log("password matcher ikke")
         return { matching: true };
       } else {
         return null;

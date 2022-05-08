@@ -24,7 +24,7 @@
                             <small *ngIf="
                             f['lastName']?.errors?.['containsOnlyWhiteSpaces'] || createUserForm.get('lastName')?.touched
                             && !createUserForm.get('lastName')?.valid">
-                                Indtast et gyldigt fornavn
+                                Indtast et gyldigt efternavn
                             </small>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                             <small
                                 *ngIf="createUserForm.get('password')?.invalid && createUserForm.get('password')?.touched">
                                 Indtast gyldigt password <br>
-                                (Minimun 6 karakter, 1 specieltegn, 1 tal, 1 lille bogstav, 1 stort bogstav)
+                                (Minimum 6 karakter, 1 specialtegn, 1 tal, 1 lille bogstav, 1 stort bogstav)
                             </small>
                         </div>
 
