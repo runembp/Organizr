@@ -1,6 +1,6 @@
 namespace Organizr.Application.Responses.Configurations;
 
-public class UpdateConfigurationsOfTypeConfigResponse
+public class UpdateConfigurationsResponse
 {
     public bool Succeeded { get; set; }
 }

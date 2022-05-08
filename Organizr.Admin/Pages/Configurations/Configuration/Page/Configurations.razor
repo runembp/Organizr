@@ -2,7 +2,9 @@
 @using Organizr.Application.Requests.Configurations
 @using Organizr.Domain.Entities
 @using Organizr.Application.Commands
+@using Organizr.Application.Commands.Configurations
 @using Organizr.Domain.ApplicationConstants
+@using Organizr.Domain.Enums
 
 @attribute [Authorize]
 
@@ -90,7 +92,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var response = await Mediator.Send(new GetAllConfigurationsOfTypeConfigurationRequest());
+        var response = await Mediator.Send(new GetAllConfigurationsOfTypeRequest{ConfigType =ConfigType.Configuration});
 
         ConfigurationList = response.Configurations;
 

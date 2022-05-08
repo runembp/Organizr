@@ -6,7 +6,7 @@ using Organizr.Application.Responses.Configurations;
 
 namespace Organizr.Application.Handlers.RequestHandlers.Configurations;
 
-public class GetAllConfigurationsOfTypeConfigurationHandler : IRequestHandler<GetAllConfigurationsOfTypeConfigurationRequest, GetAllConfigurationsOfTypeConfigurationResponse>
+public class GetAllConfigurationsOfTypeConfigurationHandler : IRequestHandler<GetAllConfigurationsOfTypeRequest, GetAllConfigurationsOfTypeResponse>
 {
     private readonly IConfigurationRepository _configurationRepository;
 
@@ -15,11 +15,11 @@ public class GetAllConfigurationsOfTypeConfigurationHandler : IRequestHandler<Ge
         _configurationRepository = configurationRepository;
     }
 
-    public async Task<GetAllConfigurationsOfTypeConfigurationResponse> Handle(GetAllConfigurationsOfTypeConfigurationRequest request, CancellationToken cancellationToken)
+    public async Task<GetAllConfigurationsOfTypeResponse> Handle(GetAllConfigurationsOfTypeRequest request, CancellationToken cancellationToken)
     {
-        var response = new GetAllConfigurationsOfTypeConfigurationResponse
+        var response = new GetAllConfigurationsOfTypeResponse
         {
-            Configurations = await _configurationRepository.GetConfigurationsOfConfigTypeConfig()
+            Configurations = await _configurationRepository.GetConfigurationsOfConfigTypeConfig(request.ConfigType)
         };
 
         return response;

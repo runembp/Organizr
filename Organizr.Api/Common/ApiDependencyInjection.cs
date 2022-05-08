@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using Organizr.Application.Commands;
+using Organizr.Application.Commands.Configurations;
 using Organizr.Application.Common.Interfaces;
 using Organizr.Application.Handlers.CommandHandlers;
+using Organizr.Application.Handlers.CommandHandlers.Configurations;
 using Organizr.Application.Handlers.RequestHandlers;
 using Organizr.Application.Handlers.RequestHandlers.Configurations;
 using Organizr.Application.HelperClasses;
@@ -26,13 +28,41 @@ public static class ApiDependencyInjection
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         builder.Services.AddScoped<TokenHelperClass>();
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+        
+        AddRepositories(builder);
+        AddMediatrRequests(builder);
+        AddMediatrCommands(builder);
+    }
+
+    private static void AddRepositories(WebApplicationBuilder builder)
+    {
         builder.Services.AddScoped<IMemberRepository, MemberRepository>();
         builder.Services.AddScoped<IMemberGroupRepository, MemberGroupRepository>();
         builder.Services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
-        builder.Services.AddTransient<IRequestHandler<CreateMemberCommand, CreateMemberResponse>, CreateMemberCommandHandler>();
-        builder.Services.AddTransient<IRequestHandler<CreateMemberGroupCommand, CreateMemberGroupResponse>, CreateMemberGroupCommandHandler>();
+    }
+
+    private static void AddMediatrRequests(WebApplicationBuilder builder)
+    {
+        // Members
         builder.Services.AddTransient<IRequestHandler<GetAllMembersRequest, List<Member>>, GetAllMembersHandler>();
+        
+        // Groups
         builder.Services.AddTransient<IRequestHandler<GetAllMemberGroupsRequest, GetAllMemberGroupsResponse>, GetAllMemberGroupsHandler>();
-        builder.Services.AddTransient<IRequestHandler<GetAllConfigurationsOfTypeConfigurationRequest, GetAllConfigurationsOfTypeConfigurationResponse>, GetAllConfigurationsOfTypeConfigurationHandler>();
+        
+        // Configurations
+        builder.Services.AddTransient<IRequestHandler<GetAllConfigurationsOfTypeRequest, GetAllConfigurationsOfTypeResponse>, GetAllConfigurationsOfTypeConfigurationHandler>();
+    }
+
+    private static void AddMediatrCommands(WebApplicationBuilder builder)
+    {
+        // Members
+        builder.Services.AddTransient<IRequestHandler<CreateMemberCommand, CreateMemberResponse>, CreateMemberCommandHandler>();
+        
+        // Groups
+        builder.Services.AddTransient<IRequestHandler<CreateMemberGroupCommand, CreateMemberGroupResponse>, CreateMemberGroupCommandHandler>();
+        
+        // Commands
+        builder.Services.AddTransient<IRequestHandler<UpdateConfigurationsOfTypeConfigCommand, UpdateConfigurationsResponse>, UpdateConfigurationsOfTypeConfigHandler>();
+        builder.Services.AddTransient<IRequestHandler<UpdateConfigurationsOfTypePageSetupCommand, UpdateConfigurationsResponse>, UpdateConfigurationsOfTypePageSetupHandler>();
     }
 }

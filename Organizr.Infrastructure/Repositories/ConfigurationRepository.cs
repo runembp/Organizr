@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Organizr.Application.Commands;
+using Organizr.Application.Commands.Configurations;
 using Organizr.Application.Common.Interfaces;
 using Organizr.Domain.ApplicationConstants;
 using Organizr.Domain.Entities;
@@ -15,22 +15,12 @@ public class ConfigurationRepository : Repository<Configuration>, IConfiguration
     {
     }
 
-    public async Task<List<Configuration>> GetConfigurationsOfConfigTypeConfig()
+    public async Task<List<Configuration>> GetConfigurationsOfConfigTypeConfig(ConfigType configType)
     {
-        return await _organizrContext.Configurations.Where(x => x.ConfigType == ConfigType.Configuration).ToListAsync();
+        return await _organizrContext.Configurations.Where(x => x.ConfigType == configType).ToListAsync();
     }
 
-    public async Task<List<Configuration>> GetConfigurationsOfConfigTypePageSetup()
-    {
-        return await _organizrContext.Configurations.Where(x => x.ConfigType == ConfigType.PageSetup).ToListAsync();
-    }
-
-    public async Task<List<Configuration>> GetConfigurationsOfConfigTypePageCssSetup()
-    {
-        return await _organizrContext.Configurations.Where(x => x.ConfigType == ConfigType.CssSetup).ToListAsync();
-    }
-
-    public async Task<bool> UpdateConfigurationOfTypeConfiguration(UpdateConfigurationsOfTypeConfigCommand command)
+    public async Task<int> UpdateConfigurationOfTypeConfiguration(UpdateConfigurationsOfTypeConfigCommand command)
     {
         var configurations = _organizrContext.Configurations.Where(x => x.ConfigType == ConfigType.Configuration).ToList();
         
@@ -58,7 +48,25 @@ public class ConfigurationRepository : Repository<Configuration>, IConfiguration
         var activateAbilityForAllMembersToCreateNews = configurations.First(x => x.Id == ConfigurationIds.ActivateAbilityForAllMembersToCreateNews);
         activateAbilityForAllMembersToCreateNews.BoolValue = command.ActivateAbilityForAllMembersToCreateNews;
         
-        await _organizrContext.SaveChangesAsync();
-        return true;
+        return await _organizrContext.SaveChangesAsync();
+    }
+
+    public async Task<int> UpdateConfigurationOfTypePageSetup(UpdateConfigurationsOfTypePageSetupCommand command)
+    {
+        var pageSetupConfigurations = _organizrContext.Configurations.Where(x => x.ConfigType == ConfigType.PageSetup);
+
+        var frontPageConfiguration = pageSetupConfigurations.First(x => x.Id == ConfigurationIds.FrontpageTopTextBox);
+        frontPageConfiguration.StringValue = command.Frontpage.StringValue;
+        
+        var createMembershipConfiguration = pageSetupConfigurations.First(x => x.Id == ConfigurationIds.CreateMembershipTopText);
+        createMembershipConfiguration.StringValue = command.CreateMembership.StringValue;
+        
+        var aboutUsConfiguration = pageSetupConfigurations.First(x => x.Id == ConfigurationIds.AboutUsPage);
+        aboutUsConfiguration.StringValue = command.AboutUs.StringValue;
+        
+        var contactConfiguration = pageSetupConfigurations.First(x => x.Id == ConfigurationIds.ContactPageTopTextBox);
+        contactConfiguration.StringValue = command.Contact.StringValue;
+
+        return await _organizrContext.SaveChangesAsync();
     }
 }
