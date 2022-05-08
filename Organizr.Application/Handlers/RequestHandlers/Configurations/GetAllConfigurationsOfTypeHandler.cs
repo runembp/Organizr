@@ -6,11 +6,11 @@ using Organizr.Application.Responses.Configurations;
 
 namespace Organizr.Application.Handlers.RequestHandlers.Configurations;
 
-public class GetAllConfigurationsOfTypeConfigurationHandler : IRequestHandler<GetAllConfigurationsOfTypeRequest, GetAllConfigurationsOfTypeResponse>
+public class GetAllConfigurationsOfTypeHandler : IRequestHandler<GetAllConfigurationsOfTypeRequest, GetAllConfigurationsOfTypeResponse>
 {
     private readonly IConfigurationRepository _configurationRepository;
 
-    public GetAllConfigurationsOfTypeConfigurationHandler(IConfigurationRepository configurationRepository)
+    public GetAllConfigurationsOfTypeHandler(IConfigurationRepository configurationRepository)
     {
         _configurationRepository = configurationRepository;
     }
@@ -19,7 +19,7 @@ public class GetAllConfigurationsOfTypeConfigurationHandler : IRequestHandler<Ge
     {
         var response = new GetAllConfigurationsOfTypeResponse
         {
-            Configurations = await _configurationRepository.GetConfigurationsOfConfigTypeConfig(request.ConfigType)
+            Configurations = await _configurationRepository.GetConfigurationsOfConfigType(request.ConfigType)
         };
 
         return response;

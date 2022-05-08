@@ -51,7 +51,7 @@ public static class ApiDependencyInjection
         builder.Services.AddTransient<IRequestHandler<GetAllMemberGroupsRequest, GetAllMemberGroupsResponse>, GetAllMemberGroupsHandler>();
         
         // Configurations
-        builder.Services.AddTransient<IRequestHandler<GetAllConfigurationsOfTypeRequest, GetAllConfigurationsOfTypeResponse>, GetAllConfigurationsOfTypeConfigurationHandler>();
+        builder.Services.AddTransient<IRequestHandler<GetAllConfigurationsOfTypeRequest, GetAllConfigurationsOfTypeResponse>, GetAllConfigurationsOfTypeHandler>();
     }
 
     private static void AddMediatrCommands(WebApplicationBuilder builder)
