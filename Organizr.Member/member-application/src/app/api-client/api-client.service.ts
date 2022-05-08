@@ -21,7 +21,7 @@ export class ApiClientService {
     }),
   };
 
-
+  
   jsonUser: string;
   createOrganizrUser(user: User): Observable<User> {
     this.jsonUser = JSON.stringify(user);

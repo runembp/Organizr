@@ -19,16 +19,11 @@ public class ConfigurationController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet("configurations")]
+    [HttpGet("configuration")]
   
     public async Task<List<Configuration>> Get()
     {
         return await _mediator.Send(new GetAllConfigurationsRequest());
-        
     }
-
-   
-
-
 }
 
