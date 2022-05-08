@@ -60,8 +60,16 @@
         <CardBody>
             <CardTitle Size="5">Organisations data</CardTitle>
             <Field>
-                <FieldLabel>Organisations adresse</FieldLabel>
+                <FieldLabel>Organisationens adresse</FieldLabel>
                 <TextEdit @bind-Text="ConfigOrganizationAddress"/>
+            </Field>
+            <Field>
+                <FieldLabel>Organisationens Telefon</FieldLabel>
+                <TextEdit @bind-Text="ConfigOrganizationPhoneNumber"/>
+            </Field>
+            <Field>
+                <FieldLabel>Organisations Email</FieldLabel>
+                <TextEdit @bind-Text="ConfigOrganizationEmail"/>
             </Field>
         </CardBody>
     </Card>
