@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiClientService } from '../api-client/api-client.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { User } from '../User';
 import { Validation } from '../validators/user-input-validator';
 import { AbstractControl } from "@angular/forms";
 
@@ -32,7 +31,6 @@ export class SignUpComponent implements OnInit {
       gender: new FormControl(null, Validators.required),
       address: new FormControl(null, Validators.required),
       email: new FormControl(null, Validators.required),
-
       password: new FormControl(null, Validators.required),
       password2: new FormControl(null, Validators.required),
     }, {
@@ -44,9 +42,9 @@ export class SignUpComponent implements OnInit {
     return this.createUserForm.controls;
   }
 
-  user: User;
-
+  user: any;
   onSubmit() {
+
     this.user = {
       firstName: this.createUserForm.get('firstName')?.value,
       lastName: this.createUserForm.get('lastName')?.value,
@@ -59,6 +57,6 @@ export class SignUpComponent implements OnInit {
 
     this.apiClient.createOrganizrUser(this.user).subscribe();
     this.createUserForm.reset();
-  };
 
+  };
 }
