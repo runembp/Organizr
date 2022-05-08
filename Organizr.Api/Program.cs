@@ -33,12 +33,6 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// Database and Identity
-await DependencyInjection.SetUpDatabaseAndIdentity(builder);
-
-// Dependency injection
-ApiDependencyInjection.AddSharedDependencyInjections(builder);
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
