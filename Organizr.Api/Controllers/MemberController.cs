@@ -23,7 +23,7 @@ public class MemberController : ControllerBase
 
     [HttpGet("organizr-member")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<List<Member>> Get()
+    public async Task<List<Member>> GetAll()
     {
         return await _mediator.Send(new GetAllMembersRequest());
     }

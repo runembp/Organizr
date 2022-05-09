@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Organizr.Application.HelperClasses;
 using Organizr.Domain.ApplicationConstants;
 using Organizr.Domain.Entities;
 using System.Text;
-using Organizr.Application.HelperClasses;
 
 namespace Organizr.Infrastructure.Persistence;
 

@@ -16,12 +16,12 @@ public class UpdateConfigurationsOfTypeConfigHandler : IRequestHandler<UpdateCon
 
     public async Task<UpdateConfigurationsOfTypeConfigResponse> Handle(UpdateConfigurationsOfTypeConfigCommand command, CancellationToken cancellationToken)
     {
-        var response = new UpdateConfigurationsOfTypeConfigResponse {Succeeded = false};
+        var response = new UpdateConfigurationsOfTypeConfigResponse { Succeeded = false };
 
         var result = await _unitOfWork.ConfigurationRepository.UpdateConfigurationOfTypeConfiguration(command);
-        
+
         response.Succeeded = result;
-        
+
         return response;
     }
 }

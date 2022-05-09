@@ -30,10 +30,12 @@ public static class ApiDependencyInjection
         builder.Services.AddScoped<IMemberRepository, MemberRepository>();
         builder.Services.AddScoped<IMemberGroupRepository, MemberGroupRepository>();
         builder.Services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
+        builder.Services.AddTransient<IRequestHandler<GetAllConfigurationsRequest, List<Configuration>>, GetAllConfigurationsRequestHandler>();
         builder.Services.AddTransient<IRequestHandler<CreateMemberCommand, CreateMemberResponse>, CreateMemberCommandHandler>();
         builder.Services.AddTransient<IRequestHandler<CreateMemberGroupCommand, CreateMemberGroupResponse>, CreateMemberGroupCommandHandler>();
         builder.Services.AddTransient<IRequestHandler<GetAllMembersRequest, List<Member>>, GetAllMembersHandler>();
         builder.Services.AddTransient<IRequestHandler<GetAllMemberGroupsRequest, GetAllMemberGroupsResponse>, GetAllMemberGroupsHandler>();
         builder.Services.AddTransient<IRequestHandler<GetAllConfigurationsOfTypeConfigurationRequest, GetAllConfigurationsOfTypeConfigurationResponse>, GetAllConfigurationsOfTypeConfigurationHandler>();
+
     }
 }

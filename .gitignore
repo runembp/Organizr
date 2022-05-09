@@ -13,6 +13,9 @@ Organizr.Api/obj
 Organizr.Admin/obj
 Organizr.Admin/bin
 
+
+Organizr.Api.csproj.user
+
 Organizr.Test/bin
 Organizr.Test/obj
 
