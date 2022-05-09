@@ -1,9 +1,10 @@
 ﻿@page "/Configurations"
-@using Organizr.Application.Requests.Configurations
 @using Organizr.Domain.Entities
-@using Organizr.Application.Commands
 @using Organizr.Application.Requests.Groups
+@using Organizr.Application.Commands.Configurations
+@using Organizr.Application.Requests.Configurations
 @using Organizr.Domain.ApplicationConstants
+@using Organizr.Domain.Enums
 
 @attribute [Authorize]
 
@@ -100,11 +101,11 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var configurationListTask = await Mediator.Send(new GetAllConfigurationsOfTypeConfigurationRequest());
-        var groupListTask = await Mediator.Send(new GetAllMemberGroupsRequest());
+        var configurationList = await Mediator.Send(new GetAllConfigurationsOfTypeRequest{ConfigType = ConfigType.Configuration});
+        var groupList = await Mediator.Send(new GetAllMemberGroupsRequest());
 
-        ConfigurationList = configurationListTask.Configurations;
-        GroupList = groupListTask.MemberGroups.ToList();
+        ConfigurationList = configurationList.Configurations;
+        GroupList = groupList.MemberGroups.ToList();
 
         await SetConfigurationValues();
     }

@@ -1,0 +1,46 @@
+﻿@using Organizr.Domain.Entities
+@using Config = Blazorise.Icons.FontAwesome.Config
+
+<RichTextEdit @ref="_richTextEditRef"
+              Theme="RichTextEditTheme.Snow"
+              ContentChanged="@OnContentChanged"
+              EditorBlur="@OnContentChanged"
+              ToolbarPosition="Placement.Top">
+    <Editor>@((MarkupString)Configuration.StringValue!)</Editor>
+    <Toolbar>
+        <RichTextEditToolbarGroup>
+            <RichTextEditToolbarButton Action="RichTextEditAction.Image" />
+            <RichTextEditToolbarButton Action="RichTextEditAction.Bold"/>
+            <RichTextEditToolbarButton Action="RichTextEditAction.Italic"/>
+            <RichTextEditToolbarSelect Action="RichTextEditAction.Size">
+                <RichTextEditToolbarSelectItem Value="small"/>
+                <RichTextEditToolbarSelectItem Selected/>
+                <RichTextEditToolbarSelectItem Value="large"/>
+                <RichTextEditToolbarSelectItem Value="huge">Very Big</RichTextEditToolbarSelectItem>
+            </RichTextEditToolbarSelect>
+            <RichTextEditToolbarButton Action="RichTextEditAction.List" Value="ordered"/>
+            <RichTextEditToolbarButton Action="RichTextEditAction.List" Value="bullet"/>
+        </RichTextEditToolbarGroup>
+    </Toolbar>
+</RichTextEdit>
+
+@code
+{
+    [Parameter]
+    public Configuration Configuration { get; set; } = new();
+    
+    private RichTextEdit _richTextEditRef = null!;
+
+    private async Task OnContentChanged()
+    {
+        Configuration.StringValue = await _richTextEditRef.GetHtmlAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await _richTextEditRef.SetHtmlAsync(Configuration.StringValue);    
+        }
+    }
+}
