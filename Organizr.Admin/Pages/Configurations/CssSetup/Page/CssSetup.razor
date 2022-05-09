@@ -1,19 +1,50 @@
 ﻿@page "/CssSetup"
+@using Organizr.Domain.Entities
+@using Organizr.Application.Requests.Configurations
+@using Organizr.Domain.Enums
+@using Organizr.Application.Commands.Configurations
 
 <Heading Size="HeadingSize.Is3">Opsætning af CSS for Member-applikationen</Heading>
 
 <Div>
     <Column ColumnSize="ColumnSize.Is6" Padding="Padding.Is0">
-        <MemoEdit Rows="30" AutoSize Disabled="!_editingActivated"/>
+        <MemoEdit Rows="30" AutoSize @bind-Text="@ConfigCss.StringValue" Disabled="!_editingActivated"/>
     </Column>
 
     <Field TextAlignment="TextAlignment.End" ColumnSize="ColumnSize.Is6">
         <Check TValue="bool" @bind-Checked="_editingActivated">Aktiver Redigering</Check>
     </Field>
 
-    <Button Color="Color.Primary">Gem</Button>
+    <Button Color="Color.Primary" Clicked="OnSaveButton_Clicked">Gem</Button>
+
+    <Column ColumnSize="ColumnSize.Is3">
+        <Alert Visible="_configSaved" Color="Color.Success">
+            <AlertMessage>Css Opsætningen er gemt</AlertMessage>
+        </Alert>
+    </Column>
 </Div>
 
 @code {
+    private Configuration ConfigCss { get; set; } = new();
     private bool _editingActivated;
+    private bool _configSaved;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var cssConfig = await Mediator.Send(new GetAllConfigurationsOfTypeRequest { ConfigType = ConfigType.CssSetup });
+        ConfigCss = cssConfig.Configurations.First();
+    }
+
+    private async Task OnSaveButton_Clicked()
+    {
+        _configSaved = false;
+
+        var response = await Mediator.Send(new UpdateConfigurationsOfTypeCssSetupCommand { StringValue = ConfigCss.StringValue });
+
+        if (response.Succeeded)
+        {
+            _configSaved = response.Succeeded;
+        }
+    }
+
 }
