@@ -69,4 +69,12 @@ public class ConfigurationRepository : Repository<Configuration>, IConfiguration
 
         return await _organizrContext.SaveChangesAsync();
     }
+
+    public async Task<int> UpdateConfigurationOfTypeCssSetup(UpdateConfigurationsOfTypeCssSetupCommand command)
+    {
+        var cssConfiguration = _organizrContext.Configurations.First(x => x.Id == ConfigurationIds.MemberApplicationCss);
+        cssConfiguration.StringValue = command.StringValue;
+        
+        return await _organizrContext.SaveChangesAsync();
+    }
 }
