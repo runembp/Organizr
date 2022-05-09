@@ -17,6 +17,5 @@ export class AboutUsComponent implements OnInit {
     this.apiClient.getAllConfigurations().subscribe((configurations) => {
       this.aboutUsContent = configurations[11]['stringValue'];
     });
-
   }
 }
