@@ -8,7 +8,6 @@ namespace Organizr.Application.Handlers.CommandHandlers.Configurations;
 public class UpdateConfigurationsOfTypeConfigHandler : IRequestHandler<UpdateConfigurationsOfTypeConfigCommand, UpdateConfigurationsResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private const int NumberOfConfigurationsOfTypeConfig = 8;
 
     public UpdateConfigurationsOfTypeConfigHandler(IUnitOfWork unitOfWork)
     {
@@ -21,12 +20,7 @@ public class UpdateConfigurationsOfTypeConfigHandler : IRequestHandler<UpdateCon
 
         var result = await _unitOfWork.ConfigurationRepository.UpdateConfigurationOfTypeConfiguration(command);
 
-        if (result != NumberOfConfigurationsOfTypeConfig)
-        {
-            return response;
-        }
-
-        response.Succeeded = true;
+        response.Succeeded = result > 0;
         
         return response;
     }
