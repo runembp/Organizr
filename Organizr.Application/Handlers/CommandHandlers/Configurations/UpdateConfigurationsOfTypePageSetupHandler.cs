@@ -5,20 +5,20 @@ using Organizr.Application.Responses.Configurations;
 
 namespace Organizr.Application.Handlers.CommandHandlers.Configurations;
 
-public class UpdateConfigurationsOfTypeConfigHandler : IRequestHandler<UpdateConfigurationsOfTypeConfigCommand, UpdateConfigurationsResponse>
+public class UpdateConfigurationsOfTypePageSetupHandler : IRequestHandler<UpdateConfigurationsOfTypePageSetupCommand, UpdateConfigurationsResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateConfigurationsOfTypeConfigHandler(IUnitOfWork unitOfWork)
+    public UpdateConfigurationsOfTypePageSetupHandler(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<UpdateConfigurationsResponse> Handle(UpdateConfigurationsOfTypeConfigCommand command, CancellationToken cancellationToken)
+    public async Task<UpdateConfigurationsResponse> Handle(UpdateConfigurationsOfTypePageSetupCommand command, CancellationToken cancellationToken)
     {
         var response = new UpdateConfigurationsResponse {Succeeded = false};
 
-        var result = await _unitOfWork.ConfigurationRepository.UpdateConfigurationOfTypeConfiguration(command);
+        var result = await _unitOfWork.ConfigurationRepository.UpdateConfigurationOfTypePageSetup(command);
 
         response.Succeeded = result > 0;
         

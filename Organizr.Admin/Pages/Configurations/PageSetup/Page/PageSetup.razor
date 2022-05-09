@@ -1,37 +1,94 @@
 ﻿@page "/PageSetup"
+@using Organizr.Application.Requests.Configurations
+@using Organizr.Domain.ApplicationConstants
+@using Organizr.Domain.Entities
+@using Organizr.Domain.Enums
+@using Organizr.Application.Commands.Configurations
 
 <h3>Sideopsætning</h3>
 
-<Tabs SelectedTab="@selectedTab" SelectedTabChanged="@OnSelectedTabChanged">
+<Tabs SelectedTab="@_selectedTab" 
+      SelectedTabChanged="@OnSelectedTabChanged" 
+      RenderMode="TabsRenderMode.LazyReload">
     <Items>
-        <Tab Name="Forside">Home</Tab>
-        <Tab Name="Om os">Profile</Tab>
-        <Tab Name="Kontakt">Messages</Tab>
-        <Tab Name="Opret medlemskab">Settings</Tab>
+        <Tab Name="Unselected">#</Tab>
+        <Tab Name="Frontpage">Forside</Tab>
+        <Tab Name="CreateMembership">Opret Medlemskab</Tab>
+        <Tab Name="AboutUs">Om os</Tab>
+        <Tab Name="Contact">Kontakt</Tab>
     </Items>
     <Content>
-        <TabPanel Name="Forside">
-            <PageEdit UsedFor="Frontpage"></PageEdit>
+        <TabPanel Name="Unselected" Padding="Padding.Is3">
+            <Paragraph>Vælg en side at redigere.</Paragraph>
+            <Help>Siderne bliver gemt i et WYSIWYG (What You See Is What You Get) format, som bliver vist på samme måde på Medlemssiden, som det gemmes her.</Help>
         </TabPanel>
-        <TabPanel Name="Om os">
-            <PageEdit UsedFor="About" />
+        <TabPanel Name="Frontpage">
+            <PageEdit Configuration="ConfigFrontpage"/>
         </TabPanel>
-        <TabPanel Name="Kontakt">
-            <PageEdit UsedFor="Contact" />
+        <TabPanel Name="CreateMembership">
+            <PageEdit Configuration="ConfigCreateMembership"/>
         </TabPanel>
-        <TabPanel Name="Opret medlemskab">
-            <PageEdit UsedFor="CreateMembership" />
+        <TabPanel Name="AboutUs">
+            <PageEdit Configuration="ConfigAboutUs"/>
+        </TabPanel>
+        <TabPanel Name="Contact">
+            <PageEdit Configuration="ConfigContact"/>
         </TabPanel>
     </Content>
 </Tabs>
 
-@code{
-    string selectedTab = "profile";
+@if (!_selectedTab.Equals("Unselected"))
+{
+    <Button Color="Color.Primary" Clicked="OnSaveButton_Clicked">Gem</Button>    
+}
 
-    private Task OnSelectedTabChanged( string name )
+<Alert Visible="@(_configurationsUpdatedSuccess && !_selectedTab.Equals("Unselected"))">
+    <AlertMessage TextColor="TextColor.Success">Sideopsætningen er gemt</AlertMessage>
+</Alert>
+
+@code{
+    private Configuration ConfigFrontpage { get; set; } = new();
+    private Configuration ConfigCreateMembership { get; set; } = new();
+    private Configuration ConfigAboutUs { get; set; } = new();
+    private Configuration ConfigContact { get; set; } = new();
+
+    private bool _configurationsUpdatedSuccess;
+
+    string _selectedTab = "Unselected";
+
+    protected override async Task OnInitializedAsync()
     {
-        selectedTab = name;
+        var pageSetupConfigurations = await Mediator.Send(new GetAllConfigurationsOfTypeRequest {ConfigType = ConfigType.PageSetup});
+        ConfigFrontpage = pageSetupConfigurations.Configurations.First(x => x.Id == ConfigurationIds.FrontpageTopTextBox);
+        ConfigCreateMembership = pageSetupConfigurations.Configurations.First(x => x.Id == ConfigurationIds.CreateMembershipTopText);
+        ConfigAboutUs = pageSetupConfigurations.Configurations.First(x => x.Id == ConfigurationIds.AboutUsPage);
+        ConfigContact = pageSetupConfigurations.Configurations.First(x => x.Id == ConfigurationIds.ContactPageTopTextBox);
+    }
+
+    private Task OnSelectedTabChanged(string name)
+    {
+        _selectedTab = name;
 
         return Task.CompletedTask;
+    }
+
+    private async Task OnSaveButton_Clicked()
+    {
+        _configurationsUpdatedSuccess = false;
+
+        var command = new UpdateConfigurationsOfTypePageSetupCommand
+        {
+            Frontpage = ConfigFrontpage,
+            CreateMembership = ConfigCreateMembership,
+            AboutUs = ConfigAboutUs,
+            Contact = ConfigContact
+        };
+
+        var response = await Mediator.Send(command);
+
+        if (response.Succeeded)
+        {
+            _configurationsUpdatedSuccess = true;
+        }
     }
 }
