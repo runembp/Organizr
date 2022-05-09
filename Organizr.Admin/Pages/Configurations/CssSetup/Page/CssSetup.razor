@@ -16,27 +16,29 @@
     </Field>
 
     <Button Color="Color.Primary" Clicked="OnSaveButton_Clicked">Gem</Button>
-    
-    <Alert Visible="_configSaved" Color="Color.Success">
-        <AlertMessage>Css Opsætningen er gemt</AlertMessage>
-    </Alert>
+
+    <Column ColumnSize="ColumnSize.Is3">
+        <Alert Visible="_configSaved" Color="Color.Success">
+            <AlertMessage>Css Opsætningen er gemt</AlertMessage>
+        </Alert>
+    </Column>
 </Div>
 
 @code {
     private Configuration ConfigCss { get; set; } = new();
     private bool _editingActivated;
     private bool _configSaved;
-    
+
     protected override async Task OnInitializedAsync()
     {
-        var cssConfig = await Mediator.Send(new GetAllConfigurationsOfTypeRequest{ConfigType = ConfigType.CssSetup});
+        var cssConfig = await Mediator.Send(new GetAllConfigurationsOfTypeRequest { ConfigType = ConfigType.CssSetup });
         ConfigCss = cssConfig.Configurations.First();
     }
 
     private async Task OnSaveButton_Clicked()
     {
         _configSaved = false;
-        
+
         var response = await Mediator.Send(new UpdateConfigurationsOfTypeCssSetupCommand { StringValue = ConfigCss.StringValue });
 
         if (response.Succeeded)
@@ -44,4 +46,5 @@
             _configSaved = response.Succeeded;
         }
     }
+
 }
