@@ -40,6 +40,9 @@ public static class ApiDependencyInjection
         builder.Services.AddScoped<IMemberRepository, MemberRepository>();
         builder.Services.AddScoped<IMemberGroupRepository, MemberGroupRepository>();
         builder.Services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
+        builder.Services.AddTransient<IRequestHandler<GetAllConfigurationsRequest, List<Configuration>>, GetAllConfigurationsRequestHandler>();
+        builder.Services.AddTransient<IRequestHandler<CreateMemberCommand, CreateMemberResponse>, CreateMemberCommandHandler>();
+        builder.Services.AddTransient<IRequestHandler<CreateMemberGroupCommand, CreateMemberGroupResponse>, CreateMemberGroupCommandHandler>();
     }
 
     private static void AddMediatrRequests(WebApplicationBuilder builder)

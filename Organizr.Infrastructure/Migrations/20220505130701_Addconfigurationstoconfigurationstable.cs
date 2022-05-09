@@ -24,8 +24,8 @@ namespace Organizr.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Configurations", 
-                columns: new[] {"ConfigType", "Description", "StringValue", "BoolValue", "IdValue"}, 
+                table: "Configurations",
+                columns: new[] { "ConfigType", "Description", "StringValue", "BoolValue", "IdValue" },
                 values: new object[]
                 {
                     (int) ConfigType.Configuration,
@@ -34,10 +34,10 @@ namespace Organizr.Infrastructure.Migrations
                     null,
                     null
                 });
-            
+
             migrationBuilder.InsertData(
-                table: "Configurations", 
-                columns: new[] {"ConfigType", "Description", "StringValue", "BoolValue", "IdValue"}, 
+                table: "Configurations",
+                columns: new[] { "ConfigType", "Description", "StringValue", "BoolValue", "IdValue" },
                 values: new object[]
                 {
                     (int) ConfigType.Configuration,
@@ -46,10 +46,10 @@ namespace Organizr.Infrastructure.Migrations
                     null,
                     null
                 });
-            
+
             migrationBuilder.InsertData(
-                table: "Configurations", 
-                columns: new[] {"ConfigType", "Description", "StringValue", "BoolValue", "IdValue"}, 
+                table: "Configurations",
+                columns: new[] { "ConfigType", "Description", "StringValue", "BoolValue", "IdValue" },
                 values: new object[]
                 {
                     (int) ConfigType.Configuration,
@@ -58,10 +58,10 @@ namespace Organizr.Infrastructure.Migrations
                     null,
                     null
                 });
-            
+
             migrationBuilder.InsertData(
-                table: "Configurations", 
-                columns: new[] {"ConfigType", "Description", "StringValue", "BoolValue", "IdValue"}, 
+                table: "Configurations",
+                columns: new[] { "ConfigType", "Description", "StringValue", "BoolValue", "IdValue" },
                 values: new object[]
                 {
                     (int) ConfigType.Configuration,
@@ -70,10 +70,10 @@ namespace Organizr.Infrastructure.Migrations
                     null,
                     null
                 });
-            
+
             migrationBuilder.InsertData(
-                table: "Configurations", 
-                columns: new[] {"ConfigType", "Description", "StringValue", "BoolValue", "IdValue"}, 
+                table: "Configurations",
+                columns: new[] { "ConfigType", "Description", "StringValue", "BoolValue", "IdValue" },
                 values: new object[]
                 {
                     (int) ConfigType.Configuration,
@@ -82,10 +82,10 @@ namespace Organizr.Infrastructure.Migrations
                     null,
                     null
                 });
-            
+
             migrationBuilder.InsertData(
-                table: "Configurations", 
-                columns: new[] {"ConfigType", "Description", "StringValue", "BoolValue", "IdValue"}, 
+                table: "Configurations",
+                columns: new[] { "ConfigType", "Description", "StringValue", "BoolValue", "IdValue" },
                 values: new object[]
                 {
                     (int) ConfigType.Configuration,
@@ -94,10 +94,10 @@ namespace Organizr.Infrastructure.Migrations
                     null,
                     null
                 });
-            
+
             migrationBuilder.InsertData(
-                table: "Configurations", 
-                columns: new[] {"ConfigType", "Description", "StringValue", "BoolValue", "IdValue"}, 
+                table: "Configurations",
+                columns: new[] { "ConfigType", "Description", "StringValue", "BoolValue", "IdValue" },
                 values: new object[]
                 {
                     (int) ConfigType.Configuration,
@@ -108,10 +108,10 @@ namespace Organizr.Infrastructure.Migrations
                 });
 
             // Page Setup
-            
+
             migrationBuilder.InsertData(
-                table: "Configurations", 
-                columns: new[] {"ConfigType", "Description", "StringValue", "BoolValue", "IdValue"}, 
+                table: "Configurations",
+                columns: new[] { "ConfigType", "Description", "StringValue", "BoolValue", "IdValue" },
                 values: new object[]
                 {
                     (int) ConfigType.PageSetup,
@@ -120,10 +120,10 @@ namespace Organizr.Infrastructure.Migrations
                     null,
                     null
                 });
-            
+
             migrationBuilder.InsertData(
-                table: "Configurations", 
-                columns: new[] {"ConfigType", "Description", "StringValue", "BoolValue", "IdValue"}, 
+                table: "Configurations",
+                columns: new[] { "ConfigType", "Description", "StringValue", "BoolValue", "IdValue" },
                 values: new object[]
                 {
                     (int) ConfigType.PageSetup,
@@ -132,10 +132,10 @@ namespace Organizr.Infrastructure.Migrations
                     null,
                     null
                 });
-            
+
             migrationBuilder.InsertData(
-                table: "Configurations", 
-                columns: new[] {"ConfigType", "Description", "StringValue", "BoolValue", "IdValue"}, 
+                table: "Configurations",
+                columns: new[] { "ConfigType", "Description", "StringValue", "BoolValue", "IdValue" },
                 values: new object[]
                 {
                     (int) ConfigType.PageSetup,
@@ -144,10 +144,10 @@ namespace Organizr.Infrastructure.Migrations
                     null,
                     null
                 });
-            
+
             migrationBuilder.InsertData(
-                table: "Configurations", 
-                columns: new[] {"ConfigType", "Description", "StringValue", "BoolValue", "IdValue"}, 
+                table: "Configurations",
+                columns: new[] { "ConfigType", "Description", "StringValue", "BoolValue", "IdValue" },
                 values: new object[]
                 {
                     (int) ConfigType.PageSetup,
@@ -156,10 +156,10 @@ namespace Organizr.Infrastructure.Migrations
                     null,
                     null
                 });
-            
+
             migrationBuilder.InsertData(
-                table: "Configurations", 
-                columns: new[] {"ConfigType", "Description", "StringValue", "BoolValue", "IdValue"}, 
+                table: "Configurations",
+                columns: new[] { "ConfigType", "Description", "StringValue", "BoolValue", "IdValue" },
                 values: new object[]
                 {
                     (int) ConfigType.PageSetup,
@@ -168,10 +168,10 @@ namespace Organizr.Infrastructure.Migrations
                     null,
                     null
                 });
-            
+
             migrationBuilder.InsertData(
-                table: "Configurations", 
-                columns: new[] {"ConfigType", "Description", "StringValue", "BoolValue", "IdValue"}, 
+                table: "Configurations",
+                columns: new[] { "ConfigType", "Description", "StringValue", "BoolValue", "IdValue" },
                 values: new object[]
                 {
                     (int) ConfigType.PageSetup,
@@ -180,12 +180,12 @@ namespace Organizr.Infrastructure.Migrations
                     null,
                     null
                 });
-            
+
             // Css Setup
-            
+
             migrationBuilder.InsertData(
-                table: "Configurations", 
-                columns: new[] {"ConfigType", "Description", "StringValue", "BoolValue", "IdValue"}, 
+                table: "Configurations",
+                columns: new[] { "ConfigType", "Description", "StringValue", "BoolValue", "IdValue" },
                 values: new object[]
                 {
                     (int) ConfigType.CssSetup,
@@ -194,7 +194,7 @@ namespace Organizr.Infrastructure.Migrations
                     null,
                     null
                 });
-            }
+        }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiClientService } from '../api-client/api-client.service';
 
 @Component({
   selector: 'app-about-us',
@@ -9,21 +10,13 @@ export class AboutUsComponent implements OnInit {
 
   aboutUsContent: string;
 
-  constructor() { }
+  constructor(private apiClient: ApiClientService) { }
 
   ngOnInit(): void {
-    this.aboutUsContent = `<!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-    </head>
-    <body>
-        <h1>Bla bla blyant</h1>
-    </body>
-    </html>`;
-  }
 
+    this.apiClient.getAllConfigurations().subscribe((configurations) => {
+      this.aboutUsContent = configurations[11]['stringValue'];
+    });
+
+  }
 }

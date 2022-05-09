@@ -1,7 +1,7 @@
 using Moq;
+using Organizr.Application.Common.Interfaces;
 using Organizr.Domain.Entities;
 using System.Collections.Generic;
-using Organizr.Application.Common.Interfaces;
 
 namespace Organizr.Test.MockData;
 

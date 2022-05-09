@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Organizr.Application.Commands.Configurations;
 using Organizr.Application.Common.Interfaces;
+using Organizr.Application.Commands.Configurations;
 using Organizr.Domain.ApplicationConstants;
 using Organizr.Domain.Entities;
 using Organizr.Domain.Enums;
