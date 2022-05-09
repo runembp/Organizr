@@ -26,7 +26,6 @@ export class ApiClientService {
     return this.http.get<any[]>(this.apiUrl + '/api/configuration');
   }
 
-
   // Member
   createOrganizrUser(user: any): Observable<any> {
     return this.http

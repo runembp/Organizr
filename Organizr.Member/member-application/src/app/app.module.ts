@@ -9,6 +9,7 @@ import { AboutUsComponent } from './about-us/about-us.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
     AppComponent,
     AboutUsComponent,
     SignUpComponent,
-    ContactUsComponent
+    ContactUsComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
