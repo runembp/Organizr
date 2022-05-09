@@ -1,0 +1,22 @@
+﻿@page "/EditGroup/{GroupId:int}"
+@using Organizr.Application.Requests.Groups
+@using Organizr.Domain.Entities
+
+@attribute [Authorize]
+
+<h3>Rediger gruppe @GroupId</h3>
+
+<Div>@SelectedGroup.Name</Div>
+
+
+@code {
+    [Parameter]
+    public int GroupId { get; set; }
+
+    private MemberGroup SelectedGroup { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        SelectedGroup = await Mediator.Send(new GetMemberGroupByIdRequest { GroupId = GroupId });
+    }
+}

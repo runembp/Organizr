@@ -6,6 +6,7 @@ using Organizr.Application.Handlers.CommandHandlers;
 using Organizr.Application.Handlers.CommandHandlers.Configurations;
 using Organizr.Application.Handlers.RequestHandlers;
 using Organizr.Application.Handlers.RequestHandlers.Configurations;
+using Organizr.Application.Handlers.RequestHandlers.Groups;
 using Organizr.Application.HelperClasses;
 using Organizr.Application.Requests.Configurations;
 using Organizr.Application.Requests.Groups;
@@ -49,6 +50,7 @@ public static class ApiDependencyInjection
         
         // Groups
         builder.Services.AddTransient<IRequestHandler<GetAllMemberGroupsRequest, GetAllMemberGroupsResponse>, GetAllMemberGroupsHandler>();
+        builder.Services.AddTransient<IRequestHandler<GetMemberGroupByIdRequest, MemberGroup>, GetMemberGroupByIdHandler>();
         
         // Configurations
         builder.Services.AddTransient<IRequestHandler<GetAllConfigurationsRequest, List<Configuration>>, GetAllConfigurationsRequestHandler>();

@@ -3,8 +3,7 @@ using Organizr.Application.Common.Interfaces;
 using Organizr.Application.Requests.Groups;
 using Organizr.Application.Responses.Groups;
 
-
-namespace Organizr.Application.Handlers.RequestHandlers;
+namespace Organizr.Application.Handlers.RequestHandlers.Groups;
 
 public class GetAllMemberGroupsHandler : IRequestHandler<GetAllMemberGroupsRequest, GetAllMemberGroupsResponse>
 {
