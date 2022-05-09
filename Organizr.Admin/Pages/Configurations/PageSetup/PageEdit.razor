@@ -6,7 +6,7 @@
               ContentChanged="@OnContentChanged"
               EditorBlur="@OnContentChanged"
               ToolbarPosition="Placement.Top">
-    <Editor>@Configuration.StringValue</Editor>
+    <Editor>@((MarkupString)Configuration.StringValue!)</Editor>
     <Toolbar>
         <RichTextEditToolbarGroup>
             <RichTextEditToolbarButton Action="RichTextEditAction.Image" />
@@ -23,7 +23,9 @@
         </RichTextEditToolbarGroup>
     </Toolbar>
 </RichTextEdit>
-@code{
+
+@code
+{
     [Parameter]
     public Configuration Configuration { get; set; } = new();
     
@@ -31,7 +33,6 @@
 
     private async Task OnContentChanged()
     {
-
         Configuration.StringValue = await _richTextEditRef.GetHtmlAsync();
     }
 

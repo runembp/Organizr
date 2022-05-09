@@ -7,7 +7,9 @@
 
 <h3>Sideopsætning</h3>
 
-<Tabs SelectedTab="@_selectedTab" SelectedTabChanged="@OnSelectedTabChanged">
+<Tabs SelectedTab="@_selectedTab" 
+      SelectedTabChanged="@OnSelectedTabChanged" 
+      RenderMode="TabsRenderMode.LazyReload">
     <Items>
         <Tab Name="Unselected">#</Tab>
         <Tab Name="Frontpage">Forside</Tab>
@@ -18,7 +20,7 @@
     <Content>
         <TabPanel Name="Unselected" Padding="Padding.Is3">
             <Paragraph>Vælg en side at redigere.</Paragraph>
-            <Help>Siderne bliver gemt i et "WYSIWYG" (What You See Is What You Get) format, som bliver vist på samme måde på Medlemssiden, som det gemmes her.</Help>
+            <Help>Siderne bliver gemt i et WYSIWYG (What You See Is What You Get) format, som bliver vist på samme måde på Medlemssiden, som det gemmes her.</Help>
         </TabPanel>
         <TabPanel Name="Frontpage">
             <PageEdit Configuration="ConfigFrontpage"/>
@@ -89,5 +91,4 @@
             _configurationsUpdatedSuccess = true;
         }
     }
-
 }
