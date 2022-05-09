@@ -36,6 +36,16 @@ export class ApiClientService {
       .pipe(retry(1), catchError(this.handleError));
   }
 
+  // Login
+  login(user: any): Observable<any> {
+
+    return this.http.post<any>(
+      this.apiUrl + '/api/login',
+      JSON.stringify(user),
+      this.httpOptions)
+      .pipe(retry(1), catchError(this.handleError));
+  }
+
   handleError(error: any) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
