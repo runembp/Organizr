@@ -101,7 +101,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var configurationList = await Mediator.Send(new GetAllConfigurationsOfTypeRequest{ConfigType =ConfigType.Configuration});
+        var configurationList = await Mediator.Send(new GetAllConfigurationsOfTypeRequest{ConfigType = ConfigType.Configuration});
         var groupList = await Mediator.Send(new GetAllMemberGroupsRequest());
 
         ConfigurationList = configurationList.Configurations;
