@@ -4,9 +4,25 @@
 
 @attribute [Authorize]
 
-<h3>Rediger gruppe @GroupId</h3>
-
-<Div>@SelectedGroup.Name</Div>
+<Tabs SelectedTab="@_selectedTab" 
+     SelectedTabChanged="@OnSelectedTab_Changed">
+    <Items>
+        <Tab Name="GroupInfo">
+            Gruppe informationer
+        </Tab>
+        <Tab Name="Members">
+            Medlemmer
+        </Tab>
+    </Items>
+    <Content>
+        <TabPanel Name="GroupInfo">
+            <GroupInformation />
+        </TabPanel>
+        <TabPanel Name="Members">
+            <GroupMembers />
+        </TabPanel>
+    </Content>
+</Tabs>
 
 
 @code {
@@ -14,9 +30,16 @@
     public int GroupId { get; set; }
 
     private MemberGroup SelectedGroup { get; set; } = new();
+    private string _selectedTab = "GroupInfo";
 
     protected override async Task OnInitializedAsync()
     {
         SelectedGroup = await Mediator.Send(new GetMemberGroupByIdRequest { GroupId = GroupId });
+    }
+
+    private Task OnSelectedTab_Changed(string tabName)
+    {
+        _selectedTab = tabName;
+        return Task.CompletedTask;
     }
 }
