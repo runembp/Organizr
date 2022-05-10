@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Organizr.Application.Commands;
+using Organizr.Application.Commands.Groups;
 using Organizr.Domain.Entities;
 
 namespace Organizr.Application.Common.Mapper;
@@ -12,4 +13,3 @@ public class OrganizrMappingProfiler : Profile
         CreateMap<MemberGroup, CreateMemberGroupCommand>().ReverseMap();
     }
 }
-

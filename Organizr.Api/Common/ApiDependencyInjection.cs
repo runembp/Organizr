@@ -1,9 +1,11 @@
 ﻿using MediatR;
 using Organizr.Application.Commands;
 using Organizr.Application.Commands.Configurations;
+using Organizr.Application.Commands.Groups;
 using Organizr.Application.Common.Interfaces;
 using Organizr.Application.Handlers.CommandHandlers;
 using Organizr.Application.Handlers.CommandHandlers.Configurations;
+using Organizr.Application.Handlers.CommandHandlers.Groups;
 using Organizr.Application.Handlers.RequestHandlers;
 using Organizr.Application.Handlers.RequestHandlers.Configurations;
 using Organizr.Application.Handlers.RequestHandlers.Groups;
@@ -64,6 +66,7 @@ public static class ApiDependencyInjection
         
         // Groups
         builder.Services.AddTransient<IRequestHandler<CreateMemberGroupCommand, CreateMemberGroupResponse>, CreateMemberGroupCommandHandler>();
+        builder.Services.AddTransient<IRequestHandler<AddMemberToMemberGroupCommand, MemberGroup>, AddMemberToMemberGroupHandler>();
         
         // Commands
         builder.Services.AddTransient<IRequestHandler<UpdateConfigurationsOfTypeConfigCommand, UpdateConfigurationsResponse>, UpdateConfigurationsOfTypeConfigHandler>();

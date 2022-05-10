@@ -1,7 +1,14 @@
 ﻿@using Organizr.Domain.Entities
 
+<Row>
+    <SearchBar/>
+    <Row Style="padding: 2rem" Flex="Flex.JustifyContent.Around">
+        <Button Color="Color.Primary" Clicked="OnAddMemberButton_Clicked">Tilføj Person</Button>
+    </Row>
+</Row>
+
 <DataGrid TItem="Member"
-          Data="GroupMembers">
+          Data="Group.Member">
     <DataGridColumns>
         <DataGridColumn Field="@nameof(Member.Id)" Sortable="true" Caption="Id">
             <DisplayTemplate>
@@ -18,13 +25,22 @@
     </DataGridColumns>
 </DataGrid>
 
+<MemberOverviewAddMemberModal @ref="addMemberModal" Group="Group" /> 
+
 @code {
 
     [Parameter]
-    public List<Member> GroupMembers { get; set; } = new();
+    public MemberGroup Group { get; set; } = new();
+
+    private MemberOverviewAddMemberModal addMemberModal;
 
     private void OnEditMemberLink_Clicked(int memberId)
     {
         NavigationManager.NavigateTo($"/EditPerson/{memberId}");
+    }
+
+    private async Task OnAddMemberButton_Clicked()
+    {
+        await addMemberModal.Show();
     }
 }

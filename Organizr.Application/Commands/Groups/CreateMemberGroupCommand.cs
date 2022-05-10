@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Organizr.Application.Responses.Groups;
 
-namespace Organizr.Application.Commands;
+namespace Organizr.Application.Commands.Groups;
 
 public class CreateMemberGroupCommand : IRequest<CreateMemberGroupResponse>
 {
