@@ -40,7 +40,7 @@ export class ApiClientService {
   login(user: any): Observable<any> {
 
     return this.http.post<any>(
-      this.apiUrl + '/api/login',
+      this.apiUrl + '/api/auth/signin',
       JSON.stringify(user),
       this.httpOptions)
       .pipe(retry(1), catchError(this.handleError));

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Organizr.Application.HelperClasses;
 using Organizr.Application.Requests;
 using Organizr.Application.Responses;
 
@@ -8,7 +9,7 @@ namespace Organizr.Api.Controllers;
 
 [AllowAnonymous]
 [ApiController]
-[Route("api/login")]
+[Route("api/auth/signin")]
 public class LoginController : ControllerBase
 {
     private readonly IMediator _mediator;
