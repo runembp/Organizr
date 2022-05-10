@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { GeocodingService } from '../google-api/geocoding.service';
-import { GeocoderResponse } from '../google-api/geocoder-response.model';
-import { ApiClientService } from '../api-client/api-client.service';
+import { GeocodingService } from '../services/google-api/geocoding.service';
+import { GeocoderResponse } from '../services/google-api/geocoder-response.model';
+import { ApiClientService } from '../services/api-client/api-client.service';
 
 @Component({
   selector: 'app-contact-us',
