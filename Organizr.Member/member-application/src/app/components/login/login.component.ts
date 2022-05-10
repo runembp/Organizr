@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   loginUser: any;
-  
+
   constructor(private apiClient: ApiClientService, private router: Router, private tokenStorage: TokenStorageService, private dataSharing: DataSharingService) { }
 
   ngOnInit(): void {
@@ -47,10 +47,10 @@ export class LoginComponent implements OnInit {
           email: response.email
         };
 
-        this.tokenStorage.saveUser(JSON.stringify(userData)); 
+        this.tokenStorage.saveUser(JSON.stringify(userData));
 
         this.dataSharing.isUserLoggedIn.next(true);
-        this.dataSharing.loggedInUser.next(this.tokenStorage.getUser());
+        this.dataSharing.loggedInUser.next(this.tokenStorage.getUser().email);
 
         return this.router.navigateByUrl('/')
       };
