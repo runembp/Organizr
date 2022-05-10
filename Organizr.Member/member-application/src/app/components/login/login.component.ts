@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ApiClientService } from '../services/api-client/api-client.service';
+import { ApiClientService } from '../../services/api-client/api-client.service';
 import { Router } from '@angular/router';
-import { TokenStorageService } from '../services/token-storage/token-storage.service';
-import { DataSharingService } from '../services/data-sharing/data-sharing.service';
+import { TokenStorageService } from '../../services/token-storage/token-storage.service';
+import { DataSharingService } from '../../services/data-sharing/data-sharing.service';
 
 @Component({
   selector: 'app-login',

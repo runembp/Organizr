@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiClientService } from '../services/api-client/api-client.service';
+import { ApiClientService } from '../../services/api-client/api-client.service';
 
 @Component({
   selector: 'app-about-us',

@@ -5,12 +5,12 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { AboutUsComponent } from './about-us/about-us.component';
-import { SignUpComponent } from './sign-up/sign-up.component';
-import { ContactUsComponent } from './contact-us/contact-us.component';
+import { AboutUsComponent } from './components/about-us/about-us.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { LoginComponent } from './login/login.component';
-import { AppNavbarComponent } from './app-navbar/app-navbar.component';
+import { LoginComponent } from './components/login/login.component';
+import { AppNavbarComponent } from './components/app-navbar/app-navbar.component';
 import { DataSharingService } from './services/data-sharing/data-sharing.service';
 
 
