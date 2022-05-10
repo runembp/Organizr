@@ -3,8 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiClientService } from '../services/api-client/api-client.service';
 import { Router } from '@angular/router';
 import { TokenStorageService } from '../services/token-storage/token-storage.service';
-import { DataSharingService } from '../data-sharing/data-sharing.service';
-import { BehaviorSubject } from 'rxjs';
+import { DataSharingService } from '../services/data-sharing/data-sharing.service';
 
 @Component({
   selector: 'app-login',
@@ -33,18 +32,30 @@ export class LoginComponent implements OnInit {
       email: this.loginForm.get('email')?.value,
       password: this.loginForm.get('password')?.value,
       rememberMe: this.loginForm.get('rememberMe')?.value
-    }
+    };
 
-    this.apiClient.login(this.loginUser).subscribe(response => {
+    this.login(this.loginUser);
+  }
+
+  login(user: any): void {
+
+    this.apiClient.login(user).subscribe(response => {
       if (response.succeeded === true) {
 
-        this.tokenStorage.saveToken(response.token); 
+        const userData = {
+          token: response.token,
+          email: response.email
+        };
+
+        this.tokenStorage.saveUser(JSON.stringify(userData)); 
+
         this.dataSharing.isUserLoggedIn.next(true);
-        this.dataSharing.loggedInUser.next(this.tokenStorage.getToken());
+        this.dataSharing.loggedInUser.next(this.tokenStorage.getUser());
 
         return this.router.navigateByUrl('/')
       };
     });
+
   }
 
 }

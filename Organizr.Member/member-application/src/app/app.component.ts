@@ -1,5 +1,5 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { DataSharingService } from './data-sharing/data-sharing.service';
+import { Component, OnInit } from '@angular/core';
+import { DataSharingService } from './services/data-sharing/data-sharing.service';
 import { TokenStorageService } from './services/token-storage/token-storage.service';
 
 @Component({
@@ -16,12 +16,15 @@ export class AppComponent implements OnInit {
       this.loggedInUser = value;
     });
   }
-  
+
   ngOnInit(): void {
 
-    if (this.tokenStorage.getToken()) {
+    const userData = this.tokenStorage.getUser();
+
+    if (userData) {
       this.dataSharing.isUserLoggedIn.next(true);
-      this.dataSharing.loggedInUser.next(this.tokenStorage.getToken());
+      this.dataSharing.loggedInUser.next(userData.email);
     }
+
   }
 }

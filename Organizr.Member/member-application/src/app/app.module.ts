@@ -11,7 +11,7 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { LoginComponent } from './login/login.component';
 import { AppNavbarComponent } from './app-navbar/app-navbar.component';
-import { DataSharingService } from './data-sharing/data-sharing.service';
+import { DataSharingService } from './services/data-sharing/data-sharing.service';
 
 
 @NgModule({
