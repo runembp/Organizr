@@ -5,5 +5,7 @@
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public bool IsOpen { get; set; }
+
+        public List<Member> Member { get; set; } = new();
     }
 }
