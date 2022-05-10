@@ -1,0 +1,30 @@
+﻿@using Organizr.Domain.Entities
+
+<DataGrid TItem="Member"
+          Data="GroupMembers">
+    <DataGridColumns>
+        <DataGridColumn Field="@nameof(Member.Id)" Sortable="true" Caption="Id">
+            <DisplayTemplate>
+                <Button Clicked="() => OnEditMemberLink_Clicked(context.Id)" Color="Color.Link">@context.Id</Button>
+            </DisplayTemplate>
+        </DataGridColumn>
+        <DataGridColumn Field="@nameof(Member.FirstName)" Sortable="true" Caption="Fornavn"/>
+        <DataGridColumn Field="@nameof(Member.LastName)" Sortable="true" Caption="Efternavn"/>
+        <DataGridColumn Field="@nameof(Member.Gender)" Sortable="true" Caption="Køn"/>
+        <DataGridColumn Field="@nameof(Member.Address)" Sortable="true" Caption="Adresse"/>
+        <DataGridColumn Field="@nameof(Member.PhoneNumber)" Sortable="true" Caption="Telefon"/>
+        <DataGridColumn Sortable="true">Rolle</DataGridColumn>
+        <DataGridColumn Sortable="true">Administrer</DataGridColumn>
+    </DataGridColumns>
+</DataGrid>
+
+@code {
+
+    [Parameter]
+    public List<Member> GroupMembers { get; set; } = new();
+
+    private void OnEditMemberLink_Clicked(int memberId)
+    {
+        NavigationManager.NavigateTo($"/EditPerson/{memberId}");
+    }
+}
