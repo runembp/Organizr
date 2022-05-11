@@ -29,7 +29,6 @@
       <Folder Include="Pages\Authentication" />
       <Folder Include="Pages\Configurations\Configuration" />
       <Folder Include="Pages\Group\" />
-      <Folder Include="Pages\Person" />
     </ItemGroup>
 
     <ItemGroup>
@@ -40,8 +39,8 @@
       <AdditionalFiles Include="Pages\Configurations\Configuration\Page\Configurations.razor" />
       <AdditionalFiles Include="Pages\Configurations\PageSetup\Page\PageSetup.razor" />
       <AdditionalFiles Include="Pages\Group\CreateGroup\Page\CreateGroup.razor" />
-      <AdditionalFiles Include="Pages\Person\CreatePerson\Page\CreatePerson.razor" />
-      <AdditionalFiles Include="Pages\Person\SearchPerson\SearchPerson.razor" />
+      <AdditionalFiles Include="Pages\Member\CreateMember\Page\CreateMember.razor" />
+      <AdditionalFiles Include="Pages\Member\SearchMember\SearchMember.razor" />
     </ItemGroup>
 
     <ItemGroup>
