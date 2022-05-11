@@ -13,7 +13,7 @@ public class MemberGroupRepository : Repository<MemberGroup>, IMemberGroupReposi
 
     public Task<MemberGroup?> GetMemberGroupWithMembers(int groupId)
     {
-        var group = _organizrContext.MemberGroups.Where(x => x.Id == groupId).Include(x => x.Member).FirstOrDefault();
+        var group = _organizrContext.MemberGroups.Where(x => x.Id == groupId).Include(x => x.Members).FirstOrDefault();
         return Task.FromResult(group);
     }
 
@@ -28,8 +28,8 @@ public class MemberGroupRepository : Repository<MemberGroup>, IMemberGroupReposi
         var group = _organizrContext.MemberGroups.First(x => x.Id == groupId);
         var member = _organizrContext.Users.First(x => x.Id == memberId);
 
-        group.Member.Add(member);
-        member.Group.Add(group);
+        group.Members.Add(member);
+        member.Groups.Add(group);
 
         await _organizrContext.SaveChangesAsync();
 
