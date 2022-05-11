@@ -29,7 +29,7 @@
     public MemberGroup Group { get; set; } = new();
     
     [Parameter]
-    public EventCallback OnMemberAdded { get; set; }
+    public EventCallback OnGroupContentChanged { get; set; }
 
     private List<Member> AllMembersList { get; set; } = new();
     private int SelectedMember { get; set; }
@@ -60,6 +60,6 @@
 
         Group = await Mediator.Send(command);
         await _addMemberModal!.Hide();
-        await OnMemberAdded.InvokeAsync();
+        await OnGroupContentChanged.InvokeAsync();
     }
 }
