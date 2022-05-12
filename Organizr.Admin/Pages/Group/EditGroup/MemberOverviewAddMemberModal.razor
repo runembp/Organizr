@@ -19,6 +19,7 @@
         </ModalBody>
         <ModalFooter>
             <Button Color="Color.Primary" Clicked="OnAddMemberButton_Clicked">Gem</Button>
+            <Button Color="Color.Secondary" Clicked="OnCancelButton_Clicked">Afbryd</Button>
         </ModalFooter>
     </ModalContent>
 </Modal>
@@ -61,5 +62,10 @@
         Group = await Mediator.Send(command);
         await _addMemberModal!.Hide();
         await OnGroupContentChanged.InvokeAsync();
+    }
+
+    private async Task OnCancelButton_Clicked()
+    {
+        await _addMemberModal!.Hide();
     }
 }
