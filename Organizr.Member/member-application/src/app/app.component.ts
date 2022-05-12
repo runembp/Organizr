@@ -12,6 +12,7 @@ import { ConfigurationConstantsService } from './services/shared/configuration-c
 export class AppComponent implements OnInit {
 
   loggedInUser: string;
+  isUserLoggedIn: boolean;
 
   constructor(private dataSharing: DataSharingService,
     private tokenStorage: TokenStorageService,
@@ -20,6 +21,10 @@ export class AppComponent implements OnInit {
 
     this.dataSharing.loggedInUser.subscribe(value => {
       this.loggedInUser = value;
+    });
+
+    this.dataSharing.isUserLoggedIn.subscribe(value => {
+      this.isUserLoggedIn = value;
     });
 
     this.apiClient.getAllConfigurations().subscribe(configurations => {

@@ -4,8 +4,8 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { LoginComponent } from './components/login/login.component';
-import { ContactUsFormComponent } from './components/contact-us/contact-us-form/contact-us-form.component';
-import { ResetPasswordComponent } from './components/login/reset-password/reset-password.component';
+import { ContactUsFormComponent } from './components/contact-us-form/contact-us-form.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component'; 
 
 const routes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
