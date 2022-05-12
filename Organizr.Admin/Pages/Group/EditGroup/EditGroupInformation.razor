@@ -1,0 +1,54 @@
+﻿@using Organizr.Domain.Entities
+@using Organizr.Application.Commands.Groups
+
+<Heading Size="HeadingSize.Is3">Rediger @Group.Name</Heading>
+
+<Field ColumnSize="ColumnSize.Is4">
+    <FieldLabel>
+        Gruppe Navn
+    </FieldLabel>
+    <TextEdit @bind-Text="_groupNameTextEdit"/>
+</Field>
+
+<Field ColumnSize="ColumnSize.Is4">
+    <FieldLabel>
+        Åben for alle
+    </FieldLabel>
+    <Check TValue="bool" @bind-Checked="_groupIsOpenCheckbox">Aktiv</Check>
+</Field>
+
+<Button Color="Color.Primary" Clicked="OnSaveButton_Clicked">Gem</Button>
+
+@code {
+
+    [Parameter]
+    public MemberGroup Group { get; set; }
+
+    [Parameter]
+    public EventCallback OnGroupEdited { get; set; }
+
+    private string _groupNameTextEdit = string.Empty;
+    private bool _groupIsOpenCheckbox;
+
+    protected override Task OnInitializedAsync()
+    {
+        _groupNameTextEdit = Group.Name;
+        _groupIsOpenCheckbox = Group.IsOpen;
+
+        return Task.CompletedTask;
+    }
+
+    private async Task OnSaveButton_Clicked()
+    {
+        var command = new UpdateMemberGroupCommand
+        {
+            Id = Group.Id,
+            Name = _groupNameTextEdit,
+            IsOpen = _groupIsOpenCheckbox
+        };
+
+        Group = await Mediator.Send(command);
+        await OnGroupEdited.InvokeAsync();
+    }
+
+}

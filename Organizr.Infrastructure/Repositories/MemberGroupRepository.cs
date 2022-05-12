@@ -35,4 +35,15 @@ public class MemberGroupRepository : Repository<MemberGroup>, IMemberGroupReposi
 
         return group;
     }
+
+    public async Task<MemberGroup> UpdateMemberGroup(MemberGroup memberGroup)
+    {
+        var group = _organizrContext.MemberGroups.First(x => x.Id == memberGroup.Id);
+        group.Name = memberGroup.Name;
+        group.IsOpen = memberGroup.IsOpen;
+
+        await _organizrContext.SaveChangesAsync();
+
+        return group;
+    }
 }
