@@ -1,6 +1,4 @@
-﻿@page "/EditGroup/{GroupId:int}"
-@using Organizr.Application.Requests.Groups
-@using Organizr.Domain.Entities
+﻿@page "/edit-group/{GroupId:int}"
 
 @attribute [Authorize]
 
@@ -35,7 +33,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        SelectedGroup = await Mediator.Send(new GetMemberGroupWithMembersByIdRequest {GroupId = GroupId});
+        SelectedGroup = await GroupService.GetMemberGroupWithMembersById(GroupId);
     }
 
     private Task OnSelectedTab_Changed(string tabName)

@@ -1,4 +1,3 @@
-@using Organizr.Application.Requests
 <Div Flex="Flex.JustifyContent.Center">
     <PageTitle>Organizr</PageTitle>
 
@@ -24,16 +23,11 @@
     private string _password = string.Empty;
     private bool ShowErrors { get; set; }
 
-    private readonly UserLoginRequest _userLoginRequest = new();
-
     private async Task OnLoginButton_Clicked()
     {
-        _userLoginRequest.Email = _email;
-        _userLoginRequest.Password = _password;
-
-        var response = await AuthenticationHelperClass.Login(_userLoginRequest);
+        var response = await LoginService.Login(_email, _password);
         
-        if (response.Succeeded)
+        if (response.Item2)
         {
             NavigationManager.NavigateTo("/", forceLoad: true);
         }

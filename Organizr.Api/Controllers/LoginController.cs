@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Organizr.Application.HelperClasses;
 using Organizr.Application.Requests;
 using Organizr.Application.Responses;
 

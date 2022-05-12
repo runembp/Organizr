@@ -1,7 +1,4 @@
-﻿@using Organizr.Domain.Entities
-@using Organizr.Application.Commands.Groups
-
-<Heading Size="HeadingSize.Is3">Rediger @Group.Name</Heading>
+﻿<Heading Size="HeadingSize.Is3">Rediger @Group.Name</Heading>
 
 <Field ColumnSize="ColumnSize.Is4">
     <FieldLabel>
@@ -40,14 +37,7 @@
 
     private async Task OnSaveButton_Clicked()
     {
-        var command = new UpdateMemberGroupCommand
-        {
-            Id = Group.Id,
-            Name = _groupNameTextEdit,
-            IsOpen = _groupIsOpenCheckbox
-        };
-
-        Group = await Mediator.Send(command);
+        // Group = await GroupService.UpdateMemberGroup(Group.Id, _groupNameTextEdit, _groupIsOpenCheckbox);
         await OnGroupEdited.InvokeAsync();
     }
 
