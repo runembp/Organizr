@@ -1,8 +1,7 @@
-﻿using Organizr.Domain.ApplicationConstants;
-using Organizr.Domain.Entities;
+﻿using Organizr.Domain.Entities;
 using Organizr.Domain.Enums;
 
-namespace Organizr.Admin.Services;
+namespace Organizr.Admin.Data.Services;
 
 public class ConfigurationService
 {

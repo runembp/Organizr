@@ -4,8 +4,8 @@ using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
 using Blazorise.RichTextEdit;
 using Microsoft.AspNetCore.Components.Authorization;
+using Organizr.Admin.Data.Services;
 using Organizr.Admin.HelperClasses;
-using Organizr.Admin.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 RunBuilderSetup();
@@ -13,6 +13,8 @@ RunApplicationSetup();
 
 void RunBuilderSetup()
 {
+    builder.Services.AddAuthentication();
+    builder.Services.AddAuthorization();
     builder.Services.AddRazorPages();
     builder.Services.AddServerSideBlazor();
     builder.Services.AddBlazoredLocalStorage();
@@ -21,7 +23,8 @@ void RunBuilderSetup()
     builder.Services.AddBootstrapProviders();
     builder.Services.AddFontAwesomeIcons();
     
-    builder.Services.AddScoped(_ => new HttpClient());
+    //TODO Change in production
+    builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri("https://localhost:7157")});
     builder.Services.AddScoped<MemberService>();
     builder.Services.AddScoped<GroupService>();
     builder.Services.AddScoped<ConfigurationService>();

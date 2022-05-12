@@ -1,10 +1,11 @@
 ﻿using System.Net.Http.Headers;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
+using Organizr.Admin.Data.DTO;
 using Organizr.Admin.HelperClasses;
 using Organizr.Domain.ApplicationConstants;
 
-namespace Organizr.Admin.Services;
+namespace Organizr.Admin.Data.Services;
 
 public class LoginService
 {
@@ -19,14 +20,19 @@ public class LoginService
         _localStorage = localStorage;
     }
 
-    public async Task<Tuple<string, bool, string>> Login(string email, string password)
+    public async Task<LoginResponse> Login(string email, string password)
     {
-        var request = (Email: email, Password: password);
+        var request = new LoginRequest {Email = email, Password = password};
         var response = await _httpClient.PostAsJsonAsync(ApiEndpoints.Login, request);
-        var result = await response.Content.ReadFromJsonAsync<Tuple<string, bool, string>>();
+        var result = await response.Content.ReadFromJsonAsync<LoginResponse>() ?? new LoginResponse();
 
-        await ((AuthenticationStateProviderHelperClass)_authenticationStateProvider).MarkUserAsAuthenticated(result!);
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", result!.Item3);
+        if (!result.Succeeded)
+        {
+            return result;
+        }
+        
+        await ((AuthenticationStateProviderHelperClass)_authenticationStateProvider).MarkUserAsAuthenticated(result);
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", result.Token);
 
         return result;
     }

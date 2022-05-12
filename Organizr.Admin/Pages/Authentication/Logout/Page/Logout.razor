@@ -3,7 +3,7 @@
 @code {
     protected override async Task OnInitializedAsync()
     {
-        // await AuthenticationHelperClass.Logout();
+        await LoginService.Logout();
         NavigationManager.NavigateTo("/");
     }
 }

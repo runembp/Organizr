@@ -1,7 +1,6 @@
-﻿using Organizr.Domain.ApplicationConstants;
-using Organizr.Domain.Entities;
+﻿using Organizr.Domain.Entities;
 
-namespace Organizr.Admin.Services;
+namespace Organizr.Admin.Data.Services;
 
 public class MemberService
 {

@@ -1,8 +1,9 @@
 ﻿<Heading>Velkommen indenfor :)</Heading>
 
 @code {
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         NavigationManager.NavigateTo("/search-member", forceLoad:true);
+        await base.OnInitializedAsync();
     }
 }

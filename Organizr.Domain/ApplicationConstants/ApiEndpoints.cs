@@ -2,9 +2,9 @@
 
 public static class ApiEndpoints
 {
-    public const string Login = "ToBeDecided";
+    public const string Login = "api/auth/signin";
     
-    public const string GetAllMembers = "api/members";
+    public const string GetAllMembers = "api/organizr-member";
     public const string PostNewMember = "api/members";
 
     public const string GetAllGroups = "api/groups";

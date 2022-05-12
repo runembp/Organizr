@@ -27,7 +27,7 @@
     {
         var response = await LoginService.Login(_email, _password);
         
-        if (response.Item2)
+        if (response.Succeeded)
         {
             NavigationManager.NavigateTo("/", forceLoad: true);
         }

@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text.Json;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
+using Organizr.Admin.Data.DTO;
 
 namespace Organizr.Admin.HelperClasses;
 public class AuthenticationStateProviderHelperClass : AuthenticationStateProvider
@@ -29,13 +30,13 @@ public class AuthenticationStateProviderHelperClass : AuthenticationStateProvide
         return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity(ParseClaimsFromJwt(savedToken), "jwt")));
     }
 
-    public async Task MarkUserAsAuthenticated(Tuple<string, bool, string> response)
+    public async Task MarkUserAsAuthenticated(LoginResponse response)
     {
         await _localStorage.RemoveItemAsync("authToken");
         await _localStorage.RemoveItemAsync("authEmail");
-        await _localStorage.SetItemAsync("authEmail", response.Item1);
-        await _localStorage.SetItemAsync("authToken", response.Item3);
-        var authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, response.Item1) }, "apiauth"));
+        await _localStorage.SetItemAsync("authEmail", response.Email);
+        await _localStorage.SetItemAsync("authToken", response.Token);
+        var authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, response.Email) }, "apiauth"));
         var authState = Task.FromResult(new AuthenticationState(authenticatedUser));
         NotifyAuthenticationStateChanged(authState);
     }
