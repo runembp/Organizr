@@ -1,4 +1,4 @@
-﻿@page "/SearchPerson"
+﻿@page "/SearchMember"
 
 @using Organizr.Domain.Entities
 @using Organizr.Domain.ApplicationConstants
@@ -15,13 +15,8 @@
     Editable="true"
     RowSelectable="_ => false"
     Virtualize
-    VirtualizeOptions="@(new VirtualizeOptions { DataGridHeight = "750px", DataGridMaxHeight = "750px"})">
+    VirtualizeOptions="@(new VirtualizeOptions {DataGridHeight = "750px", DataGridMaxHeight = "750px"})">
     <DataGridColumns>
-        <DataGridCommandColumn NewCommandAllowed="false" EditCommandAllowed="false">
-            <DeleteCommandTemplate>
-                <Button Size="Size.Small" Color="Color.Danger">Slet</Button>
-            </DeleteCommandTemplate>
-        </DataGridCommandColumn>
         <DataGridColumn Field="@nameof(Member.Id)" Caption="Profil ID">
             <DisplayTemplate>
                 <Button Clicked="() => OnEditUserLink_Clicked(context.Id)" Color="Color.Link">@context.Id</Button>
@@ -38,6 +33,11 @@
                 <Check TValue="bool" Checked="context.ConfigRefreshPrivilege" Disabled="true"></Check>
             </DisplayTemplate>
         </DataGridColumn>
+        <DataGridCommandColumn NewCommandAllowed="false" EditCommandAllowed="false">
+            <DeleteCommandTemplate>
+                <Button Size="Size.Small" Color="Color.Danger">Slet</Button>
+            </DeleteCommandTemplate>
+        </DataGridCommandColumn>
     </DataGridColumns>
 </DataGrid>
 
@@ -55,6 +55,7 @@
 
     private void OnEditUserLink_Clicked(int userId)
     {
-        NavigationManager.NavigateTo($"EditPerson/{userId}");
+        NavigationManager.NavigateTo($"EditMember/{userId}");
     }
+
 }

@@ -1,6 +1,7 @@
 ﻿@page "/SearchGroup"
 @using Organizr.Domain.Entities
 @using Organizr.Application.Requests.Groups
+@using Blazorise.DataGrid.Configuration
 
 <h3>Søg gruppe</h3>
 
@@ -10,7 +11,9 @@
           Data="UserGroups"
           FixedHeader="true"
           Editable="true"
-          RowSelectable="_ => false">
+          RowSelectable="_ => false"
+          Virtualize
+          VirtualizeOptions="@(new VirtualizeOptions {DataGridHeight = "750px", DataGridMaxHeight = "750px"})">
     <DataGridColumns>
         <DataGridCommandColumn NewCommandAllowed="false" EditCommandAllowed="false" DeleteCommandAllowed="false"/>
 
