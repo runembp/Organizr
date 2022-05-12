@@ -36,6 +36,15 @@ public class MemberGroupRepository : Repository<MemberGroup>, IMemberGroupReposi
         return group;
     }
 
+    public async Task<Member> RemoveMemberFromGroup(int groupId, int memberId)
+    {
+        var group = _organizrContext.MemberGroups.First(x => x.Id == groupId);
+        var member = group.Member.First(x => x.Id == memberId);
+        group.Member.Remove(member);
+        await _organizrContext.SaveChangesAsync();
+        return member;
+    }
+
     public async Task<MemberGroup> UpdateMemberGroup(MemberGroup memberGroup)
     {
         var group = _organizrContext.MemberGroups.First(x => x.Id == memberGroup.Id);

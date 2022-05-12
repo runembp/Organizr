@@ -13,11 +13,7 @@
           RowSelectable="_ => false">
     <DataGridColumns>
         <DataGridCommandColumn NewCommandAllowed="false" EditCommandAllowed="false" DeleteCommandAllowed="false"/>
-        <DataGridColumn Field="@nameof(MemberGroup.Id)" Caption="Slet">
-            <DisplayTemplate>
-                <Button Clicked="() => OnDeleteGroupButton_Clicked(context.Id)" Color="Color.Danger">Slet</Button>
-            </DisplayTemplate>
-        </DataGridColumn>
+
         <DataGridColumn Field="@nameof(MemberGroup.Id)" Caption="Gruppe ID">
             <DisplayTemplate>
                 <Button Clicked="() => OnEditGroupLink_Clicked(context.Id)" Color="Color.Link">@context.Id</Button>
@@ -27,6 +23,11 @@
         <DataGridColumn Field="@nameof(MemberGroup.IsOpen)" Caption="Åben for alle">
             <DisplayTemplate>
                 <Check TValue="bool" Checked="context.IsOpen" Disabled="true"></Check>
+            </DisplayTemplate>
+        </DataGridColumn>
+        <DataGridColumn Field="@nameof(MemberGroup.Id)" Caption="Slet">
+            <DisplayTemplate>
+                <Button Clicked="() => OnDeleteGroupButton_Clicked(context.Id)" Color="Color.Danger">Slet</Button>
             </DisplayTemplate>
         </DataGridColumn>
     </DataGridColumns>
