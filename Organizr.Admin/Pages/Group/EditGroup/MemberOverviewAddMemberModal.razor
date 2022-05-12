@@ -43,7 +43,7 @@
             AllMembersList = await Mediator.Send(new GetAllMembersRequest());
         }
         
-        AllMembersList = AllMembersList.Where(x => !x.Group.Contains(Group)).ToList();
+        AllMembersList = AllMembersList.Where(x => !x.Groups.Contains(Group)).ToList();
     }
 
     public async Task Show()
