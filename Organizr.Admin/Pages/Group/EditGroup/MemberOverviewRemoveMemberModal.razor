@@ -38,7 +38,7 @@
             MemberId = MemberToBeDeleted.Id
         };
 
-        Group.Member.Remove(await Mediator.Send(command));
+        Group.Members.Remove(await Mediator.Send(command));
         await OnGroupContentChanged.InvokeAsync();
         await _removeMemberModalRef!.Hide();
     }
