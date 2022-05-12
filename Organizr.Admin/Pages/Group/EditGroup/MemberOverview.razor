@@ -57,7 +57,7 @@
 
     private async Task OnRemoveMemberButton_Clicked(int memberId)
     {
-        MemberToBeDeleted = Group.Member.First(x => x.Id == memberId);
+        MemberToBeDeleted = Group.Members.First(x => x.Id == memberId);
         await _removeMemberModal!.Show();
     }
 
