@@ -1,0 +1,59 @@
+﻿@page "/EditMember/{MemberId:int}"
+
+@using Organizr.Domain.Entities
+@using Organizr.Domain.Enums
+
+@attribute [Authorize]
+
+<Tabs SelectedTab="@SelectedTab">
+    <Items>
+        <Tab Name="PersonInfo">Personinfo</Tab>
+        <Tab Name="GroupInfo">Grupper</Tab>
+        <Tab Name="RoleInfo">Roller</Tab>
+    </Items>
+    <Content>
+        <CascadingValue Value="Member">
+            <TabPanel Name="PersonInfo">
+                <MemberInfo/>
+            </TabPanel>
+            <TabPanel Name="GroupInfo">
+                <GroupInfo/>
+            </TabPanel>
+            <TabPanel Name="RoleInfo">
+                <RoleInfo/>
+            </TabPanel>
+        </CascadingValue>
+    </Content>
+</Tabs>
+
+@code {
+    
+    [Parameter]
+    public int MemberId { get; set; }
+
+    private Member Member { get; set; } = new();
+    private string SelectedTab { get; set; } = "PersonInfo";
+
+    protected override Task OnInitializedAsync()
+    {
+        Member = new Member
+        {
+            Id = 999,
+            FirstName = "Test",
+            LastName = "Testesen",
+            Address = "Vej 1000",
+            Email = "Test@testesen.com",
+            Gender = Gender.Undefined,
+            Groups = new List<MemberGroup> {new() {Id = 1, Name = "Testgroup", IsOpen = false}},
+        };
+
+        return Task.CompletedTask;
+    }
+
+    private Task MemberContentHasChanged()
+    {
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+}

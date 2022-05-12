@@ -19,6 +19,7 @@
         </ModalBody>
         <ModalFooter>
             <Button Color="Color.Primary" Clicked="OnAddMemberButton_Clicked">Gem</Button>
+            <Button Color="Color.Secondary" Clicked="OnCancelButton_Clicked">Afbryd</Button>
         </ModalFooter>
     </ModalContent>
 </Modal>
@@ -29,7 +30,7 @@
     public MemberGroup Group { get; set; } = new();
     
     [Parameter]
-    public EventCallback OnMemberAdded { get; set; }
+    public EventCallback OnGroupContentChanged { get; set; }
 
     private List<Member> AllMembersList { get; set; } = new();
     private int SelectedMember { get; set; }
@@ -42,7 +43,7 @@
             AllMembersList = await Mediator.Send(new GetAllMembersRequest());
         }
         
-        AllMembersList = AllMembersList.Where(x => !x.Group.Contains(Group)).ToList();
+        AllMembersList = AllMembersList.Where(x => !x.Groups.Contains(Group)).ToList();
     }
 
     public async Task Show()
@@ -60,6 +61,11 @@
 
         Group = await Mediator.Send(command);
         await _addMemberModal!.Hide();
-        await OnMemberAdded.InvokeAsync();
+        await OnGroupContentChanged.InvokeAsync();
+    }
+
+    private async Task OnCancelButton_Clicked()
+    {
+        await _addMemberModal!.Hide();
     }
 }

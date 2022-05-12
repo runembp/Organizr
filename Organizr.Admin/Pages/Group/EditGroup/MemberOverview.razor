@@ -8,7 +8,7 @@
 </Row>
 
 <DataGrid TItem="Member"
-          Data="Group.Member">
+          Data="Group.Members">
     <DataGridColumns>
         <DataGridColumn Field="@nameof(Member.Id)" Sortable="true" Caption="Id">
             <DisplayTemplate>
@@ -21,21 +21,29 @@
         <DataGridColumn Field="@nameof(Member.Address)" Sortable="true" Caption="Adresse"/>
         <DataGridColumn Field="@nameof(Member.PhoneNumber)" Sortable="true" Caption="Telefon"/>
         <DataGridColumn Sortable="true">Rolle</DataGridColumn>
-        <DataGridColumn Sortable="true">Administrer</DataGridColumn>
+        <DataGridColumn Field="@nameof(Member.Id)" Sortable="true" Caption="Administrer">
+            <DisplayTemplate>
+                <Button Clicked="() => OnRemoveMemberButton_Clicked(context.Id)" Color="Color.Danger">Slet</Button>
+            </DisplayTemplate>
+        </DataGridColumn>
     </DataGridColumns>
 </DataGrid>
 
-<MemberOverviewAddMemberModal @ref="addMemberModal" Group="Group" OnMemberAdded="@OnMemberAdded"/> 
+<MemberOverviewAddMemberModal @ref="_addMemberModal" Group="Group" OnGroupContentChanged="@OnMemberAdded"/>
+
+<MemberOverviewRemoveMemberModal @ref="_removeMemberModal" Group="Group" OnGroupContentChanged="@OnMemberAdded" MemberToBeDeleted="MemberToBeDeleted"/>
 
 @code {
 
     [Parameter]
     public MemberGroup Group { get; set; } = new();
-    
+
     [Parameter]
     public EventCallback OnMemberAdded { get; set; }
 
-    private MemberOverviewAddMemberModal addMemberModal;
+    private MemberOverviewAddMemberModal? _addMemberModal;
+    private MemberOverviewRemoveMemberModal? _removeMemberModal;
+    private Member MemberToBeDeleted { get; set; } = new();
 
     private void OnEditMemberLink_Clicked(int memberId)
     {
@@ -44,6 +52,13 @@
 
     private async Task OnAddMemberButton_Clicked()
     {
-        await addMemberModal.Show();
+        await _addMemberModal!.Show();
     }
+
+    private async Task OnRemoveMemberButton_Clicked(int memberId)
+    {
+        MemberToBeDeleted = Group.Members.First(x => x.Id == memberId);
+        await _removeMemberModal!.Show();
+    }
+
 }
