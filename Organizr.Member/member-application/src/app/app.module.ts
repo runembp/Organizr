@@ -14,6 +14,7 @@ import { AppNavbarComponent } from './components/app-navbar/app-navbar.component
 import { DataSharingService } from './services/shared/data-sharing.service';
 import { ConfigurationConstantsService } from './services/shared/configuration-constants.service';
 import { ContactUsFormComponent } from './components/contact-us/contact-us-form/contact-us-form.component';
+import { ResetPasswordComponent } from './components/login/reset-password/reset-password.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { ContactUsFormComponent } from './components/contact-us/contact-us-form/
     ContactUsComponent,
     LoginComponent,
     AppNavbarComponent,
-    ContactUsFormComponent
+    ContactUsFormComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
