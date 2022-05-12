@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DataSharingService } from 'src/app/services/data-sharing/data-sharing.service';
+import { DataSharingService } from 'src/app/services/shared/data-sharing.service';
 
 const USER = 'user';
 
