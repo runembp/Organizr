@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataSharingService } from 'src/app/services/data-sharing/data-sharing.service';
+import { DataSharingService } from 'src/app/services/shared/data-sharing.service';
 import { TokenStorageService } from 'src/app/services/token-storage/token-storage.service';
 import { Router } from '@angular/router';
 

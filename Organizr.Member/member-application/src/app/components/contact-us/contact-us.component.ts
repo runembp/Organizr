@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GeocodingService } from 'src/app/services/google-api/geocoding.service';
 import { GeocoderResponse } from 'src/app/services/google-api/geocoder-response.model';
-import { ApiClientService } from 'src/app/services/api-client/api-client.service';
+import { ConfigurationConstantsService } from 'src/app/services/shared/configuration-constants.service';
 
 @Component({
   selector: 'app-contact-us',
@@ -26,28 +26,39 @@ export class ContactUsComponent implements OnInit {
     minZoom: 8,
   }
 
-  constructor(private geocoderService: GeocodingService, private apiClient: ApiClientService) { }
+  constructor(private geocoderService: GeocodingService, private configService: ConfigurationConstantsService) {
+    this.configService.organizationAddress.subscribe(value => {
+      this.setMarkerForAddress(value);
+    });
+
+    this.configService.contactPageTopTextBox.subscribe(value => {
+      this.topText = value;
+    });
+
+    this.configService.contactPageLeftTextBox.subscribe(value => {
+      this.leftBoxText = value;
+    });
+  }
 
   ngOnInit(): void {
-
-    this.apiClient.getAllConfigurations().subscribe((configuration) => {
-      this.setMarkerForAddress(configuration[0]['stringValue']);
-      this.topText = configuration[11]['stringValue'];
-      this.leftBoxText = configuration[12]['stringValue'];
-    });
   }
 
   setMarkerForAddress(address: string) {
 
-    this.geocoderService
-      .getLocation(address).subscribe((response: GeocoderResponse) => {
-        if (response.status === 'OK' && response.results?.length) {
-          const location = response.results[0];
-          const loc: any = location.geometry.location;
+    if (address === '' || address === null) return;
 
-          this.locationCoords = new google.maps.LatLng(loc.lat, loc.lng);
-          this.center = location.geometry.location;
-        }
-      });
+    else {
+      this.geocoderService
+        .getLocation(address).subscribe((response: GeocoderResponse) => {
+          if (response.status === 'OK' && response.results?.length) {
+            const location = response.results[0];
+            const loc: any = location.geometry.location;
+
+            this.locationCoords = new google.maps.LatLng(loc.lat, loc.lng);
+            this.center = location.geometry.location;
+          }
+        });
+    }
+
   }
 }

@@ -11,7 +11,8 @@ import { ContactUsComponent } from './components/contact-us/contact-us.component
 import { GoogleMapsModule } from '@angular/google-maps';
 import { LoginComponent } from './components/login/login.component';
 import { AppNavbarComponent } from './components/app-navbar/app-navbar.component';
-import { DataSharingService } from './services/data-sharing/data-sharing.service';
+import { DataSharingService } from './services/shared/data-sharing.service';
+import { ConfigurationConstantsService } from './services/shared/configuration-constants.service';
 
 
 @NgModule({
@@ -31,7 +32,7 @@ import { DataSharingService } from './services/data-sharing/data-sharing.service
     ReactiveFormsModule,
     GoogleMapsModule
   ],
-  providers: [DataSharingService],
+  providers: [DataSharingService, ConfigurationConstantsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
