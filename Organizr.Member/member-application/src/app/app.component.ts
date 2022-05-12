@@ -22,22 +22,22 @@ export class AppComponent implements OnInit {
       this.loggedInUser = value;
     });
 
-    this.apiClient.getAllConfigurations().subscribe(value => {
-      this.configService.organizationAddress.next(value[0].stringValue);
-      this.configService.organizationPhoneNumber.next(value[1].stringValue);
-      this.configService.organizationEmailAddress.next(value[2].stringValue);
-      this.configService.predeterminedGroupToAssignNewMembersTo.next(value[3].idValue);
-      this.configService.activateCommentsOnNews.next(value[4].boolValue);
-      this.configService.activateAdministratorMemberAbilityToCommentOnNews.next(value[5].boolValue);
-      this.configService.activateBasicMemberAbilityToCommentOnNews.next(value[6].boolValue);
-      this.configService.activateAbilityForAllMembersToCreateNews.next(value[7].boolValue);
-      this.configService.frontpageTopTextBox.next(value[8].stringValue);
-      this.configService.loginForgottenPassword.next(value[9]);
-      this.configService.aboutUsPage.next(value[10].stringValue);
-      this.configService.contactPageTopTextBox.next(value[11].stringValue);
-      this.configService.contactPageLeftTextBox.next(value[12].stringValue);
-      this.configService.createMembershipTopText.next(value[13].stringValue);
-      this.configService.memberApplicationCss.next(value[14].stringValue);
+    this.apiClient.getAllConfigurations().subscribe(configurations => {
+      this.configService.organizationAddress.next(configurations.find(({ id }) => id === 1).stringValue);
+      this.configService.organizationPhoneNumber.next(configurations.find(({ id }) => id === 2).stringValue);
+      this.configService.organizationEmailAddress.next(configurations.find(({ id }) => id === 4).stringValue);
+      this.configService.predeterminedGroupToAssignNewMembersTo.next(configurations.find(({ id }) => id === 5).idValue);
+      this.configService.activateCommentsOnNews.next(configurations.find(({ id }) => id === 5).boolValue);
+      this.configService.activateAdministratorMemberAbilityToCommentOnNews.next(configurations.find(({ id }) => id === 6).boolValue);
+      this.configService.activateBasicMemberAbilityToCommentOnNews.next(configurations.find(({ id }) => id === 7).boolValue);
+      this.configService.activateAbilityForAllMembersToCreateNews.next(configurations.find(({ id }) => id === 8).boolValue);
+      this.configService.frontpageTopTextBox.next(configurations.find(({ id }) => id === 9).stringValue);
+      this.configService.loginForgottenPassword.next(configurations[9]);
+      this.configService.aboutUsPage.next(configurations.find(({ id }) => id === 11).stringValue);
+      this.configService.contactPageTopTextBox.next(configurations.find(({ id }) => id === 12).stringValue);
+      this.configService.contactPageLeftTextBox.next(configurations.find(({ id }) => id === 13).stringValue);
+      this.configService.createMembershipTopText.next(configurations.find(({ id }) => id === 14).stringValue);
+      this.configService.memberApplicationCss.next(configurations.find(({ id }) => id === 15).stringValue);
     });
 
   }
