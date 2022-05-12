@@ -12,6 +12,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { LoginComponent } from './components/login/login.component';
 import { AppNavbarComponent } from './components/app-navbar/app-navbar.component';
 import { DataSharingService } from './services/data-sharing/data-sharing.service';
+import { ConfigurationConstantsService } from './services/data-sharing/configuration-constants.service';
 
 
 @NgModule({

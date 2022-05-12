@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GeocodingService } from 'src/app/services/google-api/geocoding.service';
 import { GeocoderResponse } from 'src/app/services/google-api/geocoder-response.model';
 import { ApiClientService } from 'src/app/services/api-client/api-client.service';
+import { ConfigurationConstantsService } from 'src/app/services/data-sharing/configuration-constants.service';
 
 @Component({
   selector: 'app-contact-us',
@@ -26,15 +27,21 @@ export class ContactUsComponent implements OnInit {
     minZoom: 8,
   }
 
-  constructor(private geocoderService: GeocodingService, private apiClient: ApiClientService) { }
+  constructor(private geocoderService: GeocodingService, private configService: ConfigurationConstantsService) {
+    this.configService.organizationAddress.subscribe(value => {
+      this.setMarkerForAddress(value);
+    });
+   }
 
   ngOnInit(): void {
+    
+    //this.topText = this.configService.contactPageTopTextBox;
+    this.topText = "hello";
 
-    this.apiClient.getAllConfigurations().subscribe((configuration) => {
-      this.setMarkerForAddress(configuration[0]['stringValue']);
-      this.topText = configuration[11]['stringValue'];
-      this.leftBoxText = configuration[12]['stringValue'];
-    });
+    //console.log("bla:" + this.configService.contactPageTopTextBox)
+    //this.leftBoxText = this.configService.contactPageLeftTextBox;
+    this.leftBoxText = "hellooo";
+    
   }
 
   setMarkerForAddress(address: string) {
