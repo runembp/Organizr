@@ -4,8 +4,8 @@
 
 @attribute [Authorize]
 
-<Tabs SelectedTab="@_selectedTab" 
-     SelectedTabChanged="@OnSelectedTab_Changed">
+<Tabs SelectedTab="@_selectedTab"
+      SelectedTabChanged="@OnSelectedTab_Changed">
     <Items>
         <Tab Name="GroupInfo">
             Gruppe informationer
@@ -16,25 +16,26 @@
     </Items>
     <Content>
         <TabPanel Name="GroupInfo">
-            <GroupInformation />
+            <EditGroupInformation Group="@SelectedGroup" OnGroupEdited="@GroupContentHasChanged"/>
         </TabPanel>
         <TabPanel Name="Members">
-            <MemberOverview GroupMembers="@(new List<Member>())"/>
+            <MemberOverview Group="@SelectedGroup" OnMemberAdded="@GroupContentHasChanged"/>
         </TabPanel>
     </Content>
 </Tabs>
 
 
 @code {
+
     [Parameter]
     public int GroupId { get; set; }
 
-    private MemberGroup SelectedGroup { get; set; } = new();
+    private MemberGroup? SelectedGroup { get; set; } = new();
     private string _selectedTab = "GroupInfo";
 
     protected override async Task OnInitializedAsync()
     {
-        SelectedGroup = await Mediator.Send(new GetMemberGroupByIdRequest { GroupId = GroupId });
+        SelectedGroup = await Mediator.Send(new GetMemberGroupWithMembersByIdRequest {GroupId = GroupId});
     }
 
     private Task OnSelectedTab_Changed(string tabName)
@@ -42,4 +43,11 @@
         _selectedTab = tabName;
         return Task.CompletedTask;
     }
+
+    private Task GroupContentHasChanged()
+    {
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
 }

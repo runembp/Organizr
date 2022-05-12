@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
-using Organizr.Application.Commands;
+using Organizr.Application.Commands.Groups;
 using Organizr.Application.Common.Interfaces;
 using Organizr.Application.Responses.Groups;
 using Organizr.Domain.Entities;
 
-namespace Organizr.Application.Handlers.CommandHandlers;
+namespace Organizr.Application.Handlers.CommandHandlers.Groups;
 
 public class CreateMemberGroupCommandHandler : IRequestHandler<CreateMemberGroupCommand, CreateMemberGroupResponse>
 {

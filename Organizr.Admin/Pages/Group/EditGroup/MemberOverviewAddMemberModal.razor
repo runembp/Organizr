@@ -1,0 +1,65 @@
+﻿@using Organizr.Application.Requests.Groups
+@using Organizr.Domain.Entities
+@using Organizr.Application.Commands.Groups
+<Modal @ref="_addMemberModal">
+    <ModalContent Centered>
+        <ModalHeader>
+            Tilføj medlem til @Group.Name
+        </ModalHeader>
+        <ModalBody>
+            <Field>
+                <FieldLabel>Vælg medlem: </FieldLabel>
+                <Select TValue="int" @bind-SelectedValue="SelectedMember">
+                    @foreach (var member in AllMembersList)
+                    {
+                        <SelectItem Value="member.Id">@member.FirstName @member.LastName</SelectItem>
+                    }
+                </Select>
+            </Field>
+        </ModalBody>
+        <ModalFooter>
+            <Button Color="Color.Primary" Clicked="OnAddMemberButton_Clicked">Gem</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>
+
+@code
+{
+    [Parameter]
+    public MemberGroup Group { get; set; } = new();
+    
+    [Parameter]
+    public EventCallback OnMemberAdded { get; set; }
+
+    private List<Member> AllMembersList { get; set; } = new();
+    private int SelectedMember { get; set; }
+    private Modal? _addMemberModal;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            AllMembersList = await Mediator.Send(new GetAllMembersRequest());
+        }
+        
+        AllMembersList = AllMembersList.Where(x => !x.Group.Contains(Group)).ToList();
+    }
+
+    public async Task Show()
+    {
+        await _addMemberModal!.Show();
+    }
+
+    private async Task OnAddMemberButton_Clicked()
+    {
+        var command = new AddMemberToMemberGroupCommand
+        {
+            GroupId = Group.Id,
+            MemberId = SelectedMember
+        };
+
+        Group = await Mediator.Send(command);
+        await _addMemberModal!.Hide();
+        await OnMemberAdded.InvokeAsync();
+    }
+}
