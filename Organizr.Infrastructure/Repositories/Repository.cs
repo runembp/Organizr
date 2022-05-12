@@ -26,6 +26,16 @@ namespace Organizr.Infrastructure.Repositories
             await _organizrContext.SaveChangesAsync();
         }
 
+        public async Task<int> DeleteByIdAsync(int id)
+        {
+            var entity = await _organizrContext.Set<T>().FindAsync(id);
+            if (entity != null)
+            {
+                _organizrContext.Set<T>().Remove(entity);
+            }
+            return await _organizrContext.SaveChangesAsync();
+        }
+
         public async Task<IReadOnlyList<T>> GetAll()
         {
             return await _organizrContext.Set<T>().ToListAsync();

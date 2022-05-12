@@ -1,0 +1,78 @@
+﻿@page "/SearchGroup"
+@using Organizr.Domain.Entities
+@using Organizr.Application.Requests.Groups
+
+<h3>Søg gruppe</h3>
+
+<SearchBar/>
+
+<DataGrid TItem="MemberGroup"
+          Data="UserGroups"
+          FixedHeader="true"
+          Editable="true"
+          RowSelectable="_ => false">
+    <DataGridColumns>
+        <DataGridCommandColumn NewCommandAllowed="false" EditCommandAllowed="false" DeleteCommandAllowed="false"/>
+        <DataGridColumn Field="@nameof(MemberGroup.Id)" Caption="Slet">
+            <DisplayTemplate>
+                <Button Clicked="() => OnDeleteGroupButton_Clicked(context.Id)" Color="Color.Danger">Slet</Button>
+            </DisplayTemplate>
+        </DataGridColumn>
+        <DataGridColumn Field="@nameof(MemberGroup.Id)" Caption="Gruppe ID">
+            <DisplayTemplate>
+                <Button Clicked="() => OnEditGroupLink_Clicked(context.Id)" Color="Color.Link">@context.Id</Button>
+            </DisplayTemplate>
+        </DataGridColumn>
+        <DataGridColumn Field="@nameof(MemberGroup.Name)" Caption="Navn"/>
+        <DataGridColumn Field="@nameof(MemberGroup.IsOpen)" Caption="Åben for alle">
+            <DisplayTemplate>
+                <Check TValue="bool" Checked="context.IsOpen" Disabled="true"></Check>
+            </DisplayTemplate>
+        </DataGridColumn>
+    </DataGridColumns>
+</DataGrid>
+
+<Column ColumnSize="ColumnSize.Is4">
+    <Alert Visible="DeletedGroup" Color="Color.Warning">
+        <AlertMessage>Gruppen @DeletedGroupName er slettet</AlertMessage>
+    </Alert>
+</Column>
+
+<DeleteGroupModal @ref="DeleteGroupModal" GroupToBeDeleted="@MemberGroupToBeDeleted" OnGroupDeleted="@OnListContentChanged"/>
+
+
+@code {
+
+    private List<MemberGroup> UserGroups { get; set; } = new();
+    private DeleteGroupModal DeleteGroupModal { get; set; } = new();
+    private MemberGroup MemberGroupToBeDeleted { get; set; } = new();
+    private string DeletedGroupName { get; set; } = string.Empty;
+    private bool DeletedGroup { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var allMemberGroups = await Mediator.Send(new GetAllMemberGroupsRequest());
+        UserGroups = allMemberGroups.MemberGroups.ToList();
+    }
+
+    private void OnEditGroupLink_Clicked(int id)
+    {
+        NavigationManager.NavigateTo($"EditGroup/{id}");
+    }
+
+    private async Task OnDeleteGroupButton_Clicked(int membergroupId)
+    {
+        MemberGroupToBeDeleted = UserGroups.First(x => x.Id == membergroupId);
+        await DeleteGroupModal.Show();
+    }
+
+    private Task OnListContentChanged()
+    {
+        DeletedGroup = false;
+        DeletedGroupName = MemberGroupToBeDeleted.Name;
+        UserGroups.Remove(MemberGroupToBeDeleted);
+        DeletedGroup = true;
+        return Task.CompletedTask;
+    }
+
+}

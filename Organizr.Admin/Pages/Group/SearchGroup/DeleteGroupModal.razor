@@ -1,0 +1,42 @@
+﻿@using Organizr.Domain.Entities
+@using Organizr.Application.Commands.Groups
+
+<Modal @ref="DeleteGroupModalRef">
+    <ModalContent>
+        <ModalHeader>Slet @GroupToBeDeleted.Name?</ModalHeader>
+        <ModalBody>
+            <Button Color="Color.Danger" Clicked="OnDeleteButton_Clicked">Slet</Button>
+            <Button Color="Color.Secondary" Clicked="OnCancelButton_Clicked">Afbryd</Button>
+        </ModalBody>
+    </ModalContent>
+</Modal>
+
+
+@code {
+
+    [Parameter]
+    public MemberGroup GroupToBeDeleted { get; set; } = new();
+    
+    [Parameter]
+    public EventCallback OnGroupDeleted { get; set; }
+
+    private Modal? DeleteGroupModalRef { get; set; }
+
+    public async Task Show()
+    {
+        await DeleteGroupModalRef!.Show();
+    }
+
+    public async Task OnDeleteButton_Clicked()
+    {
+        await Mediator.Send(new DeleteMemberGroupCommand { Id = GroupToBeDeleted.Id});
+        await DeleteGroupModalRef!.Hide();
+        await OnGroupDeleted.InvokeAsync();
+    }
+    
+    public async Task OnCancelButton_Clicked()
+    {
+        await DeleteGroupModalRef!.Hide();
+    }
+
+}
