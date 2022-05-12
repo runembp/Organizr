@@ -46,6 +46,12 @@ export class ApiClientService {
       .pipe(retry(1), catchError(this.handleError));
   }
 
+  // Groups
+  getAllGroups(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl + '/api/groups');
+  }
+
+
   handleError(error: any) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {

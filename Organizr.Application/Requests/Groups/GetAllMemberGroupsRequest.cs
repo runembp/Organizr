@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using Organizr.Application.Responses.Groups;
+using Organizr.Domain.Entities;
 
 namespace Organizr.Application.Requests.Groups;
 
-public class GetAllMemberGroupsRequest : IRequest<GetAllMemberGroupsResponse>
+public class GetAllMemberGroupsRequest : IRequest<List<MemberGroup>>
 {
 
 }

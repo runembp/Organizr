@@ -1,26 +1,26 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Organizr.Application.Common.Interfaces;
 using Organizr.Application.Requests.Groups;
-using Organizr.Application.Responses.Groups;
+using Organizr.Domain.Entities;
 
 namespace Organizr.Application.Handlers.RequestHandlers.Groups;
 
-public class GetAllMemberGroupsHandler : IRequestHandler<GetAllMemberGroupsRequest, GetAllMemberGroupsResponse>
+public class GetAllMemberGroupsHandler : IRequestHandler<GetAllMemberGroupsRequest, List<MemberGroup>>
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    public GetAllMemberGroupsHandler(IUnitOfWork unitOfWork)
+    public GetAllMemberGroupsHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
-    public async Task<GetAllMemberGroupsResponse> Handle(GetAllMemberGroupsRequest request, CancellationToken cancellationToken)
+    
+    public async Task<List<MemberGroup>> Handle(GetAllMemberGroupsRequest request, CancellationToken cancellationToken)
     {
-        var userGroups = await _unitOfWork.GroupRepository.GetAll();
-
-        return new GetAllMemberGroupsResponse
-        {
-            MemberGroups = userGroups
-        };
+        var memberGroups = await _unitOfWork.GroupRepository.GetAll();
+        return _mapper.Map<List<MemberGroup>>(memberGroups);
     }
 }

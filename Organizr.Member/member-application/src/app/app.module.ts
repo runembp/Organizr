@@ -16,6 +16,7 @@ import { ConfigurationConstantsService } from './services/shared/configuration-c
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { ContactUsFormComponent } from './components/contact-us-form/contact-us-form.component';
 import { SideBarComponent } from './components/side-bar/side-bar.component';
+import { GroupsComponent } from './components/groups/groups.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { SideBarComponent } from './components/side-bar/side-bar.component';
     AppNavbarComponent,
     ContactUsFormComponent,
     ResetPasswordComponent,
-    SideBarComponent
+    SideBarComponent,
+    GroupsComponent
   ],
   imports: [
     BrowserModule,

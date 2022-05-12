@@ -1,0 +1,25 @@
+<div class="container mt-3">
+    <div class="row">
+        <div class="col">
+            <h3>Mine Grupper</h3>
+        </div>
+    </div> 
+
+    <div class="row">
+
+        <div class="col">
+            <h3>Alle Grupper</h3>
+            <ul class="list-group list-group-flush" *ngFor="let group of groups">
+                <li class="list-group-item d-flex justify-content-between">
+                    {{group.name}} 
+                    <button class="btn btn-success">
+                        Tilmeld
+                    </button>       
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+</div>

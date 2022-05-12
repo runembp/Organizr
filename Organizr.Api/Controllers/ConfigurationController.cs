@@ -8,7 +8,7 @@ namespace Organizr.Api.Controllers;
 
 [AllowAnonymous]
 [ApiController]
-[Route("api/")]
+[Route("api/configuration")]
 public class ConfigurationController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -18,8 +18,7 @@ public class ConfigurationController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet("configuration")]
-
+    [HttpGet]
     public async Task<List<Configuration>> Get()
     {
         return await _mediator.Send(new GetAllConfigurationsRequest());
