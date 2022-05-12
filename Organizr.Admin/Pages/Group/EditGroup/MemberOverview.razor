@@ -25,12 +25,15 @@
     </DataGridColumns>
 </DataGrid>
 
-<MemberOverviewAddMemberModal @ref="addMemberModal" Group="Group" /> 
+<MemberOverviewAddMemberModal @ref="addMemberModal" Group="Group" OnMemberAdded="@OnMemberAdded"/> 
 
 @code {
 
     [Parameter]
     public MemberGroup Group { get; set; } = new();
+    
+    [Parameter]
+    public EventCallback OnMemberAdded { get; set; }
 
     private MemberOverviewAddMemberModal addMemberModal;
 

@@ -19,7 +19,7 @@
             <GroupInformation />
         </TabPanel>
         <TabPanel Name="Members">
-            <MemberOverview Group="@SelectedGroup" />
+            <MemberOverview Group="@SelectedGroup" OnMemberAdded="@MemberAdded"/>
         </TabPanel>
     </Content>
 </Tabs>
@@ -32,9 +32,12 @@
     private MemberGroup? SelectedGroup { get; set; } = new();
     private string _selectedTab = "GroupInfo";
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        SelectedGroup = await Mediator.Send(new GetMemberGroupWithMembersByIdRequest { GroupId = GroupId });
+        if (firstRender)
+        {
+            SelectedGroup = await Mediator.Send(new GetMemberGroupWithMembersByIdRequest { GroupId = GroupId });    
+        }
     }
 
     private Task OnSelectedTab_Changed(string tabName)
@@ -42,4 +45,9 @@
         _selectedTab = tabName;
         return Task.CompletedTask;
     }
+
+    private void MemberAdded()
+    {
+        StateHasChanged();
+    } 
 }

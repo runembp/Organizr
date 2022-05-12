@@ -27,6 +27,9 @@
 {
     [Parameter]
     public MemberGroup Group { get; set; } = new();
+    
+    [Parameter]
+    public EventCallback OnMemberAdded { get; set; }
 
     private List<Member> AllMembersList { get; set; } = new();
     private int SelectedMember { get; set; }
@@ -34,8 +37,12 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        var allMembersList = await Mediator.Send(new GetAllMembersRequest());
-        AllMembersList = allMembersList.Where(x => !x.Group.Contains(Group)).ToList();
+        if (firstRender)
+        {
+            AllMembersList = await Mediator.Send(new GetAllMembersRequest());
+        }
+        
+        AllMembersList = AllMembersList.Where(x => !x.Group.Contains(Group)).ToList();
     }
 
     public async Task Show()
@@ -53,5 +60,6 @@
 
         Group = await Mediator.Send(command);
         await _addMemberModal!.Hide();
+        await OnMemberAdded.InvokeAsync();
     }
 }
