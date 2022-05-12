@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿#pragma warning disable CS8604
+
+using System.Text;
 using Newtonsoft.Json;
 
 namespace Organizr.Admin.HelperClasses;
