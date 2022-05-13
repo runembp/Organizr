@@ -13,15 +13,13 @@ public class MemberService
 
     public async Task<List<Member>> GetAllMembers()
     {
-        // return await _httpClient.GetFromJsonAsync<List<Member>>(ApiEndpoints.GetAllMembers) ?? new List<Member>();
-        return new List<Member>();
+        return await _httpClient.GetFromJsonAsync<List<Member>>("api/members") ?? new List<Member>();
     }
 
     public async Task<Member?> PostNewMember(object command)
     {
-        // var response = await _httpClient.PostAsJsonAsync(ApiEndpoints.PostNewMember, command);
-        // var member = await response.Content.ReadFromJsonAsync<Member>();
-        // return member;
-        return new Member();
+        var response = await _httpClient.PostAsJsonAsync("api/members", command);
+        var member = await response.Content.ReadFromJsonAsync<Member>();
+        return member;
     }
 }

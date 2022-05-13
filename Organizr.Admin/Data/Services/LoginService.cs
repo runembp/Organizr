@@ -3,7 +3,6 @@ using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Organizr.Admin.Data.DTO;
 using Organizr.Admin.HelperClasses;
-using Organizr.Domain.ApplicationConstants;
 
 namespace Organizr.Admin.Data.Services;
 
@@ -23,7 +22,7 @@ public class LoginService
     public async Task<LoginResponse> Login(string email, string password)
     {
         var request = new LoginRequest {Email = email, Password = password};
-        var response = await _httpClient.PostAsJsonAsync(ApiEndpoints.Login, request);
+        var response = await _httpClient.PostAsJsonAsync("api/login", request);
         var result = await response.Content.ReadFromJsonAsync<LoginResponse>() ?? new LoginResponse();
 
         if (!result.Succeeded)

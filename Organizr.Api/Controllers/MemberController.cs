@@ -11,7 +11,7 @@ namespace Organizr.Api.Controllers;
 
 [AllowAnonymous]
 [ApiController]
-[Route("api/organizr-member")]
+[Route("api/members")]
 public class MemberController : ControllerBase
 {
     private readonly IMediator _mediator;
