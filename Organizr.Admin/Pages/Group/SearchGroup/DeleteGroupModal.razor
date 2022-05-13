@@ -1,7 +1,4 @@
-﻿@using Organizr.Domain.Entities
-@using Organizr.Application.Commands.Groups
-
-<Modal @ref="DeleteGroupModalRef">
+﻿<Modal @ref="DeleteGroupModalRef">
     <ModalContent>
         <ModalHeader>Slet @GroupToBeDeleted.Name?</ModalHeader>
         <ModalBody>
@@ -29,7 +26,7 @@
 
     public async Task OnDeleteButton_Clicked()
     {
-        await Mediator.Send(new DeleteMemberGroupCommand { Id = GroupToBeDeleted.Id});
+        await GroupService.DeleteGroupById(GroupToBeDeleted.Id);
         await DeleteGroupModalRef!.Hide();
         await OnGroupDeleted.InvokeAsync();
     }

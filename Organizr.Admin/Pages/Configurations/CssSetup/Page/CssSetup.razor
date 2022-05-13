@@ -1,8 +1,4 @@
-﻿@page "/CssSetup"
-@using Organizr.Domain.Entities
-@using Organizr.Application.Requests.Configurations
-@using Organizr.Domain.Enums
-@using Organizr.Application.Commands.Configurations
+﻿@page "/css-setup"
 
 @attribute [Authorize]
 
@@ -33,20 +29,20 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var cssConfig = await Mediator.Send(new GetAllConfigurationsOfTypeRequest { ConfigType = ConfigType.CssSetup });
-        ConfigCss = cssConfig.Configurations.First();
+        var cssConfig = await ConfigurationService.GetAllConfigurationsOfType(ConfigType.CssSetup);
+        ConfigCss = cssConfig.First();
     }
 
     private async Task OnSaveButton_Clicked()
     {
         _configSaved = false;
 
-        var response = await Mediator.Send(new UpdateConfigurationsOfTypeCssSetupCommand { StringValue = ConfigCss.StringValue });
+        await ConfigurationService.UpdateConfigurationsOfTypeCssSetup(ConfigCss.StringValue!);
 
-        if (response.Succeeded)
-        {
-            _configSaved = response.Succeeded;
-        }
+        // if (response.Succeeded)
+        // {
+            // _configSaved = response.Succeeded;
+        // }
     }
 
 }

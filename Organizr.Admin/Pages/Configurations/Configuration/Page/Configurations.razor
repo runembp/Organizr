@@ -1,10 +1,4 @@
-﻿@page "/Configurations"
-@using Organizr.Domain.Entities
-@using Organizr.Application.Requests.Groups
-@using Organizr.Application.Commands.Configurations
-@using Organizr.Application.Requests.Configurations
-@using Organizr.Domain.ApplicationConstants
-@using Organizr.Domain.Enums
+﻿@page "/configurations"
 
 @attribute [Authorize]
 
@@ -101,11 +95,11 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var configurationList = await Mediator.Send(new GetAllConfigurationsOfTypeRequest{ConfigType = ConfigType.Configuration});
-        var groupList = await Mediator.Send(new GetAllMemberGroupsRequest());
+        var configurationList = await ConfigurationService.GetAllConfigurationsOfType(ConfigType.Configuration);
+        var groupList = await GroupService.GetAllGroups();
 
-        ConfigurationList = configurationList.Configurations;
-        GroupList = groupList.MemberGroups.ToList();
+        ConfigurationList = configurationList;
+        GroupList = groupList.ToList();
 
         await SetConfigurationValues();
     }
@@ -127,21 +121,21 @@
     {
         ConfigurationsHasBeenSaved = false;
 
-        var request = new UpdateConfigurationsOfTypeConfigCommand
+        var command = new
         {
             OrganizationAddress = ConfigOrganizationAddress,
             OrganizationEmailAddress = ConfigOrganizationEmail,
             OrganizationPhoneNumber = ConfigOrganizationPhoneNumber,
             ActivateCommentsOnNews = ConfigActivateCommentsOnNews,
-            PredeterminedGroupToAssignNewMembersTo = ConfigPredeterminedGroupNewMembersAssignedTo == 0 ? null : ConfigPredeterminedGroupNewMembersAssignedTo,
+            PredeterminedGroupToAssignNewMembersTo = ConfigPredeterminedGroupNewMembersAssignedTo,
             ActivateAbilityForAllMembersToCreateNews = ConfigActivateAbilityForAllMembersToCreateNews,
             ActivateAdministratorMemberAbilityToCommentOnNews = ConfigActivatedAdministratorCommentOnNews,
             ActivateBasicMemberAbilityToCommentOnNews = ConfigActivateBasicMemberCommentOnNews
         };
 
-        var response = await Mediator.Send(request);
+        await ConfigurationService.UpdateConfigurationsOfTypeConfiguration(command);
 
-        ConfigurationsHasBeenSaved = response.Succeeded;
+        // ConfigurationsHasBeenSaved = response.Succeeded;
     }
 
 }

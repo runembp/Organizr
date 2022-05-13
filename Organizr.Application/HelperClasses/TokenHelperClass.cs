@@ -18,7 +18,7 @@ public class TokenHelperClass
     public async Task<string> GenerateToken(Member member)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(await KeyVaultService.GetSecretFromConfig(_config));
+        var key = Encoding.ASCII.GetBytes(await KeyVaultHelperClass.GetSecretFromConfig(_config));
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new Claim[]

@@ -21,7 +21,7 @@ public static class DependencyInjection
     /// <param name="builder"></param>
     public static async Task SetUpDatabaseAndIdentity(WebApplicationBuilder builder)
     {
-        var secret = await KeyVaultService.GetSecretFromBuilder(builder);
+        var secret = await KeyVaultHelperClass.GetSecretFromBuilder(builder);
 
         builder.Services.AddDbContext<OrganizrDbContext>(options =>
         {

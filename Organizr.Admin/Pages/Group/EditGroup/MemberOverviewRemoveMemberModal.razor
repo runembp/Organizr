@@ -1,7 +1,4 @@
-﻿@using Organizr.Domain.Entities
-@using Organizr.Application.Commands.Groups
-
-<Modal @ref="_removeMemberModalRef">
+﻿<Modal @ref="_removeMemberModalRef">
     <ModalContent>
         <ModalHeader>
             Fjern (@MemberToBeDeleted.Id) @MemberToBeDeleted.FirstName @MemberToBeDeleted.LastName fra @Group.Name?
@@ -32,13 +29,8 @@
 
     private async Task OnRemoveButton_Clicked()
     {
-        var command = new RemoveMemberFromGroupCommand
-        {
-            GroupId = Group.Id,
-            MemberId = MemberToBeDeleted.Id
-        };
-
-        Group.Members.Remove(await Mediator.Send(command));
+        await GroupService.RemoveMemberFromGroup(Group.Id, MemberToBeDeleted.Id);
+        Group.Members.Remove(MemberToBeDeleted);
         await OnGroupContentChanged.InvokeAsync();
         await _removeMemberModalRef!.Hide();
     }

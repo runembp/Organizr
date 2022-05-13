@@ -1,7 +1,4 @@
-﻿@page "/EditMember/{MemberId:int}"
-
-@using Organizr.Domain.Entities
-@using Organizr.Domain.Enums
+﻿@page "/edit-member/{MemberId:int}"
 
 @attribute [Authorize]
 
@@ -55,5 +52,4 @@
         StateHasChanged();
         return Task.CompletedTask;
     }
-
 }

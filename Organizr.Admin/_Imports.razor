@@ -7,17 +7,23 @@
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 @using Microsoft.JSInterop
 
+@using Organizr.Domain.Entities
+@using Organizr.Domain.ApplicationConstants
+@using Organizr.Domain.Enums
+
 @using Organizr.Admin
 @using Organizr.Admin.Shared
 @using Organizr.Admin.Components
 
 @using Blazored.LocalStorage
-@using MediatR
 @using Blazorise
 @using Blazorise.DataGrid
 @using Blazorise.RichTextEdit
-@using Organizr.Application.HelperClasses
+@using Organizr.Admin.Data.Services
+@using Organizr.Admin.Data.DTO
 
-@inject IMediator Mediator
 @inject NavigationManager NavigationManager
-@inject AuthenticationHelperClass AuthenticationHelperClass
+@inject MemberService MemberService
+@inject GroupService GroupService;
+@inject ConfigurationService ConfigurationService;
+@inject LoginService LoginService;
