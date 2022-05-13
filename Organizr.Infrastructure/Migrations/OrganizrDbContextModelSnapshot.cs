@@ -24,15 +24,15 @@ namespace Organizr.Infrastructure.Migrations
 
             modelBuilder.Entity("MemberMemberGroup", b =>
                 {
-                    b.Property<int>("GroupId")
+                    b.Property<int>("GroupsId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MemberId")
+                    b.Property<int>("MembersId")
                         .HasColumnType("int");
 
-                    b.HasKey("GroupId", "MemberId");
+                    b.HasKey("GroupsId", "MembersId");
 
-                    b.HasIndex("MemberId");
+                    b.HasIndex("MembersId");
 
                     b.ToTable("MemberMemberGroup");
                 });
@@ -308,13 +308,13 @@ namespace Organizr.Infrastructure.Migrations
                 {
                     b.HasOne("Organizr.Domain.Entities.MemberGroup", null)
                         .WithMany()
-                        .HasForeignKey("GroupId")
+                        .HasForeignKey("GroupsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Organizr.Domain.Entities.Member", null)
                         .WithMany()
-                        .HasForeignKey("MemberId")
+                        .HasForeignKey("MembersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

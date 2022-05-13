@@ -66,7 +66,7 @@ public static class ApiDependencyInjection
         
         // Groups
         builder.Services.AddTransient<IRequestHandler<CreateMemberGroupCommand, CreateMemberGroupResponse>, CreateMemberGroupCommandHandler>();
-        builder.Services.AddTransient<IRequestHandler<AddMemberToMemberGroupCommand, MemberGroup>, AddMemberToMemberGroupHandler>();
+        builder.Services.AddTransient<IRequestHandler<AddMemberToMemberGroupCommand, AddMemberToMemberGroupResponse>, AddMemberToMemberGroupHandler>();
         
         // Commands
         builder.Services.AddTransient<IRequestHandler<UpdateConfigurationsOfTypeConfigCommand, UpdateConfigurationsResponse>, UpdateConfigurationsOfTypeConfigHandler>();

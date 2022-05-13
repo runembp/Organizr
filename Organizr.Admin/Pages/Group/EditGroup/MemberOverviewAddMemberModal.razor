@@ -59,7 +59,7 @@
             MemberId = SelectedMember
         };
 
-        Group = await Mediator.Send(command);
+        //Group = await Mediator.Send(command);
         await _addMemberModal!.Hide();
         await OnGroupContentChanged.InvokeAsync();
     }

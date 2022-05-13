@@ -30,7 +30,7 @@ public class MemberGroupRepository : Repository<MemberGroup>, IMemberGroupReposi
 
         group.Members.Add(member);
         member.Groups.Add(group);
-
+        
         await _organizrContext.SaveChangesAsync();
 
         return group;

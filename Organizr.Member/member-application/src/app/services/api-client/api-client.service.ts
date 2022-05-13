@@ -51,6 +51,13 @@ export class ApiClientService {
     return this.http.get<any[]>(this.apiUrl + '/api/groups');
   }
 
+  addMemberToGroup(groupId: number): Observable<any> {
+    return this.http.post(
+    this.apiUrl + `/api/group/${groupId}/member/4`,
+    this.httpOptions)
+    .pipe(retry(1), catchError(this.handleError));
+  }
+
 
   handleError(error: any) {
     let errorMessage = '';

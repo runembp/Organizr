@@ -10,10 +10,17 @@ export class GroupsComponent implements OnInit {
 
   constructor(private apiClient: ApiClientService) { }
 
-  groups: any [] = [];
+  allGroups: any[] = [];
+  myGroups: any[] = [];
 
   ngOnInit(): void {
-    this.apiClient.getAllGroups().subscribe(groups => this.groups = groups);
+    this.apiClient.getAllGroups().subscribe(groups => {
+      this.allGroups = groups
+    });
+  }
+
+  joinGroup(groupId: number): void {
+    this.apiClient.addMemberToGroup(groupId).subscribe();
   }
 
 }

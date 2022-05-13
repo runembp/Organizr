@@ -11,7 +11,7 @@ namespace Organizr.Api.Controllers;
 
 [AllowAnonymous]
 [ApiController]
-[Route("api/organizr-member")]
+[Route("api/")]
 public class MemberController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -21,14 +21,14 @@ public class MemberController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet]
+    [HttpGet("member")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<List<Member>> GetAll()
     {
         return await _mediator.Send(new GetAllMembersRequest());
     }
 
-    [HttpPost]
+    [HttpPost("member")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<CreateMemberResponse>> CreateMember([FromBody] CreateMemberCommand command)

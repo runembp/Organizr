@@ -55,8 +55,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var allMemberGroups = await Mediator.Send(new GetAllMemberGroupsRequest());
-        UserGroups = allMemberGroups.MemberGroups.ToList();
+        UserGroups = await Mediator.Send(new GetAllMemberGroupsRequest());
     }
 
     private void OnEditGroupLink_Clicked(int id)
