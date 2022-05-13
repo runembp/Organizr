@@ -4,7 +4,7 @@ using Organizr.Application.Common.Interfaces;
 using Organizr.Application.Requests.Configurations;
 using Organizr.Domain.Entities;
 
-namespace Organizr.Application.Handlers.RequestHandlers;
+namespace Organizr.Application.Handlers.RequestHandlers.Configurations;
 
 public class GetAllConfigurationsRequestHandler : IRequestHandler<GetAllConfigurationsRequest, List<Configuration>>
 {

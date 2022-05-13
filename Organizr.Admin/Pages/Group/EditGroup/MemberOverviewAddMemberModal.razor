@@ -1,7 +1,4 @@
-﻿@using Organizr.Application.Requests.Groups
-@using Organizr.Domain.Entities
-@using Organizr.Application.Commands.Groups
-<Modal @ref="_addMemberModal">
+﻿<Modal @ref="_addMemberModal">
     <ModalContent Centered>
         <ModalHeader>
             Tilføj medlem til @Group.Name
@@ -40,7 +37,7 @@
     {
         if (firstRender)
         {
-            AllMembersList = await Mediator.Send(new GetAllMembersRequest());
+            AllMembersList = await MemberService.GetAllMembers();
         }
         
         AllMembersList = AllMembersList.Where(x => !x.Groups.Contains(Group)).ToList();
@@ -53,13 +50,7 @@
 
     private async Task OnAddMemberButton_Clicked()
     {
-        var command = new AddMemberToMemberGroupCommand
-        {
-            GroupId = Group.Id,
-            MemberId = SelectedMember
-        };
-
-        //Group = await Mediator.Send(command);
+        Group = await GroupService.AddMemberToGroup(Group.Id, SelectedMember);
         await _addMemberModal!.Hide();
         await OnGroupContentChanged.InvokeAsync();
     }

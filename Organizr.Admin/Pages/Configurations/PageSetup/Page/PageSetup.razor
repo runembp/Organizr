@@ -1,9 +1,4 @@
-﻿@page "/PageSetup"
-@using Organizr.Application.Requests.Configurations
-@using Organizr.Domain.ApplicationConstants
-@using Organizr.Domain.Entities
-@using Organizr.Domain.Enums
-@using Organizr.Application.Commands.Configurations
+﻿@page "/page-setup"
 
 @attribute [Authorize]
 
@@ -60,11 +55,12 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var pageSetupConfigurations = await Mediator.Send(new GetAllConfigurationsOfTypeRequest {ConfigType = ConfigType.PageSetup});
-        ConfigFrontpage = pageSetupConfigurations.Configurations.First(x => x.Id == ConfigurationIds.FrontpageTopTextBox);
-        ConfigCreateMembership = pageSetupConfigurations.Configurations.First(x => x.Id == ConfigurationIds.CreateMembershipTopText);
-        ConfigAboutUs = pageSetupConfigurations.Configurations.First(x => x.Id == ConfigurationIds.AboutUsPage);
-        ConfigContact = pageSetupConfigurations.Configurations.First(x => x.Id == ConfigurationIds.ContactPageTopTextBox);
+        var pageSetupConfigurations = await ConfigurationService.GetAllConfigurationsOfType(ConfigType.PageSetup);
+        
+        ConfigFrontpage = pageSetupConfigurations.First(x => x.Id == ConfigurationIds.FrontpageTopTextBox);
+        ConfigCreateMembership = pageSetupConfigurations.First(x => x.Id == ConfigurationIds.CreateMembershipTopText);
+        ConfigAboutUs = pageSetupConfigurations.First(x => x.Id == ConfigurationIds.AboutUsPage);
+        ConfigContact = pageSetupConfigurations.First(x => x.Id == ConfigurationIds.ContactPageTopTextBox);
     }
 
     private Task OnSelectedTabChanged(string name)
@@ -78,19 +74,19 @@
     {
         _configurationsUpdatedSuccess = false;
 
-        var command = new UpdateConfigurationsOfTypePageSetupCommand
+        var updatedConfigurations = new List<Configuration> 
         {
-            Frontpage = ConfigFrontpage,
-            CreateMembership = ConfigCreateMembership,
-            AboutUs = ConfigAboutUs,
-            Contact = ConfigContact
+            ConfigFrontpage,
+            ConfigCreateMembership,
+            ConfigAboutUs,
+            ConfigContact
         };
 
-        var response = await Mediator.Send(command);
+        await ConfigurationService.UpdateConfigurationsOfType(ConfigType.PageSetup, updatedConfigurations);
 
-        if (response.Succeeded)
-        {
-            _configurationsUpdatedSuccess = true;
-        }
+        // if (response.Succeeded)
+        // {
+            // _configurationsUpdatedSuccess = true;
+        // }
     }
 }

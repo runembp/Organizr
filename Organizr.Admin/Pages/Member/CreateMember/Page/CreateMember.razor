@@ -1,7 +1,4 @@
-﻿@page "/CreateMember"
-@using Organizr.Domain.Enums
-@using Microsoft.AspNetCore.Identity
-@using Organizr.Application.Commands
+﻿@page "/create-member"
 
 @attribute [Authorize]
 
@@ -76,10 +73,6 @@
         
         <Alert Visible="_showErrors" Color="Color.Danger">
             <AlertMessage>Bruger kunne ikke oprettes.</AlertMessage>
-            @foreach (var error in _errors)
-            {
-                <Div><AlertMessage>@error.Description</AlertMessage></Div>
-            }
         </Alert>
 
     </Field>
@@ -96,14 +89,13 @@
     private bool _refreshConfiguration;
     private bool _userCreated;
     private bool _showErrors;
-    private List<IdentityError> _errors = new();
 
     private async Task OnButtonSave_Clicked()
     {
         _userCreated = false;
         _showErrors = false;
         
-        var command = new CreateMemberCommand
+        var command = new 
             {
                 FirstName = _firstName,
                 LastName = _lastName,
@@ -115,12 +107,11 @@
                 ConfigRefreshPrivilege = _refreshConfiguration
             };
 
-        var result = await Mediator.Send(command);
+        var createdMember = await MemberService.PostNewMember(command);
 
-        if (!result.Succeeded)
+        if (createdMember is null)
         {
             _showErrors = true;
-            _errors = result.Errors.ToList();
         }
         else
         {

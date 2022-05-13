@@ -56,7 +56,7 @@ public static class ApiDependencyInjection
         
         // Configurations
         builder.Services.AddTransient<IRequestHandler<GetAllConfigurationsRequest, List<Configuration>>, GetAllConfigurationsRequestHandler>();
-        builder.Services.AddTransient<IRequestHandler<GetAllConfigurationsOfTypeRequest, GetAllConfigurationsOfTypeResponse>, GetAllConfigurationsOfTypeHandler>();
+        builder.Services.AddTransient<IRequestHandler<GetAllConfigurationsOfTypeRequest, List<Configuration>>, GetAllConfigurationsOfTypeHandler>();
     }
 
     private static void AddMediatrCommands(WebApplicationBuilder builder)
@@ -69,7 +69,6 @@ public static class ApiDependencyInjection
         builder.Services.AddTransient<IRequestHandler<AddMemberToMemberGroupCommand, AddMemberToMemberGroupResponse>, AddMemberToMemberGroupHandler>();
         
         // Commands
-        builder.Services.AddTransient<IRequestHandler<UpdateConfigurationsOfTypeConfigCommand, UpdateConfigurationsResponse>, UpdateConfigurationsOfTypeConfigHandler>();
-        builder.Services.AddTransient<IRequestHandler<UpdateConfigurationsOfTypePageSetupCommand, UpdateConfigurationsResponse>, UpdateConfigurationsOfTypePageSetupHandler>();
+        builder.Services.AddTransient<IRequestHandler<UpdateConfigurationsOfTypeCommand, List<Configuration>>, UpdateConfigurationsOfTypeHandler>();
     }
 }

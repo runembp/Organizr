@@ -1,6 +1,5 @@
-﻿@page "/CreateGroup"
+﻿@page "/create-group"
 @using Blazorise.Extensions
-@using Organizr.Application.Commands.Groups
 
 @attribute [Authorize]
 
@@ -44,13 +43,10 @@
             return;
         }
 
-        var response = await Mediator.Send(new CreateMemberGroupCommand
-        {
-            Name = GroupName,
-            IsOpen = IsOpen
-        });
+        await GroupService.CreateNewGroup(GroupName, IsOpen);
 
-        GroupCreated = response.Succeeded;
-        GroupName = response.GroupName;
+
+    // GroupCreated = response.Succeeded;
+    // GroupName = response.GroupName;
     }
 }

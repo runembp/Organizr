@@ -1,6 +1,4 @@
 ﻿@page "/SearchGroup"
-@using Organizr.Domain.Entities
-@using Organizr.Application.Requests.Groups
 @using Blazorise.DataGrid.Configuration
 
 <h3>Søg gruppe</h3>
@@ -55,7 +53,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        UserGroups = await Mediator.Send(new GetAllMemberGroupsRequest());
+        UserGroups = await GroupService.GetAllGroups();
     }
 
     private void OnEditGroupLink_Clicked(int id)

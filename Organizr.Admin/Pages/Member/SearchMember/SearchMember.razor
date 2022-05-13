@@ -1,9 +1,6 @@
-﻿@page "/SearchMember"
+﻿@page "/search-member"
 
-@using Organizr.Domain.Entities
-@using Organizr.Domain.ApplicationConstants
 @using Blazorise.DataGrid.Configuration
-@using Organizr.Application.Requests.Groups
 
 @attribute [Authorize]
 
@@ -47,7 +44,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _userList = await Mediator.Send(new GetAllMembersRequest());
+        _userList = await MemberService.GetAllMembers();
         var mandatoryOrganizationAdministator = _userList.First(x => x.Id == 1 && x.Email == ApplicationConstants.MandatoryOrganizationAdministratorEmail);
         _userList.Remove(mandatoryOrganizationAdministator);
         await base.OnInitializedAsync();
