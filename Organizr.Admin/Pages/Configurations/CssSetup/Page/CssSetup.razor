@@ -37,7 +37,7 @@
     {
         _configSaved = false;
 
-        await ConfigurationService.UpdateConfigurationsOfTypeCssSetup(ConfigCss.StringValue!);
+        await ConfigurationService.UpdateConfigurationsOfType(ConfigType.CssSetup, new List<Configuration> {ConfigCss});
 
         // if (response.Succeeded)
         // {

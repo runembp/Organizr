@@ -74,15 +74,15 @@
     {
         _configurationsUpdatedSuccess = false;
 
-        var command = new 
+        var updatedConfigurations = new List<Configuration> 
         {
-            Frontpage = ConfigFrontpage,
-            CreateMembership = ConfigCreateMembership,
-            AboutUs = ConfigAboutUs,
-            Contact = ConfigContact
+            ConfigFrontpage,
+            ConfigCreateMembership,
+            ConfigAboutUs,
+            ConfigContact
         };
 
-        await ConfigurationService.UpdateConfigurationsOfTypePageSetup(command);
+        await ConfigurationService.UpdateConfigurationsOfType(ConfigType.PageSetup, updatedConfigurations);
 
         // if (response.Succeeded)
         // {

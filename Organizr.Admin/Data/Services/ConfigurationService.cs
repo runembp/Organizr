@@ -12,25 +12,13 @@ public class ConfigurationService
         _httpClient = httpClient;
     }
 
-    public async Task<List<Configuration>> GetAllConfigurationsOfType(ConfigType pageSetup)
+    public async Task<List<Configuration>> GetAllConfigurationsOfType(ConfigType configType)
     {
-        // await _httpClient.GetFromJsonAsync<List<Configuration>>(ApiEndpoints.GetAllConfigurationsOfType) ?? new List<Configuration>();
-
-        return new List<Configuration>();
+        return await _httpClient.GetFromJsonAsync<List<Configuration>>($"api/configurations/type/{(int)configType}") ?? new List<Configuration>();
     }
 
-    public async Task UpdateConfigurationsOfTypePageSetup(object command)
+    public async Task UpdateConfigurationsOfType(ConfigType configType, List<Configuration> updatedConfigurations)
     {
-        // await _httpClient.PostAsJsonAsync(ApiEndpoints.UpdateConfigurationsOfTypePageSetup, command);
-    }
-
-    public async Task UpdateConfigurationsOfTypeCssSetup(string cssStringValue)
-    {
-        // await _httpClient.PostAsJsonAsync(ApiEndpoints.UpdateConfigurationsOfTypeCssSetup, cssStringValue);
-    }
-
-    public async Task UpdateConfigurationsOfTypeConfiguration(object command)
-    {
-        // await _httpClient.PostAsJsonAsync(ApiEndpoints.UpdateConfigurationsOfTypeConfiguration, command);
+        await _httpClient.PostAsJsonAsync($"api/configurations/type/{(int)configType}", updatedConfigurations);
     }
 }
