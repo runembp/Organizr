@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 
 namespace Organizr.Application.HelperClasses;
-public static class KeyVaultService
+public static class KeyVaultHelperClass
 {
     private const string KeyValuePair = "KeyVault:DNS";
     private const string KeyName = "JwtKey";

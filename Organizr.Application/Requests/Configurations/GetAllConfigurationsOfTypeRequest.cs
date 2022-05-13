@@ -1,10 +1,10 @@
 using MediatR;
-using Organizr.Application.Responses.Configurations;
+using Organizr.Domain.Entities;
 using Organizr.Domain.Enums;
 
 namespace Organizr.Application.Requests.Configurations;
 
-public class GetAllConfigurationsOfTypeRequest : IRequest<GetAllConfigurationsOfTypeResponse>
+public class GetAllConfigurationsOfTypeRequest : IRequest<List<Configuration>>
 {
-    public ConfigType ConfigType { get; set; }
+    public ConfigType ConfigType { get; init; }
 }
