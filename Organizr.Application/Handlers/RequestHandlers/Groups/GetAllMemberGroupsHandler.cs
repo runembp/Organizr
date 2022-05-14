@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using Organizr.Application.Common.Interfaces;
 using Organizr.Application.Requests.Groups;
-using Organizr.Application.Responses.Groups;
+using Organizr.Domain.Entities;
 
 namespace Organizr.Application.Handlers.RequestHandlers.Groups;
 
-public class GetAllMemberGroupsHandler : IRequestHandler<GetAllMemberGroupsRequest, GetAllMemberGroupsResponse>
+public class GetAllMemberGroupsHandler : IRequestHandler<GetAllMemberGroupsRequest, List<MemberGroup>>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -14,13 +14,8 @@ public class GetAllMemberGroupsHandler : IRequestHandler<GetAllMemberGroupsReque
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<GetAllMemberGroupsResponse> Handle(GetAllMemberGroupsRequest request, CancellationToken cancellationToken)
+    public async Task<List<MemberGroup>> Handle(GetAllMemberGroupsRequest request, CancellationToken cancellationToken)
     {
-        var userGroups = await _unitOfWork.GroupRepository.GetAll();
-
-        return new GetAllMemberGroupsResponse
-        {
-            MemberGroups = userGroups
-        };
+        return (List<MemberGroup>) await _unitOfWork.GroupRepository.GetAll();
     }
 }

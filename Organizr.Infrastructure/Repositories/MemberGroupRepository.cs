@@ -25,7 +25,7 @@ public class MemberGroupRepository : Repository<MemberGroup>, IMemberGroupReposi
 
     public async Task<MemberGroup> AddMemberToGroup(int groupId, int memberId)
     {
-        var group = _organizrContext.MemberGroups.First(x => x.Id == groupId);
+        var group = _organizrContext.MemberGroups.Include(x => x.Members).First(x => x.Id == groupId);
         var member = _organizrContext.Users.First(x => x.Id == memberId);
 
         group.Members.Add(member);
@@ -38,7 +38,7 @@ public class MemberGroupRepository : Repository<MemberGroup>, IMemberGroupReposi
 
     public async Task<Member> RemoveMemberFromGroup(int groupId, int memberId)
     {
-        var group = _organizrContext.MemberGroups.First(x => x.Id == groupId);
+        var group = _organizrContext.MemberGroups.Where(x => x.Id == groupId).Include(x => x.Members).First();
         var member = group.Members.First(x => x.Id == memberId);
         group.Members.Remove(member);
         await _organizrContext.SaveChangesAsync();

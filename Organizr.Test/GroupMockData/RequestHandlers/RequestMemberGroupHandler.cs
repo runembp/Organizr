@@ -27,15 +27,15 @@ public class RequestMemberGroupHandler
     public async Task Valid_MemberGroup_Added()
     {
         // Arrange
-        var emptyMemberGroupResponse = new GetAllMemberGroupsResponse();
+        var emptyMemberGroupResponse = new List<MemberGroup>();
 
         // Act
         var result = await _requestHandler.Handle(new GetAllMemberGroupsRequest(), CancellationToken.None);
 
         // Assert
         result.ShouldBeOfType<GetAllMemberGroupsResponse>();
-        result.MemberGroups.ShouldBeOfType<List<MemberGroup>>();
+        result.ShouldBeOfType<List<MemberGroup>>();
         result.ShouldNotBe(emptyMemberGroupResponse);
-        result.MemberGroups.Count.ShouldBe(3);
+        result.Count.ShouldBe(3);
     }
 }
