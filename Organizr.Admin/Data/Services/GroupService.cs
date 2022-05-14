@@ -29,7 +29,7 @@ public class GroupService
 
     public async Task DeleteGroupById(int id)
     {
-        await _httpClient.DeleteAsJsonAsync(requestUri:"api/groups", id);
+        await _httpClient.DeleteAsJsonAsync("api/groups", id);
     }
 
     public async Task<MemberGroup> AddMemberToGroup(int groupId, int memberId)
