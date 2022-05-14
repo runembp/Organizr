@@ -19,7 +19,7 @@
 @code {
 
     [Parameter]
-    public MemberGroup Group { get; set; }
+    public MemberGroup Group { get; set; } = new();
 
     [Parameter]
     public EventCallback OnGroupEdited { get; set; }
@@ -37,7 +37,14 @@
 
     private async Task OnSaveButton_Clicked()
     {
-        // Group = await GroupService.UpdateMemberGroup(Group.Id, _groupNameTextEdit, _groupIsOpenCheckbox);
+        var updatedGroup = new MemberGroup
+        {
+            Id = Group.Id,
+            Name = _groupNameTextEdit,
+            IsOpen = _groupIsOpenCheckbox
+        };
+        
+        Group = await GroupService.UpdateMemberGroup(updatedGroup);
         await OnGroupEdited.InvokeAsync();
     }
 

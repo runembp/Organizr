@@ -4,5 +4,5 @@ namespace Organizr.Application.Responses.Groups;
 
 public class GetAllMemberGroupsResponse
 {
-    public IReadOnlyList<MemberGroup> MemberGroups { get; init; }
+    public IReadOnlyList<MemberGroup> MemberGroups { get; init; } = new List<MemberGroup>();
 }
