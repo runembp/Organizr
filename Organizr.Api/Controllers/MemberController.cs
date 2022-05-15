@@ -23,9 +23,10 @@ public class MemberController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<List<Member>> GetAll()
+    public async Task<ActionResult<List<Member>>> GetAll()
     {
-        return await _mediator.Send(new GetAllMembersRequest());
+        var result = await _mediator.Send(new GetAllMembersRequest());
+        return Ok(result);
     }
 
     [HttpPost]
@@ -35,7 +36,10 @@ public class MemberController : ControllerBase
     {
         var result = await _mediator.Send(command);
 
-        if (!result.Succeeded) return BadRequest(result);
+        if (!result.Succeeded)
+        {
+            return BadRequest(result);
+        }
 
         return Ok(result);
     }
