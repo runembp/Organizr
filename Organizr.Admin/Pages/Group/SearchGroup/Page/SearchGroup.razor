@@ -34,14 +34,7 @@
     </DataGridColumns>
 </DataGrid>
 
-<Column ColumnSize="ColumnSize.Is4">
-    <Alert Visible="DeletedGroup" Color="Color.Warning">
-        <AlertMessage>Gruppen @DeletedGroupName er slettet</AlertMessage>
-    </Alert>
-</Column>
-
 <DeleteGroupModal @ref="DeleteGroupModal" GroupToBeDeleted="@MemberGroupToBeDeleted" OnGroupDeleted="@OnListContentChanged"/>
-
 
 @code {
 
@@ -49,7 +42,6 @@
     private DeleteGroupModal DeleteGroupModal { get; set; } = new();
     private MemberGroup MemberGroupToBeDeleted { get; set; } = new();
     private string DeletedGroupName { get; set; } = string.Empty;
-    private bool DeletedGroup { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -69,10 +61,8 @@
 
     private Task OnListContentChanged()
     {
-        DeletedGroup = false;
         DeletedGroupName = MemberGroupToBeDeleted.Name;
         UserGroups.Remove(MemberGroupToBeDeleted);
-        DeletedGroup = true;
         return Task.CompletedTask;
     }
 

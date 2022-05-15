@@ -6,7 +6,7 @@
         <ModalBody>
             <Field>
                 <FieldLabel>Vælg medlem: </FieldLabel>
-                <Select TValue="int" @bind-SelectedValue="SelectedMember">
+                <Select TValue="int" @bind-SelectedValue="SelectedMemberId">
                     @foreach (var member in AllMembersList)
                     {
                         <SelectItem Value="member.Id">@member.FirstName @member.LastName</SelectItem>
@@ -20,14 +20,21 @@
                 <Button Color="Color.Secondary" Clicked="OnCancelButton_Clicked">Afbryd</Button>
             </Div>
             <br/>
-            <Div>
-                <Alert Color="Color.Danger" Visible="_addMemberError">
-                    <AlertMessage>Medlemmet kunne ikke tilføjes til Gruppen</AlertMessage>
-                </Alert>
-            </Div>
         </ModalFooter>
     </ModalContent>
 </Modal>
+
+<Snackbar @ref="_snackbarSuccess" Color="SnackbarColor.Success">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        (@_selectedMember.Id) @_selectedMember.FirstName @_selectedMember.LastName er tilføjet til @Group.Name
+    </SnackbarBody>
+</Snackbar>
+
+<Snackbar @ref="_snackbarError" Color="SnackbarColor.Danger">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        (@_selectedMember.Id) @_selectedMember.FirstName @_selectedMember.LastName kunne ikke tilføjes til @Group.Name
+    </SnackbarBody>
+</Snackbar>
 
 @code
 {
@@ -38,9 +45,11 @@
     public EventCallback OnGroupContentChanged { get; set; }
 
     private List<Member> AllMembersList { get; set; } = new();
-    private int SelectedMember { get; set; }
+    private int SelectedMemberId { get; set; }
+    private Member _selectedMember = new();
     private Modal? _addMemberModal;
-    private bool _addMemberError;
+    private Snackbar _snackbarSuccess = new();
+    private Snackbar _snackbarError = new();
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -59,16 +68,17 @@
 
     private async Task OnAddMemberButton_Clicked()
     {
-        _addMemberError = false;
-        var result = await GroupService.AddMemberToGroup(Group.Id, SelectedMember);
+        var result = await GroupService.AddMemberToGroup(Group.Id, SelectedMemberId);
 
         if (result is null)
         {
-            _addMemberError = true;
+            await _snackbarError.Show();
             return;
         }
 
+        _selectedMember = result.Members.First(x => x.Id == SelectedMemberId);
         Group = result;
+        await _snackbarSuccess.Show();
         await _addMemberModal!.Hide();
         await OnGroupContentChanged.InvokeAsync();
     }

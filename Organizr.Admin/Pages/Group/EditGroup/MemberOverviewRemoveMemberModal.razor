@@ -8,15 +8,21 @@
                 <Button Color="Color.Danger" Clicked="OnRemoveButton_Clicked">Slet</Button>
                 <Button Color="Color.Secondary" Clicked="OnCancelButton_Clicked">Afbryd</Button>
             </Div>
-            <br/>
-            <Div>
-                <Alert Color="Color.Danger" Visible="_removeMemberError">
-                    <AlertMessage>Medlemmet kunne ikke fjernes fra Gruppen</AlertMessage>
-                </Alert>
-            </Div>
         </ModalBody>
     </ModalContent>
 </Modal>
+
+<Snackbar @ref="_snackbarSuccess" Color="SnackbarColor.Success">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        (@MemberToBeDeleted.Id) @MemberToBeDeleted.FirstName @MemberToBeDeleted.LastName er blevet fjernet fra @Group.Name
+    </SnackbarBody>
+</Snackbar>
+
+<Snackbar @ref="_snackbarError" Color="SnackbarColor.Danger">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        (@MemberToBeDeleted.Id) @MemberToBeDeleted.FirstName @MemberToBeDeleted.LastName kunne ikke fjernes fra @Group.Name 
+    </SnackbarBody>
+</Snackbar>
 
 @code {
 
@@ -30,7 +36,8 @@
     public EventCallback OnGroupContentChanged { get; set; }
 
     private Modal? _removeMemberModalRef;
-    private bool _removeMemberError;
+    private Snackbar _snackbarSuccess = new();
+    private Snackbar _snackbarError = new();
 
     public async Task Show()
     {
@@ -39,15 +46,15 @@
 
     private async Task OnRemoveButton_Clicked()
     {
-        _removeMemberError = false;
         var result = await GroupService.RemoveMemberFromGroup(Group.Id, MemberToBeDeleted.Id);
 
         if (result is null)
         {
-            _removeMemberError = true;
+            await _snackbarError.Show();
             return;
         }
-        
+
+        await _snackbarSuccess.Show();
         Group.Members.Remove(MemberToBeDeleted);
         await OnGroupContentChanged.InvokeAsync();
         await _removeMemberModalRef!.Hide();
@@ -57,5 +64,4 @@
     {
         await _removeMemberModalRef!.Hide();
     }
-
 }

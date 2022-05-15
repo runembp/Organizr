@@ -17,19 +17,17 @@
 
 <br/>
 
-<Div Flex="Flex.JustifyContent.Center">
-    <Column ColumnSize="ColumnSize.Is4" TextAlignment="TextAlignment.Center">
-        <Alert Visible="ShowErrors" Color="Color.Danger">
-            <AlertMessage>Brugernavn eller password er forkert</AlertMessage>
-        </Alert>
-    </Column>
-</Div>
+<Snackbar @ref="_snackbar" Color="SnackbarColor.Danger">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        Brugernavn eller Password er forkert
+    </SnackbarBody>
+</Snackbar>
 
 @code {
 
     private string _email = string.Empty;
     private string _password = string.Empty;
-    private bool ShowErrors { get; set; }
+    private Snackbar _snackbar = new();
 
     private async Task OnLoginButton_Clicked()
     {
@@ -37,7 +35,7 @@
 
         if (response is null)
         {
-            ShowErrors = true;
+            await _snackbar.Show();
             return;
         }
 
@@ -47,8 +45,7 @@
         }
         else
         {
-            ShowErrors = true;
+            await _snackbar.Show();
         }
     }
-
 }

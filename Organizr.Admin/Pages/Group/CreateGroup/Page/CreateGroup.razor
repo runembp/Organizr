@@ -17,35 +17,31 @@
     </Field>
 </Fields>
 
-<Alert Visible="InvalidName">
-    <AlertMessage TextColor="TextColor.Danger">Indtast et gruppenavn</AlertMessage>
-</Alert>
+<Button Clicked="@OnSaveButton_Clicked" Color="Color.Primary">Gem</Button>
 
-<Button Clicked="OnSaveButton_Clicked" Color="Color.Primary">Gem</Button>
+<Snackbar @ref="_snackbarSuccess" Color="SnackbarColor.Success">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        @GroupName er nu blevet oprettet
+    </SnackbarBody>
+</Snackbar>
 
-<Alert Visible="GroupCreated">
-    <AlertMessage TextColor="TextColor.Success">@GroupName er blevet oprettet</AlertMessage>
-</Alert>
-
-<Alert Visible="GroupNotCreated">
-    <AlertMessage TextColor="TextColor.Danger">@GroupName kunne ikke oprettes</AlertMessage>
-</Alert>
+<Snackbar @ref="_snackbarError" Color="SnackbarColor.Danger">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        @GroupName kunne ikke oprettes
+    </SnackbarBody>
+</Snackbar>
 
 @code {
     private string GroupName { get; set; } = string.Empty;
     private bool IsOpen { get; set; }
-    private bool InvalidName { get; set; }
-    private bool GroupCreated { get; set; }
-    private bool GroupNotCreated { get; set; }
+    private Snackbar _snackbarSuccess = new();
+    private Snackbar _snackbarError = new();
 
     private async Task OnSaveButton_Clicked()
     {
-        InvalidName = false;
-        GroupCreated = false;
-        GroupNotCreated = false;
         if (GroupName.IsNullOrEmpty())
         {
-            InvalidName = true;
+            await _snackbarError.Show();
             return;
         }
 
@@ -59,11 +55,11 @@
 
         if (createdGroup is null)
         {
-            GroupNotCreated = true;
+            await _snackbarError.Show();
             return;
         }
 
-        GroupCreated = true;
+        await _snackbarSuccess.Show();
         GroupName = createdGroup.Name;
     }
 }

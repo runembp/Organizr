@@ -8,15 +8,15 @@
                 <Button Color="Color.Secondary" Clicked="OnCancelButton_Clicked">Afbryd</Button>
             </Div>
             <br/>
-            <Div>
-                <Alert Color="Color.Danger" Visible="_deletedGroupError">
-                    <AlertMessage>Gruppen kunne ikke slettes</AlertMessage>
-                </Alert>
-            </Div>
         </ModalBody>
     </ModalContent>
 </Modal>
 
+<Snackbar @ref="_snackbar" Color="SnackbarColor.Danger">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        Gruppen kunne ikke slettes
+    </SnackbarBody>
+</Snackbar>
 
 @code {
 
@@ -27,6 +27,7 @@
     public EventCallback OnGroupDeleted { get; set; }
 
     private Modal? DeleteGroupModalRef { get; set; }
+    private Snackbar _snackbar = new();
     private bool _deletedGroupError;
 
     public async Task Show()
@@ -40,10 +41,10 @@
 
         if (response != HttpStatusCode.NoContent)
         {
-            _deletedGroupError = true;
+            await _snackbar.Show();
             return;
         }
-        
+
         await DeleteGroupModalRef!.Hide();
         await OnGroupDeleted.InvokeAsync();
     }

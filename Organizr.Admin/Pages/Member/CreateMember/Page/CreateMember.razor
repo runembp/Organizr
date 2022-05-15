@@ -50,25 +50,26 @@
 
         <Row>
             <Column>
-                <Button Color="Color.Primary" Clicked="OnButtonSave_Clicked">Gem</Button>
+                <Button Color="Color.Primary" Clicked="@OnButtonSave_Clicked">Gem</Button>
             </Column>
             <Column>
                 <Button Color="Color.Primary">Gem og send (Ikke Implementeret)</Button>
             </Column>
         </Row>
-        
-        <br />
-
-        <Alert Visible="_userCreated" Color="Color.Success">
-            <AlertMessage>Bruger er blevet oprettet.</AlertMessage>
-        </Alert>
-        
-        <Alert Visible="_showErrors" Color="Color.Danger">
-            <AlertMessage>Bruger kunne ikke oprettes.</AlertMessage>
-        </Alert>
-
     </Field>
 </Fields>
+
+<Snackbar @ref="_snackbarSuccess" Color="SnackbarColor.Success">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        @_firstName @_lastName er blevet oprettet
+    </SnackbarBody>
+</Snackbar>
+
+<Snackbar @ref="_snackbarError" Color="SnackbarColor.Danger">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        @_firstName @_lastName kunne ikke oprettes 
+    </SnackbarBody>
+</Snackbar>
 
 @code {
     private string _firstName = string.Empty;
@@ -78,14 +79,12 @@
     private string _email = string.Empty;
     private string _password = string.Empty;
     private int _gender;
-    private bool _userCreated;
-    private bool _showErrors;
+    
+    private Snackbar _snackbarSuccess = new();
+    private Snackbar _snackbarError = new();
 
     private async Task OnButtonSave_Clicked()
     {
-        _userCreated = false;
-        _showErrors = false;
-        
         var command = new 
             {
                 FirstName = _firstName,
@@ -101,11 +100,11 @@
 
         if (createdMember is null)
         {
-            _showErrors = true;
+            await _snackbarError.Show();
         }
         else
         {
-            _userCreated = true;
+            await _snackbarSuccess.Show();
         }
     }
 }
