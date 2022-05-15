@@ -15,8 +15,16 @@
             </Field>
         </ModalBody>
         <ModalFooter>
-            <Button Color="Color.Primary" Clicked="OnAddMemberButton_Clicked">Gem</Button>
-            <Button Color="Color.Secondary" Clicked="OnCancelButton_Clicked">Afbryd</Button>
+            <Div>
+                <Button Color="Color.Primary" Clicked="OnAddMemberButton_Clicked">Gem</Button>
+                <Button Color="Color.Secondary" Clicked="OnCancelButton_Clicked">Afbryd</Button>
+            </Div>
+            <br/>
+            <Div>
+                <Alert Color="Color.Danger" Visible="_addMemberError">
+                    <AlertMessage>Medlemmet kunne ikke tilføjes til Gruppen</AlertMessage>
+                </Alert>
+            </Div>
         </ModalFooter>
     </ModalContent>
 </Modal>
@@ -25,13 +33,14 @@
 {
     [Parameter]
     public MemberGroup Group { get; set; } = new();
-    
+
     [Parameter]
     public EventCallback OnGroupContentChanged { get; set; }
 
     private List<Member> AllMembersList { get; set; } = new();
     private int SelectedMember { get; set; }
     private Modal? _addMemberModal;
+    private bool _addMemberError;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -39,7 +48,7 @@
         {
             AllMembersList = await MemberService.GetAllMembers();
         }
-        
+
         AllMembersList = AllMembersList.Where(x => !x.Groups.Contains(Group)).ToList();
     }
 
@@ -50,7 +59,16 @@
 
     private async Task OnAddMemberButton_Clicked()
     {
-        Group = await GroupService.AddMemberToGroup(Group.Id, SelectedMember);
+        _addMemberError = false;
+        var result = await GroupService.AddMemberToGroup(Group.Id, SelectedMember);
+
+        if (result is null)
+        {
+            _addMemberError = true;
+            return;
+        }
+
+        Group = result;
         await _addMemberModal!.Hide();
         await OnGroupContentChanged.InvokeAsync();
     }

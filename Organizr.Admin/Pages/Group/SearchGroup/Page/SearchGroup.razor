@@ -53,7 +53,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        UserGroups = await GroupService.GetAllGroups();
+        UserGroups = await GroupService.GetAllGroups() ?? new List<MemberGroup>();
     }
 
     private void OnEditGroupLink_Clicked(int id)

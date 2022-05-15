@@ -27,16 +27,22 @@
     <AlertMessage TextColor="TextColor.Success">@GroupName er blevet oprettet</AlertMessage>
 </Alert>
 
+<Alert Visible="GroupNotCreated">
+    <AlertMessage TextColor="TextColor.Danger">@GroupName kunne ikke oprettes</AlertMessage>
+</Alert>
+
 @code {
     private string GroupName { get; set; } = string.Empty;
     private bool IsOpen { get; set; }
     private bool InvalidName { get; set; }
     private bool GroupCreated { get; set; }
+    private bool GroupNotCreated { get; set; }
 
     private async Task OnSaveButton_Clicked()
     {
         InvalidName = false;
         GroupCreated = false;
+        GroupNotCreated = false;
         if (GroupName.IsNullOrEmpty())
         {
             InvalidName = true;
@@ -49,10 +55,15 @@
             IsOpen = IsOpen
         };
         
-        await GroupService.CreateNewGroup(groupToCreate);
+        var createdGroup = await GroupService.CreateNewGroup(groupToCreate);
 
+        if (createdGroup is null)
+        {
+            GroupNotCreated = true;
+            return;
+        }
 
-    // GroupCreated = response.Succeeded;
-    // GroupName = response.GroupName;
+        GroupCreated = true;
+        GroupName = createdGroup.Name;
     }
 }

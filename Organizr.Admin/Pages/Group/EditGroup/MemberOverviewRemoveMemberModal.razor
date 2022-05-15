@@ -4,13 +4,22 @@
             Fjern (@MemberToBeDeleted.Id) @MemberToBeDeleted.FirstName @MemberToBeDeleted.LastName fra @Group.Name?
         </ModalHeader>
         <ModalBody>
-            <Button Color="Color.Danger" Clicked="OnRemoveButton_Clicked">Slet</Button>
-            <Button Color="Color.Secondary" Clicked="OnCancelButton_Clicked">Afbryd</Button>
+            <Div>
+                <Button Color="Color.Danger" Clicked="OnRemoveButton_Clicked">Slet</Button>
+                <Button Color="Color.Secondary" Clicked="OnCancelButton_Clicked">Afbryd</Button>
+            </Div>
+            <br/>
+            <Div>
+                <Alert Color="Color.Danger" Visible="_removeMemberError">
+                    <AlertMessage>Medlemmet kunne ikke fjernes fra Gruppen</AlertMessage>
+                </Alert>
+            </Div>
         </ModalBody>
     </ModalContent>
 </Modal>
 
 @code {
+
     [Parameter]
     public MemberGroup Group { get; set; } = new();
 
@@ -21,6 +30,7 @@
     public EventCallback OnGroupContentChanged { get; set; }
 
     private Modal? _removeMemberModalRef;
+    private bool _removeMemberError;
 
     public async Task Show()
     {
@@ -29,7 +39,15 @@
 
     private async Task OnRemoveButton_Clicked()
     {
-        await GroupService.RemoveMemberFromGroup(Group.Id, MemberToBeDeleted.Id);
+        _removeMemberError = false;
+        var result = await GroupService.RemoveMemberFromGroup(Group.Id, MemberToBeDeleted.Id);
+
+        if (result is null)
+        {
+            _removeMemberError = true;
+            return;
+        }
+        
         Group.Members.Remove(MemberToBeDeleted);
         await OnGroupContentChanged.InvokeAsync();
         await _removeMemberModalRef!.Hide();
