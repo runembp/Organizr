@@ -31,20 +31,24 @@ namespace Organizr.Test.MockData
             return new MapperConfiguration(c => { c.AddProfile<OrganizrMappingProfiler>(); }).CreateMapper();
         }
 
-        private static Mock<UserManager<TUser>> MockUserManager<TUser>() where TUser : class
+        private static Mock<UserManager<Member>> MockUserManager<TUser>() where TUser : class
         {
-            var store = new Mock<IUserStore<TUser>>();
+            var store = new Mock<IUserStore<Member>>();
             var userManager =
-                new Mock<UserManager<TUser>>(store.Object, null, null, null, null, null, null, null, null);
-            userManager.Object.UserValidators.Add(new UserValidator<TUser>());
-            userManager.Object.PasswordValidators.Add(new PasswordValidator<TUser>());
+                new Mock<UserManager<Member>>(store.Object, null, null, null, null, null, null, null, null);
+            userManager.Object.UserValidators.Add(new UserValidator<Member>());
+            userManager.Object.PasswordValidators.Add(new PasswordValidator<Member>());
 
-            userManager.Setup(x => x.CreateAsync(It.IsAny<TUser>(), It.IsAny<string>()))
+            userManager.Setup(x => x.CreateAsync(It.IsAny<Member>(), It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Success);
 
+            userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>()))
+                .ReturnsAsync(new Member{Email = "Thing"});
+
+            userManager.Setup( x => x.FindByIdAsync(It.IsAny<string>()))
+                .ReturnsAsync(new Member());
+            
             return userManager;
         }
-
-
     }
 }
