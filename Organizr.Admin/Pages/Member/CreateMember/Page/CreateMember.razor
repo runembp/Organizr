@@ -34,14 +34,6 @@
         <FieldLabel>Email</FieldLabel>
         <TextEdit @bind-Text="_email" Role="TextRole.Email" Placeholder="Indtast email" />
 
-        <FieldLabel>Aktiver mulighed for medlem at genindlæse konfiguration på Medlems-applikationen</FieldLabel>
-        <Field>
-            <RadioGroup TValue="bool" @bind-CheckedValue="@_refreshConfiguration">
-                <Radio Value="@(false)">Nej</Radio>
-                <Radio Value="@(true)">Ja</Radio>
-            </RadioGroup>
-        </Field>
-
         <FieldLabel>Password</FieldLabel>
         <Field>
             <Row>
@@ -86,7 +78,6 @@
     private string _email = string.Empty;
     private string _password = string.Empty;
     private int _gender;
-    private bool _refreshConfiguration;
     private bool _userCreated;
     private bool _showErrors;
 
@@ -104,7 +95,6 @@
                 PhoneNumber = _phoneNumber,
                 Email = _email,
                 Password = _password,
-                ConfigRefreshPrivilege = _refreshConfiguration
             };
 
         var createdMember = await MemberService.PostNewMember(command);

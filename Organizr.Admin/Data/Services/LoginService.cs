@@ -19,15 +19,21 @@ public class LoginService
         _localStorage = localStorage;
     }
 
-    public async Task<LoginResponse> Login(string email, string password)
+    public async Task<LoginResponse?> Login(string email, string password)
     {
         var request = new LoginRequest {Email = email, Password = password};
         var response = await _httpClient.PostAsJsonAsync("api/login", request);
-        var result = await response.Content.ReadFromJsonAsync<LoginResponse>() ?? new LoginResponse();
 
-        if (!result.Succeeded)
+        if (!response.IsSuccessStatusCode)
         {
-            return result;
+            return null;
+        }
+        
+        var result = await response.Content.ReadFromJsonAsync<LoginResponse?>();
+
+        if (result is null || result.Succeeded is false)
+        {
+            return null;
         }
         
         await ((AuthenticationStateProviderHelperClass)_authenticationStateProvider).MarkUserAsAuthenticated(result);
