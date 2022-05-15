@@ -1,16 +1,13 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Organizr.Application.Commands;
 using Organizr.Application.Common.Interfaces;
-using Organizr.Application.Responses;
 using Organizr.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
 
-
 namespace Organizr.Application.Handlers.CommandHandlers;
 
-public class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, CreateMemberResponse>
+public class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, Member?>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -21,29 +18,31 @@ public class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, C
         _mapper = mapper;
     }
 
-    public async Task<CreateMemberResponse> Handle(CreateMemberCommand command, CancellationToken cancellationToken)
+    public async Task<Member?> Handle(CreateMemberCommand command, CancellationToken cancellationToken)
     {
         var user = _mapper.Map<Member>(command);
 
-        var response = new CreateMemberResponse { Succeeded = false };
-
         if (user is null)
         {
-            return response;
+            return null;
         }
 
         if (!new EmailAddressAttribute().IsValid(command.Email))
         {
-            response.Errors.Add(new IdentityError { Description = "Email er ikke i et godkendt format" });
+            return null;
         }
 
         user.UserName = user.Email;
 
         var result = await _unitOfWork.UserManager.CreateAsync(user, command.Password);
 
-        response.Succeeded = result.Succeeded;
-        response.Errors.AddRange(result.Errors.ToList());
+        if (!result.Succeeded)
+        {
+            return null;
+        }
 
-        return response;
+        var createdMember = await _unitOfWork.UserManager.FindByEmailAsync(command.Email);
+
+        return createdMember;
     }
 }

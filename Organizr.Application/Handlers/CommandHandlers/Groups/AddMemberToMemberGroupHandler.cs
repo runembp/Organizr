@@ -5,7 +5,7 @@ using Organizr.Domain.Entities;
 
 namespace Organizr.Application.Handlers.CommandHandlers.Groups;
 
-public class AddMemberToMemberGroupHandler : IRequestHandler<AddMemberToMemberGroupCommand, MemberGroup>
+public class AddMemberToMemberGroupHandler : IRequestHandler<AddMemberToMemberGroupCommand, MemberGroup?>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -14,7 +14,7 @@ public class AddMemberToMemberGroupHandler : IRequestHandler<AddMemberToMemberGr
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<MemberGroup> Handle(AddMemberToMemberGroupCommand request, CancellationToken cancellationToken)
+    public async Task<MemberGroup?> Handle(AddMemberToMemberGroupCommand request, CancellationToken cancellationToken)
     {
         var group = await _unitOfWork.GroupRepository.AddMemberToGroup(request.GroupId, request.MemberId);
         return group;

@@ -2,12 +2,11 @@
 using MediatR;
 using Organizr.Application.Commands.Groups;
 using Organizr.Application.Common.Interfaces;
-using Organizr.Application.Responses.Groups;
 using Organizr.Domain.Entities;
 
 namespace Organizr.Application.Handlers.CommandHandlers.Groups;
 
-public class CreateMemberGroupCommandHandler : IRequestHandler<CreateMemberGroupCommand, CreateMemberGroupResponse>
+public class CreateMemberGroupCommandHandler : IRequestHandler<CreateMemberGroupCommand, MemberGroup?>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -18,29 +17,22 @@ public class CreateMemberGroupCommandHandler : IRequestHandler<CreateMemberGroup
         _mapper = mapper;
     }
 
-    public async Task<CreateMemberGroupResponse> Handle(CreateMemberGroupCommand command, CancellationToken cancellationToken)
+    public async Task<MemberGroup?> Handle(CreateMemberGroupCommand command, CancellationToken cancellationToken)
     {
-        var response = new CreateMemberGroupResponse { Succeeded = false };
+        var group = _mapper.Map<MemberGroup>(command);
 
-        var userGroup = _mapper.Map<MemberGroup>(command);
-
-        if (userGroup is null)
+        if (group is null)
         {
-            return response;
+            return null;
         }
 
-        var groupNameAlreadyTaken = await _unitOfWork.GroupRepository.GroupExists(command.Name);
-
-        if (groupNameAlreadyTaken)
+        if (await _unitOfWork.GroupRepository.GroupExists(command.Name))
         {
-            return response;
+            return null;
         }
 
-        var result = await _unitOfWork.GroupRepository.Add(userGroup);
+        var result = await _unitOfWork.GroupRepository.Add(group);
 
-        response.GroupName = result.Name;
-        response.Succeeded = true;
-
-        return response;
+        return result;
     }
 }

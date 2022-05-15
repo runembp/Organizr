@@ -1,10 +1,11 @@
 ﻿using MediatR;
 using Organizr.Application.Commands.Groups;
 using Organizr.Application.Common.Interfaces;
+using Organizr.Domain.Entities;
 
 namespace Organizr.Application.Handlers.CommandHandlers.Groups;
 
-public class DeleteGroupHandler : IRequestHandler<DeleteMemberGroupCommand, Unit>
+public class DeleteGroupHandler : IRequestHandler<DeleteMemberGroupCommand, MemberGroup?>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -13,9 +14,9 @@ public class DeleteGroupHandler : IRequestHandler<DeleteMemberGroupCommand, Unit
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Unit> Handle(DeleteMemberGroupCommand command, CancellationToken cancellationToken)
+    public async Task<MemberGroup?> Handle(DeleteMemberGroupCommand command, CancellationToken cancellationToken)
     {
-        await _unitOfWork.GroupRepository.DeleteByIdAsync(command.Id);
-        return Unit.Value;
+        var result = await _unitOfWork.GroupRepository.DeleteByIdAsync(command.Id);
+        return result;
     }
 }

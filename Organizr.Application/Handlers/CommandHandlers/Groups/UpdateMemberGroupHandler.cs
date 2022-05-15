@@ -6,7 +6,7 @@ using Organizr.Domain.Entities;
 
 namespace Organizr.Application.Handlers.CommandHandlers.Groups;
 
-public class UpdateMemberGroupHandler : IRequestHandler<UpdateMemberGroupCommand, MemberGroup>
+public class UpdateMemberGroupHandler : IRequestHandler<UpdateMemberGroupCommand, MemberGroup?>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -17,9 +17,15 @@ public class UpdateMemberGroupHandler : IRequestHandler<UpdateMemberGroupCommand
         _mapper = mapper;
     }
 
-    public async Task<MemberGroup> Handle(UpdateMemberGroupCommand command, CancellationToken cancellationToken)
+    public async Task<MemberGroup?> Handle(UpdateMemberGroupCommand command, CancellationToken cancellationToken)
     {
         var group = _mapper.Map<MemberGroup>(command);
+
+        if (group is null)
+        {
+            return null;
+        }
+        
         return await _unitOfWork.GroupRepository.UpdateMemberGroup(group);
     }
 }

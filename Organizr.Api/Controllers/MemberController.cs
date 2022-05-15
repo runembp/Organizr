@@ -32,11 +32,11 @@ public class MemberController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<CreateMemberResponse>> CreateMember([FromBody] CreateMemberCommand command)
+    public async Task<ActionResult<Member?>> CreateMember([FromBody] CreateMemberCommand command)
     {
         var result = await _mediator.Send(command);
 
-        if (!result.Succeeded)
+        if (result is null)
         {
             return BadRequest(result);
         }

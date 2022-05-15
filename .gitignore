@@ -13,11 +13,11 @@ Organizr.Api/obj
 Organizr.Admin/obj
 Organizr.Admin/bin
 
-
-Organizr.Api.csproj.user
-
 Organizr.Test/bin
 Organizr.Test/obj
+
+Organizr.Api.csproj.user
+Organizr.sln.DotSettings.user
 
 .vs
 .idea
