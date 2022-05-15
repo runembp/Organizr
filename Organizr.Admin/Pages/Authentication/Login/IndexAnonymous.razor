@@ -3,19 +3,27 @@
 
     <Field ColumnSize="ColumnSize.Is4">
         <FieldLabel>Email address</FieldLabel>
-        <TextEdit Role="TextRole.Email" Placeholder="Indtast email" @bind-Text="_email" />
+        <TextEdit Role="TextRole.Email" Placeholder="Indtast email" @bind-Text="_email"/>
         <FieldLabel>Password</FieldLabel>
-        <TextEdit Role="TextRole.Password" Placeholder="Indtast password" @bind-Text="_password" />
+        <TextEdit Role="TextRole.Password" Placeholder="Indtast password" @bind-Text="_password"/>
     </Field>
-
-    <Alert Visible="ShowErrors" Color="Color.Danger">
-        <AlertMessage>Brugernavn eller password er forkert</AlertMessage>
-    </Alert>
 </Div>
+
 <Div Flex="Flex.JustifyContent.Center">
-    <Button Color="Color.Primary" Clicked="OnLoginButton_Clicked">Login</Button>
+    <Button Color="Color.Primary" Clicked="OnLoginButton_Clicked">
+        Login
+    </Button>
 </Div>
 
+<br/>
+
+<Div Flex="Flex.JustifyContent.Center">
+    <Column ColumnSize="ColumnSize.Is4" TextAlignment="TextAlignment.Center">
+        <Alert Visible="ShowErrors" Color="Color.Danger">
+            <AlertMessage>Brugernavn eller password er forkert</AlertMessage>
+        </Alert>
+    </Column>
+</Div>
 
 @code {
 
@@ -26,7 +34,13 @@
     private async Task OnLoginButton_Clicked()
     {
         var response = await LoginService.Login(_email, _password);
-        
+
+        if (response is null)
+        {
+            ShowErrors = true;
+            return;
+        }
+
         if (response.Succeeded)
         {
             NavigationManager.NavigateTo("/", forceLoad: true);
@@ -36,4 +50,5 @@
             ShowErrors = true;
         }
     }
+
 }
