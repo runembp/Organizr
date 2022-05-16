@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using Organizr.Domain.Entities;
+using Organizr.Application.Responses.Groups;
 
 namespace Organizr.Application.Commands.Groups;
 
-public class DeleteMemberGroupCommand : IRequest<MemberGroup?>
+public class DeleteMemberGroupCommand : IRequest<DeleteMemberGroupResponse>
 {
     public int Id { get; init; }
 }

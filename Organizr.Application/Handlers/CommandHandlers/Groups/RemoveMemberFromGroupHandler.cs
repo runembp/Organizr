@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using Organizr.Application.Commands.Groups;
 using Organizr.Application.Common.Interfaces;
-using Organizr.Domain.Entities;
+using Organizr.Application.Responses.Groups;
 
 namespace Organizr.Application.Handlers.CommandHandlers.Groups;
 
-public class RemoveMemberFromGroupHandler : IRequestHandler<RemoveMemberFromGroupCommand, MemberGroup?>
+public class RemoveMemberFromGroupHandler : IRequestHandler<RemoveMemberFromGroupCommand, RemoveMemberFromMemberGroupResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -14,8 +14,17 @@ public class RemoveMemberFromGroupHandler : IRequestHandler<RemoveMemberFromGrou
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<MemberGroup?> Handle(RemoveMemberFromGroupCommand command, CancellationToken cancellationToken)
+    public async Task<RemoveMemberFromMemberGroupResponse> Handle(RemoveMemberFromGroupCommand command, CancellationToken cancellationToken)
     {
-        return await _unitOfWork.GroupRepository.RemoveMemberFromGroup(command.GroupId, command.MemberId);
+        var response = new RemoveMemberFromMemberGroupResponse();
+        var result = await _unitOfWork.GroupRepository.RemoveMemberFromGroup(command.GroupId, command.MemberId);
+
+        if (result is null)
+        {
+            return response;
+        }
+
+        response.Succeeded = true;
+        return response;
     }
 }

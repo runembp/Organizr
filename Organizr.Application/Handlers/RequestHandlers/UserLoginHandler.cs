@@ -20,11 +20,18 @@ public class UserLoginHandler : IRequestHandler<UserLoginRequest, UserLoginRespo
     public async Task<UserLoginResponse> Handle(UserLoginRequest request, CancellationToken cancellationToken)
     {
         var response = new UserLoginResponse { Succeeded = false };
+        
+        if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password)) 
+        {
+            response.Error = "Brugernavn eller password er ikke udfyldt korrekt";
+            return response;
+        }
 
         var user = await _unitOfWork.UserManager.FindByEmailAsync(request.Email);
 
         if (user is null)
         {
+            response.Error = "Bruger kunne ikke findes";
             return response;
         }
 
@@ -32,6 +39,7 @@ public class UserLoginHandler : IRequestHandler<UserLoginRequest, UserLoginRespo
 
         if (!signInResult.Succeeded)
         {
+            response.Error = "Brugernavn eller password er forkert";
             return response;
         }
 
