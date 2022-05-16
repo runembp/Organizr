@@ -17,6 +17,8 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { ContactUsFormComponent } from './components/contact-us-form/contact-us-form.component';
 import { SideBarComponent } from './components/side-bar/side-bar.component';
 import { GroupsComponent } from './components/groups/groups.component';
+import { AllGroupsComponent } from './components/all-groups/all-groups.component';
+import { MyGroupsComponent } from './components/my-groups/my-groups.component';
 
 
 @NgModule({
@@ -30,7 +32,9 @@ import { GroupsComponent } from './components/groups/groups.component';
     ContactUsFormComponent,
     ResetPasswordComponent,
     SideBarComponent,
-    GroupsComponent
+    GroupsComponent,
+    AllGroupsComponent,
+    MyGroupsComponent
   ],
   imports: [
     BrowserModule,

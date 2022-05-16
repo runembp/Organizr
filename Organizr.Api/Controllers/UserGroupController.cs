@@ -39,7 +39,7 @@ public class UserGroupController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPost("group/{groupId}/member/{memberId}")]
+    [HttpPatch("group/{groupId}/member/{memberId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<AddMemberToMemberGroupResponse>> AddMemberToGroup([FromRoute] int groupId, int memberId)

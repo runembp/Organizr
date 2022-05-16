@@ -1,0 +1,16 @@
+<ul class="list-group list-group-flush">
+    <li class="list-group-item d-flex justify-content-between align-items-center"
+        *ngFor="let group of groups">
+        
+        {{group.name}}
+
+        <button (click)="joinGroup(group.id, userId)" class="btn btn-success" *ngIf="group.isOpen">
+            Tilmeld
+        </button>
+
+        <button class="btn btn-danger" disabled *ngIf="!group.isOpen">
+            Lukket gruppe
+        </button>
+
+    </li>
+</ul>

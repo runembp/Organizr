@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiClientService } from 'src/app/services/api-client/api-client.service';
+import { TokenStorageService } from 'src/app/services/token-storage/token-storage.service';
 
 @Component({
   selector: 'app-groups',
@@ -8,19 +9,22 @@ import { ApiClientService } from 'src/app/services/api-client/api-client.service
 })
 export class GroupsComponent implements OnInit {
 
-  constructor(private apiClient: ApiClientService) { }
+  constructor(private tokenStorage: TokenStorageService, private apiClient: ApiClientService) { }
 
+  loggedInUser: any;
   allGroups: any[] = [];
-  myGroups: any[] = [];
+  bla: any[] = [];
+  members: any[] = [];
 
   ngOnInit(): void {
     this.apiClient.getAllGroups().subscribe(groups => {
-      this.allGroups = groups
+      this.allGroups = groups;
     });
-  }
 
-  joinGroup(groupId: number): void {
-    this.apiClient.addMemberToGroup(groupId).subscribe();
+    this.loggedInUser = this.tokenStorage.getUser().id;
   }
-
 }
+
+
+
+
