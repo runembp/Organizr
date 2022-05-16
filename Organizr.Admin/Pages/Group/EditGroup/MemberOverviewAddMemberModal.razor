@@ -68,16 +68,16 @@
 
     private async Task OnAddMemberButton_Clicked()
     {
-        var result = await GroupService.AddMemberToGroup(Group.Id, SelectedMemberId);
+        var success = await GroupService.AddMemberToGroup(Group.Id, SelectedMemberId);
 
-        if (result is null)
+        if (!success)
         {
             await _snackbarError.Show();
             return;
         }
 
-        _selectedMember = result.Members.First(x => x.Id == SelectedMemberId);
-        Group = result;
+        _selectedMember = AllMembersList.First(x => x.Id == SelectedMemberId);
+        Group.Members.Add(_selectedMember);
         await _snackbarSuccess.Show();
         await _addMemberModal!.Hide();
         await OnGroupContentChanged.InvokeAsync();

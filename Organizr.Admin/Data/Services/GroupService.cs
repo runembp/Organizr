@@ -35,21 +35,21 @@ public class GroupService
         return response.StatusCode;
     }
 
-    public async Task<MemberGroup?> AddMemberToGroup(int groupId, int memberId)
+    public async Task<bool> AddMemberToGroup(int groupId, int memberId)
     {
         var response = await _httpClient.PatchAsJsonAsync($"api/groups/{groupId}/members", memberId);
-        return await response.Content.ReadFromJsonAsync<MemberGroup>();
+        return response.IsSuccessStatusCode;
     }
     
-    public async Task<MemberGroup?> RemoveMemberFromGroup(int groupId, int memberId)
+    public async Task<bool> RemoveMemberFromGroup(int groupId, int memberId)
     {
         var response = await _httpClient.DeleteAsJsonAsync($"api/groups/{groupId}", memberId);
-        return await response.Content.ReadFromJsonAsync<MemberGroup>();
+        return response.IsSuccessStatusCode;
     }
 
-    public async Task<MemberGroup?> UpdateMemberGroup(MemberGroup group)
+    public async Task<bool> UpdateMemberGroup(MemberGroup group)
     {
         var response = await _httpClient.PatchAsJsonAsync($"api/groups/{group.Id}", group);
-        return await response.Content.ReadFromJsonAsync<MemberGroup>();
+        return response.IsSuccessStatusCode;
     }
 }

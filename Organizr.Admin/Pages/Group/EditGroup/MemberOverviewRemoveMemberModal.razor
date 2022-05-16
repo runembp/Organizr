@@ -46,9 +46,9 @@
 
     private async Task OnRemoveButton_Clicked()
     {
-        var result = await GroupService.RemoveMemberFromGroup(Group.Id, MemberToBeDeleted.Id);
+        var success = await GroupService.RemoveMemberFromGroup(Group.Id, MemberToBeDeleted.Id);
 
-        if (result is null)
+        if (!success)
         {
             await _snackbarError.Show();
             return;
