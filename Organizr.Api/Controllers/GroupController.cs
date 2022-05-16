@@ -30,7 +30,7 @@ public class GroupController : ControllerBase
     [Route("{groupId:int}/members")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<MemberGroup>> GetGroupByIdWithMembers(int groupId)
+    public async Task<ActionResult<MemberGroup>> GetGroupByIdWithMembers([FromRoute] int groupId)
     {
         if (groupId <= 0)
         {
@@ -51,7 +51,7 @@ public class GroupController : ControllerBase
     [Route("{groupId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<UpdateMemberGroupResponse>> UpdateGroupById(int groupId, [FromBody] UpdateMemberGroupCommand command)
+    public async Task<ActionResult<UpdateMemberGroupResponse>> UpdateGroupById([FromRoute] int groupId, [FromBody] UpdateMemberGroupCommand command)
     {
         var response = new UpdateMemberGroupResponse();
         
@@ -75,7 +75,7 @@ public class GroupController : ControllerBase
     [Route("{groupId:int}/members")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<AddMemberToMemberGroupResponse>> AddMemberToGroup(int groupId, [FromBody] int memberId)
+    public async Task<ActionResult<AddMemberToMemberGroupResponse>> AddMemberToGroup([FromRoute] int groupId, [FromBody] int memberId)
     {
         var response = new AddMemberToMemberGroupResponse();
         
@@ -137,7 +137,7 @@ public class GroupController : ControllerBase
     [Route("/api/groups/{groupId:int}/")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> RemoveMemberFromGroup(int groupId, [FromBody] int memberId)
+    public async Task<ActionResult> RemoveMemberFromGroup([FromRoute] int groupId, [FromBody] int memberId)
     {
         var response = new RemoveMemberFromMemberGroupResponse();
         
