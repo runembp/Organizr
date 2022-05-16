@@ -1,23 +1,34 @@
-﻿<Modal @ref="DeleteGroupModalRef">
+﻿@using System.Net
+<Modal @ref="DeleteGroupModalRef">
     <ModalContent>
         <ModalHeader>Slet @GroupToBeDeleted.Name?</ModalHeader>
         <ModalBody>
-            <Button Color="Color.Danger" Clicked="OnDeleteButton_Clicked">Slet</Button>
-            <Button Color="Color.Secondary" Clicked="OnCancelButton_Clicked">Afbryd</Button>
+            <Div>
+                <Button Color="Color.Danger" Clicked="OnDeleteButton_Clicked">Slet</Button>
+                <Button Color="Color.Secondary" Clicked="OnCancelButton_Clicked">Afbryd</Button>
+            </Div>
+            <br/>
         </ModalBody>
     </ModalContent>
 </Modal>
 
+<Snackbar @ref="_snackbar" Color="SnackbarColor.Danger">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        Gruppen kunne ikke slettes
+    </SnackbarBody>
+</Snackbar>
 
 @code {
 
     [Parameter]
     public MemberGroup GroupToBeDeleted { get; set; } = new();
-    
+
     [Parameter]
     public EventCallback OnGroupDeleted { get; set; }
 
     private Modal? DeleteGroupModalRef { get; set; }
+    private Snackbar _snackbar = new();
+    private bool _deletedGroupError;
 
     public async Task Show()
     {
@@ -26,14 +37,21 @@
 
     public async Task OnDeleteButton_Clicked()
     {
-        await GroupService.DeleteGroupById(GroupToBeDeleted.Id);
+        var response = await GroupService.DeleteGroupById(GroupToBeDeleted.Id);
+
+        if (response != HttpStatusCode.NoContent)
+        {
+            await _snackbar.Show();
+            return;
+        }
+
         await DeleteGroupModalRef!.Hide();
         await OnGroupDeleted.InvokeAsync();
     }
-    
+
     public async Task OnCancelButton_Clicked()
     {
+        _deletedGroupError = false;
         await DeleteGroupModalRef!.Hide();
     }
-
 }

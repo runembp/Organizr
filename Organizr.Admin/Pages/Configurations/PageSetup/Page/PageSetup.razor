@@ -36,12 +36,21 @@
 
 @if (!_selectedTab.Equals("Unselected"))
 {
-    <Button Color="Color.Primary" Clicked="OnSaveButton_Clicked">Gem</Button>    
+    <Button Color="Color.Primary" Clicked="@OnSaveButton_Clicked">Gem</Button>    
 }
 
-<Alert Visible="@(_configurationsUpdatedSuccess && !_selectedTab.Equals("Unselected"))">
-    <AlertMessage TextColor="TextColor.Success">Sideopsætningen er gemt</AlertMessage>
-</Alert>
+<Snackbar @ref="_snackbarSuccess" Color="SnackbarColor.Success">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        Sideopsætningen er blevet gemt
+    </SnackbarBody>
+</Snackbar>
+
+<Snackbar @ref="_snackbarError" Color="SnackbarColor.Danger">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        Sideopsætningen kunne ikke gemmes 
+    </SnackbarBody>
+</Snackbar>
+
 
 @code{
     private Configuration ConfigFrontpage { get; set; } = new();
@@ -49,7 +58,8 @@
     private Configuration ConfigAboutUs { get; set; } = new();
     private Configuration ConfigContact { get; set; } = new();
 
-    private bool _configurationsUpdatedSuccess;
+    private Snackbar _snackbarSuccess = new();
+    private Snackbar _snackbarError = new();
 
     string _selectedTab = "Unselected";
 
@@ -72,8 +82,6 @@
 
     private async Task OnSaveButton_Clicked()
     {
-        _configurationsUpdatedSuccess = false;
-
         var updatedConfigurations = new List<Configuration> 
         {
             ConfigFrontpage,
@@ -82,11 +90,15 @@
             ConfigContact
         };
 
-        await ConfigurationService.UpdateConfigurationsOfType(ConfigType.PageSetup, updatedConfigurations);
+        var result = await ConfigurationService.UpdateConfigurationsOfType(ConfigType.PageSetup, updatedConfigurations);
 
-        // if (response.Succeeded)
-        // {
-            // _configurationsUpdatedSuccess = true;
-        // }
+        if (!result.IsSuccessStatusCode)
+        {
+            await _snackbarError.Show();
+        }
+        else
+        {
+            await _snackbarSuccess.Show();
+        }
     }
 }
