@@ -2,7 +2,7 @@
 
 @attribute [Authorize]
 
-<Tabs SelectedTab="@SelectedTab">
+<Tabs SelectedTab="@SelectedTab" SelectedTabChanged="OnSelectedTab_Changed">
     <Items>
         <Tab Name="PersonInfo">Personinfo</Tab>
         <Tab Name="GroupInfo">Grupper</Tab>
@@ -36,6 +36,12 @@
         Member = await MemberService.GetMemberWithGroupsById(MemberId);
     }
 
+    private Task OnSelectedTab_Changed(string tabName)
+    {
+        SelectedTab = tabName;
+        return Task.CompletedTask;
+    }
+    
     private Task MemberContentHasChanged()
     {
         StateHasChanged();

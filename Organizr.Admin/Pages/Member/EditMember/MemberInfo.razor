@@ -1,8 +1,60 @@
-﻿<h3>PersonInfo</h3>
+﻿<Heading Size="HeadingSize.Is4">Rediger (@Member.Id) @Member.FirstName @Member.LastName </Heading>
 
-<Paragraph>@Member.FirstName @Member.LastName</Paragraph>
+<Fields ColumnSize="ColumnSize.Is6">
+    <Field ColumnSize="ColumnSize.Is6">
+        <FieldLabel>Fornavn</FieldLabel>
+        <TextEdit @bind-Text="_firstName" />
+    </Field>
+   
+    <Field ColumnSize="ColumnSize.Is6">
+        <FieldLabel>Efternavn</FieldLabel>
+        <TextEdit @bind-Text="_lastName" />
+    </Field>
+    
+    <Field ColumnSize="ColumnSize.Is6">
+        <FieldLabel>Adresse</FieldLabel>
+        <TextEdit @bind-Text="_address"/>
+    </Field>
+    
+    <Field ColumnSize="ColumnSize.Is6">
+        <FieldLabel>Telefonnummer</FieldLabel>
+        <TextEdit @bind-Text="_phoneNumber"/>
+    </Field>
+    
+    <Field ColumnSize="ColumnSize.Is12">
+        <FieldLabel>Email</FieldLabel>
+        <TextEdit @bind-Text="_email"/>
+    </Field>
+    
+    <Field ColumnSize="ColumnSize.Is6">
+        <FieldLabel>Køn</FieldLabel>
+        <TextEdit @bind-Text="_password"/>
+    </Field>
+    
+</Fields>
+
+<Button Color="Color.Primary" Clicked="OnSaveButton_Clicked">Gem</Button>
 
 @code {
+
     [CascadingParameter]
     public Member Member { get; set; } = new();
+
+    private string _firstName = string.Empty;
+    private string _lastName = string.Empty;
+    private string _address = string.Empty;
+    private string _phoneNumber = string.Empty;
+    private string _email = string.Empty;
+    private string _password = string.Empty;
+    private int _gender;
+
+    private Snackbar _snackbarSuccess = new();
+    private Snackbar _snackbarError = new();
+
+    private Task OnSaveButton_Clicked()
+    {
+        Console.WriteLine("Clicked!");
+        return Task.CompletedTask;
+    }
+
 }
