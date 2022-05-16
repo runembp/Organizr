@@ -43,7 +43,13 @@
             return;
         }
 
-        await GroupService.CreateNewGroup(GroupName, IsOpen);
+        var groupToCreate = new MemberGroup
+        {
+            Name = GroupName,
+            IsOpen = IsOpen
+        };
+        
+        await GroupService.CreateNewGroup(groupToCreate);
 
 
     // GroupCreated = response.Succeeded;

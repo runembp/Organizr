@@ -1,4 +1,5 @@
-﻿using Organizr.Domain.Entities;
+﻿using Organizr.Admin.HelperClasses;
+using Organizr.Domain.Entities;
 
 namespace Organizr.Admin.Data.Services;
 
@@ -13,45 +14,38 @@ public class GroupService
 
     public async Task<List<MemberGroup>> GetAllGroups()
     {
-        // return await _httpClient.GetFromJsonAsync<List<MemberGroup>>(ApiEndpoints.GetAllGroups) ?? new List<MemberGroup>();
-        return new List<MemberGroup>();
+        return await _httpClient.GetFromJsonAsync<List<MemberGroup>>("api/groups") ?? new List<MemberGroup>();
+    }
+    
+    public async Task<MemberGroup?> GetMemberGroupWithMembersById(int groupId)
+    {
+        return await _httpClient.GetFromJsonAsync<MemberGroup>($"api/groups/{groupId}/members");
+    }
+    
+    public async Task CreateNewGroup(MemberGroup command)
+    {
+        await _httpClient.PostAsJsonAsync("api/groups/", command);
     }
 
     public async Task DeleteGroupById(int id)
     {
-        // await _httpClient.DeleteAsJsonAsync(ApiEndpoints.DeleteGroupById, id);
+        await _httpClient.DeleteAsJsonAsync("api/groups", id);
     }
 
-    public async Task RemoveMemberFromGroup(int groupId, int memberId)
+    public async Task<MemberGroup> AddMemberToGroup(int groupId, int memberId)
     {
-        // await _httpClient.DeleteAsJsonAsync(ApiEndpoints.RemoveMemberFromGroup, memberId);
-    }
-
-    public async Task<MemberGroup> AddMemberToGroup(int groupId, int selectedMemberId)
-    {
-        // var response = await _httpClient.PostAsJsonAsync(ApiEndpoints.AddMemberToGroup, selectedMemberId);
-        // return await response.Content.ReadFromJsonAsync<MemberGroup>() ?? new MemberGroup();
-        return new MemberGroup();
-    }
-
-    public async Task<List<MemberGroup>> UpdateMemberGroup(int groupId, string groupNameTextEdit, bool groupIsOpenCheckbox)
-    {
-        var content = (Name: groupNameTextEdit, IsOpen: groupIsOpenCheckbox);
-        // var response = await _httpClient.PostAsJsonAsync(ApiEndpoints.UpdateMemberGroup, content);
-        // return await response.Content.ReadFromJsonAsync<MemberGroup>() ?? new MemberGroup();
-        return new List<MemberGroup>();
-    }
-
-    public async Task<MemberGroup?> GetMemberGroupWithMembersById(int groupId)
-    {
-        // return await _httpClient.GetFromJsonAsync<MemberGroup>(ApiEndpoints.GetMemberGroupWithMembersById);
-        return new MemberGroup();
+        var response = await _httpClient.PatchAsJsonAsync($"api/groups/{groupId}/members", memberId);
+        return await response.Content.ReadFromJsonAsync<MemberGroup>() ?? new MemberGroup();
     }
     
-
-    public async Task CreateNewGroup(string groupName, bool isOpen)
+    public async Task RemoveMemberFromGroup(int groupId, int memberId)
     {
-        var command = (GroupName: groupName, IsOpen: isOpen);
-        // await _httpClient.PostAsJsonAsync(ApiEndpoints.PostNewGroup, command);
+        await _httpClient.DeleteAsJsonAsync($"api/groups/{groupId}", memberId);
+    }
+
+    public async Task<MemberGroup> UpdateMemberGroup(MemberGroup group)
+    {
+        var response = await _httpClient.PatchAsJsonAsync($"api/groups/{group.Id}", group);
+        return await response.Content.ReadFromJsonAsync<MemberGroup>() ?? new MemberGroup();
     }
 }
