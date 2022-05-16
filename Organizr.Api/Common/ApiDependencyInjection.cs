@@ -13,6 +13,7 @@ using Organizr.Application.HelperClasses;
 using Organizr.Application.Requests.Configurations;
 using Organizr.Application.Requests.Groups;
 using Organizr.Application.Responses.Groups;
+using Organizr.Application.Responses.Member;
 using Organizr.Domain.Entities;
 using Organizr.Infrastructure.Repositories;
 
@@ -60,7 +61,7 @@ public static class ApiDependencyInjection
     private static void AddMediatrCommands(WebApplicationBuilder builder)
     {
         // Members
-        builder.Services.AddTransient<IRequestHandler<CreateMemberCommand, Member?>, CreateMemberCommandHandler>();
+        builder.Services.AddTransient<IRequestHandler<CreateMemberCommand, CreateMemberResponse>, CreateMemberCommandHandler>();
         
         // Groups
         builder.Services.AddTransient<IRequestHandler<CreateMemberGroupCommand, CreateMemberGroupResponse>, CreateMemberGroupCommandHandler>();

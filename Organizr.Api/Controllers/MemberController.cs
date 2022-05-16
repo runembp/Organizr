@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Organizr.Application.Commands;
 using Organizr.Application.Requests.Groups;
-using Organizr.Application.Responses;
+using Organizr.Application.Responses.Member;
 using Organizr.Domain.Entities;
 
 
@@ -30,17 +30,17 @@ public class MemberController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CreateMemberResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<Member?>> CreateMember([FromBody] CreateMemberCommand command)
     {
         var result = await _mediator.Send(command);
 
-        if (result is null)
+        if (!result.Succeeded)
         {
             return BadRequest(result);
         }
 
-        return Ok(result);
+        return CreatedAtAction(nameof(CreateMember), result);
     }
 }
