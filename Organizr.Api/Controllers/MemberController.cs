@@ -22,7 +22,7 @@ public class MemberController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Member>))]
     public async Task<ActionResult<List<Member>>> GetAll()
     {
         var result = await _mediator.Send(new GetAllMembersRequest());
