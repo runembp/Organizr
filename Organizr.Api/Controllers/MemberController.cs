@@ -23,7 +23,7 @@ public class MemberController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Member>))]
-    public async Task<ActionResult<List<Member>>> GetAll()
+    public async Task<IActionResult> GetAll()
     {
         var result = await _mediator.Send(new GetAllMembersRequest());
         return Ok(result);
@@ -32,7 +32,7 @@ public class MemberController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CreateMemberResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<Member?>> CreateMember([FromBody] CreateMemberCommand command)
+    public async Task<IActionResult> CreateMember([FromBody] CreateMemberCommand command)
     {
         var result = await _mediator.Send(command);
 
