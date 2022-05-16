@@ -34,6 +34,12 @@
     </DataGridColumns>
 </DataGrid>
 
+<Snackbar @ref="_snackbar" Color="SnackbarColor.Success">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        @DeletedGroupName er nu blevet slettet
+    </SnackbarBody>
+</Snackbar>
+
 <DeleteGroupModal @ref="DeleteGroupModal" GroupToBeDeleted="@MemberGroupToBeDeleted" OnGroupDeleted="@OnListContentChanged"/>
 
 @code {
@@ -42,7 +48,8 @@
     private DeleteGroupModal DeleteGroupModal { get; set; } = new();
     private MemberGroup MemberGroupToBeDeleted { get; set; } = new();
     private string DeletedGroupName { get; set; } = string.Empty;
-
+    private Snackbar _snackbar = new();
+    
     protected override async Task OnInitializedAsync()
     {
         UserGroups = await GroupService.GetAllGroups() ?? new List<MemberGroup>();
@@ -59,11 +66,11 @@
         await DeleteGroupModal.Show();
     }
 
-    private Task OnListContentChanged()
+    private async Task OnListContentChanged()
     {
         DeletedGroupName = MemberGroupToBeDeleted.Name;
         UserGroups.Remove(MemberGroupToBeDeleted);
-        return Task.CompletedTask;
+        await _snackbar.Show();
     }
 
 }
