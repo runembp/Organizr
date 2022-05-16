@@ -26,8 +26,7 @@ public class GroupController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet]
-    [Route("{groupId:int}/members")]
+    [HttpGet("{groupId:int}/members")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<MemberGroup>> GetGroupByIdWithMembers([FromRoute] int groupId)
@@ -47,8 +46,7 @@ public class GroupController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPatch]
-    [Route("{groupId:int}")]
+    [HttpPatch("{groupId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<UpdateMemberGroupResponse>> UpdateGroupById([FromRoute] int groupId, [FromBody] UpdateMemberGroupCommand command)
@@ -71,8 +69,7 @@ public class GroupController : ControllerBase
         return Ok(response);
     }
     
-    [HttpPatch]
-    [Route("{groupId:int}/members")]
+    [HttpPatch("{groupId:int}/members")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<AddMemberToMemberGroupResponse>> AddMemberToGroup([FromRoute] int groupId, [FromBody] int memberId)
@@ -133,8 +130,7 @@ public class GroupController : ControllerBase
         return Ok(response);
     }
 
-    [HttpDelete]
-    [Route("/api/groups/{groupId:int}/")]
+    [HttpDelete("{groupId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> RemoveMemberFromGroup([FromRoute] int groupId, [FromBody] int memberId)
