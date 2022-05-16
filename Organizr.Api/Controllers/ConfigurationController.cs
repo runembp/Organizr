@@ -22,7 +22,7 @@ public class ConfigurationController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<List<Configuration>>> Get()
+    public async Task<ActionResult<List<Configuration>>> GetAll()
     {
         var result = await _mediator.Send(new GetAllConfigurationsRequest());
         return Ok(result);
