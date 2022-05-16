@@ -20,7 +20,7 @@ public class GroupController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<MemberGroup>))]
-    public async Task<ActionResult<List<MemberGroup>>> GetAll()
+    public async Task<IActionResult> GetAll()
     {
         var result = await _mediator.Send(new GetAllMemberGroupsRequest());
         return Ok(result);
@@ -29,7 +29,7 @@ public class GroupController : ControllerBase
     [HttpGet("{groupId:int}/members")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MemberGroup))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<MemberGroup>> GetGroupByIdWithMembers([FromRoute] int groupId)
+    public async Task<IActionResult> GetGroupByIdWithMembers([FromRoute] int groupId)
     {
         if (groupId <= 0)
         {
@@ -49,7 +49,7 @@ public class GroupController : ControllerBase
     [HttpPatch("{groupId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UpdateMemberGroupResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<UpdateMemberGroupResponse>> UpdateGroupById([FromRoute] int groupId, [FromBody] UpdateMemberGroupCommand command)
+    public async Task<IActionResult> UpdateGroupById([FromRoute] int groupId, [FromBody] UpdateMemberGroupCommand command)
     {
         var response = new UpdateMemberGroupResponse();
         
@@ -74,7 +74,7 @@ public class GroupController : ControllerBase
     [HttpPatch("{groupId:int}/members")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AddMemberToMemberGroupResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<AddMemberToMemberGroupResponse>> AddMemberToGroup([FromRoute] int groupId, [FromBody] int memberId)
+    public async Task<IActionResult> AddMemberToGroup([FromRoute] int groupId, [FromBody] int memberId)
     {
         var response = new AddMemberToMemberGroupResponse();
         
@@ -97,7 +97,7 @@ public class GroupController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CreateMemberGroupResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<CreateMemberGroupResponse>> CreateNewGroup([FromBody] CreateMemberGroupCommand command)
+    public async Task<IActionResult> CreateNewGroup([FromBody] CreateMemberGroupCommand command)
     {
         var response = await _mediator.Send(command);
 
@@ -112,7 +112,7 @@ public class GroupController : ControllerBase
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteMemberGroupResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> DeleteGroupById([FromBody] int groupId)
+    public async Task<IActionResult> DeleteGroupById([FromBody] int groupId)
     {
         var response = new DeleteMemberGroupResponse();
         
@@ -135,7 +135,7 @@ public class GroupController : ControllerBase
     [HttpDelete("{groupId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RemoveMemberFromMemberGroupResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> RemoveMemberFromGroup([FromRoute] int groupId, [FromBody] int memberId)
+    public async Task<IActionResult> RemoveMemberFromGroup([FromRoute] int groupId, [FromBody] int memberId)
     {
         var response = new RemoveMemberFromMemberGroupResponse();
         
