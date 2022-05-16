@@ -10,11 +10,11 @@ export class AllGroupsComponent implements OnInit {
 
   constructor(private apiClient: ApiClientService) { }
 
-  @Input() groups: any[] = [];
+  @Input() groups: any[];
   @Input() userId: any;
-
+  
   ngOnInit(): void {
-
+    
   }
 
   joinGroup(groupId: number, memberId: number): void {

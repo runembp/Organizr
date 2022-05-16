@@ -12,16 +12,25 @@ export class GroupsComponent implements OnInit {
   constructor(private tokenStorage: TokenStorageService, private apiClient: ApiClientService) { }
 
   loggedInUser: any;
-  allGroups: any[] = [];
-  bla: any[] = [];
-  members: any[] = [];
+  allGroups: any[];
+  myGroups: any[];
 
   ngOnInit(): void {
-    this.apiClient.getAllGroups().subscribe(groups => {
-      this.allGroups = groups;
-    });
 
     this.loggedInUser = this.tokenStorage.getUser().id;
+
+    this.apiClient.getAllGroups().subscribe(groups => {
+      this.allGroups = groups;
+
+      this.apiClient.getMembersGroups(this.loggedInUser).subscribe(value => {
+        this.myGroups = value.groups;
+
+        this.allGroups = this.allGroups.filter((x) => !this.myGroups.some(y => x.id === y.id));
+
+      });
+
+    });
+
   }
 }
 

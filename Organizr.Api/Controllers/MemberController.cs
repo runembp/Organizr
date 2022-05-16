@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Organizr.Application.Commands;
+using Organizr.Application.Requests;
 using Organizr.Application.Requests.Groups;
 using Organizr.Application.Responses;
 using Organizr.Domain.Entities;
@@ -42,5 +43,16 @@ public class MemberController : ControllerBase
         }
 
         return Ok(result);
+    }
+
+    [HttpGet("{memberId}/groups")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<Member> GetGroupsByMemberId([FromRoute] int memberId)
+    {
+        var request = new GetAllGroupsByMemberIdRequest { MemberId = memberId };
+
+       return await _mediator.Send(request);
+
+       
     }
 }

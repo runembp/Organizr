@@ -36,6 +36,10 @@ export class ApiClientService {
       .pipe(retry(1), catchError(this.handleError));
   }
 
+  getMembersGroups(memberId: number): Observable<any> {
+    return this.http.get<any>(this.apiUrl + `api/members/${memberId}/groups`)
+  }
+
   // Login
   login(user: any): Observable<any> {
 
