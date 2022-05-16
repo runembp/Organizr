@@ -111,7 +111,7 @@ public class GroupController : ControllerBase
     }
     
     [HttpDelete]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<DeleteMemberGroupResponse>> DeleteGroupById([FromBody] int groupId)
     {
@@ -130,11 +130,13 @@ public class GroupController : ControllerBase
             return BadRequest(response);
         }
         
-        return NoContent();
+        return Ok(response);
     }
 
     [HttpDelete]
     [Route("/api/groups/{groupId:int}/")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> RemoveMemberFromGroup(int groupId, [FromBody] int memberId)
     {
         var response = new RemoveMemberFromMemberGroupResponse();
@@ -151,7 +153,7 @@ public class GroupController : ControllerBase
         {
             return BadRequest(response);
         }
-        
-        return NoContent();
+
+        return Ok(response);
     }
 }
