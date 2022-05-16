@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using Organizr.Domain.Entities;
+using Organizr.Application.Responses.Member;
 using Organizr.Domain.Enums;
 
 namespace Organizr.Application.Commands
 {
-    public class CreateMemberCommand : IRequest<Member?>
+    public class CreateMemberCommand : IRequest<CreateMemberResponse>
     {
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
