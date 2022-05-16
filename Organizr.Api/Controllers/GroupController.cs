@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Organizr.Application.Commands.Groups;
 using Organizr.Application.Requests.Groups;
+using Organizr.Application.Responses.Groups;
 using Organizr.Domain.Entities;
 
 namespace Organizr.Api.Controllers;
