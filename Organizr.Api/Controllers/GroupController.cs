@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Organizr.Application.Commands.Groups;
 using Organizr.Application.Requests.Groups;
+using Organizr.Application.Responses.Groups;
 using Organizr.Domain.Entities;
 
 namespace Organizr.Api.Controllers;
@@ -18,7 +19,7 @@ public class GroupController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<List<MemberGroup>> GetAllGroups()
+    public async Task<List<MemberGroup>> GetAll()
     {
         return await _mediator.Send(new GetAllMemberGroupsRequest());
     }
@@ -30,18 +31,30 @@ public class GroupController : ControllerBase
         return await _mediator.Send(new GetMemberGroupWithMembersByIdRequest {GroupId = groupId});
     }
 
-    [HttpPatch]
-    [Route("{groupId:int}")]
-    public async Task<MemberGroup> UpdateGroupById(int groupId, [FromBody] UpdateMemberGroupCommand command)
+    [HttpPatch("{groupId}")]
+    public async Task<MemberGroup> UpdateGroupById([FromRoute] int groupId, [FromBody] UpdateMemberGroupCommand command)
     {
-        return await _mediator.Send(command);
+
+        return await _mediator.Send(new UpdateMemberGroupCommand { Id = groupId, IsOpen = command.IsOpen, Name = command.Name});
     }
     
-    [HttpPatch]
-    [Route("{groupId:int}/members")]
-    public async Task<MemberGroup> AddMemberToGroup(int groupId, [FromBody] int memberId)
+
+    [HttpPatch("{groupId}/members/{memberId}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AddMemberToMemberGroupResponse))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult> AddMemberToGroup([FromRoute] int groupId, int memberId)
     {
-        return await _mediator.Send(new AddMemberToMemberGroupCommand {GroupId = groupId, MemberId = memberId});
+        var request = new AddMemberToMemberGroupCommand
+        {
+            GroupId = groupId,
+            MemberId = memberId
+        };
+
+        var result = await _mediator.Send(request);
+
+        if (!result.Succeeded) return BadRequest("no");
+       
+        return Ok(result);
     }
 
     [HttpPost]
@@ -58,8 +71,8 @@ public class GroupController : ControllerBase
     }
 
     [HttpDelete]
-    [Route("/api/groups/{groupId:int}/")]
-    public async Task<IActionResult> RemoveMemberFromGroup(int groupId, [FromBody] int memberId)
+    [Route("/api/groups/{groupId}/")]
+    public async Task<IActionResult> RemoveMemberFromGroup([FromRoute] int groupId, [FromBody] int memberId)
     {
         var result = await _mediator.Send(new RemoveMemberFromGroupCommand {GroupId = groupId, MemberId = memberId});
         return Ok(result);

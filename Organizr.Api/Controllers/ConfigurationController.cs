@@ -28,7 +28,7 @@ public class ConfigurationController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet]
+    
     [HttpGet("type/{configType:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<List<Configuration>>> GetByType([FromRoute] int configType)

@@ -19,10 +19,10 @@ export class AllGroupsComponent implements OnInit {
 
   joinGroup(groupId: number, memberId: number): void {
     this.apiClient.addMemberToGroup(groupId, memberId).subscribe(response => {
-
-      if (response.succeeded === true) {
-        // toaster skal vises
+      if (response.succeeded) {
+        // vis toast
       }
-    });
+      
+    }, err => console.log(err.error));
   }
 }

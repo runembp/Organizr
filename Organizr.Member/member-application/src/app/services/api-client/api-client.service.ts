@@ -53,10 +53,14 @@ export class ApiClientService {
 
   addMemberToGroup(groupId: number, memberId: number): Observable<any> {
     return this.http.patch(
-      this.apiUrl + `api/group/${groupId}/member/${memberId}`,
+      this.apiUrl + `api/groups/${groupId}/members/${memberId}`,
       '',
       this.httpOptions)
-      .pipe(retry(1), catchError(this.handleError));
+      .pipe(
+        catchError(err => {
+          return throwError(() => err);
+        })
+      );
   }
 
 

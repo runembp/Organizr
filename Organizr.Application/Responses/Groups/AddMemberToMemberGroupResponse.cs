@@ -2,6 +2,6 @@
 
 public class AddMemberToMemberGroupResponse
 {
-    public bool Succeeded { get; set; }
+    public bool Succeeded { get; set; } = false;
 }
 

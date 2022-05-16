@@ -23,10 +23,12 @@ public class MemberGroupRepository : Repository<MemberGroup>, IMemberGroupReposi
         return Task.FromResult(group is not null);
     }
 
-    public async Task<MemberGroup> AddMemberToGroup(int groupId, int memberId)
+    public async Task<MemberGroup?> AddMemberToGroup(int groupId, int memberId)
     {
         var group = _organizrContext.MemberGroups.Include(x => x.Members).First(x => x.Id == groupId);
         var member = _organizrContext.Users.First(x => x.Id == memberId);
+
+        if (group.Members.Contains(member)) return null;
 
         group.Members.Add(member);
         member.Groups.Add(group);
