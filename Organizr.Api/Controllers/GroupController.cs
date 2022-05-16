@@ -71,10 +71,10 @@ public class GroupController : ControllerBase
         return Ok(response);
     }
     
-    [HttpPatch("{groupId:int}/members")]
+    [HttpPatch("{groupId:int}/members/{memberId}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AddMemberToMemberGroupResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> AddMemberToGroup([FromRoute] int groupId, [FromBody] int memberId)
+    public async Task<IActionResult> AddMemberToGroup([FromRoute] int groupId, int memberId)
     {
         var response = new AddMemberToMemberGroupResponse();
         

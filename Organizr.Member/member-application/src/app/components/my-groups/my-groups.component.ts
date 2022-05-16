@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ApiClientService } from 'src/app/services/api-client/api-client.service';
 
 @Component({
@@ -11,11 +11,10 @@ export class MyGroupsComponent implements OnInit {
   constructor() { }
 
   @Input() userId: any;
-
-  @Input() groups: any [];
+  @Input() groups: any[];
 
   ngOnInit(): void {
-
+    
   }
 
   leaveGroup(groupId: number, memberId: number): void {

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { ApiClientService } from 'src/app/services/api-client/api-client.service';
 
 @Component({
@@ -12,17 +13,12 @@ export class AllGroupsComponent implements OnInit {
 
   @Input() groups: any[];
   @Input() userId: any;
-  
+
   ngOnInit(): void {
-    
+
   }
 
   joinGroup(groupId: number, memberId: number): void {
-    this.apiClient.addMemberToGroup(groupId, memberId).subscribe(response => {
-      if (response.succeeded) {
-        // vis toast
-      }
-      
-    }, err => console.log(err.error));
+    this.apiClient.addMemberToGroup(groupId, memberId).subscribe();
   }
 }
