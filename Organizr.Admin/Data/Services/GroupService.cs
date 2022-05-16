@@ -1,5 +1,5 @@
 using System.Net;
-using Organizr.Admin.HelperClasses;
+using Organizr.Admin.Data.HelperClasses;
 using Organizr.Domain.Entities;
 
 namespace Organizr.Admin.Data.Services;
