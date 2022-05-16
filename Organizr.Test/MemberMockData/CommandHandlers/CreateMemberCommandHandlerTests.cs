@@ -1,11 +1,11 @@
 ﻿using Organizr.Application.Commands;
 using Organizr.Application.Handlers.CommandHandlers;
-using Organizr.Application.Responses;
 using Organizr.Domain.Enums;
 using Organizr.Test.MockData;
 using Shouldly;
 using System.Threading;
 using System.Threading.Tasks;
+using Organizr.Domain.Entities;
 using Xunit;
 
 namespace Organizr.Test.MemberMockData.CommandHandlers
@@ -40,9 +40,8 @@ namespace Organizr.Test.MemberMockData.CommandHandlers
         {
             var result = await _handler.Handle(_organizrMemberCommand, CancellationToken.None);
 
-            result.ShouldBeOfType<CreateMemberResponse>();
-            result.Succeeded.ShouldBe(true);
-            result.Errors.Count.ShouldBe(0);
+            result.ShouldBeOfType<Member?>();
+            result.ShouldNotBeNull();
         }
     }
 }

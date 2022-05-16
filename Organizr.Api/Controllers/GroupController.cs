@@ -19,62 +19,139 @@ public class GroupController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<List<MemberGroup>> GetAll()
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<MemberGroup>))]
+    public async Task<IActionResult> GetAll()
     {
-        return await _mediator.Send(new GetAllMemberGroupsRequest());
+        var result = await _mediator.Send(new GetAllMemberGroupsRequest());
+        return Ok(result);
     }
 
-    [HttpGet]
-    [Route("{groupId:int}/members")]
-    public async Task<MemberGroup?> GetGroupByIdWithMembers(int groupId)
+    [HttpGet("{groupId:int}/members")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MemberGroup))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetGroupByIdWithMembers([FromRoute] int groupId)
     {
-        return await _mediator.Send(new GetMemberGroupWithMembersByIdRequest {GroupId = groupId});
+        if (groupId <= 0)
+        {
+            return BadRequest("Gruppe Id er ikke udfyldt korrekt");
+        }
+        
+        var result = await _mediator.Send(new GetMemberGroupWithMembersByIdRequest {GroupId = groupId});
+
+        if (result is null)
+        {
+            return BadRequest("Gruppen findes ikke");
+        }
+        
+        return Ok(result);
     }
 
-    [HttpPatch("{groupId}")]
-    public async Task<MemberGroup> UpdateGroupById([FromRoute] int groupId, [FromBody] UpdateMemberGroupCommand command)
+    [HttpPatch("{groupId:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UpdateMemberGroupResponse))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> UpdateGroupById([FromRoute] int groupId, [FromBody] UpdateMemberGroupCommand command)
     {
+        var response = new UpdateMemberGroupResponse();
+        
+        if (groupId <= 0)
+        {
+            response.Error = "Gruppe Id er ikke udfyldt korrekt";
+            return BadRequest(response);
+        }
 
-        return await _mediator.Send(new UpdateMemberGroupCommand { Id = groupId, IsOpen = command.IsOpen, Name = command.Name});
+        command.Id = groupId;
+        
+        response = await _mediator.Send(command);
+
+        if (!response.Succeeded)
+        {
+            return BadRequest(response);
+        }
+
+        return Ok(response);
     }
     
-
-    [HttpPatch("{groupId}/members/{memberId}")]
+    [HttpPatch("{groupId:int}/members")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AddMemberToMemberGroupResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> AddMemberToGroup([FromRoute] int groupId, int memberId)
+    public async Task<IActionResult> AddMemberToGroup([FromRoute] int groupId, [FromBody] int memberId)
     {
-        var request = new AddMemberToMemberGroupCommand
+        var response = new AddMemberToMemberGroupResponse();
+        
+        if (groupId <= 0)
         {
-            GroupId = groupId,
-            MemberId = memberId
-        };
+            response.Error = "Gruppe Id er ikke udfyldt korrekt";
+            return BadRequest(response);
+        }
+        
+        response = await _mediator.Send(new AddMemberToMemberGroupCommand {GroupId = groupId, MemberId = memberId});
 
-        var result = await _mediator.Send(request);
+        if (!response.Succeeded)
+        {
+            return BadRequest(response);
+        }
 
-        if (!result.Succeeded) return BadRequest("no");
-       
-        return Ok(result);
+        return Ok(response);
     }
 
     [HttpPost]
-    public async Task CreateNewGroup([FromBody] CreateMemberGroupCommand command)
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CreateMemberGroupResponse))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> CreateNewGroup([FromBody] CreateMemberGroupCommand command)
     {
-        await _mediator.Send(command);
+        var response = await _mediator.Send(command);
+
+        if (!response.Succeeded)
+        {
+            return BadRequest(response);
+        }
+
+        return CreatedAtAction(nameof(CreateNewGroup), response);
     }
     
     [HttpDelete]
-    public async Task<IActionResult> DeleteGroupById([FromBody] int id)
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteMemberGroupResponse))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> DeleteGroupById([FromBody] int groupId)
     {
-        var result = await _mediator.Send(new DeleteMemberGroupCommand{Id = id});
-        return Ok(result);
+        var response = new DeleteMemberGroupResponse();
+        
+        if (groupId <= 0)
+        {
+            response.Error = "Gruppe Id er ikke udfyldt korrekt";
+            return BadRequest(response);
+        }
+        
+        response = await _mediator.Send(new DeleteMemberGroupCommand{Id = groupId});
+
+        if (!response.Succeeded)
+        {
+            return BadRequest(response);
+        }
+        
+        return Ok(response);
     }
 
-    [HttpDelete]
-    [Route("/api/groups/{groupId}/")]
+    [HttpDelete("{groupId:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RemoveMemberFromMemberGroupResponse))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> RemoveMemberFromGroup([FromRoute] int groupId, [FromBody] int memberId)
     {
-        var result = await _mediator.Send(new RemoveMemberFromGroupCommand {GroupId = groupId, MemberId = memberId});
-        return Ok(result);
+        var response = new RemoveMemberFromMemberGroupResponse();
+        
+        if (groupId <= 0)
+        {
+            response.Error = "Gruppe Id er ikke udfyldt korrekt";
+            return BadRequest(response);
+        }
+        
+        response = await _mediator.Send(new RemoveMemberFromGroupCommand {GroupId = groupId, MemberId = memberId});
+
+        if (!response.Succeeded)
+        {
+            return BadRequest(response);
+        }
+
+        return Ok(response);
     }
 }

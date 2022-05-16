@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Organizr.Application.Commands;
 using Organizr.Application.Common.Interfaces;
-using Organizr.Application.Responses;
 using Organizr.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
-
+using Organizr.Application.Responses.Member;
 
 namespace Organizr.Application.Handlers.CommandHandlers;
 
@@ -23,27 +21,34 @@ public class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, C
 
     public async Task<CreateMemberResponse> Handle(CreateMemberCommand command, CancellationToken cancellationToken)
     {
+        var response = new CreateMemberResponse();
         var user = _mapper.Map<Member>(command);
-
-        var response = new CreateMemberResponse { Succeeded = false };
 
         if (user is null)
         {
+            response.Error = "Medlem er ikke i et korrekt format";
             return response;
         }
 
         if (!new EmailAddressAttribute().IsValid(command.Email))
         {
-            response.Errors.Add(new IdentityError { Description = "Email er ikke i et godkendt format" });
+            response.Error = "Email er ikke i et korrekt format";
+            return response;
         }
 
         user.UserName = user.Email;
 
         var result = await _unitOfWork.UserManager.CreateAsync(user, command.Password);
 
-        response.Succeeded = result.Succeeded;
-        response.Errors.AddRange(result.Errors.ToList());
+        if (!result.Succeeded)
+        {
+            response.Error = "Medlem kunne ikke oprettes";
+        }
 
+        var createdMember = await _unitOfWork.UserManager.FindByEmailAsync(command.Email);
+
+        response.Succeeded = true;
+        response.CreatedMember = createdMember;
         return response;
     }
 }

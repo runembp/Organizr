@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Organizr.Application.Responses;
+using Organizr.Application.Responses.Member;
 using Organizr.Domain.Enums;
 
 namespace Organizr.Application.Commands

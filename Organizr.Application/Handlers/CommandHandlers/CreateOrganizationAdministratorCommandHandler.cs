@@ -1,8 +1,9 @@
-﻿using AutoMapper;
+﻿using System.ComponentModel.DataAnnotations;
+using AutoMapper;
 using MediatR;
 using Organizr.Application.Commands;
 using Organizr.Application.Common.Interfaces;
-using Organizr.Application.Responses;
+using Organizr.Application.Responses.Member;
 using Organizr.Domain.ApplicationConstants;
 using Organizr.Domain.Entities;
 
@@ -22,12 +23,19 @@ public class CreateOrganizationAdministratorCommandHandler : IRequestHandler<Cre
 
     public async Task<CreateMemberResponse> Handle(CreateMemberCommand command, CancellationToken cancellationToken)
     {
+        var response = new CreateMemberResponse();
+        
         var user = _mapper.Map<Member>(command);
-
-        var response = new CreateMemberResponse { Succeeded = false };
 
         if (user is null)
         {
+            response.Error = "Organisationsadministrator er ikke i et korrekt format";
+            return response;
+        }
+        
+        if (!new EmailAddressAttribute().IsValid(command.Email))
+        {
+            response.Error = "Email er ikke i et korrekt format";
             return response;
         }
 
@@ -35,8 +43,7 @@ public class CreateOrganizationAdministratorCommandHandler : IRequestHandler<Cre
 
         if (!result.Succeeded)
         {
-            response.Succeeded = result.Succeeded;
-            response.Errors = result.Errors.ToList();
+            response.Error = "Organisationsadministrator kunne ikke oprettes";
             return response;
         }
 
@@ -44,12 +51,14 @@ public class CreateOrganizationAdministratorCommandHandler : IRequestHandler<Cre
 
         if (!result.Succeeded)
         {
-            response.Succeeded = result.Succeeded;
-            response.Errors = result.Errors.ToList();
+            response.Error = "Organisationsadministrator kunne ikke tildeles rolle";
             return response;
         }
 
-        response.Succeeded = result.Succeeded;
+        var createdOrganizationAdministrator = await _unitOfWork.UserManager.FindByEmailAsync(command.Email);
+
+        response.Succeeded = true;
+        response.CreatedMember = createdOrganizationAdministrator;
         return response;
     }
 }
