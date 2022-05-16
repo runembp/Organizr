@@ -2,11 +2,12 @@
 using MediatR;
 using Organizr.Application.Commands.Groups;
 using Organizr.Application.Common.Interfaces;
+using Organizr.Application.Responses.Groups;
 using Organizr.Domain.Entities;
 
 namespace Organizr.Application.Handlers.CommandHandlers.Groups;
 
-public class UpdateMemberGroupHandler : IRequestHandler<UpdateMemberGroupCommand, MemberGroup?>
+public class UpdateMemberGroupHandler : IRequestHandler<UpdateMemberGroupCommand, UpdateMemberGroupResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -17,15 +18,27 @@ public class UpdateMemberGroupHandler : IRequestHandler<UpdateMemberGroupCommand
         _mapper = mapper;
     }
 
-    public async Task<MemberGroup?> Handle(UpdateMemberGroupCommand command, CancellationToken cancellationToken)
+    public async Task<UpdateMemberGroupResponse> Handle(UpdateMemberGroupCommand command, CancellationToken cancellationToken)
     {
+        var response = new UpdateMemberGroupResponse();
+        
         var group = _mapper.Map<MemberGroup>(command);
 
         if (group is null)
         {
-            return null;
+            response.Error = "Gruppe er ikke i korrekt format";
+            return response;
         }
         
-        return await _unitOfWork.GroupRepository.UpdateMemberGroup(group);
+        var result = await _unitOfWork.GroupRepository.UpdateMemberGroup(group);
+
+        if (result is null || result.Id <= 0)
+        {
+            response.Error = "Gruppe kunne ikke opdateres";
+            return response;
+        }
+
+        response.Succeeded = true;
+        return response;
     }
 }

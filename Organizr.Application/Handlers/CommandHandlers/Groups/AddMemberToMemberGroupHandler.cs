@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using Organizr.Application.Commands.Groups;
 using Organizr.Application.Common.Interfaces;
-using Organizr.Domain.Entities;
+using Organizr.Application.Responses.Groups;
 
 namespace Organizr.Application.Handlers.CommandHandlers.Groups;
 
-public class AddMemberToMemberGroupHandler : IRequestHandler<AddMemberToMemberGroupCommand, MemberGroup?>
+public class AddMemberToMemberGroupHandler : IRequestHandler<AddMemberToMemberGroupCommand, AddMemberToMemberGroupResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -14,9 +14,19 @@ public class AddMemberToMemberGroupHandler : IRequestHandler<AddMemberToMemberGr
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<MemberGroup?> Handle(AddMemberToMemberGroupCommand request, CancellationToken cancellationToken)
+    public async Task<AddMemberToMemberGroupResponse> Handle(AddMemberToMemberGroupCommand request, CancellationToken cancellationToken)
     {
+        var response = new AddMemberToMemberGroupResponse();
+        
         var group = await _unitOfWork.GroupRepository.AddMemberToGroup(request.GroupId, request.MemberId);
-        return group;
+
+        if (group is null || group.Id <= 0)
+        {
+            response.Error = "Gruppen kunne ikke oprettes";
+            return response;
+        }
+
+        response.Succeeded = true;
+        return response;
     }
 }

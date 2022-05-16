@@ -2,11 +2,12 @@
 using MediatR;
 using Organizr.Application.Commands.Groups;
 using Organizr.Application.Common.Interfaces;
+using Organizr.Application.Responses.Groups;
 using Organizr.Domain.Entities;
 
 namespace Organizr.Application.Handlers.CommandHandlers.Groups;
 
-public class CreateMemberGroupCommandHandler : IRequestHandler<CreateMemberGroupCommand, MemberGroup?>
+public class CreateMemberGroupCommandHandler : IRequestHandler<CreateMemberGroupCommand, CreateMemberGroupResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -17,22 +18,34 @@ public class CreateMemberGroupCommandHandler : IRequestHandler<CreateMemberGroup
         _mapper = mapper;
     }
 
-    public async Task<MemberGroup?> Handle(CreateMemberGroupCommand command, CancellationToken cancellationToken)
+    public async Task<CreateMemberGroupResponse> Handle(CreateMemberGroupCommand command, CancellationToken cancellationToken)
     {
+        var response = new CreateMemberGroupResponse();
+        
         var group = _mapper.Map<MemberGroup>(command);
 
         if (group is null)
         {
-            return null;
+            response.Error = "Gruppen er i et forkert format";
+            return response;
         }
 
         if (await _unitOfWork.GroupRepository.GroupExists(command.Name))
         {
-            return null;
+            response.Error = "Der findes allerede en gruppe med dette navn";
+            return response;
         }
 
         var result = await _unitOfWork.GroupRepository.Add(group);
 
-        return result;
+        if (result.Id <= 0)
+        {
+            response.Error = "Gruppen kunne ikke oprettes";
+            return response;
+        }
+
+        response.Succeeded = true;
+        response.CreatedGroup = result;
+        return response;
     }
 }

@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using Organizr.Domain.Entities;
+using Organizr.Application.Responses.Groups;
 
 namespace Organizr.Application.Commands.Groups;
 
-public class UpdateMemberGroupCommand : IRequest<MemberGroup?>
+public class UpdateMemberGroupCommand : IRequest<UpdateMemberGroupResponse>
 {
     public int Id { get; init; }
     public string Name { get; init; } = string.Empty;
