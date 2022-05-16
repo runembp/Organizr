@@ -125,7 +125,7 @@ public class GroupController : ControllerBase
 
     [HttpDelete]
     [Route("/api/groups/{groupId:int}/")]
-    public async Task<ActionResult> RemoveMemberFromGroup(int groupId, [FromBody] int memberId)
+    public async Task<ActionResult<MemberGroup>> RemoveMemberFromGroup(int groupId, [FromBody] int memberId)
     {
         if (groupId <= 0)
         {
@@ -138,7 +138,7 @@ public class GroupController : ControllerBase
         {
             return BadRequest("Medlemmet kunne ikke findes");
         }
-        
-        return NoContent();
+
+        return result;
     }
 }
