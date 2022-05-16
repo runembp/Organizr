@@ -29,6 +29,13 @@ public class MemberController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("api/members/{memberId:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Member))]
+    public async Task<IActionResult> GetMemberWithGroupsById([FromRoute] int memberId)
+    {
+        
+    }
+
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CreateMemberResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
