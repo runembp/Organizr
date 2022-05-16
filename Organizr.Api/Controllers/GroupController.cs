@@ -108,9 +108,9 @@ public class GroupController : ControllerBase
     }
     
     [HttpDelete]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteMemberGroupResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<DeleteMemberGroupResponse>> DeleteGroupById([FromBody] int groupId)
+    public async Task<ActionResult> DeleteGroupById([FromBody] int groupId)
     {
         var response = new DeleteMemberGroupResponse();
         
