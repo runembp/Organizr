@@ -133,7 +133,7 @@ public class GroupController : ControllerBase
     [HttpDelete("{groupId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> RemoveMemberFromGroup([FromRoute] int groupId, [FromBody] int memberId)
+    public async Task<ActionResult<RemoveMemberFromMemberGroupResponse>> RemoveMemberFromGroup([FromRoute] int groupId, [FromBody] int memberId)
     {
         var response = new RemoveMemberFromMemberGroupResponse();
         
