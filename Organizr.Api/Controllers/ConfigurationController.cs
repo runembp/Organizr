@@ -21,23 +21,29 @@ public class ConfigurationController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<List<Configuration>> Get()
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<List<Configuration>>> GetAll()
     {
-        return await _mediator.Send(new GetAllConfigurationsRequest());
+        var result = await _mediator.Send(new GetAllConfigurationsRequest());
+        return Ok(result);
     }
 
     [HttpGet]
-    [Route("type/{configType:int}")]
-    public async Task<List<Configuration>> GetByType(int configType)
+    [HttpGet("type/{configType:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<List<Configuration>>> GetByType([FromRoute] int configType)
     {
-        return await _mediator.Send(new GetAllConfigurationsOfTypeRequest {ConfigType = (ConfigType) configType});
+        var result = await _mediator.Send(new GetAllConfigurationsOfTypeRequest {ConfigType = (ConfigType) configType});
+        return Ok(result);
     }
 
     [HttpPost]
     [Route("type/{configType:int}")]
-    public async Task<List<Configuration>> UpdateByType(int configType, [FromBody] List<Configuration> updatedConfigurations)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<List<Configuration>>> UpdateByType([FromRoute] int configType, [FromBody] List<Configuration> updatedConfigurations)
     {
-        return await _mediator.Send(new UpdateConfigurationsOfTypeCommand {ConfigType = (ConfigType)configType, UpdatedConfigurations = updatedConfigurations});
+        var result = await _mediator.Send(new UpdateConfigurationsOfTypeCommand {ConfigType = (ConfigType) configType, UpdatedConfigurations = updatedConfigurations});
+        return Ok(result);
     }
 }
 
