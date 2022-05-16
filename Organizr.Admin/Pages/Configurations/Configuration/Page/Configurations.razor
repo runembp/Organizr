@@ -72,11 +72,17 @@
 
 <Button Color="Color.Primary" Clicked="@OnSaveButton_Clicked">Gem</Button>
 
-<Column ColumnSize="ColumnSize.Is3">
-    <Alert @bind-Visible="ConfigurationsHasBeenSaved" Color="Color.Success">
-        <AlertMessage>Konfigurationer er gemt</AlertMessage>
-    </Alert>
-</Column>
+<Snackbar @ref="_snackbarSuccess" Color="SnackbarColor.Success">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        Konfigurationerne er blevet gemt
+    </SnackbarBody>
+</Snackbar>
+
+<Snackbar @ref="_snackbarError" Color="SnackbarColor.Danger">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        Konfigurationerne kunne ikke gemmes
+    </SnackbarBody>
+</Snackbar>
 
 @code {
     private List<Configuration> ConfigurationList { get; set; } = new();
@@ -91,7 +97,8 @@
     private Configuration ConfigActivateBasicMemberCommentOnNews { get; set; } = new();
     private Configuration ConfigActivateAbilityForAllMembersToCreateNews { get; set; } = new();
 
-    private bool ConfigurationsHasBeenSaved { get; set; }
+    private Snackbar _snackbarSuccess = new();
+    private Snackbar _snackbarError = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -99,7 +106,7 @@
         var groupList = await GroupService.GetAllGroups();
 
         ConfigurationList = configurationList;
-        GroupList = groupList.ToList();
+        GroupList = groupList!.ToList();
 
         await SetConfigurationValues();
     }
@@ -119,8 +126,6 @@
 
     private async Task OnSaveButton_Clicked()
     {
-        ConfigurationsHasBeenSaved = false;
-
         var updatedConfigurations = new List<Configuration>
         {
             ConfigOrganizationAddress,
@@ -133,9 +138,16 @@
             ConfigActivateBasicMemberCommentOnNews
         };
 
-        await ConfigurationService.UpdateConfigurationsOfType(ConfigType.Configuration, updatedConfigurations);
-
-    // ConfigurationsHasBeenSaved = response.Succeeded;
+        var result = await ConfigurationService.UpdateConfigurationsOfType(ConfigType.Configuration, updatedConfigurations);
+        
+        if (!result.IsSuccessStatusCode)
+        {
+            await _snackbarError.Show();
+        }
+        else
+        {
+            await _snackbarSuccess.Show();
+        }
     }
 
 }

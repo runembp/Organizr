@@ -4,13 +4,28 @@
             Fjern (@MemberToBeDeleted.Id) @MemberToBeDeleted.FirstName @MemberToBeDeleted.LastName fra @Group.Name?
         </ModalHeader>
         <ModalBody>
-            <Button Color="Color.Danger" Clicked="OnRemoveButton_Clicked">Slet</Button>
-            <Button Color="Color.Secondary" Clicked="OnCancelButton_Clicked">Afbryd</Button>
+            <Div>
+                <Button Color="Color.Danger" Clicked="OnRemoveButton_Clicked">Slet</Button>
+                <Button Color="Color.Secondary" Clicked="OnCancelButton_Clicked">Afbryd</Button>
+            </Div>
         </ModalBody>
     </ModalContent>
 </Modal>
 
+<Snackbar @ref="_snackbarSuccess" Color="SnackbarColor.Success">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        (@MemberToBeDeleted.Id) @MemberToBeDeleted.FirstName @MemberToBeDeleted.LastName er blevet fjernet fra @Group.Name
+    </SnackbarBody>
+</Snackbar>
+
+<Snackbar @ref="_snackbarError" Color="SnackbarColor.Danger">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        (@MemberToBeDeleted.Id) @MemberToBeDeleted.FirstName @MemberToBeDeleted.LastName kunne ikke fjernes fra @Group.Name 
+    </SnackbarBody>
+</Snackbar>
+
 @code {
+
     [Parameter]
     public MemberGroup Group { get; set; } = new();
 
@@ -21,6 +36,8 @@
     public EventCallback OnGroupContentChanged { get; set; }
 
     private Modal? _removeMemberModalRef;
+    private Snackbar _snackbarSuccess = new();
+    private Snackbar _snackbarError = new();
 
     public async Task Show()
     {
@@ -29,7 +46,15 @@
 
     private async Task OnRemoveButton_Clicked()
     {
-        await GroupService.RemoveMemberFromGroup(Group.Id, MemberToBeDeleted.Id);
+        var success = await GroupService.RemoveMemberFromGroup(Group.Id, MemberToBeDeleted.Id);
+
+        if (!success)
+        {
+            await _snackbarError.Show();
+            return;
+        }
+
+        await _snackbarSuccess.Show();
         Group.Members.Remove(MemberToBeDeleted);
         await OnGroupContentChanged.InvokeAsync();
         await _removeMemberModalRef!.Hide();
@@ -39,5 +64,4 @@
     {
         await _removeMemberModalRef!.Hide();
     }
-
 }

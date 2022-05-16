@@ -44,8 +44,12 @@
             IsOpen = _groupIsOpenCheckbox
         };
         
-        Group = await GroupService.UpdateMemberGroup(updatedGroup);
-        await OnGroupEdited.InvokeAsync();
-    }
+        var success = await GroupService.UpdateMemberGroup(updatedGroup);
 
+        if (success)
+        {
+            Group = updatedGroup;
+            await OnGroupEdited.InvokeAsync();    
+        }
+    }
 }
