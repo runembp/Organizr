@@ -93,7 +93,7 @@ public class GroupController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<CreateMemberGroupResponse>> CreateNewGroup([FromBody] CreateMemberGroupCommand command)
     {
@@ -104,7 +104,7 @@ public class GroupController : ControllerBase
             return BadRequest(response);
         }
 
-        return Ok(response);
+        return CreatedAtAction(nameof(CreateNewGroup), response);
     }
     
     [HttpDelete]
