@@ -22,25 +22,23 @@ public class ConfigurationController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<List<Configuration>>> Get()
+    public async Task<ActionResult<List<Configuration>>> GetAll()
     {
         var result = await _mediator.Send(new GetAllConfigurationsRequest());
         return Ok(result);
     }
 
-    [HttpGet]
-    [Route("type/{configType:int}")]
+    [HttpGet("type/{configType:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<List<Configuration>>> GetByType(int configType)
+    public async Task<ActionResult<List<Configuration>>> GetByType([FromRoute] int configType)
     {
         var result = await _mediator.Send(new GetAllConfigurationsOfTypeRequest {ConfigType = (ConfigType) configType});
         return Ok(result);
     }
 
-    [HttpPost]
-    [Route("type/{configType:int}")]
+    [HttpPost("type/{configType:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<List<Configuration>>> UpdateByType(int configType, [FromBody] List<Configuration> updatedConfigurations)
+    public async Task<ActionResult<List<Configuration>>> UpdateByType([FromRoute] int configType, [FromBody] List<Configuration> updatedConfigurations)
     {
         var result = await _mediator.Send(new UpdateConfigurationsOfTypeCommand {ConfigType = (ConfigType) configType, UpdatedConfigurations = updatedConfigurations});
         return Ok(result);
