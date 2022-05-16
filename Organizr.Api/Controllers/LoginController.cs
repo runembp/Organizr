@@ -23,9 +23,17 @@ public class LoginController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<UserLoginResponse>> Login([FromBody] UserLoginRequest loginRequest)
     {
+        if (string.IsNullOrWhiteSpace(loginRequest.Email) || string.IsNullOrWhiteSpace(loginRequest.Password)) 
+        {
+            return BadRequest("Brugernavn eller password er ikke udfyldt korrekt");
+        }
+        
         var result = await _mediator.Send(loginRequest);
 
-        if (!result.Succeeded) return BadRequest(result);
+        if (!result.Succeeded)
+        {
+            return BadRequest("Forkert brugernavn eller password");
+        }
 
         return Ok(result);
     }
