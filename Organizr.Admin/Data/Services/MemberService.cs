@@ -22,4 +22,9 @@ public class MemberService
         var member = await response.Content.ReadFromJsonAsync<Member>();
         return member;
     }
+
+    public async Task<Member> GetMemberWithGroupsById(int memberId)
+    {
+        return await _httpClient.GetFromJsonAsync<Member>($"/api/members/{memberId}") ?? new Member();
+    }
 }
