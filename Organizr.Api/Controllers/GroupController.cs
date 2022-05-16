@@ -20,7 +20,7 @@ public class GroupController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<List<MemberGroup>>> GetAllGroups()
+    public async Task<ActionResult<List<MemberGroup>>> GetAll()
     {
         var result = await _mediator.Send(new GetAllMemberGroupsRequest());
         return Ok(result);
