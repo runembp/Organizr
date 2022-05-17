@@ -8,7 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Organizr.Application.Handlers.RequestHandlers.Groups;
 using Xunit;
-using AutoMapper;
 
 namespace Organizr.Test.GroupMockData.RequestHandlers;
 
