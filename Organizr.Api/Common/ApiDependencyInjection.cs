@@ -10,7 +10,6 @@ using Organizr.Application.Handlers.RequestHandlers.Configurations;
 using Organizr.Application.Handlers.RequestHandlers.Groups;
 using Organizr.Application.Handlers.RequestHandlers.Members;
 using Organizr.Application.HelperClasses;
-using Organizr.Application.Requests;
 using Organizr.Application.Requests.Configurations;
 using Organizr.Application.Requests.Groups;
 using Organizr.Application.Responses.Groups;

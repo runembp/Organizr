@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Organizr.Application.Commands;
 using Organizr.Application.Commands.Members;
-using Organizr.Application.Requests;
 using Organizr.Application.Requests.Groups;
 using Organizr.Application.Requests.Members;
 using Organizr.Application.Responses.Member;
