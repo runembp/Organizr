@@ -71,30 +71,6 @@ public class GroupController : ControllerBase
         return Ok(response);
     }
 
-    [HttpPatch("{groupId:int}/members")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AddMemberToMemberGroupResponse))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> AddMemberToGroup([FromRoute] int groupId, [FromBody] int memberId)
-    {
-        var response = new AddMemberToMemberGroupResponse();
-
-        if (groupId <= 0)
-        {
-            response.Error = "Gruppe Id er ikke udfyldt korrekt";
-            return BadRequest(response);
-        }
-
-        response = await _mediator.Send(new AddMemberToMemberGroupCommand { GroupId = groupId, MemberId = memberId });
-
-        if (!response.Succeeded)
-        {
-            return BadRequest(response);
-        }
-
-        return Ok(response);
-
-    }
-
 
     [HttpPatch("{groupId}/members/{memberId}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AddMemberToMemberGroupResponse))]
@@ -103,13 +79,24 @@ public class GroupController : ControllerBase
     {
         var response = new AddMemberToMemberGroupResponse();
 
+        if (groupId <= 0)
+        {
+            response.Error = "Gruppe Id er ikke udfyldt korrekt";
+            return BadRequest(response);
+        }
+        else if (memberId <= 0)
+        {
+            response.Error = "Member Id er ikke udfyldt korrekt";
+            return BadRequest(response);
+        }
+
         response = await _mediator.Send(new AddMemberToMemberGroupCommand
         {
             GroupId = groupId,
             MemberId = memberId
         });
 
-        if (!response.Succeeded) return BadRequest(response.Error = "Der skete en fejl");
+        if (!response.Succeeded) return BadRequest(response);
 
         return Ok(response);
     }
