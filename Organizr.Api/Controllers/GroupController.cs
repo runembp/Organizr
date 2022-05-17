@@ -139,10 +139,10 @@ public class GroupController : ControllerBase
         return Ok(response);
     }
 
-    [HttpDelete("{groupId:int}")]
+    [HttpDelete("{groupId:int}/members/{memberId}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RemoveMemberFromMemberGroupResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> RemoveMemberFromGroup([FromRoute] int groupId, [FromBody] int memberId)
+    public async Task<IActionResult> RemoveMemberFromGroup([FromRoute] int groupId, int memberId)
     {
         var response = new RemoveMemberFromMemberGroupResponse();
 

@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   loginUser: any;
+  loggedInUser: any;
 
   constructor(private apiClient: ApiClientService, private router: Router, private tokenStorage: TokenStorageService, private dataSharing: DataSharingService) { }
 
@@ -57,4 +58,7 @@ export class LoginComponent implements OnInit {
       };
     });
   }
+
+
+
 }
