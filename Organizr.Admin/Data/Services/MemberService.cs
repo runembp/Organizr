@@ -1,4 +1,5 @@
-﻿using Organizr.Domain.Entities;
+﻿using Organizr.Admin.Data.HelperClasses;
+using Organizr.Domain.Entities;
 
 namespace Organizr.Admin.Data.Services;
 
@@ -28,5 +29,16 @@ public class MemberService
         var member = await response.Content.ReadFromJsonAsync<Member>();
         
         return member;
+    }
+
+    public async Task<Member> GetMemberWithGroupsById(int memberId)
+    {
+        return await _httpClient.GetFromJsonAsync<Member>($"/api/members/{memberId}") ?? new Member();
+    }
+
+    public async Task<bool> UpdateMember(Member member)
+    {
+        var result = await _httpClient.PatchAsJsonAsync($"/api/members/{member.Id}", member);
+        return result.IsSuccessStatusCode;
     }
 }
