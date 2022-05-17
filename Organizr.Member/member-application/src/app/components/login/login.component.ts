@@ -44,7 +44,8 @@ export class LoginComponent implements OnInit {
 
         const userData = {
           token: response.token,
-          email: response.email
+          email: response.email,
+          id: response.id
         };
 
         this.tokenStorage.saveUser(JSON.stringify(userData));

@@ -16,6 +16,7 @@ public class GetAllMemberGroupsHandler : IRequestHandler<GetAllMemberGroupsReque
 
     public async Task<List<MemberGroup>> Handle(GetAllMemberGroupsRequest request, CancellationToken cancellationToken)
     {
-        return (List<MemberGroup>) await _unitOfWork.GroupRepository.GetAll();
+        var memberGroups = await _unitOfWork.GroupRepository.GetAll();
+        return (List<MemberGroup>)memberGroups;
     }
 }

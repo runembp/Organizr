@@ -13,8 +13,14 @@ import { LoginComponent } from './components/login/login.component';
 import { AppNavbarComponent } from './components/app-navbar/app-navbar.component';
 import { DataSharingService } from './services/shared/data-sharing.service';
 import { ConfigurationConstantsService } from './services/shared/configuration-constants.service';
-import { ContactUsFormComponent } from './components/contact-us/contact-us-form/contact-us-form.component';
-import { ResetPasswordComponent } from './components/login/reset-password/reset-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { ContactUsFormComponent } from './components/contact-us-form/contact-us-form.component';
+import { SideBarComponent } from './components/side-bar/side-bar.component';
+import { GroupsComponent } from './components/groups/groups.component';
+import { AllGroupsComponent } from './components/all-groups/all-groups.component';
+import { MyGroupsComponent } from './components/my-groups/my-groups.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -26,7 +32,11 @@ import { ResetPasswordComponent } from './components/login/reset-password/reset-
     LoginComponent,
     AppNavbarComponent,
     ContactUsFormComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    SideBarComponent,
+    GroupsComponent,
+    AllGroupsComponent,
+    MyGroupsComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +44,9 @@ import { ResetPasswordComponent } from './components/login/reset-password/reset-
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [DataSharingService, ConfigurationConstantsService],
   bootstrap: [AppComponent]

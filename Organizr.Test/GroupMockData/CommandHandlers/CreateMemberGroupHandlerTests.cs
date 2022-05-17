@@ -4,8 +4,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Organizr.Application.Commands.Groups;
 using Organizr.Application.Handlers.CommandHandlers.Groups;
-using Organizr.Domain.Entities;
 using Xunit;
+using Organizr.Application.Responses.Groups;
 
 namespace Organizr.Test.GroupMockData.CommandHandlers;
 
@@ -29,7 +29,7 @@ public class CreateMemberGroupHandlerTests
         var result = await _commandHandler.Handle(createMemberCommand, CancellationToken.None);
 
         // Assert
-        result.ShouldBeOfType<MemberGroup?>();
+        result.ShouldBeOfType<CreateMemberGroupResponse>();
         result.ShouldNotBeNull();
     }
 }
