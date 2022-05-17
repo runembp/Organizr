@@ -20,7 +20,7 @@ export class AppNavbarComponent implements OnInit {
 
    signOut(): void {
      this.tokenStorage.signOut();
-     window.location.reload();
+     this.router.navigateByUrl('/');
    }
 
   ngOnInit(): void {

@@ -37,7 +37,7 @@ public class GroupService
 
     public async Task<bool> AddMemberToGroup(int groupId, int memberId)
     {
-        var response = await _httpClient.PatchAsJsonAsync($"api/groups/{groupId}/members", memberId);
+        var response = await _httpClient.PatchAsJsonAsync($"api/groups/{groupId}/members/{memberId}");
         return response.IsSuccessStatusCode;
     }
     

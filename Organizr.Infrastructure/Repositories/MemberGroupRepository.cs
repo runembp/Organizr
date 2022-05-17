@@ -31,14 +31,14 @@ public class MemberGroupRepository : Repository<MemberGroup>, IMemberGroupReposi
         {
             return null;
         }
-        
+
         var member = _organizrContext.Users.FirstOrDefault(x => x.Id == memberId);
 
-        if (member is null)
+        if (member is null || group.Members.Contains(member))
         {
             return null;
         }
-        
+
         group.Members.Add(member);
         member.Groups.Add(group);
 
@@ -56,7 +56,7 @@ public class MemberGroupRepository : Repository<MemberGroup>, IMemberGroupReposi
         {
             return null;
         }
-        
+
         group?.Members.Remove(member);
         await _organizrContext.SaveChangesAsync();
         return group;
@@ -70,7 +70,7 @@ public class MemberGroupRepository : Repository<MemberGroup>, IMemberGroupReposi
         {
             return null;
         }
-        
+
         group.Name = memberGroup.Name;
         group.IsOpen = memberGroup.IsOpen;
 

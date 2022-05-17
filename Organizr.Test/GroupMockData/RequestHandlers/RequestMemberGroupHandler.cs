@@ -21,7 +21,7 @@ public class RequestMemberGroupHandler
         _mockUnitOfWork = MockSetup.GetUnitOfWork();
         _requestHandler = new GetAllMemberGroupsHandler(_mockUnitOfWork);
     }
-
+     
     [Fact]
     public async Task Valid_MemberGroup_Added()
     {
