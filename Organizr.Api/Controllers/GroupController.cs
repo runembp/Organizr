@@ -35,14 +35,14 @@ public class GroupController : ControllerBase
         {
             return BadRequest("Gruppe Id er ikke udfyldt korrekt");
         }
-        
-        var result = await _mediator.Send(new GetMemberGroupWithMembersByIdRequest {GroupId = groupId});
+
+        var result = await _mediator.Send(new GetMemberGroupWithMembersByIdRequest { GroupId = groupId });
 
         if (result is null)
         {
             return BadRequest("Gruppen findes ikke");
         }
-        
+
         return Ok(result);
     }
 
@@ -52,7 +52,7 @@ public class GroupController : ControllerBase
     public async Task<IActionResult> UpdateGroupById([FromRoute] int groupId, [FromBody] UpdateMemberGroupCommand command)
     {
         var response = new UpdateMemberGroupResponse();
-        
+
         if (groupId <= 0)
         {
             response.Error = "Gruppe Id er ikke udfyldt korrekt";
@@ -60,7 +60,7 @@ public class GroupController : ControllerBase
         }
 
         command.Id = groupId;
-        
+
         response = await _mediator.Send(command);
 
         if (!response.Succeeded)
@@ -70,21 +70,21 @@ public class GroupController : ControllerBase
 
         return Ok(response);
     }
-    
+
     [HttpPatch("{groupId:int}/members")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AddMemberToMemberGroupResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddMemberToGroup([FromRoute] int groupId, [FromBody] int memberId)
     {
         var response = new AddMemberToMemberGroupResponse();
-        
+
         if (groupId <= 0)
         {
             response.Error = "Gruppe Id er ikke udfyldt korrekt";
             return BadRequest(response);
         }
-        
-        response = await _mediator.Send(new AddMemberToMemberGroupCommand {GroupId = groupId, MemberId = memberId});
+
+        response = await _mediator.Send(new AddMemberToMemberGroupCommand { GroupId = groupId, MemberId = memberId });
 
         if (!response.Succeeded)
         {
@@ -92,33 +92,26 @@ public class GroupController : ControllerBase
         }
 
         return Ok(response);
-        return await _mediator.Send(new GetMemberGroupWithMembersByIdRequest {GroupId = groupId});
+
     }
 
-    [HttpPatch("{groupId}")]
-    public async Task<MemberGroup> UpdateGroupById([FromRoute] int groupId, [FromBody] UpdateMemberGroupCommand command)
-    {
-
-        return await _mediator.Send(new UpdateMemberGroupCommand { Id = groupId, IsOpen = command.IsOpen, Name = command.Name});
-    }
-    
 
     [HttpPatch("{groupId}/members/{memberId}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AddMemberToMemberGroupResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> AddMemberToGroup([FromRoute] int groupId, int memberId)
+    public async Task<IActionResult> AddMemberToGroup1([FromRoute] int groupId, int memberId)
     {
-        var request = new AddMemberToMemberGroupCommand
+        var response = new AddMemberToMemberGroupResponse();
+
+        response = await _mediator.Send(new AddMemberToMemberGroupCommand
         {
             GroupId = groupId,
             MemberId = memberId
-        };
+        });
 
-        var result = await _mediator.Send(request);
+        if (!response.Succeeded) return BadRequest(response.Error = "Der skete en fejl");
 
-        if (!result.Succeeded) return BadRequest("no");
-       
-        return Ok(result);
+        return Ok(response);
     }
 
     [HttpPost]
@@ -135,27 +128,27 @@ public class GroupController : ControllerBase
 
         return CreatedAtAction(nameof(CreateNewGroup), response);
     }
-    
+
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteMemberGroupResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> DeleteGroupById([FromBody] int groupId)
     {
         var response = new DeleteMemberGroupResponse();
-        
+
         if (groupId <= 0)
         {
             response.Error = "Gruppe Id er ikke udfyldt korrekt";
             return BadRequest(response);
         }
-        
-        response = await _mediator.Send(new DeleteMemberGroupCommand{Id = groupId});
+
+        response = await _mediator.Send(new DeleteMemberGroupCommand { Id = groupId });
 
         if (!response.Succeeded)
         {
             return BadRequest(response);
         }
-        
+
         return Ok(response);
     }
 
@@ -165,14 +158,14 @@ public class GroupController : ControllerBase
     public async Task<IActionResult> RemoveMemberFromGroup([FromRoute] int groupId, [FromBody] int memberId)
     {
         var response = new RemoveMemberFromMemberGroupResponse();
-        
+
         if (groupId <= 0)
         {
             response.Error = "Gruppe Id er ikke udfyldt korrekt";
             return BadRequest(response);
         }
-        
-        response = await _mediator.Send(new RemoveMemberFromGroupCommand {GroupId = groupId, MemberId = memberId});
+
+        response = await _mediator.Send(new RemoveMemberFromGroupCommand { GroupId = groupId, MemberId = memberId });
 
         if (!response.Succeeded)
         {
@@ -180,17 +173,6 @@ public class GroupController : ControllerBase
         }
 
         return Ok(response);
-    public async Task<IActionResult> DeleteGroupById([FromBody] int id)
-    {
-        var result = await _mediator.Send(new DeleteMemberGroupCommand{Id = id});
-        return Ok(result);
     }
 
-    [HttpDelete]
-    [Route("/api/groups/{groupId}/")]
-    public async Task<IActionResult> RemoveMemberFromGroup([FromRoute] int groupId, [FromBody] int memberId)
-    {
-        var result = await _mediator.Send(new RemoveMemberFromGroupCommand {GroupId = groupId, MemberId = memberId});
-        return Ok(result);
-    }
 }

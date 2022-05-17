@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { NotificationServiceService } from '../notification-message/notification-service.service';
+import { NotificationType } from 'src/app/notification.message';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,7 @@ export class ApiClientService {
 
   private apiUrl = environment.baseUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private notificationService: NotificationServiceService) { }
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -58,7 +60,12 @@ export class ApiClientService {
       this.httpOptions)
       .pipe(
         catchError(err => {
-          return throwError(() => err);
+          return throwError(() => {
+            this.notificationService.sendMessage({
+              message: err.error,
+              type: NotificationType.error
+            });
+          });
         })
       );
   }

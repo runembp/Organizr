@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { NotificationType } from 'src/app/notification.message';
 import { ApiClientService } from 'src/app/services/api-client/api-client.service';
+import { NotificationServiceService } from 'src/app/services/notification-message/notification-service.service';
 
 @Component({
   selector: 'app-all-groups',
@@ -8,7 +10,7 @@ import { ApiClientService } from 'src/app/services/api-client/api-client.service
 })
 export class AllGroupsComponent implements OnInit {
 
-  constructor(private apiClient: ApiClientService) { }
+  constructor(private apiClient: ApiClientService, private  notificationService: NotificationServiceService) { }
 
   @Input() groups: any[] = [];
   @Input() userId: any;
@@ -17,12 +19,15 @@ export class AllGroupsComponent implements OnInit {
 
   }
 
-  joinGroup(groupId: number, memberId: number): void {
+  joinGroup(groupId: number, memberId: number, groupName: string): void {
     this.apiClient.addMemberToGroup(groupId, memberId).subscribe(response => {
       if (response.succeeded) {
-        // vis toast
+        this.notificationService.sendMessage({
+          message:`Du er nu tilmeld gruppen ${groupName}`,
+          type: NotificationType.success
+        });
       }
       
-    }, err => console.log(err.error));
+    });
   }
 }

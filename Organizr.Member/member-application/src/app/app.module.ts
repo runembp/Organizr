@@ -19,6 +19,8 @@ import { SideBarComponent } from './components/side-bar/side-bar.component';
 import { GroupsComponent } from './components/groups/groups.component';
 import { AllGroupsComponent } from './components/all-groups/all-groups.component';
 import { MyGroupsComponent } from './components/my-groups/my-groups.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -42,7 +44,9 @@ import { MyGroupsComponent } from './components/my-groups/my-groups.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [DataSharingService, ConfigurationConstantsService],
   bootstrap: [AppComponent]
