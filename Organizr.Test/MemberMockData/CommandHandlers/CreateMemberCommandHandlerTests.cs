@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Organizr.Domain.Entities;
 using Xunit;
+using Organizr.Application.Responses.Member;
 
 namespace Organizr.Test.MemberMockData.CommandHandlers
 {
@@ -40,7 +41,7 @@ namespace Organizr.Test.MemberMockData.CommandHandlers
         {
             var result = await _handler.Handle(_organizrMemberCommand, CancellationToken.None);
 
-            result.ShouldBeOfType<Member?>();
+            result.ShouldBeOfType<CreateMemberResponse>();
             result.ShouldNotBeNull();
         }
     }

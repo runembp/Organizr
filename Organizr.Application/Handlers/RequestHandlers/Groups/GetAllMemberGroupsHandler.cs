@@ -9,18 +9,15 @@ namespace Organizr.Application.Handlers.RequestHandlers.Groups;
 public class GetAllMemberGroupsHandler : IRequestHandler<GetAllMemberGroupsRequest, List<MemberGroup>>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
 
-    public GetAllMemberGroupsHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    public GetAllMemberGroupsHandler(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
-        _mapper = mapper;
     }
 
-    
     public async Task<List<MemberGroup>> Handle(GetAllMemberGroupsRequest request, CancellationToken cancellationToken)
     {
         var memberGroups = await _unitOfWork.GroupRepository.GetAll();
-        return _mapper.Map<List<MemberGroup>>(memberGroups);
+        return (List<MemberGroup>)memberGroups;
     }
 }
