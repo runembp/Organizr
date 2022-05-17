@@ -16,7 +16,7 @@ export class GroupsComponent implements OnInit {
 
   ngOnInit(): void {
     this.apiClient.getAllGroups().subscribe(groups => {
-      this.allGroups = groups;
+      this.allGroups = groups.filter(group => group.isOpen === true);    
     });
 
     this.loggedInUser = this.tokenStorage.getUser().id;
