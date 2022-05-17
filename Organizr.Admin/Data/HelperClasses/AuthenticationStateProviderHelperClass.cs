@@ -5,7 +5,7 @@ using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Organizr.Admin.Data.DTO;
 
-namespace Organizr.Admin.HelperClasses;
+namespace Organizr.Admin.Data.HelperClasses;
 public class AuthenticationStateProviderHelperClass : AuthenticationStateProvider
 {
     private readonly HttpClient _httpClient;

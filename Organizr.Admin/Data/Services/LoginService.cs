@@ -2,7 +2,7 @@
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Organizr.Admin.Data.DTO;
-using Organizr.Admin.HelperClasses;
+using Organizr.Admin.Data.HelperClasses;
 
 namespace Organizr.Admin.Data.Services;
 
