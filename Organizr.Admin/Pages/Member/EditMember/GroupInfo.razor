@@ -1,10 +1,27 @@
-﻿<h3>GroupInfo</h3>
+﻿<Div>&nbsp;</Div>
 
-<Paragraph>@Member.FirstName @Member.LastName</Paragraph>
+<DataGrid TItem="@MemberGroup"
+          Data="@Member.Groups">
+    <DataGridColumns>
+        <DataGridColumn Field="@nameof(MemberGroup.Id)" Caption="Gruppe Id" Sortable="true">
+            <DisplayTemplate>
+                <Button Clicked="() => OnEditMemberGroupLink_Clicked(context.Id)" Color="Color.Link">@context.Id</Button>
+            </DisplayTemplate>
+        </DataGridColumn>
+        <DataGridColumn Field="@nameof(MemberGroup.Name)" Caption="Gruppe Navn" Sortable="true" />
+        <DataGridColumn Caption="Rolle" Sortable="true"></DataGridColumn>
+        <DataGridColumn Caption="Administrer" Sortable="true"></DataGridColumn>
+    </DataGridColumns>
+</DataGrid>
 
 @code {
 
     [CascadingParameter]
     public Member Member { get; set; } = new();
 
+    private Task OnEditMemberGroupLink_Clicked(int memberGroupId)
+    {
+        NavigationManager.NavigateTo($"/edit-group/{memberGroupId}");
+        return Task.CompletedTask;
+    }
 }
