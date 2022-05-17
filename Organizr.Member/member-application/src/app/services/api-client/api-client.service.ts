@@ -62,7 +62,7 @@ export class ApiClientService {
         catchError(err => {
           return throwError(() => {
             this.notificationService.sendMessage({
-              message: err.error,
+              message: err.error.error,
               type: NotificationType.error
             });
           });

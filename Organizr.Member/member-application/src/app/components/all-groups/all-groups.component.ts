@@ -23,7 +23,7 @@ export class AllGroupsComponent implements OnInit {
     this.apiClient.addMemberToGroup(groupId, memberId).subscribe(response => {
       if (response.succeeded) {
         this.notificationService.sendMessage({
-          message:`Du er nu tilmeld gruppen ${groupName}`,
+          message:`Du er nu tilmeldt gruppen ${groupName}`,
           type: NotificationType.success
         });
       }
