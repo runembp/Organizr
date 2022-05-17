@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Organizr.Application.Commands;
+using Organizr.Application.Commands.Members;
 using Organizr.Application.Requests.Groups;
 using Organizr.Application.Requests.Members;
 using Organizr.Application.Responses.Member;
@@ -30,6 +31,7 @@ public class MemberController : ControllerBase
         return Ok(result);
     }
 
+    //TODO Merge with Christinas
     [HttpGet("{memberId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Member))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -63,5 +65,25 @@ public class MemberController : ControllerBase
         }
 
         return CreatedAtAction(nameof(CreateMember), result);
+    }
+
+    [HttpPatch("{memberId:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UpdateMemberResponse))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> UpdateMember([FromRoute] int memberId, [FromBody] UpdateMemberCommand command)
+    {
+        if (memberId <= 0)
+        {
+            return BadRequest("Medlems id er ikke i et korrekt format");
+        }
+
+        var result = await _mediator.Send(command);
+
+        if (!result.Succeeded)
+        {
+            return BadRequest(result);
+        }
+
+        return Ok(result);
     }
 }
