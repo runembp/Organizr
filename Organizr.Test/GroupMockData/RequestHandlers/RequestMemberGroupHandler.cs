@@ -8,7 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Organizr.Application.Handlers.RequestHandlers.Groups;
 using Xunit;
-using AutoMapper;
 
 namespace Organizr.Test.GroupMockData.RequestHandlers;
 
@@ -16,14 +15,13 @@ public class RequestMemberGroupHandler
 {
     private readonly IUnitOfWork _mockUnitOfWork;
     private readonly GetAllMemberGroupsHandler _requestHandler;
-    private readonly IMapper _mapper;
 
     public RequestMemberGroupHandler()
     {
         _mockUnitOfWork = MockSetup.GetUnitOfWork();
-        _requestHandler = new GetAllMemberGroupsHandler(_mockUnitOfWork, _mapper);
+        _requestHandler = new GetAllMemberGroupsHandler(_mockUnitOfWork);
     }
-     /*
+     
     [Fact]
     public async Task Valid_MemberGroup_Added()
     {
@@ -36,6 +34,6 @@ public class RequestMemberGroupHandler
         // Assert
         result.ShouldBeOfType<List<MemberGroup>>();
         result.ShouldNotBe(emptyMemberGroupResponse);
-        result.MemberGroups.Count.ShouldBe(3);
-    }*/
+        result.Count.ShouldBe(3);
+    }
 }

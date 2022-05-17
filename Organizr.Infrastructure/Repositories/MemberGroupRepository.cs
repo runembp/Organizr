@@ -31,15 +31,14 @@ public class MemberGroupRepository : Repository<MemberGroup>, IMemberGroupReposi
         {
             return null;
         }
-        
+
         var member = _organizrContext.Users.FirstOrDefault(x => x.Id == memberId);
 
-        if (member is null)
+        if (member is null || group.Members.Contains(member))
         {
             return null;
         }
 
-        if (group.Members.Contains(member)) return null;
         group.Members.Add(member);
         member.Groups.Add(group);
 
@@ -48,7 +47,7 @@ public class MemberGroupRepository : Repository<MemberGroup>, IMemberGroupReposi
         return group;
     }
 
-    public async Task<Member?> RemoveMemberFromGroup(int groupId, int memberId)
+    public async Task<MemberGroup?> RemoveMemberFromGroup(int groupId, int memberId)
     {
         var group = _organizrContext.MemberGroups.Where(x => x.Id == groupId).Include(x => x.Members).FirstOrDefault();
         var member = group?.Members.FirstOrDefault(x => x.Id == memberId);
@@ -57,10 +56,10 @@ public class MemberGroupRepository : Repository<MemberGroup>, IMemberGroupReposi
         {
             return null;
         }
-        
+
         group?.Members.Remove(member);
         await _organizrContext.SaveChangesAsync();
-        return member;
+        return group;
     }
 
     public async Task<MemberGroup?> UpdateMemberGroup(MemberGroup memberGroup)
@@ -71,7 +70,7 @@ public class MemberGroupRepository : Repository<MemberGroup>, IMemberGroupReposi
         {
             return null;
         }
-        
+
         group.Name = memberGroup.Name;
         group.IsOpen = memberGroup.IsOpen;
 

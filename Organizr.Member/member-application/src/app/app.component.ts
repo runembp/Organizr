@@ -3,6 +3,9 @@ import { ApiClientService } from './services/api-client/api-client.service';
 import { DataSharingService } from './services/shared/data-sharing.service';
 import { TokenStorageService } from './services/token-storage/token-storage.service';
 import { ConfigurationConstantsService } from './services/shared/configuration-constants.service';
+import { ToastrService } from 'ngx-toastr';
+
+
 
 @Component({
   selector: 'app-root',
@@ -17,8 +20,10 @@ export class AppComponent implements OnInit {
   constructor(private dataSharing: DataSharingService,
     private tokenStorage: TokenStorageService,
     private configService: ConfigurationConstantsService,
-    private apiClient: ApiClientService) {
+    private apiClient: ApiClientService, private toastrService: ToastrService
+    ) {
 
+     
     this.dataSharing.loggedInUser.subscribe(value => {
       this.loggedInUser = value;
     });

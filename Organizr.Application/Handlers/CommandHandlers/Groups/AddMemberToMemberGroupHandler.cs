@@ -23,9 +23,10 @@ public class AddMemberToMemberGroupHandler : IRequestHandler<AddMemberToMemberGr
 
         if (group is null || group.Id <= 0)
         {
-            response.Error = "Gruppen kunne ikke oprettes";
+            response.Error = "Der skete en fejl";
             return response;
         }
+
 
         response.Succeeded = true;
         return response;

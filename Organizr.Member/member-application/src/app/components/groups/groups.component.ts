@@ -19,11 +19,11 @@ export class GroupsComponent implements OnInit {
   myGroups: any[] = [];
 
   ngOnInit(): void {
-
+      
     this.loggedInUser = this.tokenStorage.getUser().id;
 
     this.apiClient.getAllGroups().subscribe(groups => {
-
+        this.allGroups = groups.filter(group => group.isOpen === true);
       this.apiClient.getMembersGroups(this.loggedInUser).subscribe(value => {
         this.myGroups = value.groups;
 

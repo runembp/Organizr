@@ -19,5 +19,9 @@ Organizr.Test/obj
 Organizr.Api.csproj.user
 Organizr.sln.DotSettings.user
 
+Organizr.Member/node_modules
+
+
+
 .vs
 .idea

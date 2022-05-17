@@ -12,6 +12,5 @@ public class OrganizrMappingProfiler : Profile
         CreateMap<Member, CreateMemberCommand>().ReverseMap();
         CreateMap<MemberGroup, CreateMemberGroupCommand>().ReverseMap();
         CreateMap<MemberGroup, UpdateMemberGroupCommand>().ReverseMap();
-        CreateMap<MemberGroup, AddMemberToMemberGroupCommand>().ReverseMap();
     }
 }
