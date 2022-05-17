@@ -9,9 +9,8 @@ namespace Organizr.Application.Handlers.CommandHandlers.Groups;
 public class AddMemberToMemberGroupHandler : IRequestHandler<AddMemberToMemberGroupCommand, AddMemberToMemberGroupResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
 
-    public AddMemberToMemberGroupHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    public AddMemberToMemberGroupHandler(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
