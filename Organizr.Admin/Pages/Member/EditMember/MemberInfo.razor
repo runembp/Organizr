@@ -1,8 +1,131 @@
-﻿<h3>PersonInfo</h3>
+﻿<Div>&nbsp;</Div>
 
-<Paragraph>@Member.FirstName @Member.LastName</Paragraph>
+<CardDeck>
+    <Card ColumnSize="ColumnSize.Is8">
+        <Fields>
+            <Field ColumnSize="ColumnSize.Is6">
+                <FieldLabel>Fornavn</FieldLabel>
+                <TextEdit @bind-Text="_firstName"/>
+            </Field>
+
+            <Field ColumnSize="ColumnSize.Is6">
+                <FieldLabel>Efternavn</FieldLabel>
+                <TextEdit @bind-Text="_lastName"/>
+            </Field>
+
+            <Field ColumnSize="ColumnSize.Is6">
+                <FieldLabel>Adresse</FieldLabel>
+                <TextEdit @bind-Text="_address"/>
+            </Field>
+
+            <Field ColumnSize="ColumnSize.Is6">
+                <FieldLabel>Telefonnummer</FieldLabel>
+                <TextEdit @bind-Text="_phoneNumber"/>
+            </Field>
+
+            <Field ColumnSize="ColumnSize.Is12">
+                <FieldLabel>Email</FieldLabel>
+                <TextEdit @bind-Text="_email"/>
+            </Field>
+
+            <Field ColumnSize="ColumnSize.Is6">
+                <FieldLabel>Køn</FieldLabel>
+                <Select TValue="Gender" @bind-SelectedValue="_gender">
+                    <SelectItem Value="Gender.Female">Kvinde</SelectItem>
+                    <SelectItem Value="Gender.Male">Mand</SelectItem>
+                    <SelectItem Value="Gender.Undefined">Udefineret</SelectItem>
+                </Select>
+            </Field>
+
+            <Field ColumnSize="ColumnSize.Is6">
+                <Div>&nbsp;</Div>
+            </Field>
+
+            <Button Color="Color.Primary" Clicked="OnSavePersonInfoButton_Clicked" Margin="Margin.Is3">Gem</Button>
+        </Fields>
+    </Card>
+</CardDeck>
+
+<Div>&nbsp;</Div>
+
+<CardDeck>
+    <Card ColumnSize="ColumnSize.Is4">
+        <Fields>
+            <Field>
+                <FieldLabel>Password</FieldLabel>
+                <TextEdit @bind-Text="_password"/>
+            </Field>
+
+            <Field ColumnSize="ColumnSize.Is6" Margin="Margin.Is4">
+                <Button Color="Color.Primary">Generer nyt password</Button>
+            </Field>
+            
+            <Field ColumnSize="ColumnSize.Is6">
+                <Div>&nbsp;</Div>
+                <Button Color="Color.Primary">Gem</Button>
+                <Button Color="Color.Primary">Gem og send</Button>
+            </Field>
+        </Fields>
+    </Card>
+</CardDeck>
+
+<Snackbar @ref="_snackbarSuccess" Color="SnackbarColor.Success">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+            (@Member.Id) @Member.FirstName @Member.LastName er blevet opdateret
+    </SnackbarBody>
+</Snackbar>
+
+<Snackbar @ref="_snackbarError" Color="SnackbarColor.Danger">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        Ændringerne kunne ikke gemmes
+    </SnackbarBody>
+</Snackbar>
 
 @code {
+
     [CascadingParameter]
     public Member Member { get; set; } = new();
+
+    private string _firstName = string.Empty;
+    private string _lastName = string.Empty;
+    private string _address = string.Empty;
+    private string _phoneNumber = string.Empty;
+    private string _email = string.Empty;
+    private string _password = string.Empty;
+    private Gender _gender;
+
+    private Snackbar _snackbarSuccess = new();
+    private Snackbar _snackbarError = new();
+
+    protected override Task OnParametersSetAsync()
+    {
+        _firstName = Member.FirstName;
+        _lastName = Member.LastName;
+        _address = Member.Address;
+        _phoneNumber = Member.PhoneNumber;
+        _email = Member.Email;
+        _gender = Member.Gender;
+        return Task.CompletedTask;
+    }
+
+    private async Task OnSavePersonInfoButton_Clicked()
+    {
+        Member.FirstName = _firstName;
+        Member.LastName = _lastName;
+        Member.Address = _address;
+        Member.PhoneNumber = _phoneNumber;
+        Member.Email = _email;
+        Member.Gender = _gender;
+        
+        var updateSucceeded = await MemberService.UpdateMember(Member);
+
+        if (updateSucceeded)
+        {
+            await _snackbarSuccess.Show();
+        }
+        else
+        {
+            await _snackbarError.Show();
+        }
+    }
 }

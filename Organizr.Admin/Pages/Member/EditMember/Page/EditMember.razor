@@ -2,7 +2,7 @@
 
 @attribute [Authorize]
 
-<Tabs SelectedTab="@SelectedTab">
+<Tabs SelectedTab="@SelectedTab" SelectedTabChanged="OnSelectedTab_Changed">
     <Items>
         <Tab Name="PersonInfo">Personinfo</Tab>
         <Tab Name="GroupInfo">Grupper</Tab>
@@ -31,22 +31,17 @@
     private Member Member { get; set; } = new();
     private string SelectedTab { get; set; } = "PersonInfo";
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
-        Member = new Member
-        {
-            Id = 999,
-            FirstName = "Test",
-            LastName = "Testesen",
-            Address = "Vej 1000",
-            Email = "Test@testesen.com",
-            Gender = Gender.Undefined,
-            Groups = new List<MemberGroup> {new() {Id = 1, Name = "Testgroup", IsOpen = false}},
-        };
-
-        return Task.CompletedTask;
+        Member = await MemberService.GetMemberWithGroupsById(MemberId);
     }
 
+    private Task OnSelectedTab_Changed(string tabName)
+    {
+        SelectedTab = tabName;
+        return Task.CompletedTask;
+    }
+    
     private Task MemberContentHasChanged()
     {
         StateHasChanged();

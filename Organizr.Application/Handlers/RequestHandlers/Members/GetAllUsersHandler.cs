@@ -4,8 +4,7 @@ using Organizr.Application.Common.Interfaces;
 using Organizr.Application.Requests.Groups;
 using Organizr.Domain.Entities;
 
-
-namespace Organizr.Application.Handlers.RequestHandlers;
+namespace Organizr.Application.Handlers.RequestHandlers.Members;
 
 public class GetAllMembersHandler : IRequestHandler<GetAllMembersRequest, List<Member>>
 {
