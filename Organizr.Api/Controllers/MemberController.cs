@@ -31,7 +31,6 @@ public class MemberController : ControllerBase
         return Ok(result);
     }
 
-    //TODO Merge with Christinas
     [HttpGet("{memberId:int}/groups")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Member))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
