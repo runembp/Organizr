@@ -10,6 +10,10 @@ public static class HttpClientHelperClass
    
     public static Task<HttpResponseMessage> DeleteAsJsonAsync<T>(this HttpClient httpClient, string requestUri, T data)
         => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Delete, requestUri) { Content = Serialize(data) });
+    
+    public static Task<HttpResponseMessage> DeleteAsJsonAsync(this HttpClient httpClient, string requestUri)
+        => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Delete, requestUri));
+
     public static Task<HttpResponseMessage> PatchAsJsonAsync(this HttpClient httpClient, string requestUri)
         => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Patch, requestUri));
 

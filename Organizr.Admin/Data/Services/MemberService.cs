@@ -41,4 +41,10 @@ public class MemberService
         var result = await _httpClient.PatchAsJsonAsync($"/api/members/{member.Id}", member);
         return result.IsSuccessStatusCode;
     }
+
+    public async Task<bool> DeleteMember(Member memberToDelete)
+    {
+        var result = await _httpClient.DeleteAsJsonAsync($"api/members/{memberToDelete.Id}");
+        return result.IsSuccessStatusCode;
+    }
 }

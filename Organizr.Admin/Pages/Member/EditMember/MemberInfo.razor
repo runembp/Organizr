@@ -1,77 +1,93 @@
 ﻿<Div>&nbsp;</Div>
 
-<CardDeck>
-    <Card ColumnSize="ColumnSize.Is8">
-        <Fields>
-            <Field ColumnSize="ColumnSize.Is6">
-                <FieldLabel>Fornavn</FieldLabel>
-                <TextEdit @bind-Text="_firstName"/>
-            </Field>
+<Heading Size="HeadingSize.Is5">
+    Person Info
+</Heading>
 
-            <Field ColumnSize="ColumnSize.Is6">
-                <FieldLabel>Efternavn</FieldLabel>
-                <TextEdit @bind-Text="_lastName"/>
-            </Field>
+<Card ColumnSize="ColumnSize.Is8">
+    <Fields>
+        <Field ColumnSize="ColumnSize.Is6">
+            <FieldLabel>Fornavn</FieldLabel>
+            <TextEdit @bind-Text="_firstName"/>
+        </Field>
 
-            <Field ColumnSize="ColumnSize.Is6">
-                <FieldLabel>Adresse</FieldLabel>
-                <TextEdit @bind-Text="_address"/>
-            </Field>
+        <Field ColumnSize="ColumnSize.Is6">
+            <FieldLabel>Efternavn</FieldLabel>
+            <TextEdit @bind-Text="_lastName"/>
+        </Field>
 
-            <Field ColumnSize="ColumnSize.Is6">
-                <FieldLabel>Telefonnummer</FieldLabel>
-                <TextEdit @bind-Text="_phoneNumber"/>
-            </Field>
+        <Field ColumnSize="ColumnSize.Is6">
+            <FieldLabel>Adresse</FieldLabel>
+            <TextEdit @bind-Text="_address"/>
+        </Field>
 
-            <Field ColumnSize="ColumnSize.Is12">
-                <FieldLabel>Email</FieldLabel>
-                <TextEdit @bind-Text="_email"/>
-            </Field>
+        <Field ColumnSize="ColumnSize.Is6">
+            <FieldLabel>Telefonnummer</FieldLabel>
+            <TextEdit @bind-Text="_phoneNumber"/>
+        </Field>
 
-            <Field ColumnSize="ColumnSize.Is6">
-                <FieldLabel>Køn</FieldLabel>
-                <Select TValue="Gender" @bind-SelectedValue="_gender">
-                    <SelectItem Value="Gender.Female">Kvinde</SelectItem>
-                    <SelectItem Value="Gender.Male">Mand</SelectItem>
-                    <SelectItem Value="Gender.Undefined">Udefineret</SelectItem>
-                </Select>
-            </Field>
+        <Field ColumnSize="ColumnSize.Is12">
+            <FieldLabel>Email</FieldLabel>
+            <TextEdit @bind-Text="_email"/>
+        </Field>
 
-            <Field ColumnSize="ColumnSize.Is6">
-                <Div>&nbsp;</Div>
-            </Field>
+        <Field ColumnSize="ColumnSize.Is6">
+            <FieldLabel>Køn</FieldLabel>
+            <Select TValue="Gender" @bind-SelectedValue="_gender">
+                <SelectItem Value="Gender.Female">Kvinde</SelectItem>
+                <SelectItem Value="Gender.Male">Mand</SelectItem>
+                <SelectItem Value="Gender.Undefined">Udefineret</SelectItem>
+            </Select>
+        </Field>
 
-            <Button Color="Color.Primary" Clicked="OnSavePersonInfoButton_Clicked" Margin="Margin.Is3">Gem</Button>
-        </Fields>
-    </Card>
-</CardDeck>
+        <Field ColumnSize="ColumnSize.Is6">
+            <Div>&nbsp;</Div>
+        </Field>
+
+        <Button Color="Color.Primary" Clicked="OnSavePersonInfoButton_Clicked" Margin="Margin.Is3">Gem</Button>
+    </Fields>
+</Card>
 
 <Div>&nbsp;</Div>
 
-<CardDeck>
-    <Card ColumnSize="ColumnSize.Is4">
-        <Fields>
-            <Field>
-                <FieldLabel>Password</FieldLabel>
-                <TextEdit @bind-Text="_password"/>
-            </Field>
+<Heading Size="HeadingSize.Is5">
+    Password opsætning
+</Heading>
 
-            <Field ColumnSize="ColumnSize.Is6" Margin="Margin.Is4">
-                <Button Color="Color.Primary">Generer nyt password</Button>
-            </Field>
-            
-            <Field ColumnSize="ColumnSize.Is6">
-                <Div>&nbsp;</Div>
-                <Button Color="Color.Primary">Gem</Button>
-                <Button Color="Color.Primary">Gem og send</Button>
-            </Field>
-        </Fields>
-    </Card>
-</CardDeck>
+<Card ColumnSize="ColumnSize.Is4">
+    <Fields>
+        <Field>
+            <FieldLabel>Password</FieldLabel>
+            <TextEdit @bind-Text="_password"/>
+        </Field>
+
+        <Field ColumnSize="ColumnSize.Is6" Margin="Margin.Is4">
+            <Button Color="Color.Primary">Generer nyt password</Button>
+        </Field>
+
+        <Field ColumnSize="ColumnSize.Is6">
+            <Div>&nbsp;</Div>
+            <Button Color="Color.Primary">Gem</Button>
+            <Button Color="Color.Primary">Gem og send</Button>
+        </Field>
+    </Fields>
+</Card>
+
+<Div>&nbsp;</Div>
+
+<Heading Size="HeadingSize.Is5">
+    Profil administration
+</Heading>
+
+<Card ColumnSize="ColumnSize.Is2">
+    <Field>
+        <Button Color="Color.Danger" Clicked="OnDeleteMemberButtonClicked" Margin="Margin.Is3">Slet medlem</Button>
+    </Field>
+</Card>
 
 <Snackbar @ref="_snackbarSuccess" Color="SnackbarColor.Success">
     <SnackbarBody TextWeight="TextWeight.Bold">
-            (@Member.Id) @Member.FirstName @Member.LastName er blevet opdateret
+        (@Member.Id) @Member.FirstName @Member.LastName er blevet opdateret
     </SnackbarBody>
 </Snackbar>
 
@@ -80,6 +96,8 @@
         Ændringerne kunne ikke gemmes
     </SnackbarBody>
 </Snackbar>
+
+<RemoveMemberModal @ref="_removeMemberModal" MemberToDelete="Member" OnMemberDeleted="@OnMemberDeleted"/>
 
 @code {
 
@@ -96,6 +114,8 @@
 
     private Snackbar _snackbarSuccess = new();
     private Snackbar _snackbarError = new();
+    private Snackbar _snackbarDeleted = new();
+    private RemoveMemberModal _removeMemberModal = new();
 
     protected override Task OnParametersSetAsync()
     {
@@ -116,7 +136,7 @@
         Member.PhoneNumber = _phoneNumber;
         Member.Email = _email;
         Member.Gender = _gender;
-        
+
         var updateSucceeded = await MemberService.UpdateMember(Member);
 
         if (updateSucceeded)
@@ -128,4 +148,16 @@
             await _snackbarError.Show();
         }
     }
+
+    private async Task OnDeleteMemberButtonClicked()
+    {
+        await _removeMemberModal.Show();
+    }
+
+    private Task OnMemberDeleted()
+    {
+        NavigationManager.NavigateTo("/");
+        return Task.CompletedTask;
+    }
+
 }
