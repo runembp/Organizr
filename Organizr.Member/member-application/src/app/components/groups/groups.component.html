@@ -3,7 +3,7 @@
         <div class="col">
             <h3>Mine Grupper</h3>
             <hr>
-            <app-my-groups></app-my-groups>
+            <app-my-groups [userId]="loggedInUser" [groups]="myGroups"></app-my-groups>
         </div>
     </div>
 
@@ -11,7 +11,7 @@
         <div class="col">
             <h3>Alle Grupper</h3>
             <hr>
-            <app-all-groups [userId]="loggedInUser" [groups]="allGroups"></app-all-groups>
+            <app-all-groups (memberIsAddedToGroup)="ngOnInit()" [userId]="loggedInUser" [groups]="allGroups"></app-all-groups>
         </div>
     </div>
 

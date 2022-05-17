@@ -53,10 +53,8 @@ export class LoginComponent implements OnInit {
         this.dataSharing.isUserLoggedIn.next(true);
         this.dataSharing.loggedInUser.next(this.tokenStorage.getUser().email);
 
-        return this.router.navigateByUrl('/')
+        return this.router.navigateByUrl('/user')
       };
     });
-
   }
-
 }
