@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { NotificationType } from 'src/app/notification.message';
 import { Router } from '@angular/router';
 import { ApiClientService } from 'src/app/services/api-client/api-client.service';
@@ -9,16 +9,15 @@ import { NotificationServiceService } from 'src/app/services/notification-messag
   templateUrl: './all-groups.component.html',
   styleUrls: ['./all-groups.component.css']
 })
-export class AllGroupsComponent implements OnInit {
+export class AllGroupsComponent {
 
-  constructor(private apiClient: ApiClientService, private  notificationService: NotificationServiceService) { }
+  constructor(private apiClient: ApiClientService, private  notificationService: NotificationServiceService
+    , private router: Router) { }
 
   @Input() groups: any[];
   @Input() userId: any;
 
-  ngOnInit(): void {
-
-  }
+  @Output() memberIsAddedToGroup = new EventEmitter<any>();
 
   joinGroup(groupId: number, memberId: number, groupName: string): void {
     this.apiClient.addMemberToGroup(groupId, memberId).subscribe(response => {
@@ -27,8 +26,9 @@ export class AllGroupsComponent implements OnInit {
           message:`Du er nu tilmeldt gruppen ${groupName}`,
           type: NotificationType.success
         });
+        this.memberIsAddedToGroup.emit();
       }
-      
+     
     });
   }
 }

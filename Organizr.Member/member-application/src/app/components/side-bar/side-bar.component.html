@@ -12,8 +12,9 @@
                         </a>
                         <ul id="profile" class="collapse list-group list-group-flush">
 
-                            <li class="list-group-item"><a class="dropdown-item" href="#">Profilinformation</a></li>
-                            <li class="list-group-item"><a class="dropdown-item" routerLink="/groups">Gruppeoversigt</a>
+                            <li class="list-group-item"><a class="dropdown-item" routerLink="../user">Profilinformation</a></li>
+                            <li class="list-group-item"><a class="dropdown-item"
+                                routerLink="user/groups-overview" >Gruppeoversigt</a>
                             </li>
 
                         </ul>
@@ -26,8 +27,8 @@
                         <ul id="groups" class="collapse list-group list-group-flush">
                             <li class="list-group-item"><a class="dropdown-item">Alle</a></li>
 
-                            <li class="list-group-item" *ngFor="let group of myGroups" routerLink="{{group.name}}">
-                                <a class="dropdown-item" routerLink="{{group.name}}">{{group.name}}</a>
+                            <li class="list-group-item" *ngFor="let group of myGroups">
+                                <a class="dropdown-item" routerLink="user/groups">{{group.name}}</a>
                             </li>
 
                         </ul>

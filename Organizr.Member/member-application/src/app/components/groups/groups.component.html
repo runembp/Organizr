@@ -11,7 +11,7 @@
         <div class="col">
             <h3>Alle Grupper</h3>
             <hr>
-            <app-all-groups [userId]="loggedInUser" [groups]="allGroups"></app-all-groups>
+            <app-all-groups (memberIsAddedToGroup)="ngOnInit()" [userId]="loggedInUser" [groups]="allGroups"></app-all-groups>
         </div>
     </div>
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ApiClientService } from 'src/app/services/api-client/api-client.service';
 import { TokenStorageService } from 'src/app/services/token-storage/token-storage.service';
 
@@ -11,34 +11,29 @@ import { TokenStorageService } from 'src/app/services/token-storage/token-storag
 export class GroupsComponent implements OnInit {
 
   constructor(private tokenStorage: TokenStorageService, private apiClient: ApiClientService) {
-    
   }
 
   loggedInUser: any;
   allGroups: any[] = [];
+  
+  @Input()
   myGroups: any[] = [];
 
   ngOnInit(): void {
-      
+
     this.loggedInUser = this.tokenStorage.getUser().id;
 
     this.apiClient.getAllGroups().subscribe(groups => {
-        this.allGroups = groups.filter(group => group.isOpen === true);
+      
       this.apiClient.getMembersGroups(this.loggedInUser).subscribe(value => {
-        this.myGroups = value.groups;
 
-        this.allGroups = groups.filter((x) => !this.myGroups.some(y => x.id === y.id));
-
+        this.myGroups = value.groups;       
+        this.allGroups = groups.filter((x) => !this.myGroups.some(y => x.id === y.id) && x.isOpen === true);
       });
-
     });
-
-   
   }
 
-  printMe(): void {
-    console.log(this.allGroups)
-  }
+  
 }
 
 

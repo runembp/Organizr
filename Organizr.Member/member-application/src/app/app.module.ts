@@ -21,6 +21,7 @@ import { AllGroupsComponent } from './components/all-groups/all-groups.component
 import { MyGroupsComponent } from './components/my-groups/my-groups.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { GroupComponent } from './components/group/group.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { ToastrModule } from 'ngx-toastr';
     SideBarComponent,
     GroupsComponent,
     AllGroupsComponent,
-    MyGroupsComponent
+    MyGroupsComponent,
+    GroupComponent
   ],
   imports: [
     BrowserModule,
