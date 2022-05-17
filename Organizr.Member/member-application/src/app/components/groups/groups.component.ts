@@ -13,8 +13,6 @@ export class GroupsComponent implements OnInit {
 
   loggedInUser: any;
   allGroups: any[] = [];
-  bla: any[] = [];
-  members: any[] = [];
 
   ngOnInit(): void {
     this.apiClient.getAllGroups().subscribe(groups => {
