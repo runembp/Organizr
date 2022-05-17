@@ -75,7 +75,7 @@ public class GroupController : ControllerBase
     [HttpPatch("{groupId}/members/{memberId}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AddMemberToMemberGroupResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> AddMemberToGroup1([FromRoute] int groupId, int memberId)
+    public async Task<IActionResult> AddMemberToGroup([FromRoute] int groupId, int memberId)
     {
         var response = new AddMemberToMemberGroupResponse();
 
