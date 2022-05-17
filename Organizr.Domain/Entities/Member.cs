@@ -11,6 +11,6 @@ namespace Organizr.Domain.Entities
         public Gender Gender { get; set; } = Gender.Undefined;
         public bool ConfigRefreshPrivilege { get; set; }
 
-        public virtual List<MemberGroup> Groups { get; set; } = new();
+        public List<MemberGroup> Groups { get; set; } = new();
     }
 }
