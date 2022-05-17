@@ -1,46 +1,55 @@
-
 <div class="container mt-5 ms-3 mb-5">
     <div class="row">
         <div class="col-sm-auto bg-light sticky-top">
             <div class="d-flex flex-sm-column flex-row flex-nowrap bg-light align-items-center sticky-top">
-                
-                <ul class="nav nav-pills nav-flush flex-sm-column flex-row flex-nowrap mb-auto mx-auto text-center align-items-center">
+
+                <ul
+                    class="nav nav-pills nav-flush flex-sm-column flex-row flex-nowrap mb-auto mx-auto text-center align-items-center">
                     <li class="dropdown">
-                        <a href="#profile" class="nav-link dropdown-toggle  text-truncate" data-bs-toggle="collapse" aria-expanded="false" aria-controls="profile">
+                        <a href="#profile" class="nav-link dropdown-toggle  text-truncate" data-bs-toggle="collapse"
+                            aria-expanded="false" aria-controls="profile">
                             <span class="ms-1 d-none d-sm-inline">Min Profil</span>
                         </a>
                         <ul id="profile" class="collapse list-group list-group-flush">
 
-                            <li class="list-group-item"><a class="dropdown-item" href="#">Profilinformation</a></li>
-                            <li class="list-group-item"><a class="dropdown-item" routerLink="/groups">Gruppeoversigt</a></li>
-                       
+                            <li class="list-group-item"><a class="dropdown-item" routerLink="../user">Profilinformation</a></li>
+                            <li class="list-group-item"><a class="dropdown-item"
+                                routerLink="user/groups-overview" >Gruppeoversigt</a>
+                            </li>
+
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#groups" class="nav-link dropdown-toggle  text-truncate" data-bs-toggle="collapse" aria-expanded="false" aria-controls="groups">
+                        <a href="#groups" class="nav-link dropdown-toggle  text-truncate" data-bs-toggle="collapse"
+                            aria-expanded="false" aria-controls="groups">
                             <span class="ms-1 d-none d-sm-inline">Mine Grupper</span>
                         </a>
                         <ul id="groups" class="collapse list-group list-group-flush">
-                            <li class="list-group-item"><a class="dropdown-item" href="#">Alle</a></li>
-                            
+                            <li class="list-group-item"><a class="dropdown-item">Alle</a></li>
+
+                            <li class="list-group-item" *ngFor="let group of myGroups">
+                                <a class="dropdown-item" routerLink="user/groups">{{group.name}}</a>
+                            </li>
+
                         </ul>
                     </li>
 
-                    
+
                     <li class="dropdown">
-                        <a href="#news" class="nav-link dropdown-toggle  text-truncate" data-bs-toggle="collapse" aria-expanded="false" aria-controls="news">
+                        <a href="#news" class="nav-link dropdown-toggle  text-truncate" data-bs-toggle="collapse"
+                            aria-expanded="false" aria-controls="news">
                             <span class="ms-1 d-none d-sm-inline">Mine Nyheder</span>
                         </a>
                         <ul id="news" class="collapse list-group list-group-flush">
                             <li class="list-group-item"><a class="dropdown-item" href="#">Overblik</a></li>
-                            
+
                         </ul>
                     </li>
                 </ul>
-                
+
             </div>
         </div>
-        <div class="col content">                    
+        <div class="col content">
             <router-outlet></router-outlet>
         </div>
     </div>
