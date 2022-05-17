@@ -3,7 +3,7 @@
 using System.Text;
 using Newtonsoft.Json;
 
-namespace Organizr.Admin.HelperClasses;
+namespace Organizr.Admin.Data.HelperClasses;
 
 public static class HttpClientHelperClass
 {

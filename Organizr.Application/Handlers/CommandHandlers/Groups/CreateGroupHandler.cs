@@ -20,27 +20,32 @@ public class CreateMemberGroupCommandHandler : IRequestHandler<CreateMemberGroup
 
     public async Task<CreateMemberGroupResponse> Handle(CreateMemberGroupCommand command, CancellationToken cancellationToken)
     {
-        var response = new CreateMemberGroupResponse { Succeeded = false };
+        var response = new CreateMemberGroupResponse();
+        
+        var group = _mapper.Map<MemberGroup>(command);
 
-        var userGroup = _mapper.Map<MemberGroup>(command);
-
-        if (userGroup is null)
+        if (group is null)
         {
+            response.Error = "Gruppen er i et forkert format";
             return response;
         }
 
-        var groupNameAlreadyTaken = await _unitOfWork.GroupRepository.GroupExists(command.Name);
-
-        if (groupNameAlreadyTaken)
+        if (await _unitOfWork.GroupRepository.GroupExists(command.Name))
         {
+            response.Error = "Der findes allerede en gruppe med dette navn";
             return response;
         }
 
-        var result = await _unitOfWork.GroupRepository.Add(userGroup);
+        var result = await _unitOfWork.GroupRepository.Add(group);
 
-        response.GroupName = result.Name;
+        if (result.Id <= 0)
+        {
+            response.Error = "Gruppen kunne ikke oprettes";
+            return response;
+        }
+
         response.Succeeded = true;
-
+        response.CreatedGroup = result;
         return response;
     }
 }

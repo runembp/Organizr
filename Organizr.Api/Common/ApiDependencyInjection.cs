@@ -12,9 +12,8 @@ using Organizr.Application.Handlers.RequestHandlers.Groups;
 using Organizr.Application.HelperClasses;
 using Organizr.Application.Requests.Configurations;
 using Organizr.Application.Requests.Groups;
-using Organizr.Application.Responses;
-using Organizr.Application.Responses.Configurations;
 using Organizr.Application.Responses.Groups;
+using Organizr.Application.Responses.Member;
 using Organizr.Domain.Entities;
 using Organizr.Infrastructure.Repositories;
 

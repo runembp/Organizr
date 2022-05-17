@@ -13,19 +13,27 @@
         <Check TValue="bool" @bind-Checked="_editingActivated">Aktiver Redigering</Check>
     </Field>
 
-    <Button Color="Color.Primary" Clicked="OnSaveButton_Clicked">Gem</Button>
+    <Button Color="Color.Primary" Clicked="@OnSaveButton_Clicked">Gem</Button>
 
-    <Column ColumnSize="ColumnSize.Is3">
-        <Alert Visible="_configSaved" Color="Color.Success">
-            <AlertMessage>Css Opsætningen er gemt</AlertMessage>
-        </Alert>
-    </Column>
 </Div>
+
+<Snackbar @ref="_snackbarSuccess" Color="SnackbarColor.Success">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        CSS Opsætningen er blevet gemt
+    </SnackbarBody>
+</Snackbar>
+
+<Snackbar @ref="_snackbarError" Color="SnackbarColor.Danger">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        CSS Opsætningen kunne ikke gemmes 
+    </SnackbarBody>
+</Snackbar>
 
 @code {
     private Configuration ConfigCss { get; set; } = new();
     private bool _editingActivated;
-    private bool _configSaved;
+    private Snackbar _snackbarSuccess = new();
+    private Snackbar _snackbarError = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -35,14 +43,16 @@
 
     private async Task OnSaveButton_Clicked()
     {
-        _configSaved = false;
+        var result = await ConfigurationService.UpdateConfigurationsOfType(ConfigType.CssSetup, new List<Configuration> {ConfigCss});
 
-        await ConfigurationService.UpdateConfigurationsOfType(ConfigType.CssSetup, new List<Configuration> {ConfigCss});
-
-        // if (response.Succeeded)
-        // {
-            // _configSaved = response.Succeeded;
-        // }
+        if (!result.IsSuccessStatusCode)
+        {
+            await _snackbarError.Show();
+        }
+        else
+        {
+            await _snackbarSuccess.Show();
+        }
     }
 
 }

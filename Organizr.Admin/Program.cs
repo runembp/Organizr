@@ -4,8 +4,8 @@ using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
 using Blazorise.RichTextEdit;
 using Microsoft.AspNetCore.Components.Authorization;
+using Organizr.Admin.Data.HelperClasses;
 using Organizr.Admin.Data.Services;
-using Organizr.Admin.HelperClasses;
 
 var builder = WebApplication.CreateBuilder(args);
 RunBuilderSetup();

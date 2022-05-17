@@ -1,6 +1,5 @@
 using Organizr.Application.Common.Interfaces;
 using Organizr.Application.Requests.Groups;
-using Organizr.Application.Responses.Groups;
 using Organizr.Domain.Entities;
 using Organizr.Test.MockData;
 using Shouldly;
@@ -35,7 +34,6 @@ public class RequestMemberGroupHandler
         var result = await _requestHandler.Handle(new GetAllMemberGroupsRequest(), CancellationToken.None);
 
         // Assert
-        result.ShouldBeOfType<GetAllMemberGroupsResponse>();
         result.ShouldBeOfType<List<MemberGroup>>();
         result.ShouldNotBe(emptyMemberGroupResponse);
         result.MemberGroups.Count.ShouldBe(3);

@@ -19,7 +19,14 @@ public class MemberService
     public async Task<Member?> PostNewMember(object command)
     {
         var response = await _httpClient.PostAsJsonAsync("api/members", command);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            return null;
+        }
+        
         var member = await response.Content.ReadFromJsonAsync<Member>();
+        
         return member;
     }
 }

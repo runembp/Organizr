@@ -1,4 +1,5 @@
-﻿using Organizr.Admin.HelperClasses;
+using System.Net;
+using Organizr.Admin.Data.HelperClasses;
 using Organizr.Domain.Entities;
 
 namespace Organizr.Admin.Data.Services;
@@ -12,9 +13,9 @@ public class GroupService
         _httpClient = httpClient;
     }
 
-    public async Task<List<MemberGroup>> GetAllGroups()
+    public async Task<List<MemberGroup>?> GetAllGroups()
     {
-        return await _httpClient.GetFromJsonAsync<List<MemberGroup>>("api/groups") ?? new List<MemberGroup>();
+        return await _httpClient.GetFromJsonAsync<List<MemberGroup>>("api/groups");
     }
     
     public async Task<MemberGroup?> GetMemberGroupWithMembersById(int groupId)
@@ -22,30 +23,33 @@ public class GroupService
         return await _httpClient.GetFromJsonAsync<MemberGroup>($"api/groups/{groupId}/members");
     }
     
-    public async Task CreateNewGroup(MemberGroup command)
+    public async Task<MemberGroup?> CreateNewGroup(MemberGroup command)
     {
-        await _httpClient.PostAsJsonAsync("api/groups/", command);
+        var response = await _httpClient.PostAsJsonAsync("api/groups/", command);
+        return await response.Content.ReadFromJsonAsync<MemberGroup>();
     }
 
-    public async Task DeleteGroupById(int id)
+    public async Task<HttpStatusCode> DeleteGroupById(int id)
     {
-        await _httpClient.DeleteAsJsonAsync("api/groups", id);
+        var response = await _httpClient.DeleteAsJsonAsync("api/groups", id);
+        return response.StatusCode;
     }
 
-    public async Task<MemberGroup> AddMemberToGroup(int groupId, int memberId)
+    public async Task<bool> AddMemberToGroup(int groupId, int memberId)
     {
         var response = await _httpClient.PatchAsJsonAsync($"api/groups/{groupId}/members", memberId);
-        return await response.Content.ReadFromJsonAsync<MemberGroup>() ?? new MemberGroup();
+        return response.IsSuccessStatusCode;
     }
     
-    public async Task RemoveMemberFromGroup(int groupId, int memberId)
+    public async Task<bool> RemoveMemberFromGroup(int groupId, int memberId)
     {
-        await _httpClient.DeleteAsJsonAsync($"api/groups/{groupId}", memberId);
+        var response = await _httpClient.DeleteAsJsonAsync($"api/groups/{groupId}", memberId);
+        return response.IsSuccessStatusCode;
     }
 
-    public async Task<MemberGroup> UpdateMemberGroup(MemberGroup group)
+    public async Task<bool> UpdateMemberGroup(MemberGroup group)
     {
         var response = await _httpClient.PatchAsJsonAsync($"api/groups/{group.Id}", group);
-        return await response.Content.ReadFromJsonAsync<MemberGroup>() ?? new MemberGroup();
+        return response.IsSuccessStatusCode;
     }
 }

@@ -19,22 +19,17 @@ public class LoginController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserLoginResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<UserLoginResponse>> Login([FromBody] UserLoginRequest loginRequest)
+    public async Task<IActionResult> Login([FromBody] UserLoginRequest loginRequest)
     {
-        if (string.IsNullOrWhiteSpace(loginRequest.Email) || string.IsNullOrWhiteSpace(loginRequest.Password)) 
-        {
-            return BadRequest("Brugernavn eller password er ikke udfyldt korrekt");
-        }
-        
-        var result = await _mediator.Send(loginRequest);
+        var response = await _mediator.Send(loginRequest);
 
-        if (!result.Succeeded)
+        if (!response.Succeeded)
         {
-            return BadRequest("Forkert brugernavn eller password");
+            return BadRequest(response);
         }
 
-        return Ok(result);
+        return Ok(response);
     }
 }

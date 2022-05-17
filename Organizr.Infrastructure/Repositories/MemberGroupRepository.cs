@@ -30,31 +30,61 @@ public class MemberGroupRepository : Repository<MemberGroup>, IMemberGroupReposi
 
         if (group.Members.Contains(member)) return null;
 
-        group.Members.Add(member);
-        member.Groups.Add(group);
-        
-        await _organizrContext.SaveChangesAsync();
+        public async Task<MemberGroup?> AddMemberToGroup(int groupId, int memberId)
+        {
+            var group = _organizrContext.MemberGroups.Include(x => x.Members).FirstOrDefault(x => x.Id == groupId);
 
-        return group;
+            if (group is null)
+            {
+                return null;
+            }
+
+            var member = _organizrContext.Users.FirstOrDefault(x => x.Id == memberId);
+
+            if (member is null)
+            {
+                return null;
+            }
+
+            if (group.Members.Contains(member)) return null;
+
+            group.Members.Add(member);
+            member.Groups.Add(group);
+
+            await _organizrContext.SaveChangesAsync();
+
+            return group;
+        }
+
+        public async Task<MemberGroup?> RemoveMemberFromGroup(int groupId, int memberId)
+        {
+            var group = _organizrContext.MemberGroups.Where(x => x.Id == groupId).Include(x => x.Members).FirstOrDefault();
+            var member = group?.Members.FirstOrDefault(x => x.Id == memberId);
+
+            if (member is null)
+            {
+                return null;
+            }
+
+            group?.Members.Remove(member);
+            await _organizrContext.SaveChangesAsync();
+            return group;
+        }
+
+        public async Task<MemberGroup?> UpdateMemberGroup(MemberGroup memberGroup)
+        {
+            var group = _organizrContext.MemberGroups.FirstOrDefault(x => x.Id == memberGroup.Id);
+
+            if (group is null)
+            {
+                return null;
+            }
+
+            group.Name = memberGroup.Name;
+            group.IsOpen = memberGroup.IsOpen;
+
+            await _organizrContext.SaveChangesAsync();
+
+            return group;
+        }
     }
-
-    public async Task<Member> RemoveMemberFromGroup(int groupId, int memberId)
-    {
-        var group = _organizrContext.MemberGroups.Where(x => x.Id == groupId).Include(x => x.Members).First();
-        var member = group.Members.First(x => x.Id == memberId);
-        group.Members.Remove(member);
-        await _organizrContext.SaveChangesAsync();
-        return member;
-    }
-
-    public async Task<MemberGroup> UpdateMemberGroup(MemberGroup memberGroup)
-    {
-        var group = _organizrContext.MemberGroups.First(x => x.Id == memberGroup.Id);
-        group.Name = memberGroup.Name;
-        group.IsOpen = memberGroup.IsOpen;
-
-        await _organizrContext.SaveChangesAsync();
-
-        return group;
-    }
-}
