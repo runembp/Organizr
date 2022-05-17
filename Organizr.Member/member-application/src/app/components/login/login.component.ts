@@ -56,7 +56,5 @@ export class LoginComponent implements OnInit {
         return this.router.navigateByUrl('/user')
       };
     });
-
   }
-
 }

@@ -15,7 +15,7 @@ export class GroupsComponent implements OnInit {
 
   loggedInUser: any;
   allGroups: any[] = [];
-  
+
   @Input()
   myGroups: any[] = [];
 
@@ -24,18 +24,12 @@ export class GroupsComponent implements OnInit {
     this.loggedInUser = this.tokenStorage.getUser().id;
 
     this.apiClient.getAllGroups().subscribe(groups => {
-      
+
       this.apiClient.getMembersGroups(this.loggedInUser).subscribe(value => {
 
-        this.myGroups = value.groups;       
+        this.myGroups = value.groups;
         this.allGroups = groups.filter((x) => !this.myGroups.some(y => x.id === y.id) && x.isOpen === true);
       });
     });
   }
-
-  
 }
-
-
-
-

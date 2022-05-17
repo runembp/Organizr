@@ -1,6 +1,5 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NotificationType } from 'src/app/notification.message';
-import { Router } from '@angular/router';
 import { ApiClientService } from 'src/app/services/api-client/api-client.service';
 import { NotificationServiceService } from 'src/app/services/notification-message/notification-service.service';
 
@@ -11,8 +10,7 @@ import { NotificationServiceService } from 'src/app/services/notification-messag
 })
 export class AllGroupsComponent {
 
-  constructor(private apiClient: ApiClientService, private  notificationService: NotificationServiceService
-    , private router: Router) { }
+  constructor(private apiClient: ApiClientService, private  notificationService: NotificationServiceService) { }
 
   @Input() groups: any[];
   @Input() userId: any;

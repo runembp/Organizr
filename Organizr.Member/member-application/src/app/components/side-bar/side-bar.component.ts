@@ -15,6 +15,7 @@ export class SideBarComponent implements OnInit {
   constructor(private apiClient: ApiClientService, private tokenStorage: TokenStorageService) {
 
   }
+
   myGroups: any[];
   loggedInUser: any;
 
@@ -24,8 +25,6 @@ export class SideBarComponent implements OnInit {
     this.apiClient.getMembersGroups(this.loggedInUser).subscribe(value => {
       this.myGroups = value.groups;
     });
-
-
+    
   }
-
 }
