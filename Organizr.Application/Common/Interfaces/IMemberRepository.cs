@@ -6,5 +6,4 @@ public interface IMemberRepository : IRepository<Member>
 {
     Task<Member?> GetMemberWithGroupsById(int memberId);
     Task<Member?> UpdateMember(Member updatedMember);
-    Task<Member> GetAllGroupsByMemberId (int memberId);
 }

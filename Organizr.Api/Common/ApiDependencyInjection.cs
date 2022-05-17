@@ -49,7 +49,6 @@ public static class ApiDependencyInjection
     {
         // Members
         builder.Services.AddTransient<IRequestHandler<GetAllMembersRequest, List<Member>>, GetAllMembersHandler>();
-        builder.Services.AddTransient<IRequestHandler<GetAllGroupsByMemberIdRequest, Member>, GetAllGroupsByMemberIdRequestHandler>();
         
         // Groups
         builder.Services.AddTransient<IRequestHandler<GetAllMemberGroupsRequest, List<MemberGroup>>, GetAllMemberGroupsHandler>();

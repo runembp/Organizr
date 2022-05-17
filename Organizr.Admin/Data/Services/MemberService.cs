@@ -33,7 +33,7 @@ public class MemberService
 
     public async Task<Member> GetMemberWithGroupsById(int memberId)
     {
-        return await _httpClient.GetFromJsonAsync<Member>($"/api/members/{memberId}") ?? new Member();
+        return await _httpClient.GetFromJsonAsync<Member>($"/api/members/{memberId}/groups") ?? new Member();
     }
 
     public async Task<bool> UpdateMember(Member member)

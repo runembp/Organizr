@@ -33,7 +33,7 @@ public class MemberController : ControllerBase
     }
 
     //TODO Merge with Christinas
-    [HttpGet("{memberId:int}")]
+    [HttpGet("{memberId:int}/groups")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Member))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetMemberWithGroupsById([FromRoute] int memberId)
@@ -88,14 +88,4 @@ public class MemberController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("{memberId}/groups")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<Member> GetGroupsByMemberId([FromRoute] int memberId)
-    {
-        var request = new GetAllGroupsByMemberIdRequest { MemberId = memberId };
-
-       return await _mediator.Send(request);
-
-       
-    }
 }
