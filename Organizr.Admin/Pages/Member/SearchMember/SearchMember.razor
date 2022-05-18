@@ -30,17 +30,29 @@
                 <Check TValue="bool" Checked="context.ConfigRefreshPrivilege" Disabled="true"></Check>
             </DisplayTemplate>
         </DataGridColumn>
-        <DataGridCommandColumn NewCommandAllowed="false" EditCommandAllowed="false">
-            <DeleteCommandTemplate>
-                <Button Size="Size.Small" Color="Color.Danger">Slet</Button>
-            </DeleteCommandTemplate>
-        </DataGridCommandColumn>
+        <DataGridColumn Field="@nameof(Member.Id)" Caption="Administrer">
+            <DisplayTemplate>
+                <Button Size="Size.Small" Color="Color.Danger" Clicked="() => OnDeleteMemberButton_Clicked(context.Id)">Slet</Button>
+            </DisplayTemplate>
+        </DataGridColumn>
     </DataGridColumns>
 </DataGrid>
+
+<Snackbar @ref="_snackbarSuccess" Color="SnackbarColor.Success">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        @MemberToDelete.FirstName @MemberToDelete.LastName er blevet fjernet
+    </SnackbarBody>
+</Snackbar>
+
+<RemoveMemberModal @ref="_removeMemberModal" MemberToDelete="MemberToDelete" OnMemberDeleted="@OnMemberDeleted"/>
 
 @code {
 
     private List<Member> _userList = new();
+    private Snackbar _snackbarSuccess = new();
+    private RemoveMemberModal _removeMemberModal = new();
+
+    private Member MemberToDelete { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -53,6 +65,19 @@
     private void OnEditUserLink_Clicked(int userId)
     {
         NavigationManager.NavigateTo($"edit-member/{userId}");
+    }
+
+    private async Task OnDeleteMemberButton_Clicked(int memberId)
+    {
+        MemberToDelete = _userList.First(x => x.Id == memberId);
+        await _removeMemberModal.Show();
+    }
+
+    private async Task OnMemberDeleted()
+    {
+        _userList.Remove(MemberToDelete);
+        StateHasChanged();
+        await _snackbarSuccess.Show();
     }
 
 }

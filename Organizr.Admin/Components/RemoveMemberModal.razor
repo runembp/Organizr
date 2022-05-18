@@ -1,0 +1,54 @@
+﻿<Modal @ref="_deleteMemberModalRef">
+    <ModalContent>
+        <ModalHeader>Slet @MemberToDelete.FirstName @MemberToDelete.LastName?</ModalHeader>
+        <ModalBody>
+            <Div>
+                <Button Color="Color.Danger" Clicked="OnDeleteButton_Clicked">Slet</Button>
+                <Button Color="Color.Secondary" Clicked="OnCancelButton_Clicked">Afbryd</Button>
+            </Div>
+            <br/>
+        </ModalBody>
+    </ModalContent>
+</Modal>
+
+<Snackbar @ref="_snackbar" Color="SnackbarColor.Danger">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        Medlemmet kunne ikke slettes
+    </SnackbarBody>
+</Snackbar>
+
+@code {
+
+    [Parameter]
+    public Member MemberToDelete { get; set; } = new();
+    
+    [Parameter]
+    public EventCallback OnMemberDeleted { get; set; }
+
+    private Modal _deleteMemberModalRef = new();
+    private Snackbar _snackbar = new();
+
+    private async Task OnDeleteButton_Clicked()
+    {
+        var result = await MemberService.DeleteMember(MemberToDelete);
+
+        if (result)
+        {
+            await OnMemberDeleted.InvokeAsync();
+            await _deleteMemberModalRef.Hide();
+            return;
+        }
+        
+        await _snackbar.Show();
+    }
+
+    private async Task OnCancelButton_Clicked()
+    {
+        await _deleteMemberModalRef.Hide();
+    }
+
+    public async Task Show()
+    {
+        await _deleteMemberModalRef.Show();
+    }
+}
