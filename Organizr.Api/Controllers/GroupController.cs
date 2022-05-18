@@ -46,6 +46,21 @@ public class GroupController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("no-membership/{memberId:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<MemberGroup>))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetMembergroupsWhereMemberHasNoMembership([FromRoute] int memberId)
+    {
+        if (memberId <= 0)
+        {
+            return BadRequest("Medlems Id er ikke udfyldt korrekt");
+        }
+        
+        var result = await _mediator.Send(new GetAllMemberGroupsWithNoMembershipOfMemberRequest {MemberId = memberId});
+
+        return Ok(result);
+    }
+
     [HttpPatch("{groupId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UpdateMemberGroupResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -139,10 +154,10 @@ public class GroupController : ControllerBase
         return Ok(response);
     }
 
-    [HttpDelete("{groupId:int}")]
+    [HttpDelete("{groupId:int}/members/{memberId}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RemoveMemberFromMemberGroupResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> RemoveMemberFromGroup([FromRoute] int groupId, [FromBody] int memberId)
+    public async Task<IActionResult> RemoveMemberFromGroup([FromRoute] int groupId, int memberId)
     {
         var response = new RemoveMemberFromMemberGroupResponse();
 

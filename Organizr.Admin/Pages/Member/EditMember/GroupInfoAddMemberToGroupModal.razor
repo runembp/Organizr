@@ -1,0 +1,90 @@
+﻿<Modal @ref="_addMemberModal">
+    <ModalContent Centered>
+        <ModalHeader>
+            Tilføj Gruppe til @Member.FirstName @Member.LastName
+        </ModalHeader>
+        <ModalBody>
+            <Field>
+                <Select TValue="int" @bind-SelectedValue="_selectedGroupId">
+                    <SelectItem Value="-1">Vælg gruppe</SelectItem>
+                    @foreach (var group in _allGroups)
+                    {
+                        <SelectItem Value="group.Id">@group.Name</SelectItem>
+                    }
+                </Select>
+            </Field>
+        </ModalBody>
+        <ModalFooter>
+            <Div>
+                <Button Color="Color.Primary" Clicked="OnAddGroupButton_Clicked">Gem</Button>
+                <Button Color="Color.Secondary" Clicked="OnCancelButton_Clicked">Afbryd</Button>
+            </Div>
+            <br/>
+        </ModalFooter>
+    </ModalContent>
+</Modal>
+
+<Snackbar @ref="_snackbarSuccess" Color="SnackbarColor.Success">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        @_selectedGroup.Name er tilføjet til @Member.FirstName @Member.LastName
+    </SnackbarBody>
+</Snackbar>
+
+<Snackbar @ref="_snackbarError" Color="SnackbarColor.Danger">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        @_selectedGroup.Name kunne ikke tilføjes til @Member.FirstName @Member.LastName
+    </SnackbarBody>
+</Snackbar>
+
+@code {
+    [Parameter]
+    public Member Member { get; set; } = new();
+    
+    [Parameter]
+    public EventCallback OnGroupAdded { get; set; }
+
+    private List<MemberGroup> _allGroups = new();    
+    private Modal _addMemberModal = new();
+    private Snackbar _snackbarSuccess = new();
+    private Snackbar _snackbarError = new();
+    private int _selectedGroupId;
+    private MemberGroup _selectedGroup = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _allGroups = await MemberService.GetAllGroupsMemberIsNotMemberOf(Member.Id);
+    }
+
+    private async Task OnAddGroupButton_Clicked()
+    {
+        if (_selectedGroupId <= 0)
+        {
+            return;
+        }
+        
+        _selectedGroup = _allGroups.First(x => x.Id == _selectedGroupId);
+        var result = await GroupService.AddMemberToGroup(_selectedGroupId, Member.Id);
+        
+        if (!result)
+        {
+            await _snackbarError.Show();
+            return;
+        }
+
+        Member.Groups.Add(_selectedGroup);
+        await _addMemberModal.Hide();
+        await OnGroupAdded.InvokeAsync();
+        await _snackbarSuccess.Show();
+    }
+
+    private async Task OnCancelButton_Clicked()
+    {
+        await _addMemberModal.Hide();
+    }
+
+    public async Task Show()
+    {
+        await _addMemberModal.Show();
+    }
+
+}

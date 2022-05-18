@@ -43,7 +43,7 @@ public class GroupService
     
     public async Task<bool> RemoveMemberFromGroup(int groupId, int memberId)
     {
-        var response = await _httpClient.DeleteAsJsonAsync($"api/groups/{groupId}", memberId);
+        var response = await _httpClient.DeleteAsJsonAsync($"api/groups/{groupId}/members/{memberId}");
         return response.IsSuccessStatusCode;
     }
 

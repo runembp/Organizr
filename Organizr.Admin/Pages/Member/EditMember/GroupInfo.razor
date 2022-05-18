@@ -1,5 +1,14 @@
 ﻿<Div>&nbsp;</Div>
 
+<Row>
+    <SearchBar/>
+    <Row Style="padding: 2rem" Flex="Flex.JustifyContent.Around">
+        <Button Color="Color.Primary" Clicked="OnAddMemberButton_Clicked">Tilføj Medlem</Button>
+    </Row>
+</Row>
+
+<Divider />
+
 @if (Member.Groups.IsNullOrEmpty())
 {
     <Heading Size="HeadingSize.Is5">
@@ -28,14 +37,8 @@ else
     </DataGrid>
 }
 
-
-<Snackbar @ref="_snackbarSuccess" Color="SnackbarColor.Success">
-    <SnackbarBody TextWeight="TextWeight.Bold">
-        @_groupToBeRemoved.Name er fjernet fra @Member.FirstName @Member.LastName 
-    </SnackbarBody>
-</Snackbar>
-
-<GroupInfoRemoveGroupFromMemberModal @ref="_removeGroupFromMemberModal" Member="Member" GroupToBeRemoved="_groupToBeRemoved" OnListContentChanged="OnListContentChanged" />
+<GroupInfoRemoveGroupFromMemberModal @ref="_removeGroupFromMemberModal" Member="Member" GroupToBeRemoved="_groupToBeRemoved" OnGroupRemoved="OnStateChanged" />
+<GroupInfoAddMemberToGroupModal @ref="_addMemberToGroupModal" Member="Member" OnGroupAdded="OnStateChanged"/>
 
 @code {
 
@@ -43,9 +46,10 @@ else
     public Member Member { get; set; } = new();
 
     private MemberGroup _groupToBeRemoved = new();
+    private MemberGroup _groupToBeAdded = new();
 
     private GroupInfoRemoveGroupFromMemberModal _removeGroupFromMemberModal = new();
-    private Snackbar _snackbarSuccess = new();
+    private GroupInfoAddMemberToGroupModal _addMemberToGroupModal = new();
 
     private Task OnEditMemberGroupLink_Clicked(int memberGroupId)
     {
@@ -58,12 +62,16 @@ else
         _groupToBeRemoved = Member.Groups.First(x => x.Id == groupId);
         await _removeGroupFromMemberModal.Show();
     }
-
-    private async Task OnListContentChanged()
+    
+    private async Task OnAddMemberButton_Clicked()
     {
-        Member.Groups.Remove(_groupToBeRemoved);
+        await _addMemberToGroupModal.Show();
+    }
+
+    private Task OnStateChanged()
+    {
         StateHasChanged();
-        await _snackbarSuccess.Show();
+        return Task.CompletedTask;
     }
 
 }
