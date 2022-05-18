@@ -46,8 +46,7 @@ public static class OrganizrDbContextSeed
             var organizationAdministrator = new Member
             {
                 UserName = organizationAdministratorEmail,
-                Email = organizationAdministratorEmail,
-                ConfigRefreshPrivilege = true,
+                Email = organizationAdministratorEmail
             };
 
             const string organizationAdminPassword = "Orgadmin1+";

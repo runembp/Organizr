@@ -13,6 +13,5 @@ namespace Organizr.Application.Commands
         public string Address { get; set; } = string.Empty;
         public Gender Gender { get; set; } = Gender.Undefined;
         public string PhoneNumber { get; set; } = string.Empty;
-        public bool ConfigRefreshPrivilege { get; set; }
     }
 }

@@ -25,11 +25,6 @@
         <DataGridColumn Field="@nameof(Member.Email)" Caption="Email"/>
         <DataGridColumn Field="@nameof(Member.Gender)" Caption="Køn"/>
         <DataGridColumn Field="@nameof(Member.PhoneNumber)" Caption="Telefon"/>
-        <DataGridColumn Field="@nameof(Member.ConfigRefreshPrivilege)" Caption="Opdaterings Rettigheder">
-            <DisplayTemplate>
-                <Check TValue="bool" Checked="context.ConfigRefreshPrivilege" Disabled="true"></Check>
-            </DisplayTemplate>
-        </DataGridColumn>
         <DataGridColumn Field="@nameof(Member.Id)" Caption="Administrer">
             <DisplayTemplate>
                 <Button Size="Size.Small" Color="Color.Danger" Clicked="() => OnDeleteMemberButton_Clicked(context.Id)">Slet</Button>
