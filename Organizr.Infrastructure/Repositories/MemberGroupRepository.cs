@@ -17,6 +17,18 @@ public class MemberGroupRepository : Repository<MemberGroup>, IMemberGroupReposi
         return Task.FromResult(group);
     }
 
+    public Task<List<MemberGroup>> GetMembergroupWhereMemberHasNoMembership(int memberId)
+    {
+        var member = _organizrContext.Users.FirstOrDefault(x => x.Id == memberId);
+
+        if (member is null)
+        {
+            return Task.FromResult(new List<MemberGroup>());
+        }
+
+        return _organizrContext.MemberGroups.Where(x => !x.Members.Contains(member)).ToListAsync();
+    }
+
     public Task<bool> GroupExists(string groupName)
     {
         var group = _organizrContext.MemberGroups.FirstOrDefault(x => x.Name == groupName);
