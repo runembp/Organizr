@@ -5,6 +5,7 @@ namespace Organizr.Application.Common.Interfaces;
 public interface IMemberGroupRepository : IRepository<MemberGroup>
 {
     public Task<MemberGroup?> GetMemberGroupWithMembers(int groupId);
+    public Task<List<MemberGroup>> GetMembergroupWhereMemberHasNoMembership(int memberId);
     public Task<bool> GroupExists(string groupName);
     Task<MemberGroup?> AddMemberToGroup(int groupId, int memberId);
     Task<MemberGroup?> RemoveMemberFromGroup(int groupId, int memberId);

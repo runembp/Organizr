@@ -10,6 +10,12 @@
     </ModalContent>
 </Modal>
 
+<Snackbar @ref="_snackbarSuccess" Color="SnackbarColor.Success">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        @GroupToBeRemoved.Name er fjernet fra @Member.FirstName @Member.LastName 
+    </SnackbarBody>
+</Snackbar>
+
 <Snackbar @ref="_snackbarError" Color="SnackbarColor.Danger">
     <SnackbarBody TextWeight="TextWeight.Bold">
         @GroupToBeRemoved.Name kunne ikke fjernes fra @Member.FirstName @Member.LastName
@@ -25,9 +31,10 @@
     public MemberGroup GroupToBeRemoved { get; set; } = new();
 
     [Parameter]
-    public EventCallback OnListContentChanged { get; set; }
+    public EventCallback OnGroupRemoved { get; set; }
 
     private Modal _removeMemberModal = new();
+    private Snackbar _snackbarSuccess = new();
     private Snackbar _snackbarError = new();
     
     public async Task Show()
@@ -45,8 +52,10 @@
             return;
         }
 
+        Member.Groups.Remove(GroupToBeRemoved);
         await _removeMemberModal.Hide();
-        await OnListContentChanged.InvokeAsync();
+        await OnGroupRemoved.InvokeAsync();
+        await _snackbarSuccess.Show();
     }
 
     private async Task OnCancelButton_Clicked()
