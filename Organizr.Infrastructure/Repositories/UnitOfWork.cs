@@ -12,9 +12,10 @@ public class UnitOfWork : IUnitOfWork
     public SignInManager<Member> SignInManager { get; }
     public IMemberRepository MemberRepository { get; }
     public IMemberGroupRepository GroupRepository { get; }
+    public IMembershipRepository MembershipRepository { get; }
     public IConfigurationRepository ConfigurationRepository { get; }
 
-    public UnitOfWork(OrganizrDbContext dbContext, UserManager<Member> userManager, SignInManager<Member> signInManager, IMemberGroupRepository memberGroupRepository, IMemberRepository memberRepository, IConfigurationRepository configurationRepository)
+    public UnitOfWork(OrganizrDbContext dbContext, UserManager<Member> userManager, SignInManager<Member> signInManager, IMemberGroupRepository memberGroupRepository, IMemberRepository memberRepository, IConfigurationRepository configurationRepository, IMembershipRepository membershipRepository)
     {
         _dbContext = dbContext;
         UserManager = userManager;
@@ -22,6 +23,7 @@ public class UnitOfWork : IUnitOfWork
         GroupRepository = memberGroupRepository;
         MemberRepository = memberRepository;
         ConfigurationRepository = configurationRepository;
+        MembershipRepository = membershipRepository;
     }
 
     public void Dispose()

@@ -7,12 +7,12 @@ using Organizr.Domain.Entities;
 
 namespace Organizr.Application.Handlers.CommandHandlers.Groups;
 
-public class CreateMemberGroupCommandHandler : IRequestHandler<CreateMemberGroupCommand, CreateMemberGroupResponse>
+public class CreateGroupCommandHandler : IRequestHandler<CreateMemberGroupCommand, CreateMemberGroupResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
-    public CreateMemberGroupCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    public CreateGroupCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;

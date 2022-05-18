@@ -5,7 +5,7 @@ using Organizr.Application.Responses.Groups;
 
 namespace Organizr.Application.Handlers.CommandHandlers.Groups;
 
-public class DeleteGroupHandler : IRequestHandler<DeleteMemberGroupCommand, DeleteMemberGroupResponse?>
+public class DeleteGroupHandler : IRequestHandler<DeleteMemberGroupCommand, DeleteMemberGroupResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -14,7 +14,7 @@ public class DeleteGroupHandler : IRequestHandler<DeleteMemberGroupCommand, Dele
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<DeleteMemberGroupResponse?> Handle(DeleteMemberGroupCommand command, CancellationToken cancellationToken)
+    public async Task<DeleteMemberGroupResponse> Handle(DeleteMemberGroupCommand command, CancellationToken cancellationToken)
     {
         var response = new DeleteMemberGroupResponse();
         var result = await _unitOfWork.GroupRepository.DeleteByIdAsync(command.Id);
