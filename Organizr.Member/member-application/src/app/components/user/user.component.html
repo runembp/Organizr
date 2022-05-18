@@ -14,7 +14,7 @@
 
                             <li class="list-group-item"><a class="dropdown-item" routerLink="../user">Profilinformation</a></li>
                             <li class="list-group-item"><a class="dropdown-item"
-                                routerLink="user/groups-overview" >Gruppeoversigt</a>
+                                (click)="navigate('overview')" role="button" >Gruppeoversigt</a>
                             </li>
 
                         </ul>
@@ -34,7 +34,6 @@
                         </ul>
                     </li>
 
-
                     <li class="dropdown">
                         <a href="#news" class="nav-link dropdown-toggle  text-truncate" data-bs-toggle="collapse"
                             aria-expanded="false" aria-controls="news">
@@ -50,7 +49,7 @@
             </div>
         </div>
         <div class="col content">
-            <router-outlet></router-outlet>
+            <router-outlet name="sidebar"></router-outlet>
         </div>
     </div>
 </div>

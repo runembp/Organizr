@@ -5,8 +5,6 @@ import { TokenStorageService } from './services/token-storage/token-storage.serv
 import { ConfigurationConstantsService } from './services/shared/configuration-constants.service';
 import { ToastrService } from 'ngx-toastr';
 
-
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

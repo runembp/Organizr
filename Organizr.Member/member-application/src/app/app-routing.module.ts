@@ -8,9 +8,9 @@ import { ContactUsFormComponent } from './components/contact-us-form/contact-us-
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { GroupsComponent } from './components/groups/groups.component';
 import { GroupComponent } from './components/group/group.component';
+import { UserComponent } from './components/user/user.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: 'sign-up', component: SignUpComponent },
   { path: 'about-us', component: AboutUsComponent },
   { path: 'contact-us', component: ContactUsComponent },
@@ -19,18 +19,24 @@ const routes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent },
   {
     path: 'user',
+    component: UserComponent,
     children: [
       {
-        path: 'groups-overview',
-        component: GroupsComponent
-      }, 
-      {
-        path: 'groups',
+        path: '',
+        outlet: 'sidebar',
         component: GroupComponent
+      },
+      {
+        path: 'overview',
+        outlet: 'sidebar',
+        component: GroupsComponent
       }
     ]
   },
 
+
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  
 
 ];
 
