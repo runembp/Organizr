@@ -57,6 +57,22 @@ export class ApiClientService {
     return this.http.get<any[]>(this.apiUrl + 'api/groups');
   }
 
+  removedMemberFromGroup(groupId: number, memberId: number): Observable<any> {
+    return this.http.delete(
+      this.apiUrl + `api/groups/${groupId}/members/${memberId}`,
+      this.httpOptions
+    ).pipe(
+      catchError(err => {
+        return throwError(() => {
+          this.notificationService.sendMessage({
+            message: err.error.error,
+            type: NotificationType.error
+          });
+        });
+      })
+    )
+  }
+
   addMemberToGroup(groupId: number, memberId: number): Observable<any> {
     return this.http.patch(
       this.apiUrl + `api/groups/${groupId}/members/${memberId}`,

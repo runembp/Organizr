@@ -15,14 +15,12 @@ export class GroupsComponent implements OnInit {
 
   loggedInUser: any;
   allGroups: any[] = [];
-
-  @Input()
   myGroups: any[] = [];
 
   ngOnInit(): void {
 
     this.loggedInUser = this.tokenStorage.getUser().id;
-
+    
     this.apiClient.getAllGroups().subscribe(groups => {
 
       this.apiClient.getMembersGroups(this.loggedInUser).subscribe(value => {
@@ -30,6 +28,8 @@ export class GroupsComponent implements OnInit {
         this.myGroups = value.groups;
         this.allGroups = groups.filter((x) => !this.myGroups.some(y => x.id === y.id) && x.isOpen === true);
       });
+
     });
+
   }
 }
