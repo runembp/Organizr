@@ -1,1 +1,11 @@
-<p>my-groups works!</p>
+<ul class="list-group list-group-flush">
+    <li class="list-group-item d-flex justify-content-between align-items-center"
+        *ngFor="let group of groups">
+        
+        {{group.name}}
+
+        <button (click)="leaveGroup(group.id, userId)" class="btn btn-danger">
+            Forlad
+        </button>
+    </li>
+</ul>
