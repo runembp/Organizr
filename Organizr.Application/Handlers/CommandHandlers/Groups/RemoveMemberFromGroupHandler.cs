@@ -5,7 +5,7 @@ using Organizr.Application.Responses.Groups;
 
 namespace Organizr.Application.Handlers.CommandHandlers.Groups;
 
-public class RemoveMemberFromGroupHandler : IRequestHandler<RemoveMemberFromGroupCommand, RemoveMemberFromMemberGroupResponse>
+public class RemoveMemberFromGroupHandler : IRequestHandler<RemoveMemberFromGroupCommand, RemoveMemberFromGroupResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -14,9 +14,9 @@ public class RemoveMemberFromGroupHandler : IRequestHandler<RemoveMemberFromGrou
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<RemoveMemberFromMemberGroupResponse> Handle(RemoveMemberFromGroupCommand command, CancellationToken cancellationToken)
+    public async Task<RemoveMemberFromGroupResponse> Handle(RemoveMemberFromGroupCommand command, CancellationToken cancellationToken)
     {
-        var response = new RemoveMemberFromMemberGroupResponse();
+        var response = new RemoveMemberFromGroupResponse();
         var result = await _unitOfWork.GroupRepository.RemoveMemberFromGroup(command.GroupId, command.MemberId);
 
         if (result is null)

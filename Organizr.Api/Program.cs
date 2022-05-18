@@ -3,10 +3,8 @@ using Organizr.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Database and Identity
 await DependencyInjection.SetUpDatabaseAndIdentity(builder);
-// Dependency injection
-ApiDependencyInjection.AddSharedDependencyInjections(builder);
+ApiDependencyInjection.AddDependencyInjections(builder);
 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore

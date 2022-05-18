@@ -5,11 +5,11 @@ using Organizr.Domain.Entities;
 
 namespace Organizr.Application.Handlers.RequestHandlers.Members;
 
-public class GetMemberWithGroupsById : IRequestHandler<GetMemberWithGroupsByIdRequest, Member?>
+public class GetMemberWithGroupsByIdHandler : IRequestHandler<GetMemberWithGroupsByIdRequest, Member?>
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public GetMemberWithGroupsById(IUnitOfWork unitOfWork)
+    public GetMemberWithGroupsByIdHandler(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
