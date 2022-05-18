@@ -11,12 +11,12 @@ namespace Organizr.Test.GroupMockData.CommandHandlers;
 
 public class CreateMemberGroupHandlerTests
 {
-    private readonly CreateMemberGroupCommandHandler _commandHandler;
+    private readonly CreateGroupCommandHandler _commandHandler;
 
     public CreateMemberGroupHandlerTests()
     {
         var mockUnitOfWork = MockSetup.GetUnitOfWork();
-        _commandHandler = new CreateMemberGroupCommandHandler(mockUnitOfWork, MockSetup.GetMapper());
+        _commandHandler = new CreateGroupCommandHandler(mockUnitOfWork, MockSetup.GetMapper());
     }
 
     [Fact]
