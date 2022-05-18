@@ -19,7 +19,7 @@
                         <div class="mb-3 col-6">
                             <label for="lastname" class="form-label">Efternavn</label>
                             <input type="text" class="form-control" id="lastname" formControlName="lastName"
-                                [ngClass]="{ 'is-invalid': submitted && f['firstName']?.errors }" />
+                                [ngClass]="{ 'is-invalid': submitted && f['lastName']?.errors }" />
 
                             <small *ngIf="
                             f['lastName']?.errors?.['containsOnlyWhiteSpaces'] || createUserForm.get('lastName')?.touched

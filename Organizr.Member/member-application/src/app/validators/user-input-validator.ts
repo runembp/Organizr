@@ -6,7 +6,7 @@ export class Validation {
     return (controls: AbstractControl) => {
       const control = controls.get(controlName);
       const checkControl = controls.get(checkControlName);
-   
+
       if (control?.value !== checkControl?.value) {
         controls.get(checkControlName)?.setErrors({ matching: true });
         return { matching: true };
@@ -17,14 +17,17 @@ export class Validation {
   }
 
   static noWhiteSpace(check: string): ValidatorFn {
+
     return (controls: AbstractControl) => {
       const control = controls.get(check);
 
       if ((control?.value as string).indexOf(' ') >= 0 && (control?.value as string).trim().length === 0) {
         controls.get(check)?.setErrors({ containsOnlyWhiteSpaces: true });
         return { containsOnlyWhiteSpaces: true };
+      } else {
+        return null;
       }
-      return null;
+
     }
   }
 }

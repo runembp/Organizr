@@ -22,6 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { GroupComponent } from './components/group/group.component';
 import { UserComponent } from './components/user/user.component';
+import { MemberProfileComponent } from './components/member-profile/member-profile.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { UserComponent } from './components/user/user.component';
     AllGroupsComponent,
     MyGroupsComponent,
     GroupComponent,
-    UserComponent
+    UserComponent,
+    MemberProfileComponent,
   ],
   imports: [
     BrowserModule,

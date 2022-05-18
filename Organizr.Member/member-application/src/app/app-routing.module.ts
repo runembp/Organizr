@@ -9,6 +9,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { GroupsComponent } from './components/groups/groups.component';
 import { GroupComponent } from './components/group/group.component';
 import { UserComponent } from './components/user/user.component';
+import { MemberProfileComponent } from './components/member-profile/member-profile.component';
 
 const routes: Routes = [
   { path: 'sign-up', component: SignUpComponent },
@@ -30,12 +31,18 @@ const routes: Routes = [
         path: 'overview',
         outlet: 'sidebar',
         component: GroupsComponent
-      }
+      },
+      {
+        path: 'profile',
+        outlet: 'sidebar',
+        component: MemberProfileComponent
+      },
     ]
   },
 
 
   { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '**', redirectTo: '/', pathMatch: 'full' },
   
 
 ];
