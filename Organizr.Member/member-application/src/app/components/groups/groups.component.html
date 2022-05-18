@@ -3,7 +3,7 @@
         <div class="col">
             <h3>Mine Grupper</h3>
             <hr>
-            <app-my-groups [userId]="loggedInUser" [groups]="myGroups"></app-my-groups>
+            <app-my-groups (memberIsRemovedFromGroup)="ngOnInit()" [userId]="loggedInUser" [groups]="myGroups"></app-my-groups>
         </div>
     </div>
 
