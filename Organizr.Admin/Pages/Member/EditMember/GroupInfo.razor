@@ -1,27 +1,69 @@
 ﻿<Div>&nbsp;</Div>
 
-<DataGrid TItem="@MemberGroup"
-          Data="@Member.Groups">
-    <DataGridColumns>
-        <DataGridColumn Field="@nameof(MemberGroup.Id)" Caption="Gruppe Id" Sortable="true">
-            <DisplayTemplate>
-                <Button Clicked="() => OnEditMemberGroupLink_Clicked(context.Id)" Color="Color.Link">@context.Id</Button>
-            </DisplayTemplate>
-        </DataGridColumn>
-        <DataGridColumn Field="@nameof(MemberGroup.Name)" Caption="Gruppe Navn" Sortable="true" />
-        <DataGridColumn Caption="Rolle" Sortable="true"></DataGridColumn>
-        <DataGridColumn Caption="Administrer" Sortable="true"></DataGridColumn>
-    </DataGridColumns>
-</DataGrid>
+@if (Member.Groups.IsNullOrEmpty())
+{
+    <Heading Size="HeadingSize.Is5">
+        (@Member.Id) @Member.FirstName @Member.LastName er ikke medlem af nogen grupper. 
+    </Heading>
+}
+else
+{
+    <DataGrid TItem="@MemberGroup"
+              Data="@Member.Groups"
+              RowSelectable="_ => false">
+        <DataGridColumns>
+            <DataGridColumn Field="@nameof(MemberGroup.Id)" Caption="Gruppe Id" Sortable="true">
+                <DisplayTemplate>
+                    <Button Clicked="() => OnEditMemberGroupLink_Clicked(context.Id)" Color="Color.Link">@context.Id</Button>
+                </DisplayTemplate>
+            </DataGridColumn>
+            <DataGridColumn Field="@nameof(MemberGroup.Name)" Caption="Gruppe Navn" Sortable="true" />
+            <DataGridColumn Caption="Rolle" Sortable="true"></DataGridColumn>
+            <DataGridColumn Field="@nameof(MemberGroup.Id)" Caption="Administrer">
+                <DisplayTemplate>
+                    <Button Size="Size.Small" Color="Color.Danger" Clicked="() => OnRemoveMemberFromGroupButton_Clicked(context.Id)">Fjern</Button>
+                </DisplayTemplate>
+            </DataGridColumn>
+        </DataGridColumns>
+    </DataGrid>
+}
+
+
+<Snackbar @ref="_snackbarSuccess" Color="SnackbarColor.Success">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        @_groupToBeRemoved.Name er fjernet fra @Member.FirstName @Member.LastName 
+    </SnackbarBody>
+</Snackbar>
+
+<GroupInfoRemoveGroupFromMemberModal @ref="_removeGroupFromMemberModal" Member="Member" GroupToBeRemoved="_groupToBeRemoved" OnListContentChanged="OnListContentChanged" />
 
 @code {
 
     [CascadingParameter]
     public Member Member { get; set; } = new();
 
+    private MemberGroup _groupToBeRemoved = new();
+
+    private GroupInfoRemoveGroupFromMemberModal _removeGroupFromMemberModal = new();
+    private Snackbar _snackbarSuccess = new();
+
     private Task OnEditMemberGroupLink_Clicked(int memberGroupId)
     {
         NavigationManager.NavigateTo($"/edit-group/{memberGroupId}");
         return Task.CompletedTask;
     }
+
+    private async Task OnRemoveMemberFromGroupButton_Clicked(int groupId)
+    {
+        _groupToBeRemoved = Member.Groups.First(x => x.Id == groupId);
+        await _removeGroupFromMemberModal.Show();
+    }
+
+    private async Task OnListContentChanged()
+    {
+        Member.Groups.Remove(_groupToBeRemoved);
+        StateHasChanged();
+        await _snackbarSuccess.Show();
+    }
+
 }

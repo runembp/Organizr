@@ -19,6 +19,11 @@ namespace Organizr.Infrastructure.Persistence
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            modelBuilder.Entity<MemberGroup>(entity =>
+            {
+                entity.HasIndex(group => group.Name).IsUnique();
+            });
         }
     }
 }
