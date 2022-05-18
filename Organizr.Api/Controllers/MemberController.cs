@@ -86,4 +86,25 @@ public class MemberController : ControllerBase
         return Ok(result);
     }
 
+
+    [HttpDelete("{memberId:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteMemberResponse))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> DeleteMemberById([FromRoute] int memberId)
+    {
+        if (memberId <= 0)
+        {
+            return BadRequest("Medlems id er ikke i et korrekt format");
+        }
+
+        var result = await _mediator.Send(new DeleteMemberCommand {MemberId = memberId});
+
+        if (!result.Succeeded)
+        {
+            return BadRequest(result);
+        }
+
+        return Ok(result);
+    }
+    
 }
