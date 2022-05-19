@@ -3,6 +3,10 @@ import { ApiClientService } from '../../services/api-client/api-client.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Validation } from '../../validators/user-input-validator';
 import { AbstractControl } from "@angular/forms";
+import { NotificationType } from 'src/app/notification.message';
+import { NotificationServiceService } from 'src/app/services/notification-message/notification-service.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-sign-up',
@@ -21,9 +25,10 @@ export class SignUpComponent implements OnInit {
   createUserForm: FormGroup;
   submitted = false;
 
-  constructor(private apiClient: ApiClientService) { }
+  constructor(private apiClient: ApiClientService, private notificationService: NotificationServiceService, private router: Router) { }
 
   ngOnInit(): void {
+
     this.createUserForm = new FormGroup({
       firstName: new FormControl('', Validators.required),
       lastName: new FormControl('', Validators.required),
@@ -56,8 +61,17 @@ export class SignUpComponent implements OnInit {
       gender: Number(this.createUserForm.get('gender')?.value)
     }
 
-    this.apiClient.createOrganizrUser(this.user).subscribe();
-    this.createUserForm.reset();
+    this.apiClient.createOrganizrUser(this.user).subscribe(response => {
+      if (response.succeeded) {
+        this.notificationService.sendMessage({
+          message: "Du profil er blevet oprettet - du kan nu logge ind.",
+          type: NotificationType.success
+        });
 
+        this.router.navigateByUrl('/login');
+      }
+      this.createUserForm.reset();
+    });
+    
   };
 }

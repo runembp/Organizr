@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { DataSharingService } from 'src/app/services/shared/data-sharing.service';
 
 const USER = 'user';
@@ -8,11 +9,12 @@ const USER = 'user';
 })
 export class TokenStorageService {
 
-  constructor(private dataSharing: DataSharingService) { }
+  constructor(private dataSharing: DataSharingService, private router: Router) { }
 
   public signOut(): void {
     window.localStorage.clear();
     this.dataSharing.isUserLoggedIn.next(false);
+    this.router.navigateByUrl('/');
   }
 
   public saveUser(user: any): void {

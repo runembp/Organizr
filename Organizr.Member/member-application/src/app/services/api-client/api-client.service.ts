@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { NotificationServiceService } from '../notification-message/notification-service.service';
 import { NotificationType } from 'src/app/notification.message';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class ApiClientService {
 
   private apiUrl = environment.baseUrl;
 
-  constructor(private http: HttpClient, private notificationService: NotificationServiceService) { }
+  constructor(private http: HttpClient, private notificationService: NotificationServiceService, private router: Router) { }
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -35,11 +36,38 @@ export class ApiClientService {
         this.apiUrl + 'api/members',
         JSON.stringify(user),
         this.httpOptions)
-      .pipe(retry(1), catchError(this.handleError));
+      .pipe(catchError(err => {
+        return throwError(() => {
+          this.notificationService.sendMessage({
+            message: err.error.error,
+            type: NotificationType.error
+          });
+        });
+      }));
   }
 
   getMembersGroups(memberId: number): Observable<any> {
     return this.http.get<any>(this.apiUrl + `api/members/${memberId}/groups`)
+  }
+
+  getMemberById(memberId: number): Observable<any> {
+    return this.http.get<any>(this.apiUrl + `api/members/${memberId}`);
+  }
+
+  deleteMemberById(memberId: number): Observable<any> {
+    return this.http.delete<any>(
+      this.apiUrl + `api/members/${memberId}`,
+      this.httpOptions
+    ).pipe(
+      catchError(err => {
+        return throwError(() => {
+          this.notificationService.sendMessage({
+            message: err.error.error,
+            type: NotificationType.error
+          });
+        });
+      })
+    )
   }
 
   // Login
@@ -49,7 +77,17 @@ export class ApiClientService {
       this.apiUrl + 'api/login',
       JSON.stringify(user),
       this.httpOptions)
-      .pipe(retry(1), catchError(this.handleError));
+      .pipe(catchError(err => {
+        return throwError(() => {
+          this.notificationService.sendMessage({
+            message: err.error.error,
+            type: NotificationType.error
+          });
+          if (err.status === 400) {
+            return this.router.navigateByUrl('/sign-up');
+          }
+        });
+      }));
   }
 
   // Groups
@@ -90,21 +128,4 @@ export class ApiClientService {
       );
   }
 
-
-  handleError(error: any) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      // Get client-side error
-      errorMessage = error.error.message;
-
-    } else {
-      // Get server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-
-    }
-    window.alert(errorMessage);
-    return throwError(() => {
-      return errorMessage;
-    });
-  }
 }

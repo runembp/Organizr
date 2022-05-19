@@ -15,13 +15,14 @@ import { DataSharingService } from './services/shared/data-sharing.service';
 import { ConfigurationConstantsService } from './services/shared/configuration-constants.service';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { ContactUsFormComponent } from './components/contact-us-form/contact-us-form.component';
-import { SideBarComponent } from './components/side-bar/side-bar.component';
 import { GroupsComponent } from './components/groups/groups.component';
 import { AllGroupsComponent } from './components/all-groups/all-groups.component';
 import { MyGroupsComponent } from './components/my-groups/my-groups.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { GroupComponent } from './components/group/group.component';
+import { UserComponent } from './components/user/user.component';
+import { MemberProfileComponent } from './components/member-profile/member-profile.component';
 
 
 @NgModule({
@@ -34,11 +35,12 @@ import { GroupComponent } from './components/group/group.component';
     AppNavbarComponent,
     ContactUsFormComponent,
     ResetPasswordComponent,
-    SideBarComponent,
     GroupsComponent,
     AllGroupsComponent,
     MyGroupsComponent,
-    GroupComponent
+    GroupComponent,
+    UserComponent,
+    MemberProfileComponent,
   ],
   imports: [
     BrowserModule,
