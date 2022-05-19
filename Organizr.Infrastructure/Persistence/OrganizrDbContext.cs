@@ -11,6 +11,7 @@ namespace Organizr.Infrastructure.Persistence
         public DbSet<Configuration> Configurations { get; set; }
         public DbSet<Membership> Memberships { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<NewsPost> NewsPosts { get; set; }
 
         public OrganizrDbContext(DbContextOptions<OrganizrDbContext> options) : base(options)
         {

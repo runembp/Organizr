@@ -9,6 +9,7 @@ public interface IUnitOfWork : IDisposable
     IMemberGroupRepository GroupRepository { get; }
     IMembershipRepository MembershipRepository { get; }
     IConfigurationRepository ConfigurationRepository { get; }
+    INewsPostRepository NewsRepository { get; }
     UserManager<Member> UserManager { get; }
     SignInManager<Member> SignInManager { get; }
 }

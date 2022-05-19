@@ -17,15 +17,17 @@ public static class ApiDependencyInjection
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         builder.Services.AddScoped<TokenHelperClass>();
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-        
+
         AddRepositories(builder);
     }
 
     private static void AddRepositories(WebApplicationBuilder builder)
     {
+
         builder.Services.AddScoped<IMemberRepository, MemberRepository>();
         builder.Services.AddScoped<IMemberGroupRepository, MemberGroupRepository>();
         builder.Services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
         builder.Services.AddScoped<IMembershipRepository, MembershipRepository>();
+        builder.Services.AddScoped<INewsPostRepository, NewsPostRepository>();
     }
 }
