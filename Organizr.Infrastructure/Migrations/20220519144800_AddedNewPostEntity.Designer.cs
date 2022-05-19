@@ -12,8 +12,8 @@ using Organizr.Infrastructure.Persistence;
 namespace Organizr.Infrastructure.Migrations
 {
     [DbContext(typeof(OrganizrDbContext))]
-    [Migration("20220519110904_AddedNewsEntity")]
-    partial class AddedNewsEntity
+    [Migration("20220519144800_AddedNewPostEntity")]
+    partial class AddedNewPostEntity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -304,7 +304,7 @@ namespace Organizr.Infrastructure.Migrations
                     b.ToTable("Memberships");
                 });
 
-            modelBuilder.Entity("Organizr.Domain.Entities.News", b =>
+            modelBuilder.Entity("Organizr.Domain.Entities.NewsPost", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -316,7 +316,7 @@ namespace Organizr.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreateAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsPublic")
@@ -325,7 +325,7 @@ namespace Organizr.Infrastructure.Migrations
                     b.Property<int?>("MemberId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Titel")
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -333,7 +333,7 @@ namespace Organizr.Infrastructure.Migrations
 
                     b.HasIndex("MemberId");
 
-                    b.ToTable("News");
+                    b.ToTable("NewsPost");
                 });
 
             modelBuilder.Entity("Organizr.Domain.Entities.OrganizrRole", b =>
@@ -476,10 +476,10 @@ namespace Organizr.Infrastructure.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("Organizr.Domain.Entities.News", b =>
+            modelBuilder.Entity("Organizr.Domain.Entities.NewsPost", b =>
                 {
                     b.HasOne("Organizr.Domain.Entities.Member", null)
-                        .WithMany("News")
+                        .WithMany("NewsPosts")
                         .HasForeignKey("MemberId");
                 });
 
@@ -487,7 +487,7 @@ namespace Organizr.Infrastructure.Migrations
                 {
                     b.Navigation("Memberships");
 
-                    b.Navigation("News");
+                    b.Navigation("NewsPosts");
                 });
 
             modelBuilder.Entity("Organizr.Domain.Entities.MemberGroup", b =>

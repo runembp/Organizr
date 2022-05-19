@@ -18,7 +18,7 @@ public class NewsController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<News>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<NewsPost>))]
     public async Task<IActionResult> GetAll()
     {
         var result = await _mediator.Send(new GetAllNewsRequest());

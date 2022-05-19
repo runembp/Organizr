@@ -17,6 +17,6 @@ namespace Organizr.Domain.Entities
         {
             return $"({Id}) {FirstName} {LastName}";
         }
-        public List<News> News { get; set; } = new();
+        public List<NewsPost> NewsPosts { get; set; } = new();
     }
 }
