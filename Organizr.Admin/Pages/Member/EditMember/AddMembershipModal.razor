@@ -58,7 +58,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _allGroups = await MemberService.GetAllGroupsMemberIsNotMemberOf(Member.Id);
+        _allGroups = await MembershipService.GetAllOpenGroupsMemberIsNotMemberOf(Member.Id);
     }
 
     private async Task OnAddGroupButton_Clicked()

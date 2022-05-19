@@ -56,7 +56,7 @@ public class MembershipController : ControllerBase
         return Ok(result);
     }
 
-    [HttpDelete("{membershipId:int}")]
+    [HttpDelete("members/{membershipId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteMembershipResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> DeleteMembership([FromRoute] int membershipId)
