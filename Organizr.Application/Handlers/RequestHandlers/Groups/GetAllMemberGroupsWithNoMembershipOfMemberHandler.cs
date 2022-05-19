@@ -5,7 +5,7 @@ using Organizr.Domain.Entities;
 
 namespace Organizr.Application.Handlers.RequestHandlers.Groups;
 
-public class GetAllMemberGroupsWithNoMembershipOfMemberHandler : IRequestHandler<GetAllMemberGroupsWithNoMembershipOfMemberRequest, List<MemberGroup>>
+public class GetAllMemberGroupsWithNoMembershipOfMemberHandler : IRequestHandler<GetAllMemberGroupsWithNoMembershipOfMemberRequest, List<MemberGroup>?>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -14,8 +14,8 @@ public class GetAllMemberGroupsWithNoMembershipOfMemberHandler : IRequestHandler
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<List<MemberGroup>> Handle(GetAllMemberGroupsWithNoMembershipOfMemberRequest request, CancellationToken cancellationToken)
+    public async Task<List<MemberGroup>?> Handle(GetAllMemberGroupsWithNoMembershipOfMemberRequest request, CancellationToken cancellationToken)
     {
-        return await _unitOfWork.GroupRepository.GetMembergroupWhereMemberHasNoMembership(request.MemberId);
+        return await _unitOfWork.GroupRepository.GetOpenMembergroupsWhereMemberHasNoMembership(request.MemberId);
     }
 }

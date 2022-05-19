@@ -58,6 +58,11 @@ public class GroupController : ControllerBase
         
         var result = await _mediator.Send(new GetAllMemberGroupsWithNoMembershipOfMemberRequest {MemberId = memberId});
 
+        if (result is null)
+        {
+            return BadRequest("Medlemmet findes ikke");
+        }
+
         return Ok(result);
     }
 

@@ -4,10 +4,10 @@
     <Button Color="Color.Primary" Clicked="OnAddMembershipButton_Clicked">Opret medlemsskab</Button>
 </Row>
 
-@if (Member.Groups.IsNullOrEmpty())
+@if (MembershipsList.IsNullOrEmpty())
 {
     <Heading Size="HeadingSize.Is5">
-        (@Member.Id) @Member.FirstName @Member.LastName har ikke nogen medlemsskaber
+        @Member.FullNameWithId() har ikke nogen medlemsskaber
     </Heading>
 }
 else
@@ -61,7 +61,7 @@ else
 
     private async Task OnRemoveMembershipButton_Clicked(int groupId)
     {
-        _membershipToRemove = Member.Memberships.First(x => x.Id == groupId);
+        _membershipToRemove = MembershipsList.First(x => x.Id == groupId);
         await _removeMembershipModal.Show();
     }
 
@@ -72,7 +72,7 @@ else
 
     private Task OnStateChanged()
     {
-        StateHasChanged();
+        MembershipsList.Remove(_membershipToRemove);
         return Task.CompletedTask;
     }
 

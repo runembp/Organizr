@@ -36,4 +36,9 @@ public class MembershipService
         var result = await _httpClient.DeleteAsJsonAsync($"api/memberships/members/{memberId}");
         return result.IsSuccessStatusCode;
     }
+
+    public async Task<List<MemberGroup>> GetAllOpenGroupsMemberIsNotMemberOf(int memberId)
+    {
+        return await _httpClient.GetFromJsonAsync<List<MemberGroup>>($"api/groups/no-membership/{memberId}") ?? new List<MemberGroup>();
+    }
 }

@@ -17,16 +17,23 @@ public class MemberGroupRepository : Repository<MemberGroup>, IMemberGroupReposi
         return Task.FromResult(group);
     }
 
-    public Task<List<MemberGroup>> GetMembergroupWhereMemberHasNoMembership(int memberId)
+    public async Task<List<MemberGroup>?> GetOpenMembergroupsWhereMemberHasNoMembership(int memberId)
     {
         var member = _organizrContext.Users.FirstOrDefault(x => x.Id == memberId);
 
         if (member is null)
         {
-            return Task.FromResult(new List<MemberGroup>());
+            return null;
         }
 
-        return _organizrContext.MemberGroups.Where(x => !x.Members.Contains(member)).ToListAsync();
+        var groups = await _organizrContext.MemberGroups
+            .Include(x => x.Memberships)
+            .ThenInclude(x => x.Member)
+            .Where(x => x.IsOpen)
+            .Where(x => x.Memberships.All(y => y.Member != member))
+            .ToListAsync();
+
+        return groups;
     }
 
     public Task<bool> GroupExists(string groupName)
