@@ -12,6 +12,11 @@ namespace Organizr.Domain.Entities
 
         public List<MemberGroup> Groups { get; set; } = new();
         public List<Membership> Memberships { get; set; } = new();
+        
+        public string FullNameWithId()
+        {
+            return $"({Id}) {FirstName} {LastName}";
+        }
         public List<News> News { get; set; } = new();
     }
 }

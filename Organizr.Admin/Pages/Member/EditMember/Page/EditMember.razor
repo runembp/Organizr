@@ -5,16 +5,12 @@
 <Tabs SelectedTab="@SelectedTab" SelectedTabChanged="OnSelectedTab_Changed" RenderMode="TabsRenderMode.LazyReload">
     <Items>
         <Tab Name="PersonInfo">Personinfo</Tab>
-        <Tab Name="GroupInfo">Grupper</Tab>
         <Tab Name="MembershipInfo">Medlemsskaber</Tab>
     </Items>
     <Content>
         <CascadingValue Value="Member">
             <TabPanel Name="PersonInfo">
                 <MemberInfo/>
-            </TabPanel>
-            <TabPanel Name="GroupInfo">
-                <GroupInfo/>
             </TabPanel>
             <TabPanel Name="MembershipInfo">
                 <Memberships/>
