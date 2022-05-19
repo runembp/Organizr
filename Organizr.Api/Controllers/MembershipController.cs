@@ -24,7 +24,7 @@ public class MembershipController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("member/{memberId:int}")]
+    [HttpGet("members/{memberId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Membership>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetMembershipsForMember([FromRoute] int memberId)
