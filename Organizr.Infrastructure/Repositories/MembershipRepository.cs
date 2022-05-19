@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Organizr.Application.Commands.Memberships;
 using Organizr.Application.Common.Interfaces;
 using Organizr.Domain.Entities;
 using Organizr.Infrastructure.Persistence;
@@ -11,11 +12,11 @@ public class MembershipRepository : Repository<Membership>, IMembershipRepositor
     {
     }
 
-    public async Task<Membership?> CreateNewMembership(int groupId, int memberId, int roleId)
+    public async Task<Membership?> CreateMembership(CreateMembershipCommand command)
     {
-        var group = _organizrContext.MemberGroups.FirstOrDefault(x => x.Id == groupId);
-        var member = _organizrContext.Users.FirstOrDefault(x => x.Id == memberId);
-        var role = _organizrContext.Roles.FirstOrDefault(x => x.Id == roleId);
+        var group = _organizrContext.MemberGroups.FirstOrDefault(x => x.Id == command.GroupId);
+        var member = _organizrContext.Users.FirstOrDefault(x => x.Id == command.MemberId);
+        var role = _organizrContext.Roles.FirstOrDefault(x => x.Id == command.RoleId);
 
         if (group is null || member is null || role is null)
         {

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Organizr.Application.Commands.Groups;
 using Organizr.Application.Common.Interfaces;
 using Organizr.Application.Responses.Groups;
@@ -24,14 +23,6 @@ public class AddMemberToMemberGroupHandler : IRequestHandler<AddMemberToMemberGr
         if (group is null || group.Id <= 0)
         {
             response.Error = "Der skete en fejl";
-            return response;
-        }
-        
-        var membership = await _unitOfWork.MembershipRepository.CreateNewMembership(request.GroupId, request.MemberId, 1);
-
-        if (membership is null)
-        {
-            response.Error = "Medlemsskabet kunne ikke oprettes";
             return response;
         }
         
