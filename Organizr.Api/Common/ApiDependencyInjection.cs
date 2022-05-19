@@ -13,12 +13,14 @@ using Organizr.Application.Handlers.RequestHandlers.Configurations;
 using Organizr.Application.Handlers.RequestHandlers.Groups;
 using Organizr.Application.Handlers.RequestHandlers.Members;
 using Organizr.Application.Handlers.RequestHandlers.Memberships;
+using Organizr.Application.Handlers.RequestHandlers.News;
 using Organizr.Application.HelperClasses;
 using Organizr.Application.Requests;
 using Organizr.Application.Requests.Configurations;
 using Organizr.Application.Requests.Groups;
 using Organizr.Application.Requests.Members;
 using Organizr.Application.Requests.Memberships;
+using Organizr.Application.Requests.News;
 using Organizr.Application.Responses;
 using Organizr.Application.Responses.Groups;
 using Organizr.Application.Responses.Member;
@@ -47,10 +49,12 @@ public static class ApiDependencyInjection
 
     private static void AddRepositories(WebApplicationBuilder builder)
     {
+
         builder.Services.AddScoped<IMemberRepository, MemberRepository>();
         builder.Services.AddScoped<IMemberGroupRepository, MemberGroupRepository>();
         builder.Services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
         builder.Services.AddScoped<IMembershipRepository, MembershipRepository>();
+        builder.Services.AddScoped<INewsRepository, NewsRepository>();
     }
 
     private static void AddMediatrRequests(WebApplicationBuilder builder)
@@ -74,6 +78,9 @@ public static class ApiDependencyInjection
         
         // Memberships
         builder.Services.AddTransient<IRequestHandler<GetAllMembershipsRequest, List<Membership>>, GetAllMembershipsHandler>();
+
+        // News
+        builder.Services.AddTransient<IRequestHandler<GetAllNewsRequest, List<News>>, GetAllNewRequestHandler>();
     }
 
     private static void AddMediatrCommands(WebApplicationBuilder builder)
