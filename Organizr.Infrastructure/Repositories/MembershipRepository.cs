@@ -1,4 +1,5 @@
-﻿using Organizr.Application.Common.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using Organizr.Application.Common.Interfaces;
 using Organizr.Domain.Entities;
 using Organizr.Infrastructure.Persistence;
 
@@ -31,5 +32,20 @@ public class MembershipRepository : Repository<Membership>, IMembershipRepositor
         var createdMembership = _organizrContext.Memberships.Add(membership);
         await _organizrContext.SaveChangesAsync();
         return createdMembership.Entity;
+    }
+
+    public async Task<List<Membership>?> GetMembershipsForMember(int memberId)
+    {
+        var member = await _organizrContext.Users.FirstOrDefaultAsync(x => x.Id == memberId);
+
+        if (member is null)
+        {
+            return null;
+        }
+        
+        return await _organizrContext.Memberships
+            .Where(x => x.Member == member)
+            .Include(x => x.MemberGroup)
+            .ToListAsync();
     }
 }
