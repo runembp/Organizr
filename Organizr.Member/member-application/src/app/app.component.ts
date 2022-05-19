@@ -4,6 +4,8 @@ import { DataSharingService } from './services/shared/data-sharing.service';
 import { TokenStorageService } from './services/token-storage/token-storage.service';
 import { ConfigurationConstantsService } from './services/shared/configuration-constants.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { AuthService } from './services/authentication/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -12,23 +14,12 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AppComponent implements OnInit {
 
-  loggedInUser: string;
-  isUserLoggedIn: boolean;
-
   constructor(private dataSharing: DataSharingService,
     private tokenStorage: TokenStorageService,
     private configService: ConfigurationConstantsService,
-    private apiClient: ApiClientService, private toastrService: ToastrService
-    ) {
-
-     
-    this.dataSharing.loggedInUser.subscribe(value => {
-      this.loggedInUser = value;
-    });
-
-    this.dataSharing.isUserLoggedIn.subscribe(value => {
-      this.isUserLoggedIn = value;
-    });
+    private apiClient: ApiClientService, private router: Router,
+    private authService: AuthService
+  ) {
 
     this.apiClient.getAllConfigurations().subscribe(configurations => {
       this.configService.organizationAddress.next(configurations.find(({ id }) => id === 1).stringValue);
@@ -54,8 +45,11 @@ export class AppComponent implements OnInit {
     const userData = this.tokenStorage.getUser();
 
     if (userData) {
+
       this.dataSharing.isUserLoggedIn.next(true);
       this.dataSharing.loggedInUser.next(userData.email);
+      this.authService.setUserIsAuthenticated(true);
+      this.router.navigate(["/user"]);
     }
 
   }

@@ -10,6 +10,7 @@ import { GroupsComponent } from './components/groups/groups.component';
 import { GroupComponent } from './components/group/group.component';
 import { UserComponent } from './components/user/user.component';
 import { MemberProfileComponent } from './components/member-profile/member-profile.component';
+import { AuthGuardService } from './services/authentication/auth-guard.service';
 
 const routes: Routes = [
   { path: 'sign-up', component: SignUpComponent },
@@ -19,23 +20,27 @@ const routes: Routes = [
   { path: 'contact-us-form', component: ContactUsFormComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
   {
+    canActivate: [AuthGuardService],
     path: 'user',
     component: UserComponent,
     children: [
       {
         path: '',
         outlet: 'sidebar',
-        component: GroupComponent
+        component: GroupComponent,
+        canActivateChild: [AuthGuardService]
       },
       {
         path: 'overview',
         outlet: 'sidebar',
-        component: GroupsComponent
+        component: GroupsComponent,
+        canActivateChild: [AuthGuardService]
       },
       {
         path: 'profile',
         outlet: 'sidebar',
-        component: MemberProfileComponent
+        component: MemberProfileComponent,
+        canActivateChild: [AuthGuardService]
       },
     ]
   },

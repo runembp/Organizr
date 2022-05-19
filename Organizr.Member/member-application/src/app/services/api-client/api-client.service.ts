@@ -83,9 +83,6 @@ export class ApiClientService {
             message: err.error.error,
             type: NotificationType.error
           });
-          if (err.status === 400) {
-            return this.router.navigateByUrl('/sign-up');
-          }
         });
       }));
   }
