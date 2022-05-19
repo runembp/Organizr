@@ -1,20 +1,79 @@
-﻿<h3>Memberships</h3>
+﻿<Div>&nbsp;</Div>
 
-@foreach (var membership in MembershipsList)
+<Row Style="padding: 2rem" Flex="Flex.JustifyContent.End">
+    <Button Color="Color.Primary" Clicked="OnAddMembershipButton_Clicked">Opret medlemsskab</Button>
+</Row>
+
+@if (Member.Groups.IsNullOrEmpty())
 {
-    <Paragraph>@membership.Id - @membership.Member.FirstName @membership.Member.LastName - @membership.MemberGroup.Name -  @membership.Role.Description </Paragraph>
+    <Heading Size="HeadingSize.Is5">
+        (@Member.Id) @Member.FirstName @Member.LastName har ikke nogen medlemsskaber
+    </Heading>
 }
+else
+{
+    <DataGrid TItem="Membership"
+              Data="@MembershipsList"
+              RowSelectable="_ => false">
+        <DataGridColumns>
+            <DataGridColumn Field="MemberGroup.Id" Caption="Gruppe Id" Sortable="true">
+                <DisplayTemplate>
+                    <Button Clicked="() => OnEditMemberGroupLink_Clicked(context.Id)" Color="Color.Link">@context.Id</Button>
+                </DisplayTemplate>
+            </DataGridColumn>
+            <DataGridColumn Field="MemberGroup.Name" Caption="Gruppe Navn" Sortable="true"/>
+            <DataGridColumn Field="Role.Description" Caption="Rolle" Sortable="true"/>
+            <DataGridColumn Field="MemberGroup.Id" Caption="Administrer">
+                <DisplayTemplate>
+                    <Button Size="Size.Small" Color="Color.Danger" Clicked="() => OnRemoveMembershipButton_Clicked(context.Id)">Fjern</Button>
+                </DisplayTemplate>
+            </DataGridColumn>
+        </DataGridColumns>
+    </DataGrid>
+}
+
+<RemoveMembershipModal @ref="_removeMembershipModal" Member="Member" MembershipToRemove="_membershipToRemove" OnGroupRemoved="OnStateChanged" />
+<AddMembershipModal @ref="_addMembershipModal" Member="Member" OnMembershipAdded="OnStateChanged"/>
 
 @code {
 
     [CascadingParameter]
-    public Member Member { get; set; }
+    public Member Member { get; set; } = new();
 
     private List<Membership> MembershipsList { get; set; } = new();
+    
+    private int _membershipId;
+    private Membership _membershipToRemove = new();
     
     protected override async Task OnInitializedAsync()
     {
         MembershipsList = await MembershipService.GetMembershipsForMember(Member.Id);
+    }
+
+    private RemoveMembershipModal _removeMembershipModal = new();
+    private AddMembershipModal _addMembershipModal = new();
+
+    private Task OnEditMemberGroupLink_Clicked(int memberGroupId)
+    {
+        NavigationManager.NavigateTo($"/edit-group/{memberGroupId}");
+        return Task.CompletedTask;
+    }
+
+    private async Task OnRemoveMembershipButton_Clicked(int groupId)
+    {
+        _membershipToRemove = Member.Memberships.First(x => x.Id == groupId);
+        await _removeMembershipModal.Show();
+    }
+
+    private async Task OnAddMembershipButton_Clicked()
+    {
+        await _addMembershipModal.Show();
+    }
+
+    private Task OnStateChanged()
+    {
+        StateHasChanged();
+        return Task.CompletedTask;
     }
 
 }

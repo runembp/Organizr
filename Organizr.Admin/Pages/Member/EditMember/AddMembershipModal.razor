@@ -1,7 +1,7 @@
 ﻿<Modal @ref="_addMemberModal">
     <ModalContent Centered>
         <ModalHeader>
-            Tilføj Gruppe til @Member.FirstName @Member.LastName
+            Opret medlemsskab for @Member.FullNameWithId()
         </ModalHeader>
         <ModalBody>
             <Field>
@@ -12,6 +12,10 @@
                         <SelectItem Value="group.Id">@group.Name</SelectItem>
                     }
                 </Select>
+            </Field>
+            <Field>
+                <FieldLabel>Administrator?</FieldLabel>
+                <Check TValue="bool" @bind-Checked="_administratorForGroup">Ja</Check>
             </Field>
         </ModalBody>
         <ModalFooter>
@@ -26,29 +30,31 @@
 
 <Snackbar @ref="_snackbarSuccess" Color="SnackbarColor.Success">
     <SnackbarBody TextWeight="TextWeight.Bold">
-        @_selectedGroup.Name er tilføjet til @Member.FirstName @Member.LastName
+        @Member.FullNameWithId() er tilføjet til @_selectedGroup.Name 
     </SnackbarBody>
 </Snackbar>
 
 <Snackbar @ref="_snackbarError" Color="SnackbarColor.Danger">
     <SnackbarBody TextWeight="TextWeight.Bold">
-        @_selectedGroup.Name kunne ikke tilføjes til @Member.FirstName @Member.LastName
+        @Member.FullNameWithId() kunne ikke tilføjes til @_selectedGroup.Name 
     </SnackbarBody>
 </Snackbar>
 
 @code {
     [Parameter]
     public Member Member { get; set; } = new();
-    
+
     [Parameter]
-    public EventCallback OnGroupAdded { get; set; }
+    public EventCallback OnMembershipAdded { get; set; }
 
     private List<MemberGroup> _allGroups = new();    
+    private MemberGroup _selectedGroup = new();
+    private int _selectedGroupId;
+    private bool _administratorForGroup;
+    
     private Modal _addMemberModal = new();
     private Snackbar _snackbarSuccess = new();
     private Snackbar _snackbarError = new();
-    private int _selectedGroupId;
-    private MemberGroup _selectedGroup = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -63,17 +69,19 @@
         }
         
         _selectedGroup = _allGroups.First(x => x.Id == _selectedGroupId);
-        var result = await GroupService.AddMemberToGroup(_selectedGroupId, Member.Id);
+
+        var roleId = _administratorForGroup ? (int) GroupRole.Administrator : (int) GroupRole.Basic;
+        var createdMembership = await MembershipService.AddMembership(_selectedGroupId, Member.Id, roleId);
         
-        if (!result)
+        if (createdMembership is null)
         {
             await _snackbarError.Show();
             return;
         }
 
-        Member.Groups.Add(_selectedGroup);
+        Member.Memberships.Add(createdMembership);
+        await OnMembershipAdded.InvokeAsync();
         await _addMemberModal.Hide();
-        await OnGroupAdded.InvokeAsync();
         await _snackbarSuccess.Show();
     }
 

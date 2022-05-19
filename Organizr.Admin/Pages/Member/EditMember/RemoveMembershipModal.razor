@@ -1,6 +1,6 @@
 ﻿<Modal @ref="_removeMemberModal">
     <ModalContent>
-        <ModalHeader>Fjern @Member.FirstName @Member.LastName fra @GroupToBeRemoved.Name?</ModalHeader>
+        <ModalHeader>Fjern @Member.FullNameWithId() fra @MembershipToRemove.MemberGroup.Name?</ModalHeader>
         <ModalBody>
             <Div>
                 <Button Color="Color.Danger" Clicked="OnRemoveButton_Clicked">Slet</Button>
@@ -12,13 +12,13 @@
 
 <Snackbar @ref="_snackbarSuccess" Color="SnackbarColor.Success">
     <SnackbarBody TextWeight="TextWeight.Bold">
-        @GroupToBeRemoved.Name er fjernet fra @Member.FirstName @Member.LastName 
+        @Member.FullNameWithId() er fjernet fra @MembershipToRemove.MemberGroup.Name
     </SnackbarBody>
 </Snackbar>
 
 <Snackbar @ref="_snackbarError" Color="SnackbarColor.Danger">
     <SnackbarBody TextWeight="TextWeight.Bold">
-        @GroupToBeRemoved.Name kunne ikke fjernes fra @Member.FirstName @Member.LastName
+        @Member.FullNameWithId() kunne ikke fjernes fra @MembershipToRemove.MemberGroup.Name
     </SnackbarBody>
 </Snackbar>
 
@@ -28,7 +28,7 @@
     public Member Member { get; set; } = new();
 
     [Parameter]
-    public MemberGroup GroupToBeRemoved { get; set; } = new();
+    public Membership MembershipToRemove { get; set; } = new();
 
     [Parameter]
     public EventCallback OnGroupRemoved { get; set; }
@@ -44,7 +44,7 @@
 
     private async Task OnRemoveButton_Clicked()
     {
-        var result = await GroupService.RemoveMemberFromGroup(GroupToBeRemoved.Id, Member.Id);
+        var result = await MembershipService.RemoveMembership(MembershipToRemove.Id);
 
         if (!result)
         {
@@ -52,7 +52,7 @@
             return;
         }
 
-        Member.Groups.Remove(GroupToBeRemoved);
+        Member.Memberships.Remove(MembershipToRemove);
         await _removeMemberModal.Hide();
         await OnGroupRemoved.InvokeAsync();
         await _snackbarSuccess.Show();
