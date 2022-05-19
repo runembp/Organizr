@@ -42,10 +42,11 @@ public class MembershipRepository : Repository<Membership>, IMembershipRepositor
         {
             return null;
         }
-        
+
         return await _organizrContext.Memberships
             .Where(x => x.Member == member)
             .Include(x => x.MemberGroup)
+            .Include(x => x.Role)
             .ToListAsync();
     }
 }

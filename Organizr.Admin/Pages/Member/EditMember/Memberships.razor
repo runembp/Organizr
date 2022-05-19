@@ -1,0 +1,20 @@
+﻿<h3>Memberships</h3>
+
+@foreach (var membership in MembershipsList)
+{
+    <Paragraph>@membership.Id - @membership.Member.FirstName @membership.Member.LastName - @membership.MemberGroup.Name -  @membership.Role.Description </Paragraph>
+}
+
+@code {
+
+    [CascadingParameter]
+    public Member Member { get; set; }
+
+    private List<Membership> MembershipsList { get; set; } = new();
+    
+    protected override async Task OnInitializedAsync()
+    {
+        MembershipsList = await MembershipService.GetMembershipsForMember(Member.Id);
+    }
+
+}
