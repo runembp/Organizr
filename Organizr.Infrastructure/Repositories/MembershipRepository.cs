@@ -14,7 +14,7 @@ public class MembershipRepository : Repository<Membership>, IMembershipRepositor
     {
         var group = _organizrContext.MemberGroups.FirstOrDefault(x => x.Id == groupId);
         var member = _organizrContext.Users.FirstOrDefault(x => x.Id == memberId);
-        var role = _organizrContext.GroupRoles.FirstOrDefault(x => x.Id == roleId);
+        var role = _organizrContext.Roles.FirstOrDefault(x => x.Id == roleId);
 
         if (group is null || member is null || role is null)
         {
@@ -25,7 +25,7 @@ public class MembershipRepository : Repository<Membership>, IMembershipRepositor
         {
             MemberGroup = group,
             Member = member,
-            GroupRole = role
+            Role = role
         };
 
         var createdMembership = _organizrContext.Memberships.Add(membership);
