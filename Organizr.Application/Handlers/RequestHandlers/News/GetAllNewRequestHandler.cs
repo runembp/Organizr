@@ -16,7 +16,7 @@ public class GetAllNewRequestHandler : IRequestHandler<GetAllNewsRequest, List<D
 
     public async Task<List<NewsPost>> Handle(GetAllNewsRequest request, CancellationToken cancellationToken)
     {
-        var news = await _unitOfWork.NewsRepository.GetAll();
-        return (List<NewsPost>)news;
+        var news = await _unitOfWork.NewsRepository.GetAllNewsPosts();
+        return news;
     }
 }

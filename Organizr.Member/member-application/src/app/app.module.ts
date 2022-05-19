@@ -23,7 +23,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { GroupComponent } from './components/group/group.component';
 import { UserComponent } from './components/user/user.component';
 import { MemberProfileComponent } from './components/member-profile/member-profile.component';
-
+import { PublicNewspostsComponent } from './components/public-newsposts/public-newsposts.component';
+import { DatePipe } from '@angular/common'
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { MemberProfileComponent } from './components/member-profile/member-profi
     GroupComponent,
     UserComponent,
     MemberProfileComponent,
+    PublicNewspostsComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,7 +54,7 @@ import { MemberProfileComponent } from './components/member-profile/member-profi
     BrowserAnimationsModule,
     ToastrModule.forRoot()
   ],
-  providers: [DataSharingService, ConfigurationConstantsService],
+  providers: [DataSharingService, ConfigurationConstantsService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

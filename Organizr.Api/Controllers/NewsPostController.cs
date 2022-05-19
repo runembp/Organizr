@@ -6,7 +6,7 @@ using Organizr.Domain.Entities;
 namespace Organizr.Api.Controllers;
 
 [ApiController]
-[Route("api/news")]
+[Route("api/newsposts")]
 public class NewsPostController : ControllerBase
 {
 
@@ -25,6 +25,4 @@ public class NewsPostController : ControllerBase
         return Ok(result);
     }
 
-
 }
-

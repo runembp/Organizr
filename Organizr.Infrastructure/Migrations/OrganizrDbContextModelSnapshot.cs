@@ -34,7 +34,7 @@ namespace Organizr.Infrastructure.Migrations
 
                     b.HasIndex("MembersId");
 
-                    b.ToTable("MemberMemberGroup");
+                    b.ToTable("MemberMemberGroup", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -165,7 +165,7 @@ namespace Organizr.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Configurations");
+                    b.ToTable("Configurations", (string)null);
                 });
 
             modelBuilder.Entity("Organizr.Domain.Entities.Member", b =>
@@ -271,7 +271,7 @@ namespace Organizr.Infrastructure.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("MemberGroups");
+                    b.ToTable("MemberGroups", (string)null);
                 });
 
             modelBuilder.Entity("Organizr.Domain.Entities.Membership", b =>
@@ -299,7 +299,7 @@ namespace Organizr.Infrastructure.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Memberships");
+                    b.ToTable("Memberships", (string)null);
                 });
 
             modelBuilder.Entity("Organizr.Domain.Entities.NewsPost", b =>
@@ -331,7 +331,7 @@ namespace Organizr.Infrastructure.Migrations
 
                     b.HasIndex("MemberId");
 
-                    b.ToTable("NewsPosts");
+                    b.ToTable("NewsPosts", (string)null);
                 });
 
             modelBuilder.Entity("Organizr.Domain.Entities.OrganizrRole", b =>
@@ -378,7 +378,7 @@ namespace Organizr.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("MemberMemberGroup", b =>
