@@ -4,9 +4,9 @@ using Organizr.Infrastructure.Persistence;
 
 namespace Organizr.Infrastructure.Repositories;
 
-public class NewsRepository : Repository<NewsPost>, INewsRepository
+public class NewsPostRepository : Repository<NewsPost>, INewsPostRepository
 {
-    public NewsRepository(OrganizrDbContext organizrDbContext) : base(organizrDbContext)
+    public NewsPostRepository(OrganizrDbContext organizrDbContext) : base(organizrDbContext)
     {
     }
 }

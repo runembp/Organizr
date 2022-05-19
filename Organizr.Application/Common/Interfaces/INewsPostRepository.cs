@@ -2,6 +2,6 @@
 
 namespace Organizr.Application.Common.Interfaces;
 
-public interface INewsRepository : IRepository<NewsPost>
+public interface INewsPostRepository : IRepository<NewsPost>
 {
 }

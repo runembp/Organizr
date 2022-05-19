@@ -7,12 +7,12 @@ namespace Organizr.Api.Controllers;
 
 [ApiController]
 [Route("api/news")]
-public class NewsController : ControllerBase
+public class NewsPostController : ControllerBase
 {
 
     private readonly IMediator _mediator;
 
-    public NewsController(IMediator mediator)
+    public NewsPostController(IMediator mediator)
     {
         _mediator = mediator;
     }

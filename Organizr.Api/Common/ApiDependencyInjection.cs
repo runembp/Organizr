@@ -28,6 +28,6 @@ public static class ApiDependencyInjection
         builder.Services.AddScoped<IMemberGroupRepository, MemberGroupRepository>();
         builder.Services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
         builder.Services.AddScoped<IMembershipRepository, MembershipRepository>();
-        builder.Services.AddScoped<INewsRepository, NewsRepository>();
+        builder.Services.AddScoped<INewsPostRepository, NewsPostRepository>();
     }
 }
