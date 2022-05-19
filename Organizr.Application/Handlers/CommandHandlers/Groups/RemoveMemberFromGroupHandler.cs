@@ -24,6 +24,14 @@ public class RemoveMemberFromGroupHandler : IRequestHandler<RemoveMemberFromGrou
             return response;
         }
 
+        var membership = _unitOfWork.MembershipRepository.GetAll().Result.FirstOrDefault(x => x.MemberGroup.Id == command.GroupId && x.Member.Id == command.MemberId);
+
+        if (membership is null)
+        {
+            return response;
+        }
+        
+        await _unitOfWork.MembershipRepository.DeleteAsync(membership);
         response.Succeeded = true;
         return response;
     }

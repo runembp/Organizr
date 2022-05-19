@@ -26,8 +26,15 @@ public class AddMemberToMemberGroupHandler : IRequestHandler<AddMemberToMemberGr
             response.Error = "Der skete en fejl";
             return response;
         }
+        
+        var membership = await _unitOfWork.MembershipRepository.CreateNewMembership(request.GroupId, request.MemberId, 1);
 
-
+        if (membership is null)
+        {
+            response.Error = "Medlemsskabet kunne ikke oprettes";
+            return response;
+        }
+        
         response.Succeeded = true;
         return response;
     }

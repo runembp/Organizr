@@ -12,8 +12,8 @@ using Organizr.Infrastructure.Persistence;
 namespace Organizr.Infrastructure.Migrations
 {
     [DbContext(typeof(OrganizrDbContext))]
-    [Migration("20220518115551_AddedMemberships")]
-    partial class AddedMemberships
+    [Migration("20220519071842_AddedMembershipsWithRoleTable")]
+    partial class AddedMembershipsWithRoleTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -170,22 +170,6 @@ namespace Organizr.Infrastructure.Migrations
                     b.ToTable("Configurations");
                 });
 
-            modelBuilder.Entity("Organizr.Domain.Entities.GroupRole", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GroupRoles");
-                });
-
             modelBuilder.Entity("Organizr.Domain.Entities.Member", b =>
                 {
                     b.Property<int>("Id")
@@ -300,22 +284,22 @@ namespace Organizr.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("GroupRoleId")
-                        .HasColumnType("int");
-
                     b.Property<int>("MemberGroupId")
                         .HasColumnType("int");
 
                     b.Property<int>("MemberId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("GroupRoleId");
+                    b.HasKey("Id");
 
                     b.HasIndex("MemberGroupId");
 
                     b.HasIndex("MemberId");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Memberships");
                 });
@@ -348,6 +332,23 @@ namespace Organizr.Infrastructure.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Organizr.Domain.Entities.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("MemberMemberGroup", b =>
@@ -418,12 +419,6 @@ namespace Organizr.Infrastructure.Migrations
 
             modelBuilder.Entity("Organizr.Domain.Entities.Membership", b =>
                 {
-                    b.HasOne("Organizr.Domain.Entities.GroupRole", "GroupRole")
-                        .WithMany()
-                        .HasForeignKey("GroupRoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Organizr.Domain.Entities.MemberGroup", "MemberGroup")
                         .WithMany("Memberships")
                         .HasForeignKey("MemberGroupId")
@@ -436,11 +431,17 @@ namespace Organizr.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("GroupRole");
+                    b.HasOne("Organizr.Domain.Entities.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Member");
 
                     b.Navigation("MemberGroup");
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("Organizr.Domain.Entities.Member", b =>

@@ -10,7 +10,7 @@ namespace Organizr.Infrastructure.Persistence
         public DbSet<MemberGroup> MemberGroups { get; set; }
         public DbSet<Configuration> Configurations { get; set; }
         public DbSet<Membership> Memberships { get; set; }
-        public DbSet<GroupRole> GroupRoles { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
         public OrganizrDbContext(DbContextOptions<OrganizrDbContext> options) : base(options)
         {
