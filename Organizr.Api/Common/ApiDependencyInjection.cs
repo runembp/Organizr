@@ -41,7 +41,7 @@ public static class ApiDependencyInjection
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         builder.Services.AddScoped<TokenHelperClass>();
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-        
+
         AddRepositories(builder);
         AddMediatrRequests(builder);
         AddMediatrCommands(builder);
@@ -61,26 +61,24 @@ public static class ApiDependencyInjection
     {
         // Login
         builder.Services.AddTransient<IRequestHandler<UserLoginRequest, UserLoginResponse>, UserLoginHandler>();
-        
+
         // Members
         builder.Services.AddTransient<IRequestHandler<GetAllMembersRequest, List<Member>>, GetAllMembersHandler>();
         builder.Services.AddTransient<IRequestHandler<GetMemberWithGroupsByIdRequest, Member?>, GetMemberWithGroupsByIdHandler>();
-        
+
         // Groups
         builder.Services.AddTransient<IRequestHandler<GetAllMemberGroupsRequest, List<MemberGroup>>, GetAllMemberGroupsHandler>();
         builder.Services.AddTransient<IRequestHandler<GetMemberGroupByIdRequest, MemberGroup>, GetMemberGroupByIdHandler>();
         builder.Services.AddTransient<IRequestHandler<GetMemberGroupWithMembersByIdRequest, MemberGroup?>, GetMemberGroupWithMembersByIdHandler>();
         builder.Services.AddTransient<IRequestHandler<GetAllMemberGroupsWithNoMembershipOfMemberRequest, List<MemberGroup>>, GetAllMemberGroupsWithNoMembershipOfMemberHandler>();
-        
+
         // Configurations
         builder.Services.AddTransient<IRequestHandler<GetAllConfigurationsRequest, List<Configuration>>, GetAllConfigurationsRequestHandler>();
         builder.Services.AddTransient<IRequestHandler<GetAllConfigurationsOfTypeRequest, List<Configuration>>, GetAllConfigurationsOfTypeHandler>();
-        
+
         // Memberships
         builder.Services.AddTransient<IRequestHandler<GetAllMembershipsRequest, List<Membership>>, GetAllMembershipsHandler>();
 
-        // News
-        builder.Services.AddTransient<IRequestHandler<GetAllNewsRequest, List<News>>, GetAllNewRequestHandler>();
     }
 
     private static void AddMediatrCommands(WebApplicationBuilder builder)
@@ -97,7 +95,7 @@ public static class ApiDependencyInjection
         builder.Services.AddTransient<IRequestHandler<DeleteMemberGroupCommand, DeleteMemberGroupResponse>, DeleteGroupHandler>();
         builder.Services.AddTransient<IRequestHandler<RemoveMemberFromGroupCommand, RemoveMemberFromGroupResponse>, RemoveMemberFromGroupHandler>();
         builder.Services.AddTransient<IRequestHandler<UpdateMemberGroupCommand, UpdateMemberGroupResponse>, UpdateMemberGroupHandler>();
-        
+
         // Configurations
         builder.Services.AddTransient<IRequestHandler<UpdateConfigurationsOfTypeCommand, List<Configuration>>, UpdateConfigurationsOfTypeHandler>();
     }
