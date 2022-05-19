@@ -4,6 +4,7 @@ import { ApiClientService } from '../../services/api-client/api-client.service';
 import { Router } from '@angular/router';
 import { TokenStorageService } from '../../services/token-storage/token-storage.service';
 import { DataSharingService } from '../../services/shared/data-sharing.service';
+import { AuthService } from 'src/app/services/authentication/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,11 @@ export class LoginComponent implements OnInit {
   loginUser: any;
   loggedInUser: any;
 
-  constructor(private apiClient: ApiClientService, private router: Router, private tokenStorage: TokenStorageService, private dataSharing: DataSharingService) { }
+  constructor(private apiClient: ApiClientService, 
+    private router: Router, 
+    private tokenStorage: TokenStorageService, 
+    private dataSharing: DataSharingService, 
+    private authService: AuthService) { }
 
   ngOnInit(): void {
 
@@ -54,7 +59,8 @@ export class LoginComponent implements OnInit {
         this.dataSharing.isUserLoggedIn.next(true);
         this.dataSharing.loggedInUser.next(this.tokenStorage.getUser().email);
 
-        return this.router.navigateByUrl('/user')
+        this.authService.setUserIsAuthenticated(true);
+        this.router.navigate(['/user']);
       };
     });
   }
