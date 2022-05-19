@@ -25,12 +25,12 @@ void RunBuilderSetup()
     
     //TODO Change in production
     builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri("https://localhost:7157")});
+    builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationStateProviderHelperClass>();
     builder.Services.AddScoped<MemberService>();
     builder.Services.AddScoped<GroupService>();
     builder.Services.AddScoped<ConfigurationService>();
-
-    builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationStateProviderHelperClass>();
     builder.Services.AddScoped<LoginService>();
+    builder.Services.AddScoped<MembershipService>();
 }
 
 void RunApplicationSetup()
