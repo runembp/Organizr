@@ -1,6 +1,6 @@
 ﻿<Modal @ref="_removeMemberModal">
     <ModalContent>
-        <ModalHeader>Fjern @Member.FirstName @Member.LastName fra @MembershipToRemove.MemberGroup.Name?</ModalHeader>
+        <ModalHeader>Fjern @Member.FullNameWithId() fra @MembershipToRemove.MemberGroup.Name?</ModalHeader>
         <ModalBody>
             <Div>
                 <Button Color="Color.Danger" Clicked="OnRemoveButton_Clicked">Slet</Button>
@@ -12,13 +12,13 @@
 
 <Snackbar @ref="_snackbarSuccess" Color="SnackbarColor.Success">
     <SnackbarBody TextWeight="TextWeight.Bold">
-        @Member.FirstName @Member.LastName er fjernet fra @MembershipToRemove.MemberGroup.Name
+        @Member.FullNameWithId() er fjernet fra @MembershipToRemove.MemberGroup.Name
     </SnackbarBody>
 </Snackbar>
 
 <Snackbar @ref="_snackbarError" Color="SnackbarColor.Danger">
     <SnackbarBody TextWeight="TextWeight.Bold">
-        @Member.FirstName @Member.LastName kunne ikke fjernes fra @MembershipToRemove.MemberGroup.Name
+        @Member.FullNameWithId() kunne ikke fjernes fra @MembershipToRemove.MemberGroup.Name
     </SnackbarBody>
 </Snackbar>
 
