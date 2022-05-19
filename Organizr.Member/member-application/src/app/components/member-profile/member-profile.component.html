@@ -1,0 +1,74 @@
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-8">
+            <div class="container">
+                <div class="row">
+                    <div class="mb-3 col-6">
+                        <label for="firstName" class="form-label">Fornavn</label>
+                        <input type="text" value="{{firstName}}" class="form-control" id="firstName" />
+                    </div>
+
+                    <div class="mb-3 col-6">
+                        <label for="lastname" class="form-label">Efternavn</label>
+                        <input type="text" value="{{lastName}}" class="form-control" id="lastname" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3 col-6">
+                        <label for="phoneNumber" class="form-label">Telefon</label>
+                        <input type="text" value="{{phoneNumber}}" class="form-control" id="phoneNumber" />
+                    </div>
+
+                    <div class="mb-3 col-6">
+                        <label for="gender" class="form-label">Køn</label>
+                        <input type="text" value="{{gender}}" class="form-control">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3 col-12">
+                        <label for="address">Adresse</label>
+                        <input type="text" value="{{address}}" class="form-control" id="address" />
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="mb-3 col-12">
+                        <label for="email">Email</label>
+                        <input type="email" value="{{email}}" class="form-control" id="email" />
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="mb-3 col-6">
+                        <label for="password" class="form-label">Adgangskode</label>
+                        <input type="password" class="form-control" id="password" />
+                    </div>
+
+                    <div class="mb-3 col-6">
+                        <label for="password2" class="form-label">Gentag Adgangskode</label>
+                        <input type="password" class="form-control" id="password2" />
+
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" type="submit">
+                    Opret
+                </button>
+            </div>
+            <div class="row mt-3 d-flex justify-content-center">
+                <div class="col-4  d-flex justify-content-center">
+                    <button class="btn btn-danger" (click)="deleteMember(loggedInUser)">
+                        Slet profil
+                    </button>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

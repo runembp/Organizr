@@ -12,16 +12,15 @@ export class AppNavbarComponent implements OnInit {
 
   isUserLoggedIn: boolean;
 
-  constructor(private dataSharing: DataSharingService, private tokenStorage: TokenStorageService, private router: Router) {
+  constructor(private dataSharing: DataSharingService, private tokenStorage: TokenStorageService) {
     this.dataSharing.isUserLoggedIn.subscribe(value => {
       this.isUserLoggedIn = value;
     });
-   }
+  }
 
-   signOut(): void {
-     this.tokenStorage.signOut();
-     this.router.navigateByUrl('/');
-   }
+  signOut(): void {
+    this.tokenStorage.signOut();
+  }
 
   ngOnInit(): void {
   }
