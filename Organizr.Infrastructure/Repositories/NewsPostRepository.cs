@@ -10,7 +10,7 @@ public class NewsPostRepository : Repository<NewsPost>, INewsPostRepository
     {
     }
 
-    public Task<List<NewsPost>> GetAllNewsPosts()
+    public Task<List<NewsPost>> GetAllPublicNewsPosts()
     {
         var newsposts = _organizrContext.NewsPosts
             .Join(_organizrContext.Users, newspost => newspost.Member.Id,
@@ -24,7 +24,7 @@ public class NewsPostRepository : Repository<NewsPost>, INewsPostRepository
                 IsPublic = newspost.IsPublic,
                 Member = member
 
-            }).ToList();
+            }).Where(n => n.IsPublic == true).ToList();
 
         return Task.FromResult(newsposts);
     }

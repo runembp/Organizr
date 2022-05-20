@@ -16,7 +16,7 @@ export class PublicNewspostsComponent implements OnInit {
 
   ngOnInit(): void {
     this.apiClient.getAllNewsPosts().subscribe(newsposts => {
-      this.newsposts = newsposts.filter(n => n.isPublic === true);
+      this.newsposts = newsposts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
       
       this.newsposts.map(n => {
         n.createdAt = this.convertDate(n.createdAt);
