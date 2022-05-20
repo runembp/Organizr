@@ -27,6 +27,11 @@ namespace Organizr.Infrastructure.Persistence
             {
                 entity.HasIndex(group => group.Name).IsUnique();
             });
+
+            modelBuilder.Entity<NewsPost>(entity =>
+            {
+                entity.Property(member => member.Id).IsRequired();
+            });
         }
     }
 }
