@@ -11,8 +11,10 @@ import { GroupComponent } from './components/group/group.component';
 import { UserComponent } from './components/user/user.component';
 import { MemberProfileComponent } from './components/member-profile/member-profile.component';
 import { AuthGuardService } from './services/authentication/auth-guard.service';
+import { PublicNewspostsComponent } from './components/public-newsposts/public-newsposts.component';
 
 const routes: Routes = [
+  { path: 'news', component: PublicNewspostsComponent },
   { path: 'sign-up', component: SignUpComponent },
   { path: 'about-us', component: AboutUsComponent },
   { path: 'contact-us', component: ContactUsComponent },
@@ -45,9 +47,9 @@ const routes: Routes = [
     ]
   },
 
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/news', pathMatch: 'full' },
   { path: '**', redirectTo: '/', pathMatch: 'full' },
-  
+
 ];
 
 @NgModule({

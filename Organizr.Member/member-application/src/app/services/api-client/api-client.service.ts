@@ -6,7 +6,6 @@ import { throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { NotificationServiceService } from '../notification-message/notification-service.service';
 import { NotificationType } from 'src/app/notification.message';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +14,7 @@ export class ApiClientService {
 
   private apiUrl = environment.baseUrl;
 
-  constructor(private http: HttpClient, private notificationService: NotificationServiceService, private router: Router) { }
+  constructor(private http: HttpClient, private notificationService: NotificationServiceService) { }
 
   httpOptions = {
     headers: new HttpHeaders({

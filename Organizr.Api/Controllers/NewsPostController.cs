@@ -6,7 +6,7 @@ using Organizr.Domain.Entities;
 namespace Organizr.Api.Controllers;
 
 [ApiController]
-[Route("api/news")]
+[Route("api/newsposts")]
 public class NewsPostController : ControllerBase
 {
 
@@ -21,10 +21,8 @@ public class NewsPostController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<NewsPost>))]
     public async Task<IActionResult> GetAll()
     {
-        var result = await _mediator.Send(new GetAllNewsRequest());
+        var result = await _mediator.Send(new GetAllPublicNewsPostsRequest());
         return Ok(result);
     }
 
-
 }
-
