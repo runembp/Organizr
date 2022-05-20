@@ -12,7 +12,6 @@ export class PublicNewspostsComponent implements OnInit {
   constructor(private apiClient: NewspostsApiClientService, public datepipe: DatePipe) { }
 
   newsposts: any[] = [];
-  bla: string;
 
   ngOnInit(): void {
     this.apiClient.getAllNewsPosts().subscribe(newsposts => {
