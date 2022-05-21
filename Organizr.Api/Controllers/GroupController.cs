@@ -46,6 +46,26 @@ public class GroupController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("no-membership/{memberId:int}/open")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<MemberGroup>))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetOpenMembergroupsWhereMemberHasNoMembership([FromRoute] int memberId)
+    {
+        if (memberId <= 0)
+        {
+            return BadRequest("Medlems Id er ikke udfyldt korrekt");
+        }
+        
+        var result = await _mediator.Send(new GetMemberGroupsWithNoMembershipOfMemberRequest {MemberId = memberId, OnlyOpenGroups = true});
+
+        if (result is null)
+        {
+            return BadRequest("Medlemmet findes ikke");
+        }
+
+        return Ok(result);
+    }
+    
     [HttpGet("no-membership/{memberId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<MemberGroup>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -56,13 +76,13 @@ public class GroupController : ControllerBase
             return BadRequest("Medlems Id er ikke udfyldt korrekt");
         }
         
-        var result = await _mediator.Send(new GetAllMemberGroupsWithNoMembershipOfMemberRequest {MemberId = memberId});
-
+        var result = await _mediator.Send(new GetMemberGroupsWithNoMembershipOfMemberRequest {MemberId = memberId, OnlyOpenGroups = false});
+    
         if (result is null)
         {
             return BadRequest("Medlemmet findes ikke");
         }
-
+    
         return Ok(result);
     }
 

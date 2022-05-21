@@ -1,4 +1,5 @@
-﻿using Organizr.Admin.Data.DTO;
+﻿using Newtonsoft.Json.Linq;
+using Organizr.Admin.Data.DTO;
 using Organizr.Admin.Data.HelperClasses;
 using Organizr.Domain.Entities;
 
@@ -28,17 +29,15 @@ public class MembershipService
         };
         
         var response = await _httpClient.PostAsJsonAsync("api/memberships", request);
-        return await response.Content.ReadFromJsonAsync<Membership>();
+
+        var result = await response.Content.ReadAsStringAsync();
+
+        return JObject.Parse(result)["createdMembership"]?.ToObject<Membership>();
     }
 
     public async Task<bool> RemoveMembership(int memberId)
     {
         var result = await _httpClient.DeleteAsJsonAsync($"api/memberships/members/{memberId}");
         return result.IsSuccessStatusCode;
-    }
-
-    public async Task<List<MemberGroup>> GetAllOpenGroupsMemberIsNotMemberOf(int memberId)
-    {
-        return await _httpClient.GetFromJsonAsync<List<MemberGroup>>($"api/groups/no-membership/{memberId}") ?? new List<MemberGroup>();
     }
 }

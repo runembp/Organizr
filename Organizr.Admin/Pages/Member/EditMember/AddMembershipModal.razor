@@ -45,6 +45,9 @@
     public Member Member { get; set; } = new();
 
     [Parameter]
+    public List<Membership> Memberships { get; set; } = new();
+    
+    [Parameter]
     public EventCallback OnMembershipAdded { get; set; }
 
     private List<MemberGroup> _allGroups = new();    
@@ -56,9 +59,9 @@
     private Snackbar _snackbarSuccess = new();
     private Snackbar _snackbarError = new();
 
-    protected override async Task OnInitializedAsync()
+    protected override async void OnAfterRender(bool firstRender)
     {
-        _allGroups = await MembershipService.GetAllOpenGroupsMemberIsNotMemberOf(Member.Id);
+        _allGroups = await GroupService.GetAllGroupsMemberIsNotMemberOf(Member.Id);
     }
 
     private async Task OnAddGroupButton_Clicked()
@@ -79,7 +82,7 @@
             return;
         }
 
-        Member.Memberships.Add(createdMembership);
+        Memberships.Add(createdMembership);
         await OnMembershipAdded.InvokeAsync();
         await _addMemberModal.Hide();
         await _snackbarSuccess.Show();
