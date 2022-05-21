@@ -6,5 +6,5 @@ namespace Organizr.Application.Requests.Groups;
 public class GetMemberGroupsWithNoMembershipOfMemberRequest : IRequest<List<MemberGroup>?>
 {
     public int MemberId { get; init; }
-    public bool OnlyOpenGroups { get; init; } = true;
+    public bool RequestOnlyOpenGroups { get; init; } = true;
 }

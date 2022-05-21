@@ -16,6 +16,6 @@ public class GetAllMemberGroupsWithNoMembershipOfMemberHandler : IRequestHandler
 
     public async Task<List<MemberGroup>?> Handle(GetMemberGroupsWithNoMembershipOfMemberRequest request, CancellationToken cancellationToken)
     {
-        return await _unitOfWork.GroupRepository.GetOpenMembergroupsWhereMemberHasNoMembership(request.MemberId, request.OnlyOpenGroups);
+        return await _unitOfWork.GroupRepository.GetOpenMembergroupsWhereMemberHasNoMembership(request.MemberId, request.RequestOnlyOpenGroups);
     }
 }

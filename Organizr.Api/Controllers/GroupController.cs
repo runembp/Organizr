@@ -56,7 +56,7 @@ public class GroupController : ControllerBase
             return BadRequest("Medlems Id er ikke udfyldt korrekt");
         }
         
-        var result = await _mediator.Send(new GetMemberGroupsWithNoMembershipOfMemberRequest {MemberId = memberId, OnlyOpenGroups = true});
+        var result = await _mediator.Send(new GetMemberGroupsWithNoMembershipOfMemberRequest {MemberId = memberId, RequestOnlyOpenGroups = true});
 
         if (result is null)
         {
@@ -76,7 +76,7 @@ public class GroupController : ControllerBase
             return BadRequest("Medlems Id er ikke udfyldt korrekt");
         }
         
-        var result = await _mediator.Send(new GetMemberGroupsWithNoMembershipOfMemberRequest {MemberId = memberId, OnlyOpenGroups = false});
+        var result = await _mediator.Send(new GetMemberGroupsWithNoMembershipOfMemberRequest {MemberId = memberId, RequestOnlyOpenGroups = false});
     
         if (result is null)
         {
