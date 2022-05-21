@@ -5,7 +5,7 @@ using Organizr.Domain.Entities;
 
 namespace Organizr.Application.Handlers.RequestHandlers.News;
 
-public class GetAllPublicNewsPostsRequestHandler : IRequestHandler<GetAllPublicNewsPostsRequest, List<Domain.Entities.NewsPost>>
+public class GetAllPublicNewsPostsRequestHandler : IRequestHandler<GetAllPublicNewsPostsRequest, List<NewsPost>>
 {
     private readonly IUnitOfWork _unitOfWork;
 
