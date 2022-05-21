@@ -22,7 +22,18 @@ else
                 </DisplayTemplate>
             </DataGridColumn>
             <DataGridColumn Field="MemberGroup.Name" Caption="Gruppe Navn" Sortable="true"/>
-            <DataGridColumn Field="Role.Description" Caption="Rolle" Sortable="true"/>
+            <DataGridColumn Field="@nameof(Membership.Id)" Caption="Rolle" Sortable="true" Editable>
+                <DisplayTemplate>
+                    <Row>
+                        <Column ColumnSize="ColumnSize.Is2">
+                            <Paragraph>@context.Role.Description</Paragraph>
+                        </Column>
+                        <Column ColumnSize="ColumnSize.Is1">
+                            <Button Size="Size.Small" Color="Color.Secondary" Clicked="() => OnEditRoleButton_Clicked(context.Id)">Rediger</Button>
+                        </Column>
+                    </Row>
+                </DisplayTemplate>
+            </DataGridColumn>
             <DataGridColumn Field="MemberGroup.Id" Caption="Administrer">
                 <DisplayTemplate>
                     <Button Size="Size.Small" Color="Color.Danger" Clicked="() => OnRemoveMembershipButton_Clicked(context.Id)">Fjern</Button>
@@ -32,8 +43,9 @@ else
     </DataGrid>
 }
 
-<RemoveMembershipModal @ref="_removeMembershipModal" Member="Member" Memberships="MembershipsList" MembershipToRemove="_membershipToRemove" OnGroupRemoved="OnStateChanged" />
+<RemoveMembershipModal @ref="_removeMembershipModal" Member="Member" Memberships="MembershipsList" MembershipToRemove="_membershipToRemove" OnGroupRemoved="OnStateChanged"/>
 <AddMembershipModal @ref="_addMembershipModal" Member="Member" Memberships="MembershipsList" OnMembershipAdded="OnStateChanged"/>
+<ChangeMembershipRole @ref="_changeMembershipRoleModal" Membership="_membershipToChangeRole" Memberships="MembershipsList" OnRoleChanged="OnStateChanged"/>
 
 @code {
 
@@ -41,17 +53,20 @@ else
     public Member Member { get; set; } = new();
 
     private List<Membership> MembershipsList { get; set; } = new();
-    
+
     private int _membershipId;
+    private int _changedRoleId;
+    private Membership _membershipToChangeRole = new();
     private Membership _membershipToRemove = new();
+
+    private RemoveMembershipModal _removeMembershipModal = new();
+    private AddMembershipModal _addMembershipModal = new();
+    private ChangeMembershipRole _changeMembershipRoleModal = new();
     
     protected override async Task OnInitializedAsync()
     {
         MembershipsList = await MembershipService.GetMembershipsForMember(Member.Id);
     }
-
-    private RemoveMembershipModal _removeMembershipModal = new();
-    private AddMembershipModal _addMembershipModal = new();
 
     private Task OnEditMemberGroupLink_Clicked(int memberGroupId)
     {
@@ -68,6 +83,12 @@ else
     private async Task OnAddMembershipButton_Clicked()
     {
         await _addMembershipModal.Show();
+    }
+
+    private async Task OnEditRoleButton_Clicked(int membershipId)
+    {
+        _membershipToChangeRole = MembershipsList.First(x => x.Id == membershipId);
+        await _changeMembershipRoleModal.Show();
     }
 
     private Task OnStateChanged()

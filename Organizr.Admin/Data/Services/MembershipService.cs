@@ -40,4 +40,10 @@ public class MembershipService
         var result = await _httpClient.DeleteAsJsonAsync($"api/memberships/members/{memberId}");
         return result.IsSuccessStatusCode;
     }
+
+    public async Task<bool> ChangeRoleInMembership(int roleId, int membershipId)
+    {
+        var response = await _httpClient.PatchAsJsonAsync($"api/memberships/{membershipId}", roleId);
+        return response.IsSuccessStatusCode;
+    }
 }
