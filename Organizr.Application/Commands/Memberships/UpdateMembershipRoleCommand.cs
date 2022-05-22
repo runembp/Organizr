@@ -5,6 +5,6 @@ namespace Organizr.Application.Commands.Memberships;
 
 public class UpdateMembershipRoleCommand : IRequest<UpdateMembershipRoleResponse>
 {
-    public int MembershipId { get; init; }
+    public int MembershipId { get; set; }
     public int RoleId { get; init; }
 }
