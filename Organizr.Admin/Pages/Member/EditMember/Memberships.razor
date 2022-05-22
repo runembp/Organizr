@@ -32,8 +32,8 @@ else
     </DataGrid>
 }
 
-<RemoveMembershipModal @ref="_removeMembershipModal" Member="Member" MembershipToRemove="_membershipToRemove" OnGroupRemoved="OnStateChanged" />
-<AddMembershipModal @ref="_addMembershipModal" Member="Member" OnMembershipAdded="OnStateChanged"/>
+<RemoveMembershipModal @ref="_removeMembershipModal" Member="Member" Memberships="MembershipsList" MembershipToRemove="_membershipToRemove" OnGroupRemoved="OnStateChanged" />
+<AddMembershipModal @ref="_addMembershipModal" Member="Member" Memberships="MembershipsList" OnMembershipAdded="OnStateChanged"/>
 
 @code {
 
@@ -72,8 +72,7 @@ else
 
     private Task OnStateChanged()
     {
-        MembershipsList.Remove(_membershipToRemove);
+        StateHasChanged();
         return Task.CompletedTask;
     }
-
 }
