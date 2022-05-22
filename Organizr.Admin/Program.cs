@@ -31,6 +31,7 @@ void RunBuilderSetup()
     builder.Services.AddScoped<ConfigurationService>();
     builder.Services.AddScoped<LoginService>();
     builder.Services.AddScoped<MembershipService>();
+    builder.Services.AddScoped<RoleService>();
 }
 
 void RunApplicationSetup()

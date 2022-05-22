@@ -1,77 +1,88 @@
 ﻿<Div>&nbsp;</Div>
 
-<Heading Size="HeadingSize.Is5">
-    Person Info
-</Heading>
+<CardDeck>
+    <Card ColumnSize="ColumnSize.Is8" Padding="Padding.Is0">
+        <CardHeader TextWeight="TextWeight.Bold">
+            Person Info
+        </CardHeader>
+        <CardBody>
+            <Fields>
+                <Field ColumnSize="ColumnSize.Is6">
+                    <FieldLabel>Fornavn</FieldLabel>
+                    <TextEdit @bind-Text="_firstName"/>
+                </Field>
 
-<Card ColumnSize="ColumnSize.Is8">
-    <Fields>
-        <Field ColumnSize="ColumnSize.Is6">
-            <FieldLabel>Fornavn</FieldLabel>
-            <TextEdit @bind-Text="_firstName"/>
-        </Field>
+                <Field ColumnSize="ColumnSize.Is6">
+                    <FieldLabel>Efternavn</FieldLabel>
+                    <TextEdit @bind-Text="_lastName"/>
+                </Field>
 
-        <Field ColumnSize="ColumnSize.Is6">
-            <FieldLabel>Efternavn</FieldLabel>
-            <TextEdit @bind-Text="_lastName"/>
-        </Field>
+                <Field ColumnSize="ColumnSize.Is6">
+                    <FieldLabel>Adresse</FieldLabel>
+                    <TextEdit @bind-Text="_address"/>
+                </Field>
 
-        <Field ColumnSize="ColumnSize.Is6">
-            <FieldLabel>Adresse</FieldLabel>
-            <TextEdit @bind-Text="_address"/>
-        </Field>
+                <Field ColumnSize="ColumnSize.Is6">
+                    <FieldLabel>Telefonnummer</FieldLabel>
+                    <TextEdit @bind-Text="_phoneNumber"/>
+                </Field>
 
-        <Field ColumnSize="ColumnSize.Is6">
-            <FieldLabel>Telefonnummer</FieldLabel>
-            <TextEdit @bind-Text="_phoneNumber"/>
-        </Field>
+                <Field ColumnSize="ColumnSize.Is12">
+                    <FieldLabel>Email</FieldLabel>
+                    <TextEdit @bind-Text="_email"/>
+                </Field>
 
-        <Field ColumnSize="ColumnSize.Is12">
-            <FieldLabel>Email</FieldLabel>
-            <TextEdit @bind-Text="_email"/>
-        </Field>
+                <Field ColumnSize="ColumnSize.Is6">
+                    <FieldLabel>Køn</FieldLabel>
+                    <Select TValue="Gender" @bind-SelectedValue="_gender">
+                        <SelectItem Value="Gender.Female">Kvinde</SelectItem>
+                        <SelectItem Value="Gender.Male">Mand</SelectItem>
+                        <SelectItem Value="Gender.Undefined">Udefineret</SelectItem>
+                    </Select>
+                </Field>
 
-        <Field ColumnSize="ColumnSize.Is6">
-            <FieldLabel>Køn</FieldLabel>
-            <Select TValue="Gender" @bind-SelectedValue="_gender">
-                <SelectItem Value="Gender.Female">Kvinde</SelectItem>
-                <SelectItem Value="Gender.Male">Mand</SelectItem>
-                <SelectItem Value="Gender.Undefined">Udefineret</SelectItem>
-            </Select>
-        </Field>
+                <Field ColumnSize="ColumnSize.Is6">
+                    <Field>
+                        <FieldLabel>Organisationsadministrator</FieldLabel>
+                        <Check TValue="bool" @bind-Checked="_organizationAdministratorCheckbox">Aktiv</Check>
+                        <FieldHelp>Dette vil gøre brugeren i stand til at logge ind på Administrations siden for Organizr</FieldHelp>
+                    </Field>
+                </Field>
 
-        <Field ColumnSize="ColumnSize.Is6">
-            <Div>&nbsp;</Div>
-        </Field>
-
-        <Button Color="Color.Primary" Clicked="OnSavePersonInfoButton_Clicked" Margin="Margin.Is3">Gem</Button>
-    </Fields>
-</Card>
+                <Button Color="Color.Primary" Clicked="OnSavePersonInfoButton_Clicked" Margin="Margin.Is3">Gem</Button>
+            </Fields>
+        </CardBody>
+    </Card>
+</CardDeck>
 
 <Div>&nbsp;</Div>
 
-<Heading Size="HeadingSize.Is5">
-    Password opsætning
-</Heading>
+<CardDeck>
+    <Card ColumnSize="ColumnSize.Is4" Padding="Padding.Is0">
+        <CardHeader TextWeight="TextWeight.Bold">
+            Password opsætning
+        </CardHeader>
+        <CardBody>
+            <Fields>
+                <Field>
+                    <FieldLabel>Password</FieldLabel>
+                    <TextEdit @bind-Text="_password"/>
+                </Field>
 
-<Card ColumnSize="ColumnSize.Is4">
-    <Fields>
-        <Field>
-            <FieldLabel>Password</FieldLabel>
-            <TextEdit @bind-Text="_password"/>
-        </Field>
+                <Field ColumnSize="ColumnSize.Is6">
+                    <FieldLabel>&nbsp;</FieldLabel>
+                    <Button Color="Color.Primary" Size="Size.Small">Generer nyt password</Button>
+                </Field>
 
-        <Field ColumnSize="ColumnSize.Is6" Margin="Margin.Is4">
-            <Button Color="Color.Primary">Generer nyt password</Button>
-        </Field>
-
-        <Field ColumnSize="ColumnSize.Is6">
-            <Div>&nbsp;</Div>
-            <Button Color="Color.Primary">Gem</Button>
-            <Button Color="Color.Primary">Gem og send</Button>
-        </Field>
-    </Fields>
-</Card>
+                <Field ColumnSize="ColumnSize.Is6">
+                    <Div>&nbsp;</Div>
+                    <Button Color="Color.Primary">Gem</Button>
+                    <Button Color="Color.Primary">Gem og send</Button>
+                </Field>
+            </Fields>
+        </CardBody>
+    </Card>
+</CardDeck>
 
 <Div>&nbsp;</Div>
 
@@ -111,13 +122,15 @@
     private string _email = string.Empty;
     private string _password = string.Empty;
     private Gender _gender;
+    private bool _organizationAdministratorCheckbox;
+    private bool _isMemberOrganizationAdministrator;
 
     private Snackbar _snackbarSuccess = new();
     private Snackbar _snackbarError = new();
     private Snackbar _snackbarDeleted = new();
     private RemoveMemberModal _removeMemberModal = new();
 
-    protected override Task OnParametersSetAsync()
+    protected override async Task OnParametersSetAsync()
     {
         _firstName = Member.FirstName;
         _lastName = Member.LastName;
@@ -125,7 +138,8 @@
         _phoneNumber = Member.PhoneNumber;
         _email = Member.Email;
         _gender = Member.Gender;
-        return Task.CompletedTask;
+        _isMemberOrganizationAdministrator = await RoleService.IsUserOrganizationAdministrator(Member.Id);
+        _organizationAdministratorCheckbox = _isMemberOrganizationAdministrator;
     }
 
     private async Task OnSavePersonInfoButton_Clicked()
@@ -138,6 +152,11 @@
         Member.Gender = _gender;
 
         var updateSucceeded = await MemberService.UpdateMember(Member);
+
+        if (_organizationAdministratorCheckbox != _isMemberOrganizationAdministrator)
+        {
+            updateSucceeded = await RoleService.UpdateMemberRole(Member.Id, _organizationAdministratorCheckbox);
+        }
 
         if (updateSucceeded)
         {
