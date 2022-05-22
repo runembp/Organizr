@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Organizr.Application.Commands.Roles;
 using Organizr.Application.Common.Interfaces;
-using Organizr.Application.Responses;
+using Organizr.Application.Responses.Roles;
 using Organizr.Domain.ApplicationConstants;
 
 namespace Organizr.Application.Handlers.CommandHandlers.Roles;

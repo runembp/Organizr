@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using MediatR;
-using Organizr.Application.Commands;
+using Organizr.Application.Commands.Members;
 using Organizr.Application.Common.Interfaces;
 using Organizr.Application.Responses.Member;
 using Organizr.Domain.ApplicationConstants;

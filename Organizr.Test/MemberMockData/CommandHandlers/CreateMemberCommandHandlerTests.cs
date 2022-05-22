@@ -1,11 +1,10 @@
-﻿using Organizr.Application.Commands;
-using Organizr.Application.Handlers.CommandHandlers;
+﻿using Organizr.Application.Handlers.CommandHandlers;
 using Organizr.Domain.Enums;
 using Organizr.Test.MockData;
 using Shouldly;
 using System.Threading;
 using System.Threading.Tasks;
-using Organizr.Domain.Entities;
+using Organizr.Application.Commands.Members;
 using Xunit;
 using Organizr.Application.Responses.Member;
 

@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Organizr.Application.Responses;
+using Organizr.Application.Responses.Roles;
 
 namespace Organizr.Application.Commands.Roles;
 

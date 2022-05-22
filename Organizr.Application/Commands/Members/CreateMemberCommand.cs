@@ -2,7 +2,7 @@
 using Organizr.Application.Responses.Member;
 using Organizr.Domain.Enums;
 
-namespace Organizr.Application.Commands
+namespace Organizr.Application.Commands.Members
 {
     public class CreateMemberCommand : IRequest<CreateMemberResponse>
     {

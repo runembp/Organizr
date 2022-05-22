@@ -33,6 +33,9 @@
 
         <FieldLabel>Email</FieldLabel>
         <TextEdit @bind-Text="_email" Role="TextRole.Email" Placeholder="Indtast email" />
+        
+        <FieldLabel>Tildel Organisationsadministrator rettigheder</FieldLabel>
+        <Check TValue="bool" @bind-Checked="_isOrganizationAdministrator">Aktiv</Check>
 
         <FieldLabel>Password</FieldLabel>
         <Field>
@@ -79,6 +82,7 @@
     private string _email = string.Empty;
     private string _password = string.Empty;
     private int _gender;
+    private bool _isOrganizationAdministrator;
     
     private Snackbar _snackbarSuccess = new();
     private Snackbar _snackbarError = new();
@@ -101,10 +105,22 @@
         if (createdMember is null)
         {
             await _snackbarError.Show();
+            return;
         }
-        else
+
+        var assignedMemberToRole = false;
+        
+        if (_isOrganizationAdministrator)
         {
-            await _snackbarSuccess.Show();
+            assignedMemberToRole = await RoleService.UpdateMemberRole(createdMember.Id, _isOrganizationAdministrator);
         }
+
+        if (!assignedMemberToRole)
+        {
+            await _snackbarError.Show();
+            return;
+        }
+        
+        await _snackbarSuccess.Show();
     }
 }

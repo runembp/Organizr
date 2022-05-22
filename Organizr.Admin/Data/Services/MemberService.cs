@@ -1,4 +1,5 @@
-﻿using Organizr.Admin.Data.HelperClasses;
+﻿using Newtonsoft.Json.Linq;
+using Organizr.Admin.Data.HelperClasses;
 using Organizr.Domain.Entities;
 
 namespace Organizr.Admin.Data.Services;
@@ -25,10 +26,10 @@ public class MemberService
         {
             return null;
         }
-        
-        var member = await response.Content.ReadFromJsonAsync<Member>();
-        
-        return member;
+
+        var result = await response.Content.ReadAsStringAsync();
+
+        return JObject.Parse(result)["createdMember"]?.ToObject<Member>();
     }
 
     public async Task<Member> GetMemberWithGroupsById(int memberId)
