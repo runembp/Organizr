@@ -50,4 +50,19 @@ public class MembershipRepository : Repository<Membership>, IMembershipRepositor
             .Include(x => x.Role)
             .ToListAsync();
     }
+
+    public async Task<Membership?> UpdateMembershipRole(int membershipId, int roleId)
+    {
+        var membership = await _organizrContext.Memberships.FirstOrDefaultAsync(x => x.Id == membershipId);
+        var role = await _organizrContext.Roles.FirstOrDefaultAsync(x => x.Id == roleId);
+        
+        if (membership is null || role is null)
+        {
+            return null;
+        }
+
+        membership.Role = role;
+        await _organizrContext.SaveChangesAsync();
+        return membership;
+    }
 }

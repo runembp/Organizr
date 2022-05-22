@@ -17,7 +17,7 @@ public class MemberGroupRepository : Repository<MemberGroup>, IMemberGroupReposi
         return Task.FromResult(group);
     }
 
-    public async Task<List<MemberGroup>?> GetOpenMembergroupsWhereMemberHasNoMembership(int memberId)
+    public async Task<List<MemberGroup>?> GetOpenMembergroupsWhereMemberHasNoMembership(int memberId, bool onlyOpenGroups)
     {
         var member = _organizrContext.Users.FirstOrDefault(x => x.Id == memberId);
 
@@ -29,9 +29,8 @@ public class MemberGroupRepository : Repository<MemberGroup>, IMemberGroupReposi
         var groups = await _organizrContext.MemberGroups
             .Include(x => x.Memberships)
             .ThenInclude(x => x.Member)
-            .Where(x => x.IsOpen)
-            .Where(x => x.Memberships.All(y => y.Member != member))
-            .ToListAsync();
+            .Where(x => !onlyOpenGroups || x.IsOpen)
+            .Where(x => x.Memberships.All(y => y.Member != member)).ToListAsync();
 
         return groups;
     }
