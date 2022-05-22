@@ -21,14 +21,14 @@ public class MembershipService
 
     public async Task<Membership?> AddMembership(int groupId, int memberId, int roleId)
     {
-        var request = new MembershipDTO
+        var command = new MembershipDTO
         {
             GroupId = groupId,
             MemberId = memberId,
             RoleId = roleId
         };
         
-        var response = await _httpClient.PostAsJsonAsync("api/memberships", request);
+        var response = await _httpClient.PostAsJsonAsync("api/memberships", command);
 
         var result = await response.Content.ReadAsStringAsync();
 
@@ -43,7 +43,13 @@ public class MembershipService
 
     public async Task<bool> ChangeRoleInMembership(int roleId, int membershipId)
     {
-        var response = await _httpClient.PatchAsJsonAsync($"api/memberships/{membershipId}", roleId);
+        var command = new MembershipRoleDTO
+        {
+            MembershipId = membershipId,
+            RoleId = roleId
+        };
+        
+        var response = await _httpClient.PatchAsJsonAsync($"api/memberships/{membershipId}", command);
         return response.IsSuccessStatusCode;
     }
 }

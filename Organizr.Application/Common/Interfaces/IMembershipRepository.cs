@@ -7,4 +7,5 @@ public interface IMembershipRepository : IRepository<Membership>
 {
     Task<Membership?> CreateMembership(CreateMembershipCommand command);
     Task<List<Membership>?> GetMembershipsForMember(int memberId);
+    Task<Membership?> UpdateMembershipRole(int membershipId, int roleId);
 }
