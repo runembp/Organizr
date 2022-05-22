@@ -22,6 +22,11 @@ public class GroupService
     {
         return await _httpClient.GetFromJsonAsync<MemberGroup>($"api/groups/{groupId}/members");
     }
+
+    public async Task<List<MemberGroup>> GetAllGroupsMemberIsNotMemberOf(int memberId)
+    {
+        return await _httpClient.GetFromJsonAsync<List<MemberGroup>>($"api/groups/no-membership/{memberId}") ?? new List<MemberGroup>();
+    }
     
     public async Task<MemberGroup?> CreateNewGroup(MemberGroup command)
     {
