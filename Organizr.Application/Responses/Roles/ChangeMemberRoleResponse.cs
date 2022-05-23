@@ -1,4 +1,4 @@
-﻿namespace Organizr.Application.Responses;
+﻿namespace Organizr.Application.Responses.Roles;
 
 public class ChangeMemberRoleResponse
 {

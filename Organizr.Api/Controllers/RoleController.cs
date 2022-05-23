@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Organizr.Application.Commands.Roles;
 using Organizr.Application.Requests.Roles;
-using Organizr.Application.Responses;
+using Organizr.Application.Responses.Roles;
 
 namespace Organizr.Api.Controllers;
 

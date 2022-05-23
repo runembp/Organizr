@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using MediatR;
-using Organizr.Application.Commands;
 using Organizr.Application.Common.Interfaces;
 using Organizr.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
+using Organizr.Application.Commands.Members;
 using Organizr.Application.Responses.Member;
 
 namespace Organizr.Application.Handlers.CommandHandlers;

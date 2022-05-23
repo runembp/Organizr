@@ -1,6 +1,6 @@
 using AutoMapper;
-using Organizr.Application.Commands;
 using Organizr.Application.Commands.Groups;
+using Organizr.Application.Commands.Members;
 using Organizr.Domain.Entities;
 using Organizr.Test.MockData;
 using Shouldly;
