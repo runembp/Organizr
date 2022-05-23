@@ -1,0 +1,93 @@
+﻿<Modal @ref="_modalRef">
+    <ModalContent>
+        <ModalBody>
+            <Paragraph>
+                Ændre rettighedsniveau for:
+            </Paragraph>
+            <Paragraph TextWeight="TextWeight.Bold">
+                @Membership.Member.FullNameWithId()
+            </Paragraph>
+            <Paragraph>
+                i Gruppen
+            </Paragraph>
+            <Paragraph TextWeight="TextWeight.Bold">
+                @Membership.MemberGroup.Name
+            </Paragraph>
+
+            <Select TValue="int" @bind-SelectedValue="@_selectedGroupRoleId">
+                <SelectItem Value="-1">Vælg Rolle</SelectItem>
+                <SelectItem Value="1">Administrator</SelectItem>
+                <SelectItem Value="2">Basic</SelectItem>
+            </Select>
+        </ModalBody>
+        <ModalFooter>
+            <Button Color="Color.Primary" Clicked="OnSaveButton_Clicked">Gem</Button>
+            <Button Color="Color.Secondary" Clicked="async () => await _modalRef.Hide()">Afbryd</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>
+
+<Snackbar @ref="_snackbarSuccess" Color="SnackbarColor.Success">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        @Membership.Member.FullNameWithId() er blevet tildelt rollen @Membership.Role.Description i gruppen @Membership.MemberGroup.Name
+    </SnackbarBody>
+</Snackbar>
+
+<Snackbar @ref="_snackbarError" Color="SnackbarColor.Danger">
+    <SnackbarBody TextWeight="TextWeight.Bold">
+        Ændring af rolle for @Membership.Member.FullNameWithId() i @Membership.MemberGroup.Name kunne ikke gennemføres
+    </SnackbarBody>
+</Snackbar>
+
+@code {
+
+    [Parameter]
+    public Membership Membership { get; set; } = new();
+
+    [Parameter]
+    public List<Membership> Memberships { get; set; } = new();
+
+    [Parameter]
+    public EventCallback OnRoleChanged { get; set; }
+
+    private Modal _modalRef = new();
+    private Snackbar _snackbarSuccess = new();
+    private Snackbar _snackbarError = new();
+
+    private int _selectedGroupRoleId;
+
+    protected override Task OnInitializedAsync()
+    {
+        _selectedGroupRoleId = Membership.Role.Id;
+        return Task.CompletedTask;
+    }
+
+    public async Task Show()
+    {
+        await _modalRef.Show();
+    }
+
+    private async Task OnSaveButton_Clicked()
+    {
+        var result = await MembershipService.ChangeRoleInMembership(_selectedGroupRoleId, Membership.Id);
+
+        if (_selectedGroupRoleId == -1)
+        {
+            return;
+        }
+
+        if (!result)
+        {
+            await _snackbarError.Show();
+            return;
+        }
+
+        var changedMembership = Memberships.First(x => x.Id == Membership.Id);
+        changedMembership.Role.Id = _selectedGroupRoleId;
+        changedMembership.Role.Description = _selectedGroupRoleId == 1 ? "Administrator" : "Basic";
+        await OnRoleChanged.InvokeAsync();
+        await _modalRef.Hide();
+        await _snackbarSuccess.Show();
+    }
+
+}

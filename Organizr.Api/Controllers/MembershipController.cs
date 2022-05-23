@@ -56,6 +56,27 @@ public class MembershipController : ControllerBase
         return Ok(result);
     }
 
+    [HttpPatch("{membershipId:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UpdateMembershipRoleResponse))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> ChangeRoleInMembership([FromRoute] int membershipId, [FromBody] UpdateMembershipRoleCommand command)
+    {
+        if (membershipId <= 0)
+        {
+            return BadRequest("Medlemsskabs Id'et er ikke udfyldt korrekt");
+        }
+
+        command.MembershipId = membershipId;
+        var result = await _mediator.Send(command);
+
+        if (!result.Succeeded)
+        {
+            return BadRequest(result);
+        }
+
+        return Ok(result);
+    }
+
     [HttpDelete("members/{membershipId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteMembershipResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

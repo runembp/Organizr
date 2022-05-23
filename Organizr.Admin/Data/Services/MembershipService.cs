@@ -1,4 +1,5 @@
-﻿using Organizr.Admin.Data.DTO;
+﻿using Newtonsoft.Json.Linq;
+using Organizr.Admin.Data.DTO;
 using Organizr.Admin.Data.HelperClasses;
 using Organizr.Domain.Entities;
 
@@ -20,15 +21,18 @@ public class MembershipService
 
     public async Task<Membership?> AddMembership(int groupId, int memberId, int roleId)
     {
-        var request = new MembershipDTO
+        var command = new MembershipDTO
         {
             GroupId = groupId,
             MemberId = memberId,
             RoleId = roleId
         };
         
-        var response = await _httpClient.PostAsJsonAsync("api/memberships", request);
-        return await response.Content.ReadFromJsonAsync<Membership>();
+        var response = await _httpClient.PostAsJsonAsync("api/memberships", command);
+
+        var result = await response.Content.ReadAsStringAsync();
+
+        return JObject.Parse(result)["createdMembership"]?.ToObject<Membership>();
     }
 
     public async Task<bool> RemoveMembership(int memberId)
@@ -37,8 +41,15 @@ public class MembershipService
         return result.IsSuccessStatusCode;
     }
 
-    public async Task<List<MemberGroup>> GetAllOpenGroupsMemberIsNotMemberOf(int memberId)
+    public async Task<bool> ChangeRoleInMembership(int roleId, int membershipId)
     {
-        return await _httpClient.GetFromJsonAsync<List<MemberGroup>>($"api/groups/no-membership/{memberId}") ?? new List<MemberGroup>();
+        var command = new MembershipRoleDTO
+        {
+            MembershipId = membershipId,
+            RoleId = roleId
+        };
+        
+        var response = await _httpClient.PatchAsJsonAsync($"api/memberships/{membershipId}", command);
+        return response.IsSuccessStatusCode;
     }
 }

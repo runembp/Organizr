@@ -31,6 +31,9 @@
     public Membership MembershipToRemove { get; set; } = new();
 
     [Parameter]
+    public List<Membership> Memberships { get; set; } = new();
+
+    [Parameter]
     public EventCallback OnGroupRemoved { get; set; }
 
     private Modal _removeMemberModal = new();
@@ -52,7 +55,7 @@
             return;
         }
 
-        Member.Memberships.Remove(MembershipToRemove);
+        Memberships.Remove(MembershipToRemove);
         await _removeMemberModal.Hide();
         await OnGroupRemoved.InvokeAsync();
         await _snackbarSuccess.Show();
