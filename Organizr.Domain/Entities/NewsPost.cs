@@ -8,4 +8,5 @@ public class NewsPost
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     public bool IsPublic { get; set; }
     public Member Member { get; set; } = new();
+    public MemberGroup MemberGroup { get; set; } = new();
 }

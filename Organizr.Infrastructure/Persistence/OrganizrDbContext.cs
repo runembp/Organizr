@@ -32,6 +32,11 @@ namespace Organizr.Infrastructure.Persistence
             {
                 entity.Property(member => member.Id).IsRequired();
             });
+
+            modelBuilder.Entity<NewsPost>()
+                .HasOne(n => n.MemberGroup)
+                .WithMany(mp =>mp.NewsPosts);
+            
         }
     }
 }
