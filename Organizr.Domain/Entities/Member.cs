@@ -10,13 +10,13 @@ namespace Organizr.Domain.Entities
         public string Address { get; set; } = string.Empty;
         public Gender Gender { get; set; } = Gender.Undefined;
 
-        public List<MemberGroup> Groups { get; set; } = new();
         public List<Membership> Memberships { get; set; } = new();
+        public List<NewsPost> NewsPosts { get; set; } = new();
         
         public string FullNameWithId()
         {
             return $"({Id}) {FirstName} {LastName}";
         }
-        public List<NewsPost> NewsPosts { get; set; } = new();
+        
     }
 }

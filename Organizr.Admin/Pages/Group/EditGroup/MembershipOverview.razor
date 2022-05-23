@@ -5,21 +5,21 @@
     </Row>
 </Row>
 
-<DataGrid TItem="Member"
-          Data="Group.Members">
+<DataGrid TItem="Membership"
+          Data="Group.Memberships">
     <DataGridColumns>
         <DataGridColumn Field="@nameof(Member.Id)" Sortable="true" Caption="Id">
             <DisplayTemplate>
                 <Button Clicked="() => OnEditMemberLink_Clicked(context.Id)" Color="Color.Link">@context.Id</Button>
             </DisplayTemplate>
         </DataGridColumn>
-        <DataGridColumn Field="@nameof(Member.FirstName)" Sortable="true" Caption="Fornavn"/>
-        <DataGridColumn Field="@nameof(Member.LastName)" Sortable="true" Caption="Efternavn"/>
-        <DataGridColumn Field="@nameof(Member.Gender)" Sortable="true" Caption="Køn"/>
-        <DataGridColumn Field="@nameof(Member.Address)" Sortable="true" Caption="Adresse"/>
-        <DataGridColumn Field="@nameof(Member.PhoneNumber)" Sortable="true" Caption="Telefon"/>
+        <DataGridColumn Field="Member.FirstName" Sortable="true" Caption="Fornavn"/>
+        <DataGridColumn Field="Member.LastName" Sortable="true" Caption="Efternavn"/>
+        <DataGridColumn Field="Member.Gender" Sortable="true" Caption="Køn"/>
+        <DataGridColumn Field="Member.Address" Sortable="true" Caption="Adresse"/>
+        <DataGridColumn Field="Member.PhoneNumber" Sortable="true" Caption="Telefon"/>
         <DataGridColumn Sortable="true">Rolle</DataGridColumn>
-        <DataGridColumn Field="@nameof(Member.Id)" Sortable="true" Caption="Administrer">
+        <DataGridColumn Field="Member.Id" Sortable="true" Caption="Administrer">
             <DisplayTemplate>
                 <Button Clicked="() => OnRemoveMemberButton_Clicked(context.Id)" Color="Color.Danger">Slet</Button>
             </DisplayTemplate>
@@ -27,9 +27,9 @@
     </DataGridColumns>
 </DataGrid>
 
-<MemberOverviewAddMemberModal @ref="_addMemberModal" Group="Group" OnGroupContentChanged="@OnMemberAdded"/>
+<MembershipOverviewAddMemberModal @ref="_addMemberModal" Group="Group" OnGroupContentChanged="@OnMemberAdded"/>
 
-<MemberOverviewRemoveMemberModal @ref="_removeMemberModal" Group="Group" OnGroupContentChanged="@OnMemberAdded" MemberToBeDeleted="MemberToBeDeleted"/>
+<MembershipOverviewRemoveMemberModal @ref="_removeMemberModal" Group="Group" OnGroupContentChanged="@OnMemberAdded" MembershipToBeDeleted="MembershipToBeDeleted"/>
 
 @code {
 
@@ -39,9 +39,9 @@
     [Parameter]
     public EventCallback OnMemberAdded { get; set; }
 
-    private MemberOverviewAddMemberModal? _addMemberModal;
-    private MemberOverviewRemoveMemberModal? _removeMemberModal;
-    private Member MemberToBeDeleted { get; set; } = new();
+    private MembershipOverviewAddMemberModal? _addMemberModal;
+    private MembershipOverviewRemoveMemberModal? _removeMemberModal;
+    private Membership MembershipToBeDeleted { get; set; } = new();
 
     private void OnEditMemberLink_Clicked(int memberId)
     {
@@ -55,7 +55,7 @@
 
     private async Task OnRemoveMemberButton_Clicked(int memberId)
     {
-        MemberToBeDeleted = Group.Members.First(x => x.Id == memberId);
+        MembershipToBeDeleted = Group.Memberships.FirstOrDefault(x => x.Member.Id == memberId)!;
         await _removeMemberModal!.Show();
     }
 

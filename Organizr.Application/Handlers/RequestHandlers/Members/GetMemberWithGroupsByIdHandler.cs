@@ -5,7 +5,7 @@ using Organizr.Domain.Entities;
 
 namespace Organizr.Application.Handlers.RequestHandlers.Members;
 
-public class GetMemberWithGroupsByIdHandler : IRequestHandler<GetMemberWithGroupsByIdRequest, Member?>
+public class GetMemberWithGroupsByIdHandler : IRequestHandler<GetMemberWithMembershipsByIdRequest, Member?>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -14,8 +14,8 @@ public class GetMemberWithGroupsByIdHandler : IRequestHandler<GetMemberWithGroup
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Member?> Handle(GetMemberWithGroupsByIdRequest request, CancellationToken cancellationToken)
+    public async Task<Member?> Handle(GetMemberWithMembershipsByIdRequest request, CancellationToken cancellationToken)
     {
-        return await _unitOfWork.MemberRepository.GetMemberWithGroupsById(request.MemberId);
+        return await _unitOfWork.MemberRepository.GetMemberWithMembershipsById(request.MemberId);
     }
 }

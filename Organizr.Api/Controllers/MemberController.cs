@@ -31,6 +31,14 @@ public class MemberController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("no-membership/{groupId:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Member>))]
+    public async Task<IActionResult> GetAllMembersWithNoMembershipInGroup([FromRoute] int groupId)
+    {
+        var result = await _mediator.Send(new GetAllMembersWithNoMembershipInGroupRequest {GroupId = groupId});
+        return Ok(result);
+    }
+
     [HttpGet("{memberId}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Member))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -54,14 +62,14 @@ public class MemberController : ControllerBase
     [HttpGet("{memberId:int}/groups")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Member))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetMemberWithGroupsById([FromRoute] int memberId)
+    public async Task<IActionResult> GetMemberWithMembershipsById([FromRoute] int memberId)
     {
         if (memberId <= 0)
         {
             return BadRequest("Medlems id er ikke i et korrekt format");
         }
 
-        var result = await _mediator.Send(new GetMemberWithGroupsByIdRequest {MemberId = memberId});
+        var result = await _mediator.Send(new GetMemberWithMembershipsByIdRequest {MemberId = memberId});
 
         if (result is null)
         {

@@ -16,9 +16,9 @@ else
               Data="@MembershipsList"
               RowSelectable="_ => false">
         <DataGridColumns>
-            <DataGridColumn Field="MemberGroup.Id" Caption="Gruppe Id" Sortable="true">
+            <DataGridColumn Field="MemberGroup.Id" Caption="Medlemskab Id" Sortable="true">
                 <DisplayTemplate>
-                    <Button Clicked="() => OnEditMemberGroupLink_Clicked(context.Id)" Color="Color.Link">@context.Id</Button>
+                    <Button Clicked="() => OnEditMemberGroupLink_Clicked(context.MemberGroup.Id)" Color="Color.Link">@context.MemberGroup.Id</Button>
                 </DisplayTemplate>
             </DataGridColumn>
             <DataGridColumn Field="MemberGroup.Name" Caption="Gruppe Navn" Sortable="true"/>
