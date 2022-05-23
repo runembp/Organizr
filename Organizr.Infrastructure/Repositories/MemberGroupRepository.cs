@@ -11,10 +11,9 @@ public class MemberGroupRepository : Repository<MemberGroup>, IMemberGroupReposi
     {
     }
 
-    public Task<MemberGroup?> GetMemberGroupWithMembers(int groupId)
+    public async Task<MemberGroup?> GetMemberGroupWithMembershipsById(int groupId)
     {
-        var group = _organizrContext.MemberGroups.Where(x => x.Id == groupId).Include(x => x.Members).FirstOrDefault();
-        return Task.FromResult(group);
+        return await _organizrContext.MemberGroups.Where(x => x.Id == groupId).Include(x => x.Memberships).FirstOrDefaultAsync();
     }
 
     public async Task<List<MemberGroup>?> GetOpenMembergroupsWhereMemberHasNoMembership(int memberId, bool onlyOpenGroups)
@@ -39,45 +38,6 @@ public class MemberGroupRepository : Repository<MemberGroup>, IMemberGroupReposi
     {
         var group = _organizrContext.MemberGroups.FirstOrDefault(x => x.Name == groupName);
         return Task.FromResult(group is not null);
-    }
-
-    public async Task<MemberGroup?> AddMemberToGroup(int groupId, int memberId)
-    {
-        var group = _organizrContext.MemberGroups.Include(x => x.Members).FirstOrDefault(x => x.Id == groupId);
-
-        if (group is null)
-        {
-            return null;
-        }
-
-        var member = _organizrContext.Users.FirstOrDefault(x => x.Id == memberId);
-
-        if (member is null || group.Members.Contains(member))
-        {
-            return null;
-        }
-
-        group.Members.Add(member);
-        member.Groups.Add(group);
-
-        await _organizrContext.SaveChangesAsync();
-
-        return group;
-    }
-
-    public async Task<MemberGroup?> RemoveMemberFromGroup(int groupId, int memberId)
-    {
-        var group = _organizrContext.MemberGroups.Where(x => x.Id == groupId).Include(x => x.Members).FirstOrDefault();
-        var member = group?.Members.FirstOrDefault(x => x.Id == memberId);
-
-        if (member is null)
-        {
-            return null;
-        }
-
-        group?.Members.Remove(member);
-        await _organizrContext.SaveChangesAsync();
-        return group;
     }
 
     public async Task<MemberGroup?> UpdateMemberGroup(MemberGroup memberGroup)

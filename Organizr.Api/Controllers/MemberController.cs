@@ -54,14 +54,14 @@ public class MemberController : ControllerBase
     [HttpGet("{memberId:int}/groups")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Member))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetMemberWithGroupsById([FromRoute] int memberId)
+    public async Task<IActionResult> GetMemberWithMembershipsById([FromRoute] int memberId)
     {
         if (memberId <= 0)
         {
             return BadRequest("Medlems id er ikke i et korrekt format");
         }
 
-        var result = await _mediator.Send(new GetMemberWithGroupsByIdRequest {MemberId = memberId});
+        var result = await _mediator.Send(new GetMemberWithMembershipsByIdRequest {MemberId = memberId});
 
         if (result is null)
         {
