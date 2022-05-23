@@ -8,10 +8,9 @@ namespace Organizr.Infrastructure.Repositories
     public class MemberRepository : Repository<Member>, IMemberRepository
     {
         public MemberRepository(OrganizrDbContext organizrContext) : base(organizrContext) { }
-        public Task<Member?> GetMemberWithGroupsById(int memberId)
+        public async Task<Member?> GetMemberWithMembershipsById(int memberId)
         {
-            var member = _organizrContext.Users.Where(x => x.Id == memberId).Include(x => x.Groups).FirstOrDefault();
-            return Task.FromResult(member);
+            return await _organizrContext.Users.Where(x => x.Id == memberId).Include(x => x.Memberships).FirstOrDefaultAsync();
         }
 
         public async Task<Member?> UpdateMember(Member updatedMember)
@@ -33,6 +32,16 @@ namespace Organizr.Infrastructure.Repositories
             await _organizrContext.SaveChangesAsync();
             
             return member;
+        }
+
+        public async Task<List<Member>> GetAllMembersWithNoMembershipInGroup(int groupId)
+        {
+            var result = await _organizrContext.Users
+                .Include(x => x.Memberships)
+                .Where(x => x.Memberships.All(y => y.MemberGroup.Id != groupId))
+                .ToListAsync();
+
+            return result;
         }
     }
 }

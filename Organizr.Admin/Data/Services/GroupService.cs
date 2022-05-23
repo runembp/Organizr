@@ -13,17 +13,17 @@ public class GroupService
         _httpClient = httpClient;
     }
 
-    public async Task<List<MemberGroup>?> GetAllGroups()
+    public async Task<List<MemberGroup>> GetAllGroups()
     {
-        return await _httpClient.GetFromJsonAsync<List<MemberGroup>>("api/groups");
+        return await _httpClient.GetFromJsonAsync<List<MemberGroup>>("api/groups") ?? new List<MemberGroup>();
     }
     
-    public async Task<MemberGroup?> GetMemberGroupWithMembersById(int groupId)
+    public async Task<MemberGroup?> GetMemberGroupWithMemberhipsById(int groupId)
     {
-        return await _httpClient.GetFromJsonAsync<MemberGroup>($"api/groups/{groupId}/members");
+        return await _httpClient.GetFromJsonAsync<MemberGroup>($"api/groups/{groupId}/memberships");
     }
 
-    public async Task<List<MemberGroup>> GetAllGroupsMemberIsNotMemberOf(int memberId)
+    public async Task<List<MemberGroup>> GetAllGroupsMemberHasNoMembershipIn(int memberId)
     {
         return await _httpClient.GetFromJsonAsync<List<MemberGroup>>($"api/groups/no-membership/{memberId}") ?? new List<MemberGroup>();
     }
@@ -38,18 +38,6 @@ public class GroupService
     {
         var response = await _httpClient.DeleteAsJsonAsync("api/groups", id);
         return response.StatusCode;
-    }
-
-    public async Task<bool> AddMemberToGroup(int groupId, int memberId)
-    {
-        var response = await _httpClient.PatchAsJsonAsync($"api/groups/{groupId}/members/{memberId}");
-        return response.IsSuccessStatusCode;
-    }
-    
-    public async Task<bool> RemoveMemberFromGroup(int groupId, int memberId)
-    {
-        var response = await _httpClient.DeleteAsJsonAsync($"api/groups/{groupId}/members/{memberId}");
-        return response.IsSuccessStatusCode;
     }
 
     public async Task<bool> UpdateMemberGroup(MemberGroup group)

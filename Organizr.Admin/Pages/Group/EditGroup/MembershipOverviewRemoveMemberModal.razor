@@ -1,7 +1,7 @@
 ﻿<Modal @ref="_removeMemberModalRef">
     <ModalContent>
         <ModalHeader>
-            Fjern (@MemberToBeDeleted.Id) @MemberToBeDeleted.FirstName @MemberToBeDeleted.LastName fra @Group.Name?
+            Fjern (@MembershipToBeDeleted.Member.Id) @MembershipToBeDeleted.Member.FirstName @MembershipToBeDeleted.Member.LastName fra @Group.Name?
         </ModalHeader>
         <ModalBody>
             <Div>
@@ -14,13 +14,13 @@
 
 <Snackbar @ref="_snackbarSuccess" Color="SnackbarColor.Success">
     <SnackbarBody TextWeight="TextWeight.Bold">
-        (@MemberToBeDeleted.Id) @MemberToBeDeleted.FirstName @MemberToBeDeleted.LastName er blevet fjernet fra @Group.Name
+        (@MembershipToBeDeleted.Member.Id) @MembershipToBeDeleted.Member.FirstName @MembershipToBeDeleted.Member.LastName er blevet fjernet fra @Group.Name
     </SnackbarBody>
 </Snackbar>
 
 <Snackbar @ref="_snackbarError" Color="SnackbarColor.Danger">
     <SnackbarBody TextWeight="TextWeight.Bold">
-        (@MemberToBeDeleted.Id) @MemberToBeDeleted.FirstName @MemberToBeDeleted.LastName kunne ikke fjernes fra @Group.Name 
+        (@MembershipToBeDeleted.Id) @MembershipToBeDeleted.Member.FirstName @MembershipToBeDeleted.Member.LastName kunne ikke fjernes fra @Group.Name 
     </SnackbarBody>
 </Snackbar>
 
@@ -30,7 +30,7 @@
     public MemberGroup Group { get; set; } = new();
 
     [Parameter]
-    public Member MemberToBeDeleted { get; set; } = new();
+    public Membership MembershipToBeDeleted { get; set; } = new();
 
     [Parameter]
     public EventCallback OnGroupContentChanged { get; set; }
@@ -46,7 +46,7 @@
 
     private async Task OnRemoveButton_Clicked()
     {
-        var success = await GroupService.RemoveMemberFromGroup(Group.Id, MemberToBeDeleted.Id);
+        var success = await MembershipService.RemoveMembership(MembershipToBeDeleted.Id);
 
         if (!success)
         {
@@ -54,8 +54,8 @@
             return;
         }
 
+        Group.Memberships.Remove(MembershipToBeDeleted);
         await _snackbarSuccess.Show();
-        Group.Members.Remove(MemberToBeDeleted);
         await OnGroupContentChanged.InvokeAsync();
         await _removeMemberModalRef!.Hide();
     }

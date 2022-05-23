@@ -3,7 +3,8 @@
 @attribute [Authorize]
 
 <Tabs SelectedTab="@_selectedTab"
-      SelectedTabChanged="@OnSelectedTab_Changed">
+      SelectedTabChanged="@OnSelectedTab_Changed"
+      RenderMode="TabsRenderMode.LazyReload">
     <Items>
         <Tab Name="GroupInfo">
             Gruppe informationer
@@ -17,7 +18,7 @@
             <EditGroupInformation Group="@SelectedGroup" OnGroupEdited="@GroupContentHasChanged"/>
         </TabPanel>
         <TabPanel Name="Members">
-            <MemberOverview Group="@SelectedGroup" OnMemberAdded="@GroupContentHasChanged"/>
+            <MembershipOverview Group="@SelectedGroup" OnMemberAdded="@GroupContentHasChanged"/>
         </TabPanel>
     </Content>
 </Tabs>
@@ -33,7 +34,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        SelectedGroup = await GroupService.GetMemberGroupWithMembersById(GroupId);
+        SelectedGroup = await GroupService.GetMemberGroupWithMemberhipsById(GroupId);
     }
 
     private Task OnSelectedTab_Changed(string tabName)
