@@ -2,6 +2,7 @@
 using Organizr.Application.Commands;
 using Organizr.Application.Commands.Groups;
 using Organizr.Application.Commands.Members;
+using Organizr.Application.Commands.NewsPosts;
 using Organizr.Domain.Entities;
 
 namespace Organizr.Application.Common.Mapper;
