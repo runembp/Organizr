@@ -13,7 +13,10 @@ public class MemberGroupRepository : Repository<MemberGroup>, IMemberGroupReposi
 
     public async Task<MemberGroup?> GetMemberGroupWithMembershipsById(int groupId)
     {
-        return await _organizrContext.MemberGroups.Where(x => x.Id == groupId).Include(x => x.Memberships).FirstOrDefaultAsync();
+        return await _organizrContext.MemberGroups.Where(x => x.Id == groupId)
+            .Include(x => x.Memberships)
+                .ThenInclude(x => x.Member)
+            .FirstOrDefaultAsync();
     }
 
     public async Task<List<MemberGroup>?> GetOpenMembergroupsWhereMemberHasNoMembership(int memberId, bool onlyOpenGroups)

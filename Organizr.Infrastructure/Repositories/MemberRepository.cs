@@ -33,5 +33,15 @@ namespace Organizr.Infrastructure.Repositories
             
             return member;
         }
+
+        public async Task<List<Member>> GetAllMembersWithNoMembershipInGroup(int groupId)
+        {
+            var result = await _organizrContext.Users
+                .Include(x => x.Memberships)
+                .Where(x => x.Memberships.All(y => y.MemberGroup.Id != groupId))
+                .ToListAsync();
+
+            return result;
+        }
     }
 }

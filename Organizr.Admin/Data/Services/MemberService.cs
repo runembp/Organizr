@@ -15,7 +15,12 @@ public class MemberService
 
     public async Task<List<Member>> GetAllMembers()
     {
-        return await _httpClient.GetFromJsonAsync<List<Member>>("api/members") ?? new List<Member>();
+        return await _httpClient.GetFromJsonAsync<List<Member>>($"api/members") ?? new List<Member>();
+    }
+
+    public async Task<List<Member>> GetAllMembersWithNoMembershipOfGroup(int groupId)
+    {
+        return await _httpClient.GetFromJsonAsync<List<Member>>($"api/members/no-membership/{groupId}") ?? new List<Member>();
     }
 
     public async Task<Member?> PostNewMember(object command)

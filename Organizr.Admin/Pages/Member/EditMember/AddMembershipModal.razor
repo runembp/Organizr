@@ -61,7 +61,7 @@
 
     protected override async void OnAfterRender(bool firstRender)
     {
-        _allGroups = await GroupService.GetAllGroupsMemberIsNotMemberOf(Member.Id);
+        _allGroups = await GroupService.GetAllGroupsMemberHasNoMembershipIn(Member.Id);
     }
 
     private async Task OnAddGroupButton_Clicked()

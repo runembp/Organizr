@@ -31,6 +31,14 @@ public class MemberController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("no-membership/{groupId:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Member>))]
+    public async Task<IActionResult> GetAllMembersWithNoMembershipInGroup([FromRoute] int groupId)
+    {
+        var result = await _mediator.Send(new GetAllMembersWithNoMembershipInGroupRequest {GroupId = groupId});
+        return Ok(result);
+    }
+
     [HttpGet("{memberId}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Member))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
