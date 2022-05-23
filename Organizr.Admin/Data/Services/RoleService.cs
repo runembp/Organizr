@@ -18,7 +18,7 @@ public class RoleService
 
     public async Task<bool> UpdateMemberRole(int memberId, bool setUserOrganizationAdministrator)
     {
-        var result = await _httpClient.PatchAsJsonAsync("api/roles/{memberId}", setUserOrganizationAdministrator);
+        var result = await _httpClient.PatchAsJsonAsync($"api/roles/{memberId}", setUserOrganizationAdministrator);
         return result.IsSuccessStatusCode;
     }
 }
