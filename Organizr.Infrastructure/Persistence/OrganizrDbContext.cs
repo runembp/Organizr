@@ -31,7 +31,9 @@ namespace Organizr.Infrastructure.Persistence
             modelBuilder.Entity<NewsPost>(entity =>
             {
                 entity.Property(member => member.Id).IsRequired();
+                entity.Property(memberGroup => memberGroup.Id).IsRequired();
             });
+
         }
     }
 }

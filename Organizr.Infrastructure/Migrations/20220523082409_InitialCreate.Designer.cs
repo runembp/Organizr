@@ -12,8 +12,8 @@ using Organizr.Infrastructure.Persistence;
 namespace Organizr.Infrastructure.Migrations
 {
     [DbContext(typeof(OrganizrDbContext))]
-    [Migration("20220519145641_AddedDbSetToContext")]
-    partial class AddedDbSetToContext
+    [Migration("20220523082409_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -322,7 +322,10 @@ namespace Organizr.Infrastructure.Migrations
                     b.Property<bool>("IsPublic")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("MemberId")
+                    b.Property<int>("MemberGroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MemberId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -330,6 +333,8 @@ namespace Organizr.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MemberGroupId");
 
                     b.HasIndex("MemberId");
 
@@ -478,9 +483,21 @@ namespace Organizr.Infrastructure.Migrations
 
             modelBuilder.Entity("Organizr.Domain.Entities.NewsPost", b =>
                 {
-                    b.HasOne("Organizr.Domain.Entities.Member", null)
+                    b.HasOne("Organizr.Domain.Entities.MemberGroup", "MemberGroup")
                         .WithMany("NewsPosts")
-                        .HasForeignKey("MemberId");
+                        .HasForeignKey("MemberGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Organizr.Domain.Entities.Member", "Member")
+                        .WithMany("NewsPosts")
+                        .HasForeignKey("MemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Member");
+
+                    b.Navigation("MemberGroup");
                 });
 
             modelBuilder.Entity("Organizr.Domain.Entities.Member", b =>
@@ -493,6 +510,8 @@ namespace Organizr.Infrastructure.Migrations
             modelBuilder.Entity("Organizr.Domain.Entities.MemberGroup", b =>
                 {
                     b.Navigation("Memberships");
+
+                    b.Navigation("NewsPosts");
                 });
 #pragma warning restore 612, 618
         }
