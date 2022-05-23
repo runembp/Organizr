@@ -16,7 +16,7 @@ public class NewsPostRepository : Repository<NewsPost>, INewsPostRepository
     {
         return await _organizrContext.NewsPosts
             .Include(x => x.Member)
-            // .Include(x => x.MemberGroup) -- Remove Comments once Membergroup is a part of NewsPosts
+            .Include(x => x.MemberGroup)
             .Where(x => x.IsPublic)
             .ToListAsync();
     }
@@ -25,7 +25,7 @@ public class NewsPostRepository : Repository<NewsPost>, INewsPostRepository
     {
         var member = _organizrContext.Users.FirstOrDefault(m => m.Id == command.MemberId);
         var group = _organizrContext.MemberGroups.FirstOrDefault(g => g.Id == command.MemberGroupId);
-        
+
         if (group is null || member is null)
         {
             return null;
