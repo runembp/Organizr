@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Organizr.Application.Commands.NewsPosts;
 using Organizr.Application.Requests.News;
+using Organizr.Application.Responses.NewsPost;
 using Organizr.Domain.Entities;
 
 namespace Organizr.Api.Controllers;
@@ -25,4 +27,19 @@ public class NewsPostController : ControllerBase
         return Ok(result);
     }
 
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CreateNewsPostResponse))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> CreateNewsPost([FromBody] CreateNewsPostCommand command)
+    {
+        var response = await _mediator.Send(command);
+
+        if (!response.Succeeded)
+        {
+            return BadRequest(response);
+        }
+
+        return CreatedAtAction(nameof(CreateNewsPost), response);
+
+    }
 }
