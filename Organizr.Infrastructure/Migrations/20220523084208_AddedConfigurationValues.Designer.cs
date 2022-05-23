@@ -12,8 +12,8 @@ using Organizr.Infrastructure.Persistence;
 namespace Organizr.Infrastructure.Migrations
 {
     [DbContext(typeof(OrganizrDbContext))]
-    [Migration("20220517143208_UniqueGroupNames")]
-    partial class UniqueGroupNames
+    [Migration("20220523084208_AddedConfigurationValues")]
+    partial class AddedConfigurationValues
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -189,9 +189,6 @@ namespace Organizr.Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("ConfigRefreshPrivilege")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -279,6 +276,71 @@ namespace Organizr.Infrastructure.Migrations
                     b.ToTable("MemberGroups");
                 });
 
+            modelBuilder.Entity("Organizr.Domain.Entities.Membership", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("MemberGroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MemberGroupId");
+
+                    b.HasIndex("MemberId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("Memberships");
+                });
+
+            modelBuilder.Entity("Organizr.Domain.Entities.NewsPost", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsPublic")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MemberGroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MemberGroupId");
+
+                    b.HasIndex("MemberId");
+
+                    b.ToTable("NewsPosts");
+                });
+
             modelBuilder.Entity("Organizr.Domain.Entities.OrganizrRole", b =>
                 {
                     b.Property<int>("Id")
@@ -307,6 +369,23 @@ namespace Organizr.Infrastructure.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Organizr.Domain.Entities.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("MemberMemberGroup", b =>
@@ -373,6 +452,66 @@ namespace Organizr.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Organizr.Domain.Entities.Membership", b =>
+                {
+                    b.HasOne("Organizr.Domain.Entities.MemberGroup", "MemberGroup")
+                        .WithMany("Memberships")
+                        .HasForeignKey("MemberGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Organizr.Domain.Entities.Member", "Member")
+                        .WithMany("Memberships")
+                        .HasForeignKey("MemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Organizr.Domain.Entities.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Member");
+
+                    b.Navigation("MemberGroup");
+
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("Organizr.Domain.Entities.NewsPost", b =>
+                {
+                    b.HasOne("Organizr.Domain.Entities.MemberGroup", "MemberGroup")
+                        .WithMany("NewsPosts")
+                        .HasForeignKey("MemberGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Organizr.Domain.Entities.Member", "Member")
+                        .WithMany("NewsPosts")
+                        .HasForeignKey("MemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Member");
+
+                    b.Navigation("MemberGroup");
+                });
+
+            modelBuilder.Entity("Organizr.Domain.Entities.Member", b =>
+                {
+                    b.Navigation("Memberships");
+
+                    b.Navigation("NewsPosts");
+                });
+
+            modelBuilder.Entity("Organizr.Domain.Entities.MemberGroup", b =>
+                {
+                    b.Navigation("Memberships");
+
+                    b.Navigation("NewsPosts");
                 });
 #pragma warning restore 612, 618
         }

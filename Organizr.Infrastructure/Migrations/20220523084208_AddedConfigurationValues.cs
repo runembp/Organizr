@@ -1,27 +1,25 @@
-﻿
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Organizr.Domain.Enums;
 
 #nullable disable
 
-using Microsoft.EntityFrameworkCore.Migrations;
-using Organizr.Domain.Enums;
-
 namespace Organizr.Infrastructure.Migrations
 {
-    public partial class Addconfigurationstoconfigurationstable : Migration
+    public partial class AddedConfigurationValues : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.InsertData(
-                table: "Configurations",
-                columns: new[] { "ConfigType", "Description", "StringValue", "BoolValue", "IdValue" },
-                values: new object[]
-                {
+               table: "Configurations",
+               columns: new[] { "ConfigType", "Description", "StringValue", "BoolValue", "IdValue" },
+               values: new object[]
+               {
                     (int) ConfigType.Configuration,
                     "Organization address",
                     null,
                     null,
                     null
-                });
+               });
 
             migrationBuilder.InsertData(
                 table: "Configurations",
@@ -198,6 +196,7 @@ namespace Organizr.Infrastructure.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+
         }
     }
 }

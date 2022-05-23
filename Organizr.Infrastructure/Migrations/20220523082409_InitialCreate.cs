@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -33,7 +34,6 @@ namespace Organizr.Infrastructure.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Gender = table.Column<int>(type: "int", nullable: false),
-                    ConfigRefreshPrivilege = table.Column<bool>(type: "bit", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -77,12 +77,25 @@ namespace Organizr.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     IsOpen = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MemberGroups", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Roles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Roles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -191,6 +204,93 @@ namespace Organizr.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "MemberMemberGroup",
+                columns: table => new
+                {
+                    GroupsId = table.Column<int>(type: "int", nullable: false),
+                    MembersId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MemberMemberGroup", x => new { x.GroupsId, x.MembersId });
+                    table.ForeignKey(
+                        name: "FK_MemberMemberGroup_AspNetUsers_MembersId",
+                        column: x => x.MembersId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MemberMemberGroup_MemberGroups_GroupsId",
+                        column: x => x.GroupsId,
+                        principalTable: "MemberGroups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NewsPosts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsPublic = table.Column<bool>(type: "bit", nullable: false),
+                    MemberId = table.Column<int>(type: "int", nullable: false),
+                    MemberGroupId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NewsPosts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_NewsPosts_AspNetUsers_MemberId",
+                        column: x => x.MemberId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_NewsPosts_MemberGroups_MemberGroupId",
+                        column: x => x.MemberGroupId,
+                        principalTable: "MemberGroups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Memberships",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MemberGroupId = table.Column<int>(type: "int", nullable: false),
+                    MemberId = table.Column<int>(type: "int", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Memberships", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Memberships_AspNetUsers_MemberId",
+                        column: x => x.MemberId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Memberships_MemberGroups_MemberGroupId",
+                        column: x => x.MemberGroupId,
+                        principalTable: "MemberGroups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Memberships_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -229,6 +329,42 @@ namespace Organizr.Infrastructure.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MemberGroups_Name",
+                table: "MemberGroups",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MemberMemberGroup_MembersId",
+                table: "MemberMemberGroup",
+                column: "MembersId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Memberships_MemberGroupId",
+                table: "Memberships",
+                column: "MemberGroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Memberships_MemberId",
+                table: "Memberships",
+                column: "MemberId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Memberships_RoleId",
+                table: "Memberships",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NewsPosts_MemberGroupId",
+                table: "NewsPosts",
+                column: "MemberGroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NewsPosts_MemberId",
+                table: "NewsPosts",
+                column: "MemberId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -252,13 +388,25 @@ namespace Organizr.Infrastructure.Migrations
                 name: "Configurations");
 
             migrationBuilder.DropTable(
-                name: "MemberGroups");
+                name: "MemberMemberGroup");
+
+            migrationBuilder.DropTable(
+                name: "Memberships");
+
+            migrationBuilder.DropTable(
+                name: "NewsPosts");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "Roles");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "MemberGroups");
         }
     }
 }

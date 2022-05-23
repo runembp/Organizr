@@ -320,6 +320,9 @@ namespace Organizr.Infrastructure.Migrations
                     b.Property<bool>("IsPublic")
                         .HasColumnType("bit");
 
+                    b.Property<int>("MemberGroupId")
+                        .HasColumnType("int");
+
                     b.Property<int>("MemberId")
                         .HasColumnType("int");
 
@@ -328,6 +331,8 @@ namespace Organizr.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MemberGroupId");
 
                     b.HasIndex("MemberId");
 
@@ -476,6 +481,12 @@ namespace Organizr.Infrastructure.Migrations
 
             modelBuilder.Entity("Organizr.Domain.Entities.NewsPost", b =>
                 {
+                    b.HasOne("Organizr.Domain.Entities.MemberGroup", "MemberGroup")
+                        .WithMany("NewsPosts")
+                        .HasForeignKey("MemberGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Organizr.Domain.Entities.Member", "Member")
                         .WithMany("NewsPosts")
                         .HasForeignKey("MemberId")
@@ -483,6 +494,8 @@ namespace Organizr.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Member");
+
+                    b.Navigation("MemberGroup");
                 });
 
             modelBuilder.Entity("Organizr.Domain.Entities.Member", b =>
@@ -495,6 +508,8 @@ namespace Organizr.Infrastructure.Migrations
             modelBuilder.Entity("Organizr.Domain.Entities.MemberGroup", b =>
                 {
                     b.Navigation("Memberships");
+
+                    b.Navigation("NewsPosts");
                 });
 #pragma warning restore 612, 618
         }
