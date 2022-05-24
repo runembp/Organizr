@@ -17,7 +17,7 @@ public class Create : BaseApiEndpoint
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [SwaggerOperation(
         Summary = "Creates a new member",
-        Tags = new [] {"MemberEndpoint"})]
+        Tags = new [] {"Members"})]
     public async Task<IActionResult> Handle([FromBody] CreateMemberCommand command)
     {
         var result = await Mediator.Send(command);
