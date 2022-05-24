@@ -27,47 +27,7 @@ export class ApiClientService {
   getAllConfigurations(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl + 'api/configurations/');
   }
-
-  // Member
-  createOrganizrUser(user: any): Observable<any> {
-    return this.http
-      .post<any>(
-        this.apiUrl + 'api/members',
-        JSON.stringify(user),
-        this.httpOptions)
-      .pipe(catchError(err => {
-        return throwError(() => {
-          this.notificationService.sendMessage({
-            message: err.error.error,
-            type: NotificationType.error
-          });
-        });
-      }));
-  }
-
-  getMembersGroups(memberId: number): Observable<any> {
-    return this.http.get<any>(this.apiUrl + `api/members/${memberId}/groups`)
-  }
-
-  getMemberById(memberId: number): Observable<any> {
-    return this.http.get<any>(this.apiUrl + `api/members/${memberId}`);
-  }
-
-  deleteMemberById(memberId: number): Observable<any> {
-    return this.http.delete<any>(
-      this.apiUrl + `api/members/${memberId}`,
-      this.httpOptions
-    ).pipe(
-      catchError(err => {
-        return throwError(() => {
-          this.notificationService.sendMessage({
-            message: err.error.error,
-            type: NotificationType.error
-          });
-        });
-      })
-    )
-  }
+  
 
   // Login
   login(user: any): Observable<any> {
@@ -84,44 +44,6 @@ export class ApiClientService {
           });
         });
       }));
-  }
-
-  // Groups
-  getAllGroups(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl + 'api/groups');
-  }
-
-  removedMemberFromGroup(groupId: number, memberId: number): Observable<any> {
-    return this.http.delete(
-      this.apiUrl + `api/groups/${groupId}/members/${memberId}`,
-      this.httpOptions
-    ).pipe(
-      catchError(err => {
-        return throwError(() => {
-          this.notificationService.sendMessage({
-            message: err.error.error,
-            type: NotificationType.error
-          });
-        });
-      })
-    )
-  }
-
-  addMemberToGroup(groupId: number, memberId: number): Observable<any> {
-    return this.http.patch(
-      this.apiUrl + `api/groups/${groupId}/members/${memberId}`,
-      '',
-      this.httpOptions)
-      .pipe(
-        catchError(err => {
-          return throwError(() => {
-            this.notificationService.sendMessage({
-              message: err.error.error,
-              type: NotificationType.error
-            });
-          });
-        })
-      );
   }
 
 }

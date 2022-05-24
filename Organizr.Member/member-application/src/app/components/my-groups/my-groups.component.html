@@ -2,9 +2,9 @@
     <li class="list-group-item d-flex justify-content-between align-items-center"
         *ngFor="let group of groups">
         
-        {{group.name}}
-
-        <button (click)="leaveGroup(group.id, userId, group.name)" class="btn btn-danger">
+        {{group['memberGroup'].name}}
+        
+        <button (click)="leaveGroup(group.id, group.name)" class="btn btn-danger">
             Forlad
         </button>
     </li>

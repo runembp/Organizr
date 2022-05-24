@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ApiClientService } from 'src/app/services/api-client/api-client.service';
+import { MembergroupsApiClientService } from 'src/app/services/api-client/membergroups/membergroups-api-client.service';
 import { NotificationType } from 'src/app/notification.message';
 import { NotificationServiceService } from 'src/app/services/notification-message/notification-service.service';
 
@@ -10,7 +10,7 @@ import { NotificationServiceService } from 'src/app/services/notification-messag
 })
 export class MyGroupsComponent implements OnInit {
 
-  constructor(private apiClient: ApiClientService, private notificationService: NotificationServiceService) { }
+  constructor(private apiClient: MembergroupsApiClientService, private notificationService: NotificationServiceService) { }
 
   @Input() userId: any;
   @Input() groups: any[];
@@ -18,11 +18,11 @@ export class MyGroupsComponent implements OnInit {
   @Output() memberIsRemovedFromGroup = new EventEmitter<any>();
 
   ngOnInit(): void {
-
+   
   }
 
-  leaveGroup(groupId: number, memberId: number, groupName: string): void {
-    this.apiClient.removedMemberFromGroup(groupId, memberId).subscribe(response => {
+  leaveGroup(membershipId: number, groupName: string): void {
+    this.apiClient.removedMemberFromGroup(membershipId).subscribe(response => {
       if (response.succeeded) {
         this.notificationService.sendMessage({
           message: `Du har forladt gruppen ${groupName}`,

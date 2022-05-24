@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ApiClientService } from 'src/app/services/api-client/api-client.service';
+import { Component, OnInit } from '@angular/core';
+import { MembersApiClientService } from 'src/app/services/api-client/members/members-api-client.service';
+import { MembergroupsApiClientService } from 'src/app/services/api-client/membergroups/membergroups-api-client.service';
 import { TokenStorageService } from 'src/app/services/token-storage/token-storage.service';
 
 
@@ -10,24 +11,27 @@ import { TokenStorageService } from 'src/app/services/token-storage/token-storag
 })
 export class GroupsComponent implements OnInit {
 
-  constructor(private tokenStorage: TokenStorageService, private apiClient: ApiClientService) {
+  constructor(private tokenStorage: TokenStorageService, private memberApiClient: MembersApiClientService,
+    private membergroupsApiClient: MembergroupsApiClientService) {
   }
 
   loggedInUser: any;
   allGroups: any[] = [];
   myGroups: any[] = [];
+  memberships: any[] = [];
 
   ngOnInit(): void {
 
     this.loggedInUser = this.tokenStorage.getUser().id;
-    
-    this.apiClient.getAllGroups().subscribe(groups => {
 
-      this.apiClient.getMembersGroups(this.loggedInUser).subscribe(value => {
+    this.membergroupsApiClient.getAllOpenGroupsWhereMemberHasNoMembership(this.loggedInUser).subscribe(groups => {
+      this.allGroups = groups;
+    });
 
-        this.myGroups = value.groups;
-        this.allGroups = groups.filter((x) => !this.myGroups.some(y => x.id === y.id) && x.isOpen === true);
-      });
+    this.memberApiClient.getMembersGroups(this.loggedInUser).subscribe(member => {
+
+      this.memberships = member.memberships;
+      this.myGroups = this.memberships.map(x => x);
 
     });
 
