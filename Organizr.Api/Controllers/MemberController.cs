@@ -59,7 +59,7 @@ public class MemberController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("{memberId:int}/groups")]
+    [HttpGet("{memberId:int}/memberships")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Member))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetMemberWithMembershipsById([FromRoute] int memberId)
@@ -70,6 +70,26 @@ public class MemberController : ControllerBase
         }
 
         var result = await _mediator.Send(new GetMemberWithMembershipsByIdRequest {MemberId = memberId});
+
+        if (result is null)
+        {
+            return BadRequest("Medlemmet findes ikke");
+        }
+
+        return Ok(result);
+    }
+
+    [HttpGet("{memberId}/memberships/groups")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Member))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetMemberMembershipGroupsById([FromRoute] int memberId)
+    {
+        if (memberId <= 0)
+        {
+            return BadRequest("Medlems id er ikke i et korrekt format");
+        }
+
+        var result = await _mediator.Send(new GetMemberMembershipGroupsByIdRequest { MemberId = memberId });
 
         if (result is null)
         {

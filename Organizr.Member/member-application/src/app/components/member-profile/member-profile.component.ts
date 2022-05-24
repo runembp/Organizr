@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TokenStorageService } from 'src/app/services/token-storage/token-storage.service';
-import { ApiClientService } from 'src/app/services/api-client/api-client.service';
 import { NotificationServiceService } from 'src/app/services/notification-message/notification-service.service';
 import { NotificationType } from 'src/app/notification.message';
+import { MembersApiClientService } from 'src/app/services/api-client/members/members-api-client.service';
 
 @Component({
   selector: 'app-member-profile',
@@ -15,7 +15,7 @@ export class MemberProfileComponent implements OnInit {
   loggedInUser: number;
 
   constructor(private tokenStorage: TokenStorageService,
-    private apiClient: ApiClientService,
+    private apiClient: MembersApiClientService,
     private notificationService: NotificationServiceService) { }
 
   firstName: string;

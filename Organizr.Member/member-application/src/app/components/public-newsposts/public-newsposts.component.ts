@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NewspostsApiClientService } from 'src/app/services/api-client/newsposts-api-client.service';
+import { NewspostsApiClientService } from 'src/app/services/api-client/newsposts/newsposts-api-client.service';
 import { DatePipe } from '@angular/common'
 
 @Component({

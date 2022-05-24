@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiClientService } from '../../services/api-client/api-client.service';
+import { MembersApiClientService } from 'src/app/services/api-client/members/members-api-client.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Validation } from '../../validators/user-input-validator';
 import { AbstractControl } from "@angular/forms";
@@ -25,7 +25,7 @@ export class SignUpComponent implements OnInit {
   createUserForm: FormGroup;
   submitted = false;
 
-  constructor(private apiClient: ApiClientService, private notificationService: NotificationServiceService, private router: Router) { }
+  constructor(private apiClient: MembersApiClientService, private notificationService: NotificationServiceService, private router: Router) { }
 
   ngOnInit(): void {
 
@@ -61,7 +61,7 @@ export class SignUpComponent implements OnInit {
       gender: Number(this.createUserForm.get('gender')?.value)
     }
 
-    this.apiClient.createOrganizrUser(this.user).subscribe(response => {
+    this.apiClient.createMember(this.user).subscribe(response => {
       if (response.succeeded) {
         this.notificationService.sendMessage({
           message: "Du profil er blevet oprettet - du kan nu logge ind.",
