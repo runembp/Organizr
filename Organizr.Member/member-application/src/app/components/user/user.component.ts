@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiClientService } from 'src/app/services/api-client/api-client.service';
+import { MembersApiClientService } from 'src/app/services/api-client/members/members-api-client.service';
 import { TokenStorageService } from 'src/app/services/token-storage/token-storage.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
@@ -11,17 +11,20 @@ import { Router } from '@angular/router';
 })
 export class UserComponent implements OnInit {
 
-  constructor(private apiClient: ApiClientService, private tokenStorage: TokenStorageService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private apiClient: MembersApiClientService, private tokenStorage: TokenStorageService, private route: ActivatedRoute, private router: Router) { }
 
   isUserLoggedIn: boolean;
-  myGroups: any[];
+  myGroups: any[] = [];
   loggedInUser: any;
+  memberships: any[] = [];
 
   ngOnInit(): void {
     this.loggedInUser = this.tokenStorage.getUser().id;
 
-    this.apiClient.getMembersGroups(this.loggedInUser).subscribe(value => {
-      this.myGroups = value.groups;
+    this.apiClient.getMembersGroups(this.loggedInUser).subscribe(member => {
+      this.memberships = member.memberships;
+      this.myGroups = this.memberships.map(x => x);
+     
     });
   }
 

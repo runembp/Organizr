@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { NotificationServiceService } from '../notification-message/notification-service.service';
-
+import { NotificationServiceService } from '../../notification-message/notification-service.service';
 
 @Injectable({
   providedIn: 'root'

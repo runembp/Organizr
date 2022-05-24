@@ -13,6 +13,14 @@ namespace Organizr.Infrastructure.Repositories
             return await _organizrContext.Users.Where(x => x.Id == memberId).Include(x => x.Memberships).FirstOrDefaultAsync();
         }
 
+        public async Task<Member?> GetMemberMembershipGroupsById(int memberId)
+        {
+            return await _organizrContext.Users.Where(u => u.Id == memberId)
+                .Include(ms => ms.Memberships)
+                .ThenInclude(x => x.MemberGroup)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<Member?> UpdateMember(Member updatedMember)
         {
             var member = _organizrContext.Users.FirstOrDefault(x => x.Id == updatedMember.Id);

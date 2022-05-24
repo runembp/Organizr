@@ -46,17 +46,17 @@ public class GroupController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("no-membership/{memberId:int}/open")]
+    [HttpGet("no-membership/{memberId:int}/")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<MemberGroup>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetOpenMembergroupsWhereMemberHasNoMembership([FromRoute] int memberId)
+    public async Task<IActionResult> GetMembergroupsWhereMemberHasNoMembership([FromRoute] int memberId, [FromQuery] bool open)
     {
         if (memberId <= 0)
         {
             return BadRequest("Medlems Id er ikke udfyldt korrekt");
         }
         
-        var result = await _mediator.Send(new GetMemberGroupsWithNoMembershipOfMemberRequest {MemberId = memberId, RequestOnlyOpenGroups = true});
+        var result = await _mediator.Send(new GetMemberGroupsWithNoMembershipOfMemberRequest {MemberId = memberId, RequestOnlyOpenGroups = open});
 
         if (result is null)
         {
@@ -66,25 +66,7 @@ public class GroupController : ControllerBase
         return Ok(result);
     }
     
-    [HttpGet("no-membership/{memberId:int}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<MemberGroup>))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetMembergroupsWhereMemberHasNoMembership([FromRoute] int memberId)
-    {
-        if (memberId <= 0)
-        {
-            return BadRequest("Medlems Id er ikke udfyldt korrekt");
-        }
-        
-        var result = await _mediator.Send(new GetMemberGroupsWithNoMembershipOfMemberRequest {MemberId = memberId, RequestOnlyOpenGroups = false});
     
-        if (result is null)
-        {
-            return BadRequest("Medlemmet findes ikke");
-        }
-    
-        return Ok(result);
-    }
 
     [HttpPatch("{groupId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UpdateMemberGroupResponse))]
