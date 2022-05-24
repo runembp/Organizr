@@ -17,7 +17,7 @@ public class Update : BaseApiEndpoint
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [SwaggerOperation(
         Summary = "Updates a member",
-        Tags = new [] {"MemberEndpoint"})]
+        Tags = new [] {"Members"})]
     public async Task<IActionResult> Handle([FromRoute] int memberId, [FromBody] UpdateMemberCommand command)
     {
         if (memberId <= 0)

@@ -17,7 +17,7 @@ public class Login : BaseApiEndpoint
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [SwaggerOperation(
         Summary = "Authenticates based on username and password",
-        Tags = new [] {"LoginEndpoint"})]
+        Tags = new [] {"Login"})]
     public async Task<IActionResult> Handle([FromBody] UserLoginRequest loginRequest)
     {
         var response = await Mediator.Send(loginRequest);

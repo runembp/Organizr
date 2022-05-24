@@ -17,7 +17,7 @@ public class GetWithMembershipsGroups : BaseApiEndpoint
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [SwaggerOperation(
         Summary = "Gets a member with Memberships and Membership Groups by id",
-        Tags = new [] {"MemberEndpoint"})]
+        Tags = new [] {"Members"})]
     public async Task<IActionResult> Handle([FromRoute] int memberId)
     {
         if (memberId <= 0)

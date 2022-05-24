@@ -16,7 +16,7 @@ public class GetAll : BaseApiEndpoint
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Configuration>))]
     [SwaggerOperation(
         Summary = "Gets a list of all configurations",
-        Tags = new [] {"ConfigurationEndpoint"})]
+        Tags = new [] {"Configurations"})]
     public async Task<IActionResult> Handle()
     {
         var result = await Mediator.Send(new GetAllConfigurationsRequest());

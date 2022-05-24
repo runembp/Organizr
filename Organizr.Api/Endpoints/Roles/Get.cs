@@ -16,7 +16,7 @@ public class Get : BaseApiEndpoint
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [SwaggerOperation(
         Summary = "Gets a bool based on if the Member is Organization administrator or not",
-        Tags = new [] {"RoleEndpoint"})]
+        Tags = new [] {"Roles"})]
     public async Task<IActionResult> Handle([FromRoute] int memberId)
     {
         var result = await Mediator.Send(new GetMemberRoleRequest{MemberId = memberId});

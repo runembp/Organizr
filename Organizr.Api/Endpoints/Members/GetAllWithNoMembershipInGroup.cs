@@ -16,7 +16,7 @@ public class GetAllWithNoMembershipInGroup : BaseApiEndpoint
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Member>))]
     [SwaggerOperation(
         Summary = "Gets a list of all members, who does not have a membership in the specified group",
-        Tags = new [] {"MemberEndpoint"})]
+        Tags = new [] {"Members"})]
     public async Task<IActionResult> Handle([FromRoute] int groupId)
     {
         var result = await Mediator.Send(new GetAllMembersWithNoMembershipInGroupRequest {GroupId = groupId});

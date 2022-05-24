@@ -17,7 +17,7 @@ public class GetByType : BaseApiEndpoint
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Configuration>))]
     [SwaggerOperation(
         Summary = "Gets a list of Configurations based on type",
-        Tags = new [] {"ConfigurationEndpoint"})]
+        Tags = new [] {"Configurations"})]
     public async Task<IActionResult> Handle([FromRoute] int configType)
     {
         var result = await Mediator.Send(new GetAllConfigurationsOfTypeRequest {ConfigType = (ConfigType) configType});
