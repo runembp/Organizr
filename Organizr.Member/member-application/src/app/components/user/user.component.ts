@@ -35,7 +35,7 @@ export class UserComponent implements OnInit {
       { relativeTo: this.route });
   }
 
-  navigateBla(path: string, id: number) {
+  navigateTo(path: string, id: number) {
     this.router.navigate([{ outlets: { sidebar: [ path, id ] }}], { relativeTo: this.route });
   }
 

@@ -31,7 +31,7 @@
                             <li class="list-group-item"><a class="dropdown-item">Alle</a></li>
 
                             <li class="list-group-item" *ngFor="let group of myGroups">
-                                <a class="dropdown-item" (click)="navigateBla('group', group['memberGroup'].id)"> {{group['memberGroup'].name}}</a>
+                                <a class="dropdown-item" (click)="navigateTo('group', group['memberGroup'].id)"> {{group['memberGroup'].name}}</a>
                             </li>
 
                         </ul>
