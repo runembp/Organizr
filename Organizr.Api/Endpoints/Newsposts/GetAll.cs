@@ -16,7 +16,7 @@ public class GetAll : BaseApiEndpoint
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<NewsPost>))]
     [SwaggerOperation(
         Summary = "Gets a list of all news posts",
-        Tags = new [] {"NewsPostEndpoint"})]
+        Tags = new [] {"NewsPosts"})]
     public async Task<IActionResult> Handle()
     {
         var result = await Mediator.Send(new GetAllPublicNewsPostsRequest());

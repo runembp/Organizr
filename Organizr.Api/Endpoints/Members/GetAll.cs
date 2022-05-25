@@ -16,7 +16,7 @@ public class GetAll : BaseApiEndpoint
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Member>))]
     [SwaggerOperation(
         Summary = "Gets a list of all members",
-        Tags = new [] {"MemberEndpoint"})]
+        Tags = new [] {"Members"})]
     public async Task<ActionResult<List<Member>>> Handle(CancellationToken cancellationToken = default)
     {
         var result = await Mediator.Send(new GetAllMembersRequest(), cancellationToken);

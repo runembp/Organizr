@@ -17,7 +17,7 @@ public class Update : BaseApiEndpoint
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [SwaggerOperation(
         Summary = "Updates a role on the specified member",
-        Tags = new [] {"RoleEndpoint"})]
+        Tags = new [] {"Roles"})]
     public async Task<IActionResult> Handle([FromRoute] int memberId, [FromBody] bool isOrganizationAdministrator)
     {
         var result = await Mediator.Send(new ChangeMemberRoleCommand {MemberId = memberId, IsOrganizationAdministrator = isOrganizationAdministrator});

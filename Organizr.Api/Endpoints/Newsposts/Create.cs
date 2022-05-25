@@ -17,7 +17,7 @@ public class Create : BaseApiEndpoint
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [SwaggerOperation(
         Summary = "Creates a new news post",
-        Tags = new [] {"NewsPostEndpoint"})]
+        Tags = new [] {"NewsPosts"})]
     public async Task<IActionResult> CreateNewsPost([FromBody] CreateNewsPostCommand command)
     {
         var response = await Mediator.Send(command);

@@ -17,7 +17,7 @@ public class Delete : BaseApiEndpoint
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [SwaggerOperation(
         Summary = "Deletes a Member",
-        Tags = new [] {"MemberEndpoint"})]
+        Tags = new [] {"Members"})]
     public async Task<IActionResult> DeleteMemberById([FromRoute] int memberId)
     {
         if (memberId <= 0)
