@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Organizr.Application.Requests.Configurations;
 using Organizr.Domain.Entities;
+using Organizr.Domain.Enums;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Organizr.Api.Endpoints.Configurations;
@@ -15,11 +16,17 @@ public class GetAll : BaseApiEndpoint
     [HttpGet("api/configurations")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Configuration>))]
     [SwaggerOperation(
-        Summary = "Gets a list of all configurations",
+        Summary = "Gets a list of all configurations, or all configurations of specific type if configType id is recieved",
         Tags = new [] {"Configurations"})]
-    public async Task<IActionResult> Handle()
+    public async Task<IActionResult> Handle([FromQuery] int? configType)
     {
-        var result = await Mediator.Send(new GetAllConfigurationsRequest());
-        return Ok(result);
+        if (configType is null)
+        {
+            var allConfigurations = await Mediator.Send(new GetAllConfigurationsRequest());
+            return Ok(allConfigurations);    
+        }
+        
+        var configurationsByType = await Mediator.Send(new GetAllConfigurationsOfTypeRequest {ConfigType = (ConfigType) configType});
+        return Ok(configurationsByType);
     }
 }

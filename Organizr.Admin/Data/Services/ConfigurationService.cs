@@ -14,11 +14,11 @@ public class ConfigurationService
 
     public async Task<List<Configuration>> GetAllConfigurationsOfType(ConfigType configType)
     {
-        return await _httpClient.GetFromJsonAsync<List<Configuration>>($"api/configurations/type/{(int)configType}") ?? new List<Configuration>();
+        return await _httpClient.GetFromJsonAsync<List<Configuration>>($"api/configurations?configType={(int)configType}") ?? new List<Configuration>();
     }
 
     public async Task<HttpResponseMessage> UpdateConfigurationsOfType(ConfigType configType, List<Configuration> updatedConfigurations)
     {
-        return await _httpClient.PostAsJsonAsync($"api/configurations/type/{(int)configType}", updatedConfigurations);
+        return await _httpClient.PostAsJsonAsync($"api/configurations?configType={(int)configType}", updatedConfigurations);
     }
 }
