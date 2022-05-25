@@ -12,6 +12,15 @@ public class NewsPostRepository : Repository<NewsPost>, INewsPostRepository
     {
     }
 
+    public async Task<List<NewsPost>> GetAllNewsPostsByGroupId(int groupId)
+    {
+        return await _organizrContext.NewsPosts
+            .Where(g => groupId == g.Id)
+            .Include(mg => mg.MemberGroup)
+            .Include(m => m.Member)
+            .ToListAsync();
+    }
+
     public async Task<List<NewsPost>> GetAllPublicNewsPosts()
     {
         return await _organizrContext.NewsPosts
