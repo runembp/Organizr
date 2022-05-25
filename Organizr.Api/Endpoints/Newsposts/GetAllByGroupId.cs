@@ -14,6 +14,7 @@ namespace Organizr.Api.Endpoints.Newsposts
 
         [HttpGet("api/newsposts/groups/{groupId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<NewsPost>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest]
         [SwaggerOperation(
             Summary = "Gets a list of all newsposts based on groupId",
             Tags = new[] { "NewsPosts" })]
