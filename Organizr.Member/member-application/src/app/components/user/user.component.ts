@@ -29,10 +29,15 @@ export class UserComponent implements OnInit {
   }
 
   navigate(path: string) {
+    console.log(this.route)
+    console.log(path)
     this.router.navigate([{ outlets: { sidebar: path } }],
       { relativeTo: this.route });
   }
 
+  navigateBla(path: string, id: number) {
+    this.router.navigate([{ outlets: { sidebar: [ path, id ] }}], { relativeTo: this.route });
+  }
 
 
 }

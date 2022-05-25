@@ -19,7 +19,7 @@ export class AllGroupsComponent {
 
   joinGroup(groupId: number, memberId: number, groupName: string): void {
     
-    let membership = { groupId: groupId, memberId: memberId, roleId: 2}
+    const membership = { groupId: groupId, memberId: memberId, roleId: 2}
 
     this.apiClient.addMemberToGroup(membership).subscribe(response => {
       if (response.succeeded) {

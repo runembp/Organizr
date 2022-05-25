@@ -23,4 +23,8 @@ export class NewspostsApiClientService {
   getAllNewsPosts(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl + 'api/newsposts');
   }
+
+  getAllNewsPostsByGroupId(groupId: number): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl + `api/newsposts/groups/${groupId}`);
+  }
 }

@@ -27,6 +27,14 @@ public class NewsPostController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("groups/{groupId}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<NewsPost>))]
+    public async Task<IActionResult> GetAllByGroupId([FromRoute] int groupId)
+    {
+        var result = await _mediator.Send(new GetAllNewsPostsByGroupIdRequest { GroupId = groupId });
+        return Ok(result);
+    }
+
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CreateNewsPostResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
