@@ -17,9 +17,21 @@ public class GetAll : BaseApiEndpoint
     [SwaggerOperation(
         Summary = "Gets a list of all Memberships",
         Tags = new [] {"Memberships"})]
-    public async Task<IActionResult> GetAllMemberships()
+    public async Task<IActionResult> GetAllMemberships([FromQuery] int? memberId)
     {
-        var result = await Mediator.Send(new GetAllMembershipsRequest());
-        return Ok(result);
+        if (memberId is not null)
+        {
+            var membershipsForSpecificMember = await Mediator.Send(new GetMembershipsForMemberRequest {MemberId = (int) memberId});
+
+            if (membershipsForSpecificMember is null)
+            {
+                return BadRequest("Medlemmet findes ikke");
+            }
+
+            return Ok(membershipsForSpecificMember);
+        }
+        
+        var allMemberships = await Mediator.Send(new GetAllMembershipsRequest());
+        return Ok(allMemberships);
     }
 }
