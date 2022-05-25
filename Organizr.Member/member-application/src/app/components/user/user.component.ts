@@ -29,8 +29,7 @@ export class UserComponent implements OnInit {
   }
 
   navigate(path: string) {
-    console.log(this.route)
-    console.log(path)
+
     this.router.navigate([{ outlets: { sidebar: path } }],
       { relativeTo: this.route });
   }
