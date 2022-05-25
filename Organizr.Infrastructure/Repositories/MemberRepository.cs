@@ -51,5 +51,10 @@ namespace Organizr.Infrastructure.Repositories
 
             return result;
         }
+
+        public async Task<Member?> GetMemberByEmail(string requestEmail)
+        {
+            return await _organizrContext.Users.Where(x => x.Email == requestEmail).FirstOrDefaultAsync();
+        }
     }
 }

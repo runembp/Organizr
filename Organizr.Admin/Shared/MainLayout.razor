@@ -1,12 +1,14 @@
 ﻿@inherits LayoutComponentBase
 
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
 <PageTitle>Organizr.Admin</PageTitle>
 
 <div class="page">
     <AuthorizeView>
         <Authorized>
             <div class="sidebar">
-                <NavMenu />
+                <NavMenu/>
             </div>
         </Authorized>
     </AuthorizeView>
@@ -15,6 +17,10 @@
         <AuthorizeView>
             <Authorized>
                 <div class="top-row px-4">
+                    <span>
+                        <button class="btn btn-link btn-sm" onclick="@OnMemberId_Clicked">(@_memberId)</button>
+                        @_memberName
+                    </span>
                     <a href="/logout" target="_blank">Log ud</a>
                 </div>
             </Authorized>
@@ -25,3 +31,25 @@
         </article>
     </main>
 </div>
+
+@code
+{
+    private int _memberId;
+    private string _memberName = string.Empty;
+    private Member _loggedInMember = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var claimName = authState.User.Claims.First().ToString().ToLower().Replace("name: ", "");
+        _loggedInMember = await MemberService.GetMemberByEmail(claimName);
+        _memberId = _loggedInMember.Id;
+        _memberName = $"{_loggedInMember.FirstName} {_loggedInMember.LastName}";
+    }
+
+    private Task OnMemberId_Clicked()
+    {
+        NavigationManager.NavigateTo($"/edit-member/{_memberId}");
+        return Task.CompletedTask;
+    }
+}
