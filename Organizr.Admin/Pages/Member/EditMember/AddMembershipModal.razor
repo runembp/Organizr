@@ -1,7 +1,7 @@
 ﻿<Modal @ref="_addMemberModal">
     <ModalContent Centered>
         <ModalHeader>
-            Opret medlemsskab for @Member.FullNameWithId()
+            Opret medlemsskab for @Member.GetFullNameWithId()
         </ModalHeader>
         <ModalBody>
             <Field>
@@ -30,13 +30,13 @@
 
 <Snackbar @ref="_snackbarSuccess" Color="SnackbarColor.Success">
     <SnackbarBody TextWeight="TextWeight.Bold">
-        @Member.FullNameWithId() er tilføjet til @_selectedGroup.Name 
+        @Member.GetFullNameWithId() er tilføjet til @_selectedGroup.Name 
     </SnackbarBody>
 </Snackbar>
 
 <Snackbar @ref="_snackbarError" Color="SnackbarColor.Danger">
     <SnackbarBody TextWeight="TextWeight.Bold">
-        @Member.FullNameWithId() kunne ikke tilføjes til @_selectedGroup.Name 
+        @Member.GetFullNameWithId() kunne ikke tilføjes til @_selectedGroup.Name 
     </SnackbarBody>
 </Snackbar>
 

@@ -5,7 +5,7 @@
                 Ændre rettighedsniveau for:
             </Paragraph>
             <Paragraph TextWeight="TextWeight.Bold">
-                @Membership.Member.FullNameWithId()
+                @Membership.Member.GetFullNameWithId()
             </Paragraph>
             <Paragraph>
                 i Gruppen
@@ -29,13 +29,13 @@
 
 <Snackbar @ref="_snackbarSuccess" Color="SnackbarColor.Success">
     <SnackbarBody TextWeight="TextWeight.Bold">
-        @Membership.Member.FullNameWithId() er blevet tildelt rollen @Membership.Role.Description i gruppen @Membership.MemberGroup.Name
+        @Membership.Member.GetFullNameWithId() er blevet tildelt rollen @Membership.Role.Description i gruppen @Membership.MemberGroup.Name
     </SnackbarBody>
 </Snackbar>
 
 <Snackbar @ref="_snackbarError" Color="SnackbarColor.Danger">
     <SnackbarBody TextWeight="TextWeight.Bold">
-        Ændring af rolle for @Membership.Member.FullNameWithId() i @Membership.MemberGroup.Name kunne ikke gennemføres
+        Ændring af rolle for @Membership.Member.GetFullNameWithId() i @Membership.MemberGroup.Name kunne ikke gennemføres
     </SnackbarBody>
 </Snackbar>
 

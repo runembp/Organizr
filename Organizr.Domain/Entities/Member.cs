@@ -13,7 +13,12 @@ namespace Organizr.Domain.Entities
         public List<Membership> Memberships { get; set; } = new();
         public List<NewsPost> NewsPosts { get; set; } = new();
         
-        public string FullNameWithId()
+        public string GetFullName()
+        {
+            return $"{FirstName} {LastName}"; 
+        }
+        
+        public string GetFullNameWithId()
         {
             return $"({Id}) {FirstName} {LastName}";
         }
