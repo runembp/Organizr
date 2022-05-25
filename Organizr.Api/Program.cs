@@ -32,6 +32,7 @@ builder.Services.AddSwaggerGen(options =>
             Array.Empty<string>()
         }
     });
+    options.EnableAnnotations();
 });
 
 var app = builder.Build();
