@@ -15,11 +15,22 @@ namespace Organizr.Api.Endpoints.Newsposts
         [HttpGet("api/newsposts/groups/{groupId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<NewsPost>))]
         [SwaggerOperation(
-       Summary = "Gets a list of all news posts",
-       Tags = new[] { "NewsPosts" })]
+            Summary = "Gets a list of all newsposts based on groupId",
+            Tags = new[] { "NewsPosts" })]
         public async Task<IActionResult> Handle([FromRoute] int groupId)
         {
+            if (groupId <= 0)
+            {
+                return BadRequest("Medlems id er ikke i et korrekt format");
+            }
+
             var result = await Mediator.Send(new GetAllNewsPostsByGroupIdRequest { GroupId = groupId });
+
+            if (result is null)
+            {
+                return BadRequest("Gruppen findes ikke");
+            }
+
             return Ok(result);
         }
     }
