@@ -5,9 +5,9 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Organizr.Api.Endpoints.Roles;
 
-public class Get : BaseApiEndpoint
+public class GetById : BaseApiEndpoint
 {
-    public Get(IMediator mediator) : base(mediator)
+    public GetById(IMediator mediator) : base(mediator)
     {
     }
     
