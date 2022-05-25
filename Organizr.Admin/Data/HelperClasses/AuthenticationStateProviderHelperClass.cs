@@ -34,8 +34,10 @@ public class AuthenticationStateProviderHelperClass : AuthenticationStateProvide
     {
         await _localStorage.RemoveItemAsync("authToken");
         await _localStorage.RemoveItemAsync("authEmail");
+        await _localStorage.RemoveItemAsync("authId");
         await _localStorage.SetItemAsync("authEmail", response.Email);
         await _localStorage.SetItemAsync("authToken", response.Token);
+        await _localStorage.SetItemAsync("authId", response.Id);
         var authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, response.Email) }, "apiauth"));
         var authState = Task.FromResult(new AuthenticationState(authenticatedUser));
         NotifyAuthenticationStateChanged(authState);
