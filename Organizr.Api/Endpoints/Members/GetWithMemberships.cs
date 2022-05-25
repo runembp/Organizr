@@ -12,20 +12,20 @@ public class GetWithMemberships : BaseApiEndpoint
     {
     }
     
-    [HttpGet("api/members/{memberId:int}/memberships")]
+    [HttpGet("api/members/{memberId:int}/memberships/")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Member))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [SwaggerOperation(
         Summary = "Gets member with memberships by id",
         Tags = new [] {"Members"})]
-    public async Task<IActionResult> Handle([FromRoute] int memberId, [FromQuery] bool? includeMemberships)
+    public async Task<IActionResult> Handle([FromRoute] int memberId, [FromQuery] bool? includeGroups)
     {
         if (memberId <= 0)
         {
             return BadRequest("Medlems id er ikke i et korrekt format");
         }
 
-        if (includeMemberships is not null && includeMemberships == true)
+        if (includeGroups is not null && includeGroups == true)
         {
             var memberWithMembershipsAndGroupsIncluded = await Mediator.Send(new GetMemberMembershipGroupsByIdRequest { MemberId = memberId });
 

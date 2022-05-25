@@ -29,7 +29,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Member = await MemberService.GetMemberById(MemberId);
+        Member = await MemberService.GetMemberWithMembershipsById(MemberId);
     }
 
     private Task OnSelectedTab_Changed(string tabName)
