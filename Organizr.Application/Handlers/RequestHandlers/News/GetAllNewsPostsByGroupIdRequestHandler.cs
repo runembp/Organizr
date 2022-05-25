@@ -5,7 +5,7 @@ using Organizr.Domain.Entities;
 
 namespace Organizr.Application.Handlers.RequestHandlers.News;
 
-public class GetAllNewsPostsByGroupIdRequestHandler : IRequestHandler<GetAllNewsPostsByGroupIdRequest, List<NewsPost>>
+public class GetAllNewsPostsByGroupIdRequestHandler : IRequestHandler<GetAllNewsPostsByGroupIdRequest, List<NewsPost>?>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -14,7 +14,7 @@ public class GetAllNewsPostsByGroupIdRequestHandler : IRequestHandler<GetAllNews
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<List<NewsPost>> Handle(GetAllNewsPostsByGroupIdRequest request, CancellationToken cancellationToken)
+    public async Task<List<NewsPost>?> Handle(GetAllNewsPostsByGroupIdRequest request, CancellationToken cancellationToken)
     {
         return await _unitOfWork.NewsRepository.GetAllPublicNewsPosts();
     }
