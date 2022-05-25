@@ -13,9 +13,9 @@ public class MemberService
         _httpClient = httpClient;
     }
 
-    public async Task<Member> GetMemberByEmail(string userEmail)
+    public async Task<Member> GetMemberById(int userId)
     {
-        return await _httpClient.GetFromJsonAsync<Member>($"api/members/email/{userEmail}") ?? new Member();
+        return await _httpClient.GetFromJsonAsync<Member>($"api/members/{userId}") ?? new Member();
     }
 
     public async Task<List<Member>> GetAllMembers()

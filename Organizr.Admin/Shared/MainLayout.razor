@@ -1,6 +1,6 @@
 ﻿@inherits LayoutComponentBase
 
-@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject ILocalStorageService LocalStorage
 
 <PageTitle>Organizr.Admin</PageTitle>
 
@@ -40,9 +40,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var claimName = authState.User.Claims.First().ToString().ToLower().Replace("name: ", "");
-        _loggedInMember = await MemberService.GetMemberByEmail(claimName);
+        var authId = await LocalStorage.GetItemAsync<int>("authId");
+        _loggedInMember = await MemberService.GetMemberById(authId);
         _memberId = _loggedInMember.Id;
         _memberName = $"{_loggedInMember.FirstName} {_loggedInMember.LastName}";
     }
