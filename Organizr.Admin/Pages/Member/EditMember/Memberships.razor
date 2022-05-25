@@ -66,7 +66,7 @@ else
     private RemoveMembershipModal _removeMembershipModal = new();
     private AddMembershipModal _addMembershipModal = new();
     private ChangeMembershipRole _changeMembershipRoleModal = new();
-    
+
     protected override async Task OnInitializedAsync()
     {
         MembershipsList = await MembershipService.GetMembershipsForMember(Member.Id);

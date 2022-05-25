@@ -20,12 +20,12 @@ public class GroupService
     
     public async Task<MemberGroup?> GetMemberGroupWithMemberhipsById(int groupId)
     {
-        return await _httpClient.GetFromJsonAsync<MemberGroup>($"api/groups/{groupId}/memberships");
+        return await _httpClient.GetFromJsonAsync<MemberGroup>($"api/groups/{groupId}?includeMemberships=true");
     }
 
     public async Task<List<MemberGroup>> GetAllGroupsMemberHasNoMembershipIn(int memberId)
     {
-        return await _httpClient.GetFromJsonAsync<List<MemberGroup>>($"api/groups/no-membership/{memberId}?open=false") ?? new List<MemberGroup>();
+        return await _httpClient.GetFromJsonAsync<List<MemberGroup>>($"api/groups?memberId={memberId}&includeOnlyOpenGroups=false") ?? new List<MemberGroup>();
     }
     
     public async Task<MemberGroup?> CreateNewGroup(MemberGroup command)
