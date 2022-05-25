@@ -12,7 +12,7 @@ public class Delete : BaseApiEndpoint
     {
     }
     
-    [HttpDelete("api/memberships/members/{membershipId:int}")]
+    [HttpDelete("api/memberships/{membershipId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteMembershipResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [SwaggerOperation(

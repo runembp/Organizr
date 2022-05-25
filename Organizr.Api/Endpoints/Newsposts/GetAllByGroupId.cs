@@ -12,7 +12,7 @@ namespace Organizr.Api.Endpoints.Newsposts
         {
         }
 
-        [HttpGet("api/newsposts/groups/{groupId}")]
+        [HttpGet("api/newsposts/groups/{groupId:int}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<NewsPost>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [SwaggerOperation(

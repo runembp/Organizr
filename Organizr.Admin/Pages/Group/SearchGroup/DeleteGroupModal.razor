@@ -39,7 +39,7 @@
     {
         var response = await GroupService.DeleteGroupById(GroupToBeDeleted.Id);
 
-        if (response != HttpStatusCode.NoContent)
+        if (response != HttpStatusCode.OK)
         {
             await _snackbar.Show();
             return;

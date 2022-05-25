@@ -20,12 +20,6 @@ namespace Organizr.Infrastructure.Repositories
             return entity;
         }
 
-        public async Task DeleteAsync(T entity)
-        {
-            _organizrContext.Set<T>().Remove(entity);
-            await _organizrContext.SaveChangesAsync();
-        }
-
         public async Task<T?> DeleteByIdAsync(int id)
         {
             var entity = await _organizrContext.Set<T>().FindAsync(id);
@@ -45,11 +39,6 @@ namespace Organizr.Infrastructure.Repositories
         public async Task<T> GetByIdAsync(int id)
         {
             return await _organizrContext.Set<T>().FindAsync(id);
-        }
-
-        public Task UpdateAsync(T entity)
-        {
-            throw new NotImplementedException();
         }
     }
 }

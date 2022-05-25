@@ -17,7 +17,12 @@ public class MemberService
     {
         return await _httpClient.GetFromJsonAsync<Member>($"api/members/{userId}") ?? new Member();
     }
-
+    
+    public async Task<Member> GetMemberWithMembershipsById(int memberId)
+    {
+        return await _httpClient.GetFromJsonAsync<Member>($"/api/members/{memberId}/memberships") ?? new Member();
+    }
+    
     public async Task<List<Member>> GetAllMembers()
     {
         return await _httpClient.GetFromJsonAsync<List<Member>>($"api/members") ?? new List<Member>();
@@ -25,7 +30,7 @@ public class MemberService
 
     public async Task<List<Member>> GetAllMembersWithNoMembershipOfGroup(int groupId)
     {
-        return await _httpClient.GetFromJsonAsync<List<Member>>($"api/members/no-membership/{groupId}") ?? new List<Member>();
+        return await _httpClient.GetFromJsonAsync<List<Member>>($"api/members?hasMembership=false&groupId={groupId}") ?? new List<Member>();
     }
 
     public async Task<Member?> PostNewMember(object command)
@@ -40,11 +45,6 @@ public class MemberService
         var result = await response.Content.ReadAsStringAsync();
 
         return JObject.Parse(result)["createdMember"]?.ToObject<Member>();
-    }
-
-    public async Task<Member> GetMemberWithGroupsById(int memberId)
-    {
-        return await _httpClient.GetFromJsonAsync<Member>($"/api/members/{memberId}") ?? new Member();
     }
 
     public async Task<bool> UpdateMember(Member member)

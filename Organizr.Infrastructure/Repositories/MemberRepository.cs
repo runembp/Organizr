@@ -42,8 +42,15 @@ namespace Organizr.Infrastructure.Repositories
             return member;
         }
 
-        public async Task<List<Member>> GetAllMembersWithNoMembershipInGroup(int groupId)
+        public async Task<List<Member>?> GetAllMembersWithNoMembershipInGroup(int groupId)
         {
+            var group = await _organizrContext.MemberGroups.FirstOrDefaultAsync(x => x.Id == groupId);
+
+            if (group is null)
+            {
+                return null;
+            }
+            
             var result = await _organizrContext.Users
                 .Include(x => x.Memberships)
                 .Where(x => x.Memberships.All(y => y.MemberGroup.Id != groupId))

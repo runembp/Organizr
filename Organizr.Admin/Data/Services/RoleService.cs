@@ -13,7 +13,7 @@ public class RoleService
 
     public async Task<bool> IsUserOrganizationAdministrator(int memberId)
     {
-        return await _httpClient.GetFromJsonAsync<bool>($"api/roles/{memberId}");
+        return await _httpClient.GetFromJsonAsync<bool>($"api/validation?isOrganizationAdministrator={memberId}");
     }
 
     public async Task<bool> UpdateMemberRole(int memberId, bool setUserOrganizationAdministrator)

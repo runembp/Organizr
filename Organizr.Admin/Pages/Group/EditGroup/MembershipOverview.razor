@@ -53,9 +53,9 @@
         await _addMemberModal!.Show();
     }
 
-    private async Task OnRemoveMemberButton_Clicked(int memberId)
+    private async Task OnRemoveMemberButton_Clicked(int membershipId)
     {
-        MembershipToBeDeleted = Group.Memberships.FirstOrDefault(x => x.Member.Id == memberId)!;
+        MembershipToBeDeleted = Group.Memberships.FirstOrDefault(x => x.Id == membershipId)!;
         await _removeMemberModal!.Show();
     }
 

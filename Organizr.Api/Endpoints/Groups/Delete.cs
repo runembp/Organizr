@@ -16,7 +16,7 @@ public class Delete : BaseApiEndpoint
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteMemberGroupResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [SwaggerOperation(
-        Summary = "Deletes a Group",
+        Summary = "Deletes a Group based on a Group Id",
         Tags = new [] {"Groups"})]
     public async Task<IActionResult> DeleteGroupById([FromBody] int groupId)
     {

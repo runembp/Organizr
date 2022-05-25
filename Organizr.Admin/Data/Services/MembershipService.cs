@@ -16,7 +16,7 @@ public class MembershipService
 
     public async Task<List<Membership>> GetMembershipsForMember(int memberId)
     {
-        return await _httpClient.GetFromJsonAsync<List<Membership>>($"api/memberships/members/{memberId}") ?? new List<Membership>();
+        return await _httpClient.GetFromJsonAsync<List<Membership>>($"api/memberships?memberId={memberId}") ?? new List<Membership>();
     }
 
     public async Task<Membership?> AddMembership(int groupId, int memberId, int roleId)
@@ -35,9 +35,9 @@ public class MembershipService
         return JObject.Parse(result)["createdMembership"]?.ToObject<Membership>();
     }
 
-    public async Task<bool> RemoveMembership(int memberId)
+    public async Task<bool> RemoveMembership(int membershipId)
     {
-        var result = await _httpClient.DeleteAsJsonAsync($"api/memberships/members/{memberId}");
+        var result = await _httpClient.DeleteAsJsonAsync($"api/memberships/{membershipId}");
         return result.IsSuccessStatusCode;
     }
 
