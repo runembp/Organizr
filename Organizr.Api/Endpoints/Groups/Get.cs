@@ -16,7 +16,7 @@ public class Get : BaseApiEndpoint
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MemberGroup))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [SwaggerOperation(
-        Summary = "Gets a group with Memberships by id",
+        Summary = "Gets a group based on a groupId. Memberships included, if includeMemberships boolean is recieved",
         Tags = new [] {"Groups"})]
     public async Task<IActionResult> Handle([FromRoute] int groupId, [FromQuery] bool? includeMemberships) 
     {

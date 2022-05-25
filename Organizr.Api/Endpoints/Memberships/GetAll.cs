@@ -15,7 +15,7 @@ public class GetAll : BaseApiEndpoint
     [HttpGet("api/memberships")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Membership>))]
     [SwaggerOperation(
-        Summary = "Gets a list of all Memberships",
+        Summary = "Gets a list of all Memberships, or a list of all Memberships of a Member, if the memberId parameter is recieved",
         Tags = new [] {"Memberships"})]
     public async Task<IActionResult> GetAllMemberships([FromQuery] int? memberId)
     {
