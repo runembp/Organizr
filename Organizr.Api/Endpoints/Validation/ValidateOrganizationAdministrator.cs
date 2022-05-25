@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Organizr.Application.Requests.Roles;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace Organizr.Api.Endpoints.Roles;
+namespace Organizr.Api.Endpoints.Validation;
 
 public class GetById : BaseApiEndpoint
 {
@@ -11,15 +11,15 @@ public class GetById : BaseApiEndpoint
     {
     }
     
-    [HttpGet("api/roles/{memberId:int}")]
+    [HttpGet("api/validation")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [SwaggerOperation(
         Summary = "Gets a bool based on if the Member is Organization administrator or not",
-        Tags = new [] {"Roles"})]
-    public async Task<IActionResult> Handle([FromRoute] int memberId)
+        Tags = new [] {"Validations"})]
+    public async Task<IActionResult> Handle([FromQuery] int isOrganizationAdministrator)
     {
-        var result = await Mediator.Send(new GetMemberRoleRequest{MemberId = memberId});
+        var result = await Mediator.Send(new GetMemberRoleRequest{MemberId = isOrganizationAdministrator});
 
         if (result is null)
         {
