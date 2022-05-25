@@ -19,7 +19,7 @@
                 <div class="top-row px-4">
                     <span>
                         <button class="btn btn-link btn-sm" onclick="@OnMemberId_Clicked">(@_memberId)</button>
-                        @_memberName
+                        @_loggedInMember.GetFullName()
                     </span>
                     <a href="/logout" target="_blank">Log ud</a>
                 </div>
@@ -35,7 +35,6 @@
 @code
 {
     private int _memberId;
-    private string _memberName = string.Empty;
     private Member _loggedInMember = new();
 
     protected override async Task OnInitializedAsync()
@@ -43,7 +42,6 @@
         var authId = await LocalStorage.GetItemAsync<int>("authId");
         _loggedInMember = await MemberService.GetMemberById(authId);
         _memberId = _loggedInMember.Id;
-        _memberName = $"{_loggedInMember.FirstName} {_loggedInMember.LastName}";
     }
 
     private Task OnMemberId_Clicked()
