@@ -1,0 +1,46 @@
+<div class="container my-3">
+    <form [formGroup]="newNewsPostForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="col mb-3">
+                <label for="group" class="form-label">Gruppe</label>
+                <select class="form-select" formControlName="group">
+                    <option *ngFor="let group of myGroups" [value]="group['memberGroup'].id">
+                        {{group['memberGroup'].name}}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col mb-3">
+                <label for="title" class="form-label">Overskrift</label>
+                <input type="text" class="form-control" formControlName="title">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col mb-3">
+                <label for="content" class="form-label">Indhold</label>
+                <textarea class="form-control" cols="30" rows="10" formControlName="content"></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col mb-3">
+                <input class="form-check-input form-check-inline" type="checkbox" formControlName="isPublic">
+                <label class="form-check-label" for="flexCheckDefault" >
+                    Gør offentlig for alle
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col mb-3 d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary" [disabled]="!newNewsPostForm.valid">
+                Gem
+            </button>
+            </div>
+        </div>
+
+    </form>
+</div>

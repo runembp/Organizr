@@ -32,6 +32,7 @@ export class GroupsComponent implements OnInit {
 
       this.memberships = member.memberships;
       this.myGroups = this.memberships.map(x => x);
+      
 
     });
 
