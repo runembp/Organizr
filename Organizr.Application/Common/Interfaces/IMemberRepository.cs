@@ -8,5 +8,4 @@ public interface IMemberRepository : IRepository<Member>
     Task<Member?> GetMemberMembershipGroupsById(int memberId);
     Task<Member?> UpdateMember(Member updatedMember);
     Task<List<Member>> GetAllMembersWithNoMembershipInGroup(int requestGroupId);
-    Task<Member?> GetMemberByEmail(string requestEmail);
 }
