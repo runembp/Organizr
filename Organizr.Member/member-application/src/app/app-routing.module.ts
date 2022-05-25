@@ -12,6 +12,7 @@ import { UserComponent } from './components/user/user.component';
 import { MemberProfileComponent } from './components/member-profile/member-profile.component';
 import { AuthGuardService } from './services/authentication/auth-guard.service';
 import { PublicNewspostsComponent } from './components/public-newsposts/public-newsposts.component';
+import { CreateNewspostComponent } from './components/create-newspost/create-newspost.component';
 
 const routes: Routes = [
   { path: 'news', component: PublicNewspostsComponent },
@@ -29,7 +30,7 @@ const routes: Routes = [
       {
         path: '',
         outlet: 'sidebar',
-        component: GroupComponent,
+        component: MemberProfileComponent,
         canActivateChild: [AuthGuardService]
       },
       {
@@ -44,11 +45,27 @@ const routes: Routes = [
         component: MemberProfileComponent,
         canActivateChild: [AuthGuardService]
       },
+      {
+        path: 'group/:id',
+        outlet: 'sidebar',
+        component: GroupComponent,
+        canActivateChild: [AuthGuardService],     
+      },
+
+      {
+        path: 'create-newspost',
+        outlet: 'sidebar',
+        component: CreateNewspostComponent,
+        canActivateChild: [AuthGuardService],
+      }
+      
+
+
     ]
   },
 
   { path: '', redirectTo: '/news', pathMatch: 'full' },
-  { path: '**', redirectTo: '/', pathMatch: 'full' },
+  //{ path: '**', redirectTo: '/', pathMatch: 'full' },
 
 ];
 

@@ -48,10 +48,10 @@ export class SignUpComponent implements OnInit {
     return this.createUserForm.controls;
   }
 
-  user: any;
+
   onSubmit() {
 
-    this.user = {
+    const user = {
       firstName: this.createUserForm.get('firstName')?.value,
       lastName: this.createUserForm.get('lastName')?.value,
       email: this.createUserForm.get('email')?.value,
@@ -61,7 +61,7 @@ export class SignUpComponent implements OnInit {
       gender: Number(this.createUserForm.get('gender')?.value)
     }
 
-    this.apiClient.createMember(this.user).subscribe(response => {
+    this.apiClient.createMember(user).subscribe(response => {
       if (response.succeeded) {
         this.notificationService.sendMessage({
           message: "Du profil er blevet oprettet - du kan nu logge ind.",

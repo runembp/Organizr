@@ -24,7 +24,8 @@ import { GroupComponent } from './components/group/group.component';
 import { UserComponent } from './components/user/user.component';
 import { MemberProfileComponent } from './components/member-profile/member-profile.component';
 import { PublicNewspostsComponent } from './components/public-newsposts/public-newsposts.component';
-import { DatePipe } from '@angular/common'
+import { DatePipe } from '@angular/common';
+import { CreateNewspostComponent } from './components/create-newspost/create-newspost.component'
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { DatePipe } from '@angular/common'
     UserComponent,
     MemberProfileComponent,
     PublicNewspostsComponent,
+    CreateNewspostComponent,
   ],
   imports: [
     BrowserModule,
